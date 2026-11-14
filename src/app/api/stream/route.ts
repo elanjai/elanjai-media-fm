@@ -1,3 +1,4 @@
+import { createHmac, randomBytes } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { getStations } from "@/lib/data";
 
@@ -17,6 +18,22 @@ import { getStations } from "@/lib/data";
 const ALLOWED_ORIGINS = new Set(
   getStations().map((s) => new URL(s.stream_url).origin)
 );
+
+/**
+ * HLS manifests often reference *other* origins (Akamai master playlist →
+ * yuppcdn.net segments). Only URLs we emitted ourselves get past the
+ * allowlist: rewriteManifest signs each URI with a per-process secret, and
+ * the signature is re-verified on the way back in. Signatures die with the
+ * process, so nothing here can be forged into an open proxy.
+ */
+const URL_SECRET = randomBytes(32);
+
+function signUrl(u: URL): string {
+  return createHmac("sha256", URL_SECRET)
+    .update(u.toString())
+    .digest("base64url")
+    .slice(0, 20);
+}
 
 const HOP_BY_HOP = new Set([
   "connection",
@@ -38,7 +55,8 @@ function decodeTarget(encoded: string | null): URL | null {
 }
 
 function proxiedUrl(u: URL): string {
-  return `/api/stream?u=${Buffer.from(u.toString()).toString("base64url")}`;
+  const b64 = Buffer.from(u.toString()).toString("base64url");
+  return `/api/stream?u=${b64}&s=${signUrl(u)}`;
 }
 
 /** Rewrite an HLS manifest so every URI routes back through this proxy. */
@@ -96,7 +114,10 @@ async function fetchUpstream(target: URL, range: string | null) {
 export async function GET(request: NextRequest) {
   const target = decodeTarget(request.nextUrl.searchParams.get("u"));
   if (!target) return NextResponse.json({ error: "Bad u" }, { status: 400 });
-  if (!/^https?:$/.test(target.protocol) || !ALLOWED_ORIGINS.has(target.origin)) {
+  const sig = request.nextUrl.searchParams.get("s") ?? "";
+  const trusted =
+    ALLOWED_ORIGINS.has(target.origin) || sig === signUrl(target);
+  if (!/^https?:$/.test(target.protocol) || !trusted) {
     return NextResponse.json({ error: "Not an allowed stream" }, { status: 403 });
   }
 
