@@ -70,6 +70,13 @@ Stream endpoints die and move often. Re-run the health check periodically:
 python scripts/healthcheck.py   # flips is_active=false on dead streams
 ```
 
+Normalize + brand the logo tiles (512×512, corner badge, idempotent —
+originals are kept in `data/.logo-originals/`):
+
+```bash
+python scripts/brand_logos.py [genre ...]
+```
+
 ## Legal note
 
 Station names, logos and streams belong to their owners. The directory links to

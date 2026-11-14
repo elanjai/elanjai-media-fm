@@ -40,3 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 server.log
+
+# python
+__pycache__/
+
+# logo originals backup (re-created by scripts/brand_logos.py)
+data/.logo-originals/
