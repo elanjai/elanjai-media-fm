@@ -40,8 +40,14 @@ def fetch(url, binary=True, timeout=10, max_bytes=4_000_000, tries=3):
         try:
             req = urllib.request.Request(url, headers={
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) ElanjaiFM/1.0"})
-            # cap the read — a "homepage" that is actually a stream never ends
-            return urllib.request.urlopen(req, timeout=timeout, context=ctx).read(max_bytes)
+            resp = urllib.request.urlopen(req, timeout=timeout, context=ctx)
+            # a "homepage" that is actually a stream never ends — bail on
+            # audio content-types instead of trickle-reading max_bytes
+            ct = resp.headers.get("Content-Type", "").lower()
+            if any(t in ct for t in ("audio", "mpeg", "ogg", "stream")):
+                resp.close()
+                raise ValueError(f"stream content-type {ct}")
+            return resp.read(max_bytes)
         except Exception as e:
             last = e
             time.sleep(1.5 * (i + 1))

@@ -50,8 +50,14 @@ OLD_GEN_PAIRS = [
     ((0xA3, 0x48, 0x0E), (0x7C, 0x2D, 0x12)), ((0x6D, 0x28, 0xD9), (0x4C, 0x1D, 0x95)),
     ((0x0F, 0x76, 0x6E), (0x11, 0x5E, 0x59)),
 ]
-# fetched junk that must be regenerated (e.g. WiX site-builder icons)
-REGEN_SLUGS = {"jn-fm-tamil", "jn-fm-tamil-classic"}
+# fetched junk that must be regenerated (site-builder icons, FB icons,
+# homepage screenshots picked up as og:image, etc.)
+REGEN_SLUGS = {
+    "jn-fm-tamil", "jn-fm-tamil-classic",
+    "radio-badal", "radio-kochi",           # WiX builder icons
+    "radio-maharani",                        # Facebook "f" icon
+    "universal-health-radio",                # website screenshot
+}
 
 FONT_CANDIDATES = [
     r"C:\Windows\Fonts\segoeuib.ttf",
@@ -233,6 +239,13 @@ def ink_luminance(im):
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 
 
+def is_tiny_mark(im):
+    """Favicon-grade source: real content is a speck (<30% of canvas in
+    both axes) — nothing worth upscaling → regenerate."""
+    t = alpha_trim(im)
+    return t.width < 0.30 * im.width and t.height < 0.30 * im.height
+
+
 def is_old_generated(im):
     """Old gen_tile: 256px full-bleed vertical gradient c1(top)→c2(bottom)."""
     if im.size != (256, 256):
@@ -351,7 +364,7 @@ def pretty_label(name, slug):
     return " ".join(title_word(w) for w in slug_words(slug))
 
 
-def gen_tile(name, slug):
+def gen_tile(name, slug, genre="tamil"):
     """Design-system tile: slug-keyed gradient, monogram, name, EQ bars."""
     h = int(hashlib.md5(slug.encode()).hexdigest(), 16)
     c1, c2 = GRADS[h % len(GRADS)]
@@ -364,6 +377,12 @@ def gen_tile(name, slug):
                outline=(255, 255, 255, 30), width=6)
 
     label = pretty_label(name, slug)
+    # headline font covers Latin only — strip non-ASCII (e.g. "(తెలుగు)"),
+    # then drop emptied brackets; fall back to the slug if nothing remains
+    label = re.sub(r"[^\x20-\x7E]+", "", label)
+    label = re.sub(r"[\(\[\{]\s*[\)\]\}]", "", label).strip(" -–—·")
+    if not label:
+        label = " ".join(title_word(w) for w in slug_words(slug))
     words = label.split()
     first = words[0] if words else "FM"
     mono = first.upper() if len(first) <= 3 or first.isupper() else \
@@ -390,7 +409,8 @@ def gen_tile(name, slug):
     for i, bh in enumerate((36, 60, 78, 50, 28)):
         x = bx + i * 30
         dr.rounded_rectangle([x, by - bh, x + 16, by], radius=7, fill=ACCENT)
-    dr.text((SIZE * .10, SIZE * .85), "T A M I L   R A D I O",
+    tag = "   ".join(genre.upper()) + "   R A D I O"
+    dr.text((SIZE * .10, SIZE * .85), tag,
             font=font(24), fill=(255, 255, 255, 150))
 
     out = Image.new("RGBA", (SIZE, SIZE), (0, 0, 0, 0))
@@ -433,8 +453,8 @@ def main():
             st = stations.get(slug)
             name = st["name"] if st else slug.replace("-", " ").title()
             regenerate = (slug in genset or slug in REGEN_SLUGS
-                          or is_old_generated(im))
-            tile = gen_tile(name, slug) if regenerate else enhance(im)
+                          or is_old_generated(im) or is_tiny_mark(im))
+            tile = gen_tile(name, slug, genre) if regenerate else enhance(im)
             apply_badge(tile, badge).save(dst, "PNG", optimize=True)
             if regenerate:
                 genset.add(slug)
