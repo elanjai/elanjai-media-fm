@@ -77,6 +77,14 @@ originals are kept in `data/.logo-originals/`):
 python scripts/brand_logos.py [genre ...]
 ```
 
+Editorial ranking: each genre's flagship/top-20 channels carry a `top_rank`
+field that leads every listing (genre pages, search, home picks). Adjust the
+ordered slug lists and re-apply with:
+
+```bash
+python scripts/apply_top_rank.py
+```
+
 ## Legal note
 
 Station names, logos and streams belong to their owners. The directory links to

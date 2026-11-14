@@ -82,7 +82,12 @@ const rankScore = (s: Station) => {
 };
 
 export const rankStations = (list: Station[]) =>
-  [...list].sort((a, b) => rankScore(b) - rankScore(a));
+  [...list].sort(
+    (a, b) =>
+      (a.top_rank ?? Number.MAX_SAFE_INTEGER) -
+        (b.top_rank ?? Number.MAX_SAFE_INTEGER) ||
+      rankScore(b) - rankScore(a)
+  );
 
 export const getStationsByGenre = (genre: string) =>
   rankStations(getStations().filter((s) => s.genre === genre));

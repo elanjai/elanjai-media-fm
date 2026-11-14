@@ -12,6 +12,8 @@ export type Station = {
   bitrate: number;
   votes: number;
   tags: string[];
+  /** Editorial top-20 position within the genre (1 = genre flagship). */
+  top_rank?: number;
   is_active: boolean;
 };
 

@@ -10,11 +10,16 @@ import { genreStyle } from "@/lib/genre-style";
 import { websiteJsonLd } from "@/lib/jsonld";
 
 export default function HomePage() {
-  const featured = getFeatured(8).map(toPublic);
+  const featured = getFeatured(14).map(toPublic);
   const genres = getGenres();
   const total = getStations().length;
   const tamil = getStationsByGenre("tamil").slice(0, 8).map(toPublic);
   const tamilGenre = genres.find((g) => g.slug === "tamil");
+  // flagship station per language — top_rank #1 after editorial ranking
+  const collections = genres.flatMap((g) => {
+    const station = getStationsByGenre(g.slug)[0];
+    return station ? [{ genre: g, station: toPublic(station) }] : [];
+  });
 
   return (
     <div className="py-5">
@@ -91,13 +96,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Popular now — compact rows */}
+      {/* Popular collections — flagship station per language */}
+      {collections.length > 0 && (
+        <section aria-labelledby="collections" className="mt-8">
+          <h2
+            id="collections"
+            className="mb-3 font-display text-[16.5px] font-semibold text-ink lg:text-lg"
+          >
+            Popular collections
+          </h2>
+          <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
+            {collections.map(({ genre, station }) => {
+              const st = genreStyle(genre.slug);
+              return (
+                <div key={station.id} className="relative w-[130px] shrink-0">
+                  <StationCard station={station} />
+                  <span
+                    className="pointer-events-none absolute left-5 top-5 z-10 rounded-full px-2 py-[3px] text-[8.5px] font-bold uppercase tracking-wider shadow-sm"
+                    style={{ backgroundColor: st.bg, color: st.fg }}
+                  >
+                    {genre.name}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* Popular now — next best after the collection flagships */}
       <section aria-labelledby="popular" className="mt-8">
         <h2 id="popular" className="mb-3 font-display text-[16.5px] font-semibold text-ink lg:text-lg">
           Popular now
         </h2>
         <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.slice(0, 6).map((s) => (
+          {featured.slice(collections.length, collections.length + 6).map((s) => (
             <StationRow key={s.id} station={s} />
           ))}
         </div>
