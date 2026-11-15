@@ -28,14 +28,13 @@ ARG NEXT_PUBLIC_SITE_URL=https://elanjai-fm.up.railway.app
 # NEXT_BUILD_SKIP_CHECKS: lint/typecheck run in the Release workflow before a
 # tag exists — Railway only rebuilds tagged commits, so skipping them here is
 # safe and keeps build memory low (tsc is the heaviest build step).
-# NODE_OPTIONS: raise the V8 heap cap for turbopack + prerendering.
+# No .next/cache mount: a stale/corrupt Turbopack cache survives rebuilds and
+# can crash the compiler silently — a clean build is the safer default.
 ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL} \
     NEXT_TELEMETRY_DISABLED=1 \
-    NEXT_BUILD_SKIP_CHECKS=true \
-    NODE_OPTIONS=--max-old-space-size=6144
+    NEXT_BUILD_SKIP_CHECKS=true
 
-RUN --mount=type=cache,id=s/a5ffb2de-b8d0-4f4d-a4c6-514f4240bff6-/app/.next/cache,target=/app/.next/cache \
-    npm run build
+RUN npm run build
 
 # --- Runtime -----------------------------------------------------------------
 FROM base AS runner

@@ -167,20 +167,25 @@ docker run --rm -p 3000:3000 elanjai-media-fm
 
 ## Build memory notes
 
-Railway builds the image on its own builders; `next build` is memory-hungry.
-Two mitigations are already in place:
+Railway builds the image on its own builders; `next build` is memory-hungry,
+and silent build deaths (log just stops) are almost always OOM kills. The
+mitigations in place:
 
 - **`NEXT_BUILD_SKIP_CHECKS=true`** (Dockerfile builder stage) →
   `typescript.ignoreBuildErrors` — skips the in-build `tsc` pass, the
   heaviest step. Type safety is still enforced: the Release workflow runs
   `npm run lint` + `npm run typecheck` + `npm run build` before any tag is
   pushed, so Railway only ever rebuilds already-verified commits.
-- **`NODE_OPTIONS=--max-old-space-size=6144`** — raises the V8 heap cap so
-  turbopack/prerendering don't hit Node's default limit.
+- The same flag also sets `experimental.cpus: 4` — Next defaults to one
+  worker per CPU core, and each worker loads the app + the full station
+  catalog. Bounding worker count caps peak memory on builders with many
+  cores but modest RAM.
+- **No `.next/cache` BuildKit mount** — a stale/corrupt Turbopack cache
+  persists across rebuilds and can crash the compiler silently. (The npm
+  cache mount stays; it only holds package tarballs.)
 
-If a build *still* dies around "Generating static pages", reduce worker
-parallelism via `experimental.staticGenerationMaxConcurrency` in
-`next.config.ts` (e.g. `4`), or raise the heap further.
+If a build *still* dies during compile, try the image on a bigger builder
+(Railway plan) or test `docker build` locally to compare environments.
 
 ## Troubleshooting
 
