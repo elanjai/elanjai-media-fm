@@ -84,6 +84,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               </p>
               <nav className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5" aria-label="Footer">
                 <Link href="/genres" className="hover:text-ink">All genres</Link>
+                <Link href="/city" className="hover:text-ink">Cities</Link>
+                <Link href="/network" className="hover:text-ink">Networks</Link>
                 <Link href="/recent" className="hover:text-ink">Recently played</Link>
                 <Link href="/add-station" className="hover:text-ink">Add your station</Link>
                 <Link href="/about" className="hover:text-ink">About</Link>
