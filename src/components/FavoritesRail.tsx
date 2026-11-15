@@ -20,7 +20,7 @@ export default function FavoritesRail() {
         </h2>
         <Link
           href="/favorites"
-          className="text-[11.5px] font-semibold text-brand-2 dark:text-accent"
+          className="text-xs font-semibold text-brand-2 dark:text-accent"
         >
           See all →
         </Link>

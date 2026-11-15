@@ -100,19 +100,34 @@ body {
 }
 .rail::-webkit-scrollbar { display: none; }
 
-/* Range input — volume slider */
+/* Small visual, big touch target — expands a control's hit area to 44×44
+   without changing how it looks. Apply to icon-only buttons under 44px. */
+.hit-expand {
+  position: relative;
+}
+.hit-expand::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+/* Range input — volume slider: 5px visual track, ~28px vertical hit area */
 input[type="range"].vol {
   appearance: none;
-  height: 5px;
+  height: 28px;
   border-radius: 3px;
   background:
-    linear-gradient(to right, var(--brand-2), var(--brand-2)) 0 / var(--fill, 60%) 100% no-repeat,
-    var(--surface-2);
+    linear-gradient(to right, var(--brand-2), var(--brand-2)) 0 center / var(--fill, 60%) 5px no-repeat,
+    linear-gradient(to right, var(--surface-2), var(--surface-2)) 0 center / 100% 5px no-repeat;
 }
 [data-theme="dark"] input[type="range"].vol {
   background:
-    linear-gradient(to right, var(--accent), var(--accent)) 0 / var(--fill, 60%) 100% no-repeat,
-    var(--surface-2);
+    linear-gradient(to right, var(--accent), var(--accent)) 0 center / var(--fill, 60%) 5px no-repeat,
+    linear-gradient(to right, var(--surface-2), var(--surface-2)) 0 center / 100% 5px no-repeat;
 }
 input[type="range"].vol::-webkit-slider-thumb {
   appearance: none;

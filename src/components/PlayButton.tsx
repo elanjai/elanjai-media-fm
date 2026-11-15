@@ -29,7 +29,7 @@ export default function PlayButton({
         if (isCurrent) toggle();
         else play(station);
       }}
-      className={`flex items-center justify-center rounded-full bg-accent text-accent-ink shadow-md shadow-brand/25 transition hover:scale-105 hover:brightness-105 active:scale-95 ${className}`}
+      className={`flex items-center justify-center rounded-full bg-accent text-accent-ink shadow-md shadow-brand/25 transition hover:scale-105 hover:brightness-105 active:scale-95 ${size < 44 ? "hit-expand " : ""}${className}`}
       style={{ width: size, height: size }}
     >
       {loading ? (

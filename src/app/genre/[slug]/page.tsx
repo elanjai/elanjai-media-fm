@@ -52,7 +52,7 @@ export default async function GenrePage({ params }: Props) {
         <Link
           href="/genres"
           aria-label="Back to genres"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
         </Link>
@@ -60,7 +60,7 @@ export default async function GenrePage({ params }: Props) {
         <Link
           href="/search"
           aria-label="Search"
-          className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
+          className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
         >
           <Icon name="search" size={18} />
         </Link>
@@ -87,7 +87,7 @@ export default async function GenrePage({ params }: Props) {
           )
         )}
       </div>
-      <p className="mt-3 text-[11.5px] text-muted">
+      <p className="mt-3 text-xs text-muted">
         {g.count} live stations — tap to play
       </p>
 

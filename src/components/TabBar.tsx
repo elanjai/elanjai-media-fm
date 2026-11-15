@@ -39,7 +39,7 @@ export default function TabBar() {
                 <Icon name={it.icon} size={20} strokeWidth={active ? 2 : 1.8} />
               </span>
               <span
-                className={`text-[9.5px] leading-none ${
+                className={`text-[11px] leading-none ${
                   active ? "font-semibold text-brand-2 dark:text-accent" : "font-medium text-muted"
                 }`}
               >

@@ -71,11 +71,11 @@ export default async function StationPage({ params }: Props) {
         <Link
           href={`/genre/${s.genre}`}
           aria-label={`Back to ${s.genre} stations`}
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
         </Link>
-        <nav aria-label="Breadcrumb" className="min-w-0 flex-1 truncate text-[11px] text-muted">
+        <nav aria-label="Breadcrumb" className="min-w-0 flex-1 truncate text-xs text-muted">
           <Link href="/" className="hover:text-ink">Home</Link>
           <span className="mx-1.5">/</span>
           <Link href={`/genre/${s.genre}`} className="capitalize hover:text-ink">
@@ -119,7 +119,7 @@ export default async function StationPage({ params }: Props) {
                 {s.tags.slice(0, 4).map((t) => (
                   <span
                     key={t}
-                    className="rounded-full bg-white/10 px-2.5 py-1 text-[10.5px] font-medium text-brand-ink/85"
+                    className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-brand-ink/85"
                   >
                     {t}
                   </span>
@@ -135,7 +135,7 @@ export default async function StationPage({ params }: Props) {
         <PlayButton station={pub} size={56} />
         <div className="min-w-0 flex-1">
           <p className="text-[13px] font-semibold text-ink">Tap to listen live</p>
-          <p className="mt-0.5 text-[10.5px] text-muted">Free · no sign-up</p>
+          <p className="mt-0.5 text-xs text-muted">Free · no sign-up</p>
         </div>
         <FavoriteButton station={pub} size={44} />
         {s.homepage && (
@@ -164,7 +164,7 @@ export default async function StationPage({ params }: Props) {
             </h2>
             <Link
               href={`/genre/${s.genre}`}
-              className="text-[11.5px] font-semibold text-brand-2 dark:text-accent"
+              className="text-xs font-semibold text-brand-2 dark:text-accent"
             >
               All {genreCount} →
             </Link>

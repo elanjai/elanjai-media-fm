@@ -48,13 +48,13 @@ export default function HomePage() {
           <br />
           One tap away.
         </h1>
-        <p className="relative mt-2 text-[11.5px] text-brand-ink/75">
+        <p className="relative mt-2 text-xs text-brand-ink/75">
           {genres.slice(0, 3).map((g) => g.name).join(" · ")} · +{Math.max(genres.length - 3, 0)} more
         </p>
         {tamil[0] && (
           <div className="relative mt-4 flex items-center gap-3">
             <PlayButton station={tamil[0]} size={52} />
-            <span className="text-[11px] font-medium text-brand-ink/70">
+            <span className="text-xs font-medium text-brand-ink/70">
               Start with {tamil[0].name}
             </span>
           </div>
@@ -67,7 +67,7 @@ export default function HomePage() {
           <h2 id="languages" className="font-display text-[16.5px] font-semibold text-ink">
             Languages
           </h2>
-          <Link href="/genres" className="text-[11.5px] font-semibold text-brand-2 dark:text-accent">
+          <Link href="/genres" className="text-xs font-semibold text-brand-2 dark:text-accent">
             See all →
           </Link>
         </div>
@@ -82,12 +82,12 @@ export default function HomePage() {
                 style={{ backgroundColor: st.bg }}
               >
                 <span
-                  className="flex h-[22px] w-[22px] items-center justify-center rounded-full font-display text-[10.5px] font-bold text-white"
+                  className="flex h-[22px] w-[22px] items-center justify-center rounded-full font-display text-[11px] font-bold text-white"
                   style={{ backgroundColor: st.fg }}
                 >
                   {st.short[0]}
                 </span>
-                <span className="text-[12.5px] font-semibold" style={{ color: st.fg }}>
+                <span className="text-[13px] font-semibold" style={{ color: st.fg }}>
                   {g.name}
                 </span>
               </Link>
@@ -112,7 +112,7 @@ export default function HomePage() {
                 <div key={station.id} className="relative w-[130px] shrink-0">
                   <StationCard station={station} />
                   <span
-                    className="pointer-events-none absolute left-5 top-5 z-10 rounded-full px-2 py-[3px] text-[8.5px] font-bold uppercase tracking-wider shadow-sm"
+                    className="pointer-events-none absolute left-5 top-5 z-10 rounded-full px-2 py-[3px] text-[11px] font-bold uppercase tracking-wider shadow-sm"
                     style={{ backgroundColor: st.bg, color: st.fg }}
                   >
                     {genre.name}
@@ -136,7 +136,7 @@ export default function HomePage() {
             </h2>
             <Link
               href="/genre/tamil"
-              className="text-[11.5px] font-semibold text-brand-2 dark:text-accent"
+              className="text-xs font-semibold text-brand-2 dark:text-accent"
             >
               All {tamilGenre.count} →
             </Link>
@@ -152,7 +152,7 @@ export default function HomePage() {
               className="flex w-[80px] shrink-0 flex-col items-center justify-center gap-2 rounded-[20px] border border-dashed border-border text-muted transition hover:border-brand-2 hover:text-brand-2"
             >
               <Icon name="chevR" size={20} />
-              <span className="text-[10px] font-semibold">All {tamilGenre.count}</span>
+              <span className="text-[11px] font-semibold">All {tamilGenre.count}</span>
             </Link>
           </div>
         </section>
@@ -173,7 +173,7 @@ export default function HomePage() {
                 </h2>
                 <Link
                   href={`/genre/${g.slug}`}
-                  className="text-[11.5px] font-semibold text-brand-2 dark:text-accent"
+                  className="text-xs font-semibold text-brand-2 dark:text-accent"
                 >
                   All {g.count} →
                 </Link>

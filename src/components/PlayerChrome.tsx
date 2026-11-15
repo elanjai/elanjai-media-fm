@@ -32,11 +32,11 @@ export default function PlayerChrome({ total }: { total: number }) {
           >
             <StationLogo src={current.favicon} fallbackSrc={current.faviconAlt} name={current.name} size={44} className="h-11 w-11 shrink-0" />
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-[13.5px] font-semibold text-ink">
+              <span className="block truncate text-sm font-semibold text-ink">
                 {current.name}
               </span>
               <span
-                className={`mt-0.5 flex items-center gap-1.5 truncate text-[10.5px] ${
+                className={`mt-0.5 flex items-center gap-1.5 truncate text-xs ${
                   status === "error" ? "text-danger" : "text-muted"
                 }`}
               >

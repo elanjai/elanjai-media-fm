@@ -24,8 +24,8 @@ export default function StationCard({ station }: { station: PublicStation }) {
           <PlayButton station={station} size={30} />
         </div>
       </div>
-      <p className="mt-2.5 truncate text-[12.5px] font-semibold text-ink">{station.name}</p>
-      <p className="mt-0.5 truncate text-[10px] capitalize text-muted">
+      <p className="mt-2.5 truncate text-[13px] font-semibold text-ink">{station.name}</p>
+      <p className="mt-0.5 truncate text-xs capitalize text-muted">
         {station.genre} {station.bitrate ? `· ${station.bitrate}k` : ""}
       </p>
     </div>

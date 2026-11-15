@@ -8,7 +8,7 @@ export default function LiveBadge({
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-2 rounded-full bg-accent px-2.5 py-1 font-display text-[10.5px] font-bold tracking-wide text-accent-ink ${className}`}
+      className={`inline-flex items-center gap-2 rounded-full bg-accent px-2.5 py-1 font-display text-[11px] font-bold tracking-wide text-accent-ink ${className}`}
     >
       <span className="flex h-3 items-end gap-[2px]" aria-hidden>
         {[10, 16, 12, 18].map((h, i) => (

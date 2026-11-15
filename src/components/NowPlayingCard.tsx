@@ -15,10 +15,10 @@ export default function NowPlayingCard({ station }: { station: PublicStation }) 
     <div className="flex items-center gap-3.5 rounded-[18px] border border-border bg-surface px-4 py-3.5">
       <Icon name="eq" size={24} className="shrink-0 text-brand-2 dark:text-accent" />
       <div className="min-w-0 flex-1">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-muted">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
           Now playing
         </p>
-        <p className="mt-0.5 truncate text-[12.5px] font-semibold text-ink">
+        <p className="mt-0.5 truncate text-[13px] font-semibold text-ink">
           {isCurrent
             ? status === "error"
               ? "Stream unavailable — tap play to retry"

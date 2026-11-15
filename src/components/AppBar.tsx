@@ -17,7 +17,7 @@ export default function AppBar() {
             <span className="block font-display text-[15px] font-semibold tracking-tight text-ink">
               Elanjai FM
             </span>
-            <span className="mt-0.5 block text-[7.5px] font-medium uppercase tracking-[0.2em] text-muted">
+            <span className="mt-0.5 block truncate text-[11px] font-medium uppercase tracking-[0.12em] text-muted">
               Free Indian Radio
             </span>
           </span>
@@ -35,7 +35,7 @@ export default function AppBar() {
           <Link
             href="/favorites"
             aria-label="Favorites"
-            className="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-rose md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-rose md:hidden"
           >
             <Icon name="heart" size={17} strokeWidth={1.8} />
           </Link>

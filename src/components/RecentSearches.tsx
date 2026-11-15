@@ -19,7 +19,7 @@ export default function RecentSearches() {
   if (!items.length) return null;
   return (
     <section aria-label="Recent searches">
-      <h2 className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-muted">
+      <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
         Recent searches
       </h2>
       <div className="mt-2.5 flex flex-wrap gap-2">

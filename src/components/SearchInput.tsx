@@ -55,7 +55,7 @@ export default function SearchInput({ autoFocus = false }: { autoFocus?: boolean
             router.push("/search");
           }}
           aria-label="Clear search"
-          className="absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-muted transition hover:bg-surface hover:text-ink"
+          className="hit-expand absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-muted transition hover:bg-surface hover:text-ink"
         >
           <Icon name="x" size={15} />
         </button>

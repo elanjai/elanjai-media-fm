@@ -32,7 +32,7 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
         <p className="mt-4 font-display text-sm font-semibold text-ink">
           {kind === "favorites" ? "No favorites yet" : "Nothing played yet"}
         </p>
-        <p className="mt-1.5 text-[11px] text-muted">
+        <p className="mt-1.5 text-xs text-muted">
           {kind === "favorites"
             ? "Tap the heart on any station and it lands here."
             : "Pick a station to get started."}
@@ -49,7 +49,7 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
             station={s}
             trailing={
               kind === "recents" && relTime(s.playedAt) ? (
-                <span className="flex shrink-0 items-center gap-1 text-[10px] text-muted">
+                <span className="flex shrink-0 items-center gap-1 text-[11px] text-muted">
                   <Icon name="clock" size={13} strokeWidth={1.8} />
                   {relTime(s.playedAt)}
                 </span>
@@ -67,7 +67,7 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
             <p className="text-[12px] font-medium text-accent-ink">
               Tap ♡ on any station to keep it here.
             </p>
-            <p className="mt-0.5 text-[10px] text-accent-ink/70">
+            <p className="mt-0.5 text-[11px] text-accent-ink/70">
               Favorites never leave your device.
             </p>
           </div>
@@ -76,7 +76,7 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
         <button
           type="button"
           onClick={clearRecents}
-          className="mt-4 flex w-full items-center justify-center gap-2.5 rounded-[14px] bg-surface-2 py-3 text-[12.5px] font-semibold text-muted transition hover:text-ink"
+          className="mt-4 flex w-full items-center justify-center gap-2.5 rounded-[14px] bg-surface-2 py-3 text-[13px] font-semibold text-muted transition hover:text-ink"
         >
           <Icon name="x" size={15} /> Clear history
         </button>

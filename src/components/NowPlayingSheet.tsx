@@ -37,13 +37,13 @@ function SleepCircle() {
         aria-label="Sleep timer"
         aria-expanded={open}
         title={active ? `Sleeping in ${mm}:${ss}` : "Sleep timer"}
-        className={`relative flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface transition ${
+        className={`relative flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
           active ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
         }`}
       >
         <Icon name="moon" size={20} strokeWidth={1.8} />
         {active && (
-          <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-bold text-accent-ink">
+          <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-accent-ink">
             {mm}
           </span>
         )}
@@ -152,11 +152,11 @@ export default function NowPlayingSheet({
               type="button"
               onClick={onClose}
               aria-label="Collapse player"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
             >
               <Icon name="chevD" size={16} />
             </button>
-            <p className="absolute inset-x-0 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-muted">
+            <p className="absolute inset-x-0 text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-muted">
               Now playing
             </p>
             <button
@@ -167,7 +167,7 @@ export default function NowPlayingSheet({
               }}
               aria-label="Stop playback"
               title="Stop"
-              className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-danger"
+              className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-danger"
             >
               <Icon name="x" size={15} />
             </button>
@@ -189,7 +189,7 @@ export default function NowPlayingSheet({
           <h2 className="mt-3 truncate text-center font-display text-2xl font-semibold text-ink">
             {current.name}
           </h2>
-          <p className="mt-1 text-center text-[12.5px] capitalize text-muted">
+          <p className="mt-1 text-center text-[13px] capitalize text-muted">
             {current.language} · {current.bitrate ? `${current.bitrate} kbps ` : ""}
             {current.codec || "MP3"}
           </p>
@@ -197,7 +197,7 @@ export default function NowPlayingSheet({
           <div className="mt-4 flex items-center gap-3 rounded-2xl border border-border bg-surface px-3.5 py-3">
             <Icon name="eq" size={22} className="shrink-0 text-brand-2 dark:text-accent" />
             <div className="min-w-0">
-              <p className="truncate text-[12.5px] font-semibold text-ink">
+              <p className="truncate text-[13px] font-semibold text-ink">
                 {status === "error"
                   ? error ?? "Stream unavailable"
                   : status === "loading"
@@ -206,7 +206,7 @@ export default function NowPlayingSheet({
                       ? (nowPlaying ?? "Live")
                       : "Paused"}
               </p>
-              <p className="mt-0.5 text-[9.5px] text-muted">
+              <p className="mt-0.5 text-[11px] text-muted">
                 {status === "error" ? "Tap play to retry" : "Now playing · via ICY metadata"}
               </p>
             </div>
@@ -219,7 +219,7 @@ export default function NowPlayingSheet({
               type="button"
               onClick={prev}
               aria-label="Previous station"
-              className="text-ink transition hover:text-brand-2 dark:hover:text-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:text-brand-2 dark:hover:text-accent"
             >
               <Icon name="prev" size={34} />
             </button>
@@ -239,7 +239,7 @@ export default function NowPlayingSheet({
               type="button"
               onClick={next}
               aria-label="Next station"
-              className="text-ink transition hover:text-brand-2 dark:hover:text-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:text-brand-2 dark:hover:text-accent"
             >
               <Icon name="next" size={34} />
             </button>
@@ -252,7 +252,7 @@ export default function NowPlayingSheet({
               onClick={() => toggleFavorite(current)}
               aria-pressed={isFav}
               aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
-              className={`flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface transition ${
+              className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
                 isFav ? "text-rose" : "text-muted hover:text-rose"
               }`}
             >
@@ -264,7 +264,7 @@ export default function NowPlayingSheet({
               onClick={share}
               aria-label="Share station"
               title={shared ? "Link copied!" : "Share station"}
-              className={`flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface transition ${
+              className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
                 shared ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
               }`}
             >
@@ -274,7 +274,7 @@ export default function NowPlayingSheet({
               type="button"
               onClick={toggleMute}
               aria-label={muted ? "Unmute" : "Mute"}
-              className={`flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface transition ${
+              className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
                 muted ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
               }`}
             >
@@ -302,7 +302,7 @@ export default function NowPlayingSheet({
           {/* Up next */}
           {upNext && (
             <>
-              <p className="mt-6 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-muted">
+              <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
                 Up next
               </p>
               <button
@@ -312,10 +312,10 @@ export default function NowPlayingSheet({
               >
                 <StationLogo src={upNext.favicon} fallbackSrc={upNext.faviconAlt} name={upNext.name} size={32} className="h-8 w-8 shrink-0" />
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[12.5px] font-semibold text-ink">
+                  <span className="block truncate text-[13px] font-semibold text-ink">
                     {upNext.name}
                   </span>
-                  <span className="mt-0.5 block truncate text-[9.5px] capitalize text-muted">
+                  <span className="mt-0.5 block truncate text-[11px] capitalize text-muted">
                     {upNext.genre} {upNext.bitrate ? `· ${upNext.bitrate}k` : ""}
                   </span>
                 </span>
@@ -323,7 +323,7 @@ export default function NowPlayingSheet({
               </button>
             </>
           )}
-          <p className="mt-5 text-center text-[10px] text-muted">
+          <p className="mt-5 text-center text-[11px] text-muted">
             <Link href={`/station/${current.slug}`} onClick={onClose} className="font-medium text-brand-2 underline-offset-2 hover:underline dark:text-accent">
               Open station page →
             </Link>

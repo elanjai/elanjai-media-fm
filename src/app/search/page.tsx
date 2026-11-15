@@ -22,7 +22,7 @@ async function Results({ searchParams }: Props) {
       <div className="mt-6 flex flex-col gap-6">
         <RecentSearches />
         <section aria-labelledby="trending">
-          <h2 className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-muted">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
             Trending now
           </h2>
           <div className="mt-2.5 grid grid-cols-1 gap-2.5 md:grid-cols-2">
@@ -44,13 +44,13 @@ async function Results({ searchParams }: Props) {
 
   return (
     <div className="mt-6">
-      <p className="text-[11.5px] text-muted">
+      <p className="text-xs text-muted">
         {results.length} station{results.length === 1 ? "" : "s"} for “{q}”
       </p>
       {results.length === 0 ? (
         <div className="mt-6 flex flex-col items-center rounded-[22px] border border-dashed border-border bg-surface px-6 py-12 text-center">
           <p className="font-display text-sm font-semibold text-ink">No matches</p>
-          <p className="mt-1.5 text-[11px] text-muted">
+          <p className="mt-1.5 text-xs text-muted">
             Try a station name, language, or tag.
           </p>
         </div>
