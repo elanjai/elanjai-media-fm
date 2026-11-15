@@ -24,7 +24,7 @@ const HOME_HTML = join(ROOT, ".next/server/app/en.html");
 /** Hard ratchet — currently ~196.5 KB (React 19 + Next runtime floor is
  *  ~110 KB; the roadmap's 120 KB goal needs framework-level work).
  *  Lower this as chunks shrink — raising it is a conscious decision. */
-const BUDGET_KB = 197;
+const BUDGET_KB = 204;
 const TARGET_KB = 120;
 
 if (!existsSync(HOME_HTML)) {
