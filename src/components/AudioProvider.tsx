@@ -191,6 +191,16 @@ export default function AudioProvider({
   /** Stations the user already approved this session while saving data. */
   const saverOkRef = useRef<Set<string>>(new Set());
   const { dataSaver } = usePrefs();
+  /** Volume captured before the sleep-timer fade, restored on play/stop. */
+  const fadeBaseRef = useRef<number | null>(null);
+
+  const restoreFade = useCallback(() => {
+    const audio = audioRef.current;
+    if (audio && fadeBaseRef.current !== null) {
+      audio.volume = fadeBaseRef.current;
+      fadeBaseRef.current = null;
+    }
+  }, []);
 
   const destroyHls = useCallback(() => {
     hlsRef.current?.destroy();
@@ -469,6 +479,7 @@ export default function AudioProvider({
   const startPlay = useCallback(
     (s: PublicStation, queue?: PublicStation[]) => {
       wantPlayRef.current = true;
+      restoreFade();
       queueRef.current = queue?.length ? queue : null;
       attemptRef.current = 0;
       setRetryAttempt(0);
@@ -496,7 +507,7 @@ export default function AudioProvider({
         return next;
       });
     },
-    [attemptConnect, clearTimers, setStatusTracked]
+    [attemptConnect, clearTimers, restoreFade, setStatusTracked]
   );
 
   /**
@@ -565,6 +576,7 @@ export default function AudioProvider({
     const audio = audioRef.current;
     wantPlayRef.current = false;
     clearTimers();
+    restoreFade();
     destroyHls();
     audio?.pause();
     audio?.removeAttribute("src");
@@ -575,7 +587,7 @@ export default function AudioProvider({
     setRetryAttempt(0);
     setSleepAt(null);
     setSleepRemaining(null);
-  }, [clearTimers, destroyHls, setStatusTracked]);
+  }, [clearTimers, destroyHls, restoreFade, setStatusTracked]);
 
   // ---------- catalog for next/prev (fetched lazily on first use) ----------
   const ensureCatalog = useCallback(async () => {
@@ -683,26 +695,45 @@ export default function AudioProvider({
   }, []);
 
   // ---------- sleep timer ----------
-  const setSleepTimer = useCallback((minutes: number | null) => {
-    if (minutes === null) {
-      setSleepAt(null);
-      setSleepRemaining(null);
-    } else {
-      setSleepAt(Date.now() + minutes * 60_000);
-    }
-  }, []);
+  const setSleepTimer = useCallback(
+    (minutes: number | null) => {
+      if (minutes === null) {
+        restoreFade();
+        setSleepAt(null);
+        setSleepRemaining(null);
+      } else {
+        setSleepAt(Date.now() + minutes * 60_000);
+      }
+    },
+    [restoreFade]
+  );
 
   useEffect(() => {
     if (!sleepAt) return;
     const tick = () => {
       const left = Math.max(0, Math.round((sleepAt - Date.now()) / 1000));
       setSleepRemaining(left);
-      if (left <= 0) stop();
+      const audio = audioRef.current;
+      // Fade the last 30 s out so sleep doesn't end with a hard cut.
+      if (audio && left <= 30 && left > 0 && statusRef.current === "playing") {
+        fadeBaseRef.current ??= audio.volume;
+        audio.volume = Math.max(0, fadeBaseRef.current * (left / 30));
+      }
+      if (left <= 0) {
+        // Pause rather than stop: the mini player stays visible so the
+        // listener can resume tomorrow with one tap (F-1.9).
+        wantPlayRef.current = false;
+        audio?.pause();
+        restoreFade();
+        setStatusTracked("paused");
+        setSleepAt(null);
+        setSleepRemaining(null);
+      }
     };
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [sleepAt, stop]);
+  }, [sleepAt, restoreFade, setStatusTracked]);
 
   // ---------- now playing (ICY StreamTitle) ----------
   useEffect(() => {

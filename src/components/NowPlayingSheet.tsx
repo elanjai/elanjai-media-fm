@@ -10,7 +10,7 @@ import Icon from "./Icon";
 import LiveBadge from "./LiveBadge";
 import StationLogo from "./StationLogo";
 
-const SLEEP_OPTIONS = [15, 30, 45, 60];
+const SLEEP_OPTIONS = [15, 30, 45, 60, 90];
 
 /** Session data-use estimate — ticks once a second while audio plays (F-1.8). */
 function SessionData({ bitrate, status }: { bitrate: number; status: string }) {
@@ -34,6 +34,7 @@ function SessionData({ bitrate, status }: { bitrate: number; status: string }) {
 function SleepCircle() {
   const { sleepRemaining, setSleepTimer } = useSleepTimer();
   const [open, setOpen] = useState(false);
+  const [customMin, setCustomMin] = useState("");
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -86,6 +87,35 @@ function SleepCircle() {
               {m} minutes
             </button>
           ))}
+          <form
+            className="flex items-center gap-2 border-t border-border px-3 py-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const v = Number(customMin);
+              if (v >= 1 && v <= 480) {
+                setSleepTimer(v);
+                setOpen(false);
+              }
+            }}
+          >
+            <input
+              type="number"
+              min={1}
+              max={480}
+              value={customMin}
+              onChange={(e) => setCustomMin(e.target.value)}
+              placeholder="Custom"
+              aria-label="Custom minutes"
+              className="w-20 rounded-lg border border-border bg-surface-2 px-2.5 py-1.5 text-sm text-ink outline-none focus:border-brand-2"
+            />
+            <button
+              type="submit"
+              className="text-sm font-semibold text-brand-2 disabled:text-muted dark:text-accent"
+              disabled={!customMin}
+            >
+              Set
+            </button>
+          </form>
           {active && (
             <button
               type="button"
