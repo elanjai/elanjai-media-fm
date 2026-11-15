@@ -45,9 +45,17 @@ export const viewport: Viewport = {
 // Set data-theme before first paint to avoid a flash of the wrong theme.
 const themeInit = `(function(){try{var t=localStorage.getItem("emfm:theme")||"system";var d=t==="dark"||(t==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.dataset.theme=d?"dark":"light"}catch(e){}})()`;
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+// Copyright year — computed once at build (Cache Components forbids an
+// uncached new Date() during prerender) and refreshed on every deploy.
+async function copyrightYear() {
+  "use cache";
+  return new Date().getFullYear();
+}
+
+export default async function RootLayout({ children }: LayoutProps<"/">) {
   const genres = getGenres();
   const total = getStations().length;
+  const year = await copyrightYear();
   return (
     <html
       lang="en"
@@ -80,7 +88,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 <Link href="/terms" className="hover:text-ink">Terms</Link>
                 <Link href="/dmca" className="hover:text-ink">DMCA</Link>
               </nav>
-              <p className="mt-3 text-[11px]">© {new Date().getFullYear()} {SITE.name}</p>
+              <p className="mt-3 text-[11px]">© {year} {SITE.name}</p>
             </div>
           </footer>
 

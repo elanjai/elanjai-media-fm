@@ -576,11 +576,12 @@ export default function AudioProvider({
   const recents = useMemo(
     () =>
       recentEntries
-        .map((e) => {
-          const s = bySlug.get(resolveSlug(e.slug)) ?? snaps[resolveSlug(e.slug)];
+        .map((e): PublicStation | null => {
+          const s =
+            bySlug.get(resolveSlug(e.slug)) ?? snaps[resolveSlug(e.slug)];
           return s ? { ...s, playedAt: e.playedAt } : null;
         })
-        .filter((x): x is PublicStation => Boolean(x)),
+        .filter((x): x is PublicStation => x !== null),
     [recentEntries, resolveSlug, bySlug, snaps]
   );
 

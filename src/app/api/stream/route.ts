@@ -108,19 +108,31 @@ async function fetchUpstream(target: URL, range: string | null) {
 }
 
 /** Release the concurrency slot when the streamed body ends or is cancelled. */
-function releaseOnClose(body: ReadableStream, release: () => void) {
-  const ts = new TransformStream<Uint8Array, Uint8Array>({
-    transform(chunk, controller) {
-      controller.enqueue(chunk);
-    },
-    flush() {
-      release();
+function releaseOnClose(
+  body: ReadableStream<Uint8Array>,
+  release: () => void
+) {
+  const reader = body.getReader();
+  return new ReadableStream<Uint8Array>({
+    async pull(controller) {
+      try {
+        const { done, value } = await reader.read();
+        if (done) {
+          release();
+          controller.close();
+        } else {
+          controller.enqueue(value);
+        }
+      } catch (err) {
+        release();
+        controller.error(err);
+      }
     },
     cancel() {
       release();
+      reader.cancel().catch(() => {});
     },
   });
-  return body.pipeThrough(ts);
 }
 
 export async function GET(request: NextRequest) {
