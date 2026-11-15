@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useLibrary } from "./AudioProvider";
 import Icon from "./Icon";
 import { usePrefs, type TextSize, type ThemeChoice } from "./PrefsProvider";
+import ShareFavorites from "./ShareFavorites";
 
 const THEME_OPTS: { v: ThemeChoice; label: string }[] = [
   { v: "system", label: "System" },
@@ -290,6 +291,8 @@ export default function SettingsButton() {
                     ? "Setup link copied"
                     : "Copy a setup link for a senior's device"}
                 </button>
+
+                <ShareFavorites stations={favoriteStations} />
 
                 <button
                   type="button"
