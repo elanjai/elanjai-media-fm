@@ -7,6 +7,7 @@ import { reportStreamIssue } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
 import { isBusyStatus, useLibrary, usePlayback, usePlaybackActions, useSleepTimer } from "./AudioProvider";
 import AdSlotClient from "./AdSlotClient";
+import AlarmCircle from "./AlarmCircle";
 import CastButton from "./CastButton";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
@@ -358,6 +359,7 @@ export default function NowPlayingSheet({
               <Icon name={isFav ? "heartF" : "heart"} size={20} strokeWidth={1.8} />
             </button>
             <SleepCircle />
+            <AlarmCircle slug={current.slug} />
             <CastButton />
             <a
               href={wa}

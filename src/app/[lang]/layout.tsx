@@ -3,6 +3,7 @@ import { Inter, Noto_Sans_Devanagari, Noto_Sans_Tamil, Poppins } from "next/font
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { eligibleCampaigns } from "@/lib/ads";
+import AlarmWatcher from "@/components/AlarmWatcher";
 import AudioProvider from "@/components/AudioProvider";
 import AppBar from "@/components/AppBar";
 import ConsentBanner from "@/components/ConsentBanner";
@@ -169,6 +170,7 @@ export default async function RootLayout({
                 npAds={eligibleCampaigns("np-sponsored", { today: await todayCached() })}
               />
               <InstallPrompt />
+              <AlarmWatcher />
               <TabBar />
             </AudioProvider>
             <LanguagePickerSheet genres={genres} />
