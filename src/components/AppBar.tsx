@@ -4,6 +4,7 @@ import BrandLogo from "./BrandLogo";
 import Icon from "./Icon";
 import NavLinks from "./NavLinks";
 import SearchInput from "./SearchInput";
+import SettingsButton from "./SettingsButton";
 import ThemeToggle from "./ThemeToggle";
 
 /** Slim app bar — brand mark + desktop nav + search + theme + favorites. */
@@ -32,6 +33,7 @@ export default function AppBar() {
             </Suspense>
           </div>
           <ThemeToggle />
+          <SettingsButton />
           <Link
             href="/favorites"
             aria-label="Favorites"

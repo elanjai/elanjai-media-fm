@@ -68,6 +68,21 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
+/* Text size preference (Settings) — the design is px-based, so the honest
+   way to enlarge it is a whole-UI zoom on <html>. Baseline-supported. */
+html[data-textsize="large"] { zoom: 1.125; }
+html[data-textsize="xl"] { zoom: 1.25; }
+
+/* Respect reduced-motion: static equalizer, no sheet/rail animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Live "now playing" equalizer */
 @keyframes emfm-eq {
   0%, 100% { transform: scaleY(0.3); }
