@@ -18,7 +18,7 @@ export default function PlayerChrome({
   /** Eligible self-ad campaigns for the sheet's sponsored card (F-4.2). */
   npAds?: Campaign[];
 }) {
-  const { current, status, error, nowPlaying, retryAttempt, pendingPlay } =
+  const { current, status, error, nowPlaying, retryAttempt, pendingPlay, preroll } =
     usePlayback();
   const { toggle, next, play, confirmPendingPlay, dismissPendingPlay } =
     usePlaybackActions();
@@ -90,6 +90,8 @@ export default function PlayerChrome({
               >
                 {status === "error" ? (
                   error ?? "Stream unavailable — retry"
+                ) : preroll ? (
+                  "Ad · station starts in a moment"
                 ) : status === "reconnecting" ? (
                   `Reconnecting… (${retryAttempt}/3)`
                 ) : status === "connecting" ? (

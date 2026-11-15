@@ -75,3 +75,26 @@ export function pickWeighted(eligible: Campaign[], rand: number): Campaign | nul
   }
   return eligible[eligible.length - 1];
 }
+
+/**
+ * Client-side impression/click beacon — aggregate counters only, no
+ * identity. Lives here (not in a component module) so the audio engine
+ * and row components can count without import cycles.
+ */
+export function adBeacon(slot: string, campaign: string, type: "imp" | "clk") {
+  const payload = JSON.stringify({ c: campaign, s: slot, t: type });
+  try {
+    const blob = new Blob([payload], { type: "application/json" });
+    const sent = navigator.sendBeacon?.("/api/ads/event", blob) ?? false;
+    if (!sent) {
+      fetch("/api/ads/event", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: payload,
+        keepalive: true,
+      }).catch(() => {});
+    }
+  } catch {
+    /* best-effort */
+  }
+}

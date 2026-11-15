@@ -130,7 +130,12 @@ export default async function RootLayout({
       <body className="min-h-full bg-bg pb-44 font-sans text-ink md:pb-32">
         <LocaleProvider lang={lang} dict={dict}>
           <PrefsProvider>
-            <AudioProvider>
+            <AudioProvider
+              prerollCampaigns={eligibleCampaigns("preroll", {
+                today: await todayCached(),
+                kinds: ["audio_preroll"],
+              })}
+            >
               <AppBar />
 
               <main className="mx-auto w-full max-w-2xl px-4 md:max-w-4xl xl:max-w-6xl">{children}</main>

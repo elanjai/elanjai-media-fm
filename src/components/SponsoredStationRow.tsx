@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { PublicStation } from "@/lib/types";
-import { adBeacon } from "./AdSlotClient";
+import { adBeacon } from "@/lib/ads";
 import StationRow from "./StationRow";
 
 /**

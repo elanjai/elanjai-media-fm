@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { adBeacon, pickWeighted, type Campaign } from "@/lib/ads";
 import { track } from "@/lib/analytics";
 import { reportStreamIssue, sessionId } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
@@ -57,6 +58,8 @@ type PlaybackState = {
   retryAttempt: number;
   /** High-bitrate play held back by data saver until confirmed (F-1.8). */
   pendingPlay: { station: PublicStation; queue?: PublicStation[] } | null;
+  /** A sponsored audio clip is playing before the stream starts (F-4.5). */
+  preroll: boolean;
 };
 
 type PlaybackActions = {
@@ -133,6 +136,34 @@ const RECENT_KEY = "emfm:recents";
 const SNAPS_KEY = "emfm:snaps";
 const VOL_KEY = "emfm:volume";
 const MUTE_KEY = "emfm:muted";
+const ADFREE_KEY = "emfm:adfree";
+
+/**
+ * Audio pre-roll pilot (F-4.5, §6.1 rule 1 — audio is sacred): a single
+ * ≤15 s sponsored clip before the *first* stream of a session, max once
+ * per 45 min, never on station switches, never for ad-free supporters
+ * or data-saver users. Armed only when NEXT_PUBLIC_PREROLL_ENABLED=1
+ * AND an audio_preroll campaign is active — ships dark otherwise.
+ */
+const PREROLL_ENABLED = process.env.NEXT_PUBLIC_PREROLL_ENABLED === "1";
+const PREROLL_KEY = "emfm:preroll:last";
+const PREROLL_COOLDOWN_MS = 45 * 60_000;
+const PREROLL_MAX_MS = 16_000; // 15 s creative + 1 s slack — never block the stream
+
+const prerollDue = () => {
+  try {
+    return Date.now() - Number(localStorage.getItem(PREROLL_KEY) ?? 0) > PREROLL_COOLDOWN_MS;
+  } catch {
+    return false;
+  }
+};
+const prerollMark = () => {
+  try {
+    localStorage.setItem(PREROLL_KEY, String(Date.now()));
+  } catch {
+    /* storage denied */
+  }
+};
 
 type RecentEntry = { slug: string; playedAt: number };
 
@@ -148,10 +179,20 @@ function read<T>(key: string, fallback: T): T {
 
 export default function AudioProvider({
   children,
+  prerollCampaigns = [],
 }: {
   children: React.ReactNode;
+  /** Eligible audio_preroll campaigns from the server (F-4.5). */
+  prerollCampaigns?: Campaign[];
 }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const prerollAudioRef = useRef<HTMLAudioElement | null>(null);
+  const prerollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prerollActiveRef = useRef(false);
+  const prerollCampaignsRef = useRef(prerollCampaigns);
+  useEffect(() => {
+    prerollCampaignsRef.current = prerollCampaigns;
+  }, [prerollCampaigns]);
   const hlsRef = useRef<{ destroy: () => void } | null>(null);
   const watchdogRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const catalogRef = useRef<PublicStation[] | null>(null);
@@ -169,6 +210,7 @@ export default function AudioProvider({
   const [recentEntries, setRecentEntries] = useState<RecentEntry[]>([]);
   const [snaps, setSnaps] = useState<Record<string, PublicStation>>({});
   const [catalog, setCatalog] = useState<PublicStation[] | null>(null);
+  const [preroll, setPreroll] = useState(false);
   /** Legacy station id → slug, recovered from stored snapshots. */
   const [idMap, setIdMap] = useState<Record<string, string>>({});
 
@@ -480,9 +522,34 @@ export default function AudioProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * End an in-flight pre-roll: tear down its dedicated <audio> element
+   * (kept separate so the clip can never trip the stream retry engine),
+   * then — when `resume` — continue into the station connect path.
+   */
+  const endPreroll = useCallback(
+    (resume: boolean) => {
+      if (prerollTimerRef.current) {
+        clearTimeout(prerollTimerRef.current);
+        prerollTimerRef.current = null;
+      }
+      const ad = prerollAudioRef.current;
+      if (ad) {
+        ad.pause();
+        ad.removeAttribute("src");
+        prerollAudioRef.current = null;
+      }
+      prerollActiveRef.current = false;
+      setPreroll(false);
+      if (resume && wantPlayRef.current && currentRef.current) attemptConnect();
+    },
+    [attemptConnect]
+  );
+
   /** The actual play path — retry/online-resume calls go here directly. */
   const startPlay = useCallback(
     (s: PublicStation, queue?: PublicStation[]) => {
+      const sessionStart = !currentRef.current;
       wantPlayRef.current = true;
       restoreFade();
       queueRef.current = queue?.length ? queue : null;
@@ -496,6 +563,46 @@ export default function AudioProvider({
       setError(null);
       setNowPlaying(null);
       ttfaStartRef.current = performance.now();
+
+      // F-4.5 pre-roll: session starts only, ≤15 s, 45-min cooldown —
+      // the station shows as "connecting" while the clip plays.
+      if (
+        sessionStart &&
+        PREROLL_ENABLED &&
+        !dataSaver &&
+        prerollDue() &&
+        localStorage.getItem(ADFREE_KEY) !== "1"
+      ) {
+        const c = pickWeighted(
+          prerollCampaignsRef.current.filter((x) => x.creative.audioUrl),
+          Math.random()
+        );
+        if (c?.creative.audioUrl) {
+          prerollMark();
+          adBeacon("preroll", c.id, "imp");
+          prerollActiveRef.current = true;
+          setPreroll(true);
+          const ad = new Audio();
+          ad.preload = "auto";
+          ad.volume = audioRef.current?.volume ?? 0.9;
+          ad.muted = audioRef.current?.muted ?? false;
+          prerollAudioRef.current = ad;
+          let done = false;
+          const finish = () => {
+            if (done) return;
+            done = true;
+            endPreroll(true);
+          };
+          ad.addEventListener("ended", finish, { once: true });
+          ad.addEventListener("error", finish, { once: true });
+          // Hard cap: a stalled ad must never hold the stream hostage.
+          prerollTimerRef.current = setTimeout(finish, PREROLL_MAX_MS);
+          ad.src = c.creative.audioUrl;
+          ad.play().catch(finish);
+          return; // station connect continues from endPreroll(true)
+        }
+      }
+
       attemptConnect();
 
       setRecentEntries((prev) => {
@@ -512,7 +619,7 @@ export default function AudioProvider({
         return next;
       });
     },
-    [attemptConnect, clearTimers, restoreFade, setStatusTracked]
+    [attemptConnect, clearTimers, dataSaver, endPreroll, restoreFade, setStatusTracked]
   );
 
   /**
@@ -561,6 +668,18 @@ export default function AudioProvider({
     const audio = audioRef.current;
     const s = currentRef.current;
     if (!audio || !s) return;
+    // Pre-roll in flight → pause/resume the ad clip, not the (unloaded) stream.
+    const ad = prerollAudioRef.current;
+    if (ad) {
+      if (ad.paused) {
+        ad.play().catch(() => endPreroll(true));
+        setStatusTracked("connecting");
+      } else {
+        ad.pause();
+        setStatusTracked("paused");
+      }
+      return;
+    }
     // After an error the old source is dead — go through play() again so the
     // stream URL (or a fresh hls.js instance) is re-established instead of
     // calling play() on a broken src. Makes "tap to retry" actually retry.
@@ -577,11 +696,12 @@ export default function AudioProvider({
     }
     wantPlayRef.current = true;
     audio.play().catch(() => play(s));
-  }, [status, play, clearTimers, setStatusTracked]);
+  }, [status, play, clearTimers, endPreroll, setStatusTracked]);
 
   const stop = useCallback(() => {
     const audio = audioRef.current;
     wantPlayRef.current = false;
+    endPreroll(false);
     clearTimers();
     restoreFade();
     destroyHls();
@@ -594,7 +714,7 @@ export default function AudioProvider({
     setRetryAttempt(0);
     setSleepAt(null);
     setSleepRemaining(null);
-  }, [clearTimers, destroyHls, restoreFade, setStatusTracked]);
+  }, [clearTimers, destroyHls, endPreroll, restoreFade, setStatusTracked]);
 
   // ---------- catalog for next/prev (fetched lazily on first use) ----------
   const ensureCatalog = useCallback(async () => {
@@ -945,8 +1065,9 @@ export default function AudioProvider({
       muted,
       retryAttempt,
       pendingPlay,
+      preroll,
     }),
-    [current, status, error, nowPlaying, volume, muted, retryAttempt, pendingPlay]
+    [current, status, error, nowPlaying, volume, muted, retryAttempt, pendingPlay, preroll]
   );
 
   const playbackActions = useMemo<PlaybackActions>(

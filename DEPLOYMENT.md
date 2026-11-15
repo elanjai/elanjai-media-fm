@@ -62,6 +62,10 @@ configured by the repo itself.
      into ad personalization in the consent banner; a Google-certified
      TCF CMP is still required for EEA/UK/CH personalization — do not
      remove that gating until a real CMP is in place.
+   - `NEXT_PUBLIC_PREROLL_ENABLED` — set to `1` to arm the audio pre-roll
+     pilot (F-4.5). Even armed, a clip only plays when an
+     `audio_preroll` campaign is `active` in `data/campaigns.json` —
+     the pilot ships dark with both gates off by default. Build arg.
    - Do **not** set `PORT`/`HOSTNAME` — Railway injects `PORT` at runtime and
      `server.js` binds `0.0.0.0:$PORT` automatically.
 

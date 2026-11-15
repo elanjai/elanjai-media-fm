@@ -5,7 +5,7 @@
  * (ads.ts stays client-light deliberately).
  */
 import { eligibleCampaigns, type Campaign } from "./ads";
-import { getStation, toPublic } from "./data";
+import { getStationBySlug, toPublic } from "./data";
 import type { PublicStation } from "./types";
 
 export type FeaturedStation = {
@@ -32,7 +32,7 @@ export function featuredStations(opts: {
     )
     .map((campaign) => {
       const slug = campaign.creative.stationSlug;
-      const s = slug ? getStation(slug) : undefined;
+      const s = slug ? getStationBySlug(slug) : undefined;
       return s ? { campaign, station: toPublic(s) } : null;
     })
     .filter((x): x is FeaturedStation => x !== null);

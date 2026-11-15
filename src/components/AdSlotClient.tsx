@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { pickWeighted, type Campaign } from "@/lib/ads";
+import { adBeacon, pickWeighted, type Campaign } from "@/lib/ads";
 import Icon from "./Icon";
 
 /**
@@ -39,22 +39,10 @@ function bumpCap(id: string) {
   }
 }
 function beacon(slot: string, campaign: string, type: "imp" | "clk") {
-  const payload = JSON.stringify({ c: campaign, s: slot, t: type });
-  try {
-    const blob = new Blob([payload], { type: "application/json" });
-    const sent = navigator.sendBeacon?.("/api/ads/event", blob) ?? false;
-    if (!sent) {
-      fetch("/api/ads/event", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: payload,
-        keepalive: true,
-      }).catch(() => {});
-    }
-  } catch {
-    /* best-effort */
-  }
+  adBeacon(slot, campaign, type);
 }
+
+export { adBeacon };
 
 export default function AdSlotClient({
   slot,
@@ -182,5 +170,5 @@ export default function AdSlotClient({
   );
 }
 
-/** Reachable for sponsored-station rows (F-4.4). */
-export { beacon as adBeacon };
+/* SponsoredStationRow + the pre-roll engine (F-4.4/F-4.5) import adBeacon
+   from @/lib/ads directly — kept re-exported here for compatibility. */
