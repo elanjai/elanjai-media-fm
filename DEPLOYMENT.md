@@ -44,6 +44,10 @@ configured by the repo itself.
      URLs, sitemap and JSON-LD. Railway forwards service variables as Docker
      build args; the Dockerfile's `ARG` line picks it up. (If unset, the app
      falls back to a placeholder origin — set it before the first real release.)
+   - `STREAM_URL_SECRET` — any long random string. It signs the HLS URLs the
+     `/api/stream` proxy emits; when unset a random per-process secret is used,
+     so signed URLs break on every restart/redeploy. Set it once — it's a
+     runtime variable, no build arg needed.
    - Do **not** set `PORT`/`HOSTNAME` — Railway injects `PORT` at runtime and
      `server.js` binds `0.0.0.0:$PORT` automatically.
 

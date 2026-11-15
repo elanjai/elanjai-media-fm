@@ -102,13 +102,6 @@ function read<T>(key: string, fallback: T): T {
   }
 }
 
-function streamParam(stream: string): string | null {
-  try {
-    return new URLSearchParams(stream.split("?")[1]).get("u");
-  } catch {
-    return null;
-  }
-}
 
 export default function AudioProvider({
   children,
@@ -433,14 +426,12 @@ export default function AudioProvider({
   // ---------- now playing (ICY StreamTitle) ----------
   useEffect(() => {
     if (status !== "playing" || !current) return;
-    // `u` (encoded upstream) is present on fresh catalog entries; fall back
-    // to parsing the proxy URL for stations persisted before the field existed.
-    const u = current.u ?? streamParam(current.stream);
-    if (!u) return;
     let cancelled = false;
     const poll = async () => {
       try {
-        const r = await fetch(`/api/now-playing?u=${u}`);
+        const r = await fetch(
+          `/api/now-playing?slug=${encodeURIComponent(current.slug)}`
+        );
         const d = await r.json();
         if (!cancelled && d.title) setNowPlaying(d.title);
       } catch {

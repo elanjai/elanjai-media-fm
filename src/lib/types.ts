@@ -41,8 +41,6 @@ export type PublicStation = Pick<
   hls: boolean;
   /** True when the browser plays the broadcaster's https URL directly (no proxy). */
   direct: boolean;
-  /** base64url of the upstream stream URL — used by /api/now-playing. */
-  u: string;
   playedAt?: number;
   faviconAlt?: string;
 };

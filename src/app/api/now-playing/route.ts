@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStations } from "@/lib/data";
+import {
+  clientKey,
+  isCatalogStream,
+  rateLimit,
+  stationStreamUrl,
+} from "@/lib/stream-guard";
 
 /**
  * Now-playing lookup — opens a brief second connection to an Icecast/Shoutcast
@@ -9,19 +14,20 @@ import { getStations } from "@/lib/data";
  * many bytes comes 1 length byte (×16 = metadata byte count), then the
  * metadata string `StreamTitle='...';`.
  *
+ * `?slug=<station>` is the preferred lookup. `?u=<base64url>` remains for
+ * clients persisted before the slug endpoint — it must decode to an exact
+ * catalog stream URL (no arbitrary upstreams).
+ *
  * Results are cached 20s per stream — the open connection reads only until
  * the first metadata block, then closes.
  */
-
-const ALLOWED_ORIGINS = new Set(
-  getStations().map((s) => new URL(s.stream_url).origin)
-);
 
 type CacheEntry = { title: string | null; at: number };
 const cache = new Map<string, CacheEntry>();
 const TTL_MS = 20_000;
 const OPEN_TIMEOUT = 9_000;
 const MAX_READ = 6 * 1024 * 1024;
+const REQ_MAX_PER_MIN = 120;
 
 function decodeTarget(encoded: string | null): URL | null {
   if (!encoded) return null;
@@ -30,6 +36,22 @@ function decodeTarget(encoded: string | null): URL | null {
   } catch {
     return null;
   }
+}
+
+function resolveTarget(request: NextRequest): URL | null {
+  const slug = request.nextUrl.searchParams.get("slug");
+  if (slug) {
+    const url = stationStreamUrl(slug);
+    if (!url) return null;
+    try {
+      return new URL(url);
+    } catch {
+      return null;
+    }
+  }
+  const target = decodeTarget(request.nextUrl.searchParams.get("u"));
+  if (!target) return null;
+  return isCatalogStream(target) ? target : null;
 }
 
 async function readIcyTitle(target: URL): Promise<string | null> {
@@ -81,9 +103,16 @@ async function readIcyTitle(target: URL): Promise<string | null> {
 }
 
 export async function GET(request: NextRequest) {
-  const target = decodeTarget(request.nextUrl.searchParams.get("u"));
-  if (!target) return NextResponse.json({ error: "Bad u" }, { status: 400 });
-  if (!/^https?:$/.test(target.protocol) || !ALLOWED_ORIGINS.has(target.origin)) {
+  const ip = clientKey(request);
+  if (!rateLimit(`np:${ip}`, REQ_MAX_PER_MIN, 60_000)) {
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+  }
+
+  const target = resolveTarget(request);
+  if (!target) {
+    return NextResponse.json({ error: "Unknown or disallowed stream" }, { status: 403 });
+  }
+  if (!/^https?:$/.test(target.protocol)) {
     return NextResponse.json({ error: "Not allowed" }, { status: 403 });
   }
 

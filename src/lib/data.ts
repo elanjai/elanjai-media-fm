@@ -45,7 +45,6 @@ export function toPublic(s: Station): PublicStation {
     stream: direct ? s.stream_url : playableUrl(s.stream_url),
     hls: /\.m3u8?($|\?)/i.test(s.stream_url),
     direct,
-    u: Buffer.from(s.stream_url).toString("base64url"),
   };
 }
 
