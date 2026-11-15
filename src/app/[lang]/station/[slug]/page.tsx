@@ -43,7 +43,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: { canonical: `${SITE.url}/${lang}/station/${s.slug}`, ...langAlternates(`/station/${s.slug}`) },
-    openGraph: { title, description, url: `${SITE.url}/${lang}/station/${s.slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE.url}/${lang}/station/${s.slug}`,
+      images: [{ url: `${SITE.url}/og/${s.slug}.png`, width: 1200, height: 630, alt: `${s.name} on ${SITE.name}` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${SITE.url}/og/${s.slug}.png`],
+    },
   };
 }
 
@@ -133,7 +144,7 @@ export default async function StationPage({ params }: Props) {
             {genreSlug}
           </Link>
         </nav>
-        <ShareButton slug={s.slug} name={s.name} />
+        <ShareButton url={`${SITE.url}/${lang}/station/${s.slug}`} name={s.name} />
       </div>
 
       {/* Hero card — deep green, big art, live chip, tags */}

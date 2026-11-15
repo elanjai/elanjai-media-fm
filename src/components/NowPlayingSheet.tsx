@@ -9,6 +9,8 @@ import CastButton from "./CastButton";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
 import LiveBadge from "./LiveBadge";
+import { useLang } from "./LocaleProvider";
+import { shareText } from "./ShareButton";
 import StationLogo from "./StationLogo";
 
 const SLEEP_OPTIONS = [15, 30, 45, 60, 90];
@@ -147,6 +149,7 @@ export default function NowPlayingSheet({
   const { toggle, stop, next, prev, setVolume, toggleMute, peekNext } =
     usePlaybackActions();
   const { favorites, toggleFavorite } = useLibrary();
+  const lang = useLang();
   const [upNext, setUpNext] = useState<PublicStation | null>(null);
   const [shared, setShared] = useState(false);
   /** Slug the user already reported — resets automatically on station change. */
@@ -176,10 +179,17 @@ export default function NowPlayingSheet({
   const vol = muted ? 0 : volume;
   const reported = reportedSlug === current.slug;
 
+  const url = `${location.origin}/${lang}/station/${current.slug}`;
+  const wa = `https://wa.me/?text=${encodeURIComponent(`${shareText(current.name)}\n${url}`)}`;
+
   const share = async () => {
-    const url = `${location.origin}/station/${current.slug}`;
     try {
-      if (navigator.share) await navigator.share({ title: current.name, url });
+      if (navigator.share)
+        await navigator.share({
+          title: current.name,
+          text: shareText(current.name),
+          url,
+        });
       else {
         await navigator.clipboard.writeText(url);
         setShared(true);
@@ -330,7 +340,7 @@ export default function NowPlayingSheet({
           </div>
 
           {/* Secondary actions */}
-          <div className="mt-6 flex items-center justify-center gap-5">
+          <div className="mt-6 flex items-center justify-center gap-3.5">
             <button
               type="button"
               onClick={() => toggleFavorite(current)}
@@ -344,6 +354,16 @@ export default function NowPlayingSheet({
             </button>
             <SleepCircle />
             <CastButton />
+            <a
+              href={wa}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share on WhatsApp"
+              title="Share on WhatsApp"
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25d366]/15 text-[#1da851] transition hover:bg-[#25d366]/25"
+            >
+              <Icon name="whatsapp" size={18} />
+            </a>
             <button
               type="button"
               onClick={share}
