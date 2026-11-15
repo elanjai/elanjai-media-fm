@@ -48,10 +48,11 @@ configured by the repo itself.
      `/api/stream` proxy emits; when unset a random per-process secret is used,
      so signed URLs break on every restart/redeploy. Set it once — it's a
      runtime variable, no build arg needed.
-   - `ADMIN_ADS_KEY` — any long random string. It gates the ad report at
-     `/admin/ads?key=<token>` and the CSV export at
-     `/api/ads/report.csv?key=<token>`. When unset both return 404, which is
-     the desired state until you want the report. Runtime variable.
+   - `ADMIN_ADS_KEY` — any long random string. It gates the admin pages
+     (`/admin/ads?key=<token>`, `/admin/claims?key=<token>`) and the CSV
+     export at `/api/ads/report.csv?key=<token>`. When unset all of them
+     return 404, which is the desired state until you want the reports.
+     Runtime variable.
    - `NEXT_PUBLIC_ADSENSE_CLIENT` / `NEXT_PUBLIC_ADSENSE_SLOT` — the
      `ca-pub-…` client id and one manual ad-unit id once the site is
      AdSense-approved. Until both are set, ad slots serve only our own

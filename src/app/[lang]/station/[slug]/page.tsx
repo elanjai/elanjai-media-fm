@@ -413,8 +413,14 @@ export default async function StationPage({ params }: Props) {
         </section>
       )}
 
-      <div className="mt-8 flex justify-center border-t border-border pt-5">
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-border pt-5">
         <ReportButton slug={s.slug} />
+        <Link
+          href={`/claim?slug=${s.slug}`}
+          className="text-xs font-semibold text-muted underline-offset-2 transition hover:text-ink hover:underline"
+        >
+          Broadcaster? Claim this station
+        </Link>
       </div>
     </div>
   );

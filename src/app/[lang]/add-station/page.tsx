@@ -39,7 +39,11 @@ export default function AddStationPage() {
         Submit by email
       </a>
       <p className="mt-4 text-xs text-muted">
-        Removal requests are handled the same way — see our{" "}
+        Already listed and want to manage it?{" "}
+        <Link href="/claim" className="underline">
+          Claim your station
+        </Link>
+        . Removal requests are handled the same way — see our{" "}
         <Link href="/dmca" className="underline">DMCA page</Link>.
       </p>
     </div>
