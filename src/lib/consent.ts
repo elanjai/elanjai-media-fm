@@ -1,7 +1,8 @@
 /**
  * Consent foundation (F-4.1). One localStorage record gates every
- * non-essential signal we send — first-party analytics today, ad
- * personalization when AdSense lands (F-4.3). No consent recorded =
+ * non-essential signal we send — first-party analytics plus AdSense
+ * personalization (F-4.3: `ads` controls requestNonPersonalizedAds).
+ * No consent recorded =
  * nothing sent; essential playback/beacon endpoints (stream reports,
  * trending plays) stay consent-free because they carry no identifiers
  * beyond the per-tab session id.

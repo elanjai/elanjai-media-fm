@@ -52,6 +52,16 @@ configured by the repo itself.
      `/admin/ads?key=<token>` and the CSV export at
      `/api/ads/report.csv?key=<token>`. When unset both return 404, which is
      the desired state until you want the report. Runtime variable.
+   - `NEXT_PUBLIC_ADSENSE_CLIENT` / `NEXT_PUBLIC_ADSENSE_SLOT` — the
+     `ca-pub-…` client id and one manual ad-unit id once the site is
+     AdSense-approved. Until both are set, ad slots serve only our own
+     campaigns and `/ads.txt` returns 404. Both are `NEXT_PUBLIC_` build
+     args — the CSP ad allowlist is compiled in at build time, so set them
+     before the release that turns ads on (changing them later needs a
+     rebuild). Ads default to non-personalized unless the listener opted
+     into ad personalization in the consent banner; a Google-certified
+     TCF CMP is still required for EEA/UK/CH personalization — do not
+     remove that gating until a real CMP is in place.
    - Do **not** set `PORT`/`HOSTNAME` — Railway injects `PORT` at runtime and
      `server.js` binds `0.0.0.0:$PORT` automatically.
 

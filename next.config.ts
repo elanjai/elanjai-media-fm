@@ -15,10 +15,22 @@ const skipChecks = process.env.NEXT_BUILD_SKIP_CHECKS === "true";
  *    endpoints.
  *  - frame-ancestors 'none' on everything except /embed/* — that route is
  *    the public iframe widget (F-3.5) and is deliberately frameable.
+ *  - The Google ad allowlist (script/frame) is compiled in only when
+ *    NEXT_PUBLIC_ADSENSE_CLIENT is set at build time (F-4.3); until then
+ *    the policy stays minimal.
  */
+const ADSENSE = Boolean(process.env.NEXT_PUBLIC_ADSENSE_CLIENT);
+
+const AD_SCRIPT = ADSENSE
+  ? " https://pagead2.googlesyndication.com https://*.googlesyndication.com https://adservice.google.com https://adservice.google.co.in https://partner.googleadservices.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://securepubads.g.doubleclick.net"
+  : "";
+const AD_FRAME = ADSENSE
+  ? " https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://securepubads.g.doubleclick.net https://*.googlesyndication.com https://fundingchoicesmessages.google.com"
+  : "";
+
 const CSP_BASE = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline'${AD_SCRIPT}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https: http:",
   "font-src 'self' data:",
@@ -29,6 +41,7 @@ const CSP_BASE = [
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
+  `frame-src 'self'${AD_FRAME}`,
 ];
 
 const CSP = [...CSP_BASE, "frame-ancestors 'none'"].join("; ");
