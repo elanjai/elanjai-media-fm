@@ -704,18 +704,48 @@ export default function AudioProvider({
 
   // ---------- media session ----------
   useEffect(() => {
-    if (!("mediaSession" in navigator) || !current) return;
+    if (!("mediaSession" in navigator)) return;
+    if (!current) {
+      navigator.mediaSession.metadata = null;
+      navigator.mediaSession.playbackState = "none";
+      return;
+    }
+    const artType = /\.jpe?g($|\?)/i.test(current.favicon)
+      ? "image/jpeg"
+      : /\.webp($|\?)/i.test(current.favicon)
+        ? "image/webp"
+        : "image/png";
+    const art = current.favicon
+      ? [96, 256, 512].map((s) => ({
+          src: current.favicon,
+          sizes: `${s}x${s}`,
+          type: artType,
+        }))
+      : [];
     navigator.mediaSession.metadata = new MediaMetadata({
       title: nowPlaying || current.name,
       artist: nowPlaying ? current.name : "Elanjai Media FM",
       album: `${current.language} · ${current.country}`,
+      artwork: art,
     });
+    navigator.mediaSession.playbackState =
+      status === "playing" || status === "buffering"
+        ? "playing"
+        : status === "idle"
+          ? "none"
+          : "paused";
+    // Separate handlers — a lock-screen Play should resume, not toggle.
     navigator.mediaSession.setActionHandler("play", () => toggle());
-    navigator.mediaSession.setActionHandler("pause", () => toggle());
+    navigator.mediaSession.setActionHandler("pause", () => {
+      if (status === "playing" || isBusyStatus(status)) toggle();
+    });
     navigator.mediaSession.setActionHandler("stop", () => stop());
     navigator.mediaSession.setActionHandler("nexttrack", () => next());
     navigator.mediaSession.setActionHandler("previoustrack", () => prev());
-  }, [current, nowPlaying, toggle, stop, next, prev]);
+    return () => {
+      navigator.mediaSession.playbackState = "none";
+    };
+  }, [current, nowPlaying, status, toggle, stop, next, prev]);
 
   // ---------- keyboard shortcuts ----------
   // Scoped so we don't fight the browser or the user's focus:
