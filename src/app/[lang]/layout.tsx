@@ -4,11 +4,13 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import AudioProvider from "@/components/AudioProvider";
 import AppBar from "@/components/AppBar";
+import InstallPrompt from "@/components/InstallPrompt";
 import LanguagePickerSheet from "@/components/LanguagePickerSheet";
 import LangLink from "@/components/LangLink";
 import LocaleProvider from "@/components/LocaleProvider";
 import PlayerChrome from "@/components/PlayerChrome";
 import PrefsProvider from "@/components/PrefsProvider";
+import SwRegister from "@/components/SwRegister";
 import TabBar from "@/components/TabBar";
 import { getGenres, getStations } from "@/lib/data";
 import {
@@ -153,11 +155,13 @@ export default async function RootLayout({
               </footer>
 
               <PlayerChrome total={total} />
+              <InstallPrompt />
               <TabBar />
             </AudioProvider>
             <LanguagePickerSheet genres={genres} />
           </PrefsProvider>
         </LocaleProvider>
+        <SwRegister />
       </body>
     </html>
   );

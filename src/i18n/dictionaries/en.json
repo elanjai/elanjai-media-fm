@@ -82,5 +82,10 @@
   "meta": {
     "homeTitle": "Free Indian Radio Online — Tamil, Hindi, Telugu & more",
     "homeDescription": "Listen to {count}+ live Indian radio stations online for free — Tamil, Hindi, Malayalam, Telugu, Kannada, Punjabi and more. No sign-up, no app."
+  },
+  "pwa": {
+    "installTitle": "Install Elanjai FM",
+    "installHint": "One-tap radio from your home screen — no app store needed.",
+    "installCta": "Install app"
   }
 }
