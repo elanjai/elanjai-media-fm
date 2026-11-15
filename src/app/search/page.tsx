@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import RecentSearches from "@/components/RecentSearches";
 import SearchInput from "@/components/SearchInput";
 import StationRow from "@/components/StationRow";
+import TrendingList from "@/components/TrendingList";
 import { getFeatured, searchStations, toPublic } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -25,18 +26,7 @@ async function Results({ searchParams }: Props) {
           <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
             Trending now
           </h2>
-          <div className="mt-2.5 grid grid-cols-1 gap-2.5 md:grid-cols-2">
-            {trending.map((s, i) => (
-              <div key={s.id} className="flex items-center gap-3">
-                <span className="w-5 shrink-0 text-center font-display text-[15px] font-bold text-brand-2 dark:text-accent">
-                  {i + 1}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <StationRow station={s} />
-                </div>
-              </div>
-            ))}
-          </div>
+          <TrendingList stations={trending} />
         </section>
       </div>
     );

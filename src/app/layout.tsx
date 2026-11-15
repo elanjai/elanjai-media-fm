@@ -4,7 +4,9 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import AudioProvider from "@/components/AudioProvider";
 import AppBar from "@/components/AppBar";
+import LanguagePickerSheet from "@/components/LanguagePickerSheet";
 import PlayerChrome from "@/components/PlayerChrome";
+import PrefsProvider from "@/components/PrefsProvider";
 import TabBar from "@/components/TabBar";
 import { getGenres, getStations } from "@/lib/data";
 import { SITE } from "@/lib/site";
@@ -66,8 +68,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body className="min-h-full bg-bg pb-44 font-sans text-ink md:pb-32">
-        <AudioProvider>
-          <AppBar />
+        <PrefsProvider>
+          <AudioProvider>
+            <AppBar />
 
           <main className="mx-auto w-full max-w-2xl px-4 md:max-w-4xl xl:max-w-6xl">{children}</main>
 
@@ -94,7 +97,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 
           <PlayerChrome total={total} />
           <TabBar />
-        </AudioProvider>
+          </AudioProvider>
+          <LanguagePickerSheet genres={genres} />
+        </PrefsProvider>
       </body>
     </html>
   );

@@ -2,10 +2,11 @@ import Link from "next/link";
 import BrandLogo from "@/components/BrandLogo";
 import FavoritesRail from "@/components/FavoritesRail";
 import Icon from "@/components/Icon";
+import LanguageRail from "@/components/LanguageRail";
 import LiveBadge from "@/components/LiveBadge";
+import OrderedGenreSections from "@/components/OrderedGenreSections";
 import PlayButton from "@/components/PlayButton";
 import StationCard from "@/components/StationCard";
-import StationRow from "@/components/StationRow";
 import { getGenres, getStations, getStationsByGenre, toPublic } from "@/lib/data";
 import { genreStyle } from "@/lib/genre-style";
 import { websiteJsonLd } from "@/lib/jsonld";
@@ -71,29 +72,7 @@ export default function HomePage() {
             See all →
           </Link>
         </div>
-        <div className="rail -mx-4 flex gap-2.5 overflow-x-auto px-4 pb-1">
-          {genres.map((g) => {
-            const st = genreStyle(g.slug);
-            return (
-              <Link
-                key={g.slug}
-                href={`/genre/${g.slug}`}
-                className="flex shrink-0 items-center gap-2 rounded-full py-2 pl-2.5 pr-4 transition hover:brightness-95"
-                style={{ backgroundColor: st.bg }}
-              >
-                <span
-                  className="flex h-[22px] w-[22px] items-center justify-center rounded-full font-display text-[11px] font-bold text-white"
-                  style={{ backgroundColor: st.fg }}
-                >
-                  {st.short[0]}
-                </span>
-                <span className="text-[13px] font-semibold" style={{ color: st.fg }}>
-                  {g.name}
-                </span>
-              </Link>
-            );
-          })}
-        </div>
+        <LanguageRail genres={genres} />
       </section>
 
       {/* Popular now — flagship station per language */}
@@ -161,34 +140,16 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Other languages — section per genre, rows */}
-      {genres
-        .filter((g) => g.slug !== "tamil")
-        .slice(0, 3)
-        .map((g) => {
-          const list = getStationsByGenre(g.slug).slice(0, 4).map(toPublic);
-          if (!list.length) return null;
-          return (
-            <section key={g.slug} aria-labelledby={`g-${g.slug}`} className="mt-8">
-              <div className="mb-3 flex items-baseline justify-between">
-                <h2 id={`g-${g.slug}`} className="font-display text-[16.5px] font-semibold text-ink">
-                  {g.name} radio
-                </h2>
-                <Link
-                  href={`/genre/${g.slug}`}
-                  className="text-xs font-semibold text-brand-2 dark:text-accent"
-                >
-                  All {g.count} →
-                </Link>
-              </div>
-              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-                {list.map((s) => (
-                  <StationRow key={s.id} station={s} queue={list} />
-                ))}
-              </div>
-            </section>
-          );
-        })}
+      {/* Other languages — section per genre, rows; re-sorted by language pref */}
+      <OrderedGenreSections
+        sections={genres
+          .filter((g) => g.slug !== "tamil")
+          .slice(0, 4)
+          .map((g) => ({
+            genre: g,
+            stations: getStationsByGenre(g.slug).slice(0, 4).map(toPublic),
+          }))}
+      />
     </div>
   );
 }
