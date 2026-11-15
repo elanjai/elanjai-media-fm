@@ -298,6 +298,18 @@ export default function SettingsButton() {
                   type="button"
                   onClick={() => {
                     setOpen(false);
+                    router.push(`/${lang}/stats`);
+                  }}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-[13px] font-semibold text-muted transition hover:border-brand-2/40 hover:text-ink"
+                >
+                  <Icon name="clock" size={15} strokeWidth={1.8} />
+                  My listening stats
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
                     router.push(`/${lang}/ad-free`);
                   }}
                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-[13px] font-semibold text-muted transition hover:border-brand-2/40 hover:text-ink"

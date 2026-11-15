@@ -12,6 +12,7 @@ import {
 import { adBeacon, isAdFree, pickWeighted, type Campaign } from "@/lib/ads";
 import { track } from "@/lib/analytics";
 import { reportStreamIssue, sessionId } from "@/lib/report";
+import { recordSeconds, recordSession } from "@/lib/stats";
 import type { PublicStation } from "@/lib/types";
 import { usePrefs } from "./PrefsProvider";
 
@@ -895,6 +896,7 @@ export default function AudioProvider({
       return;
     beaconedRef.current = { slug: current.slug, at: Date.now() };
     track("play", { s: current.genre });
+    recordSession();
     const payload = JSON.stringify({ slug: current.slug, sid: sessionId() });
     try {
       const blob = new Blob([payload], { type: "application/json" });
@@ -918,7 +920,17 @@ export default function AudioProvider({
   useEffect(() => {
     if (status !== "playing" || !current) return;
     const slug = current.slug;
+    // F-5.7: accumulate real elapsed seconds between beats; the cleanup
+    // flush also runs on pause/stop/switch so partial minutes count.
+    let lastTick = Date.now();
+    const flushStats = () => {
+      const now = Date.now();
+      const sec = Math.round((now - lastTick) / 1000);
+      lastTick = now;
+      if (sec >= 10) recordSeconds(slug, sec);
+    };
     const beat = () => {
+      flushStats();
       const payload = JSON.stringify({ slug, sid: sessionId() });
       try {
         const blob = new Blob([payload], { type: "application/json" });
@@ -937,7 +949,10 @@ export default function AudioProvider({
     };
     beat(); // count "still playing" immediately, not a minute in
     const iv = setInterval(beat, 60_000);
-    return () => clearInterval(iv);
+    return () => {
+      flushStats();
+      clearInterval(iv);
+    };
   }, [status, current]);
 
   const toggleFavorite = useCallback((station: PublicStation) => {
