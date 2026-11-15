@@ -38,6 +38,30 @@ export type Campaign = {
 
 export const campaigns = campaignsJson as Campaign[];
 
+/**
+ * Ad-free supporter flag (F-4.7) — a single localStorage key every ad
+ * surface honors (display slots, sponsored rows, AdSense units, audio
+ * pre-roll). Set/cleared from /ad-free.
+ */
+const ADFREE_KEY = "emfm:adfree";
+
+export const isAdFree = () => {
+  try {
+    return localStorage.getItem(ADFREE_KEY) === "1";
+  } catch {
+    return false;
+  }
+};
+
+export const setAdFree = (on: boolean) => {
+  try {
+    if (on) localStorage.setItem(ADFREE_KEY, "1");
+    else localStorage.removeItem(ADFREE_KEY);
+  } catch {
+    /* storage denied */
+  }
+};
+
 /** Campaigns eligible for a slot right now. `today` = "YYYY-MM-DD". */
 export function eligibleCampaigns(
   slot: string,

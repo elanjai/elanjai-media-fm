@@ -66,6 +66,11 @@ configured by the repo itself.
      pilot (F-4.5). Even armed, a clip only plays when an
      `audio_preroll` campaign is `active` in `data/campaigns.json` —
      the pilot ships dark with both gates off by default. Build arg.
+   - `NEXT_PUBLIC_ADFREE_URL` / `NEXT_PUBLIC_ADFREE_CODE` — the
+     supporter plan (F-4.7). The URL is the payment link shown on
+     `/ad-free` (Razorpay page, UPI intent, …). The CODE is the
+     activation code sent to supporters after payment; when unset,
+     `/ad-free` runs in honor mode. Build args.
    - Do **not** set `PORT`/`HOSTNAME` — Railway injects `PORT` at runtime and
      `server.js` binds `0.0.0.0:$PORT` automatically.
 

@@ -294,6 +294,18 @@ export default function SettingsButton() {
                 <button
                   type="button"
                   onClick={() => {
+                    setOpen(false);
+                    router.push(`/${lang}/ad-free`);
+                  }}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-[13px] font-semibold text-muted transition hover:border-brand-2/40 hover:text-ink"
+                >
+                  <Icon name="heart" size={15} strokeWidth={1.8} />
+                  Go ad-free — support the app
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
                     localStorage.removeItem("emfm:consent");
                     location.reload();
                   }}

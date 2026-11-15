@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { adBeacon, pickWeighted, type Campaign } from "@/lib/ads";
+import { adBeacon, isAdFree, pickWeighted, type Campaign } from "@/lib/ads";
 import Icon from "./Icon";
 
 /**
@@ -10,7 +10,7 @@ import Icon from "./Icon";
  * clicks through /go/<id> for CTR. Ad-free supporters (F-4.7) see nothing.
  */
 const CAP_KEY = "emfm:adcap";
-const ADFREE_KEY = "emfm:adfree";
+
 
 function capHit(c: Campaign): boolean {
   if (!c.caps.perUserPerDay) return false;
@@ -62,7 +62,7 @@ export default function AdSlotClient({
   // back to any eligible campaign if everything is capped.
   useEffect(() => {
     queueMicrotask(() => {
-      setAdFree(localStorage.getItem(ADFREE_KEY) === "1");
+      setAdFree(isAdFree());
       const open = campaigns.filter((c) => !capHit(c));
       setPicked(pickWeighted(open.length ? open : campaigns, Math.random()));
     });

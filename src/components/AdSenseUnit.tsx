@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { isAdFree } from "@/lib/ads";
 import { ADSENSE_CLIENT as CLIENT, ADSENSE_SLOT as SLOT } from "@/lib/adsense";
 import { getConsent } from "@/lib/consent";
 
@@ -18,8 +19,6 @@ import { getConsent } from "@/lib/consent";
  * Manual units only — Auto ads' anchor/vignette formats would cover
  * the player and tab bar (§6.3 "Never" list).
  */
-const ADFREE_KEY = "emfm:adfree";
-
 /** adsbygoogle.js queue — a plain array with an NPA flag set pre-load. */
 type AdsbygoogleQueue = unknown[] & { requestNonPersonalizedAds?: number };
 
@@ -56,7 +55,7 @@ export default function AdSenseUnit({
   const [adFree, setAdFree] = useState(false);
 
   useEffect(() => {
-    queueMicrotask(() => setAdFree(localStorage.getItem(ADFREE_KEY) === "1"));
+    queueMicrotask(() => setAdFree(isAdFree()));
     if (!CLIENT || !SLOT || !ref.current) return;
     ensureScript();
     try {

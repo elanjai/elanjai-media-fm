@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { adBeacon, pickWeighted, type Campaign } from "@/lib/ads";
+import { adBeacon, isAdFree, pickWeighted, type Campaign } from "@/lib/ads";
 import { track } from "@/lib/analytics";
 import { reportStreamIssue, sessionId } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
@@ -136,7 +136,6 @@ const RECENT_KEY = "emfm:recents";
 const SNAPS_KEY = "emfm:snaps";
 const VOL_KEY = "emfm:volume";
 const MUTE_KEY = "emfm:muted";
-const ADFREE_KEY = "emfm:adfree";
 
 /**
  * Audio pre-roll pilot (F-4.5, §6.1 rule 1 — audio is sacred): a single
@@ -571,7 +570,7 @@ export default function AudioProvider({
         PREROLL_ENABLED &&
         !dataSaver &&
         prerollDue() &&
-        localStorage.getItem(ADFREE_KEY) !== "1"
+        !isAdFree()
       ) {
         const c = pickWeighted(
           prerollCampaignsRef.current.filter((x) => x.creative.audioUrl),

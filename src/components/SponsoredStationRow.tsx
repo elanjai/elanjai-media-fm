@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { PublicStation } from "@/lib/types";
-import { adBeacon } from "@/lib/ads";
+import { adBeacon, isAdFree } from "@/lib/ads";
 import StationRow from "./StationRow";
 
 /**
@@ -11,7 +11,7 @@ import StationRow from "./StationRow";
  * as ad slots, so broadcaster reports stay honest. Ad-free supporters
  * (F-4.7) don't see it.
  */
-const ADFREE_KEY = "emfm:adfree";
+
 
 export default function SponsoredStationRow({
   station,
@@ -29,7 +29,7 @@ export default function SponsoredStationRow({
   const sent = useRef(false);
 
   useEffect(() => {
-    queueMicrotask(() => setAdFree(localStorage.getItem(ADFREE_KEY) === "1"));
+    queueMicrotask(() => setAdFree(isAdFree()));
     if (!ref.current) return;
     let timer: ReturnType<typeof setTimeout> | null = null;
     const io = new IntersectionObserver(
