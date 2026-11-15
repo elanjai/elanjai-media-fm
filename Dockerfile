@@ -14,7 +14,7 @@ WORKDIR /app
 # --- Dependencies: cached unless package-lock.json changes -------------------
 FROM base AS deps
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm \
+RUN --mount=type=cache,id=s/a5ffb2de-b8d0-4f4d-a4c6-514f4240bff6-/root/.npm,target=/root/.npm \
     npm ci --no-audit --no-fund
 
 # --- Build -------------------------------------------------------------------
@@ -28,7 +28,7 @@ ARG NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL} \
     NEXT_TELEMETRY_DISABLED=1
 
-RUN --mount=type=cache,target=/app/.next/cache \
+RUN --mount=type=cache,id=s/a5ffb2de-b8d0-4f4d-a4c6-514f4240bff6-/app/.next/cache,target=/app/.next/cache \
     npm run build
 
 # --- Runtime -----------------------------------------------------------------
