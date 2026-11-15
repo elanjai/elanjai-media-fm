@@ -28,5 +28,6 @@ export const SITE = {
     stations: process.env.NEXT_PUBLIC_STATIONS_EMAIL || contactEmail,
     dmca: process.env.NEXT_PUBLIC_DMCA_EMAIL || contactEmail,
     grievance: process.env.NEXT_PUBLIC_GRIEVANCE_EMAIL || contactEmail,
+    ads: process.env.NEXT_PUBLIC_ADS_EMAIL || contactEmail,
   },
 } as const;

@@ -153,6 +153,7 @@ export default async function RootLayout({
                     <LangLink href="/listen" className="hover:text-ink">{dict.footer.abroad}</LangLink>
                     <LangLink href="/recent" className="hover:text-ink">{dict.footer.recent}</LangLink>
                     <LangLink href="/add-station" className="hover:text-ink">{dict.footer.addStation}</LangLink>
+                    <LangLink href="/advertise" className="hover:text-ink">{dict.footer.advertise}</LangLink>
                     <LangLink href="/about" className="hover:text-ink">{dict.footer.about}</LangLink>
                     <LangLink href="/contact" className="hover:text-ink">{dict.footer.contact}</LangLink>
                     <LangLink href="/privacy" className="hover:text-ink">{dict.footer.privacy}</LangLink>
