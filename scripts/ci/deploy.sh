@@ -52,5 +52,5 @@ if [ -z "$DEPLOYMENT_ID" ]; then
 fi
 echo "Deployment queued: $DEPLOYMENT_ID (commit ${SHA:0:8})"
 
-./wait-for-deployment.sh "$DEPLOYMENT_ID"
-./verify.sh "$SHA"
+bash ./wait-for-deployment.sh "$DEPLOYMENT_ID"
+bash ./verify.sh "$SHA"

@@ -71,5 +71,5 @@ NEW_ID="$(
 )"
 echo "Rollback initiated (deployment ${NEW_ID:-$TARGET})."
 
-./wait-for-deployment.sh "${NEW_ID:-$TARGET}"
-./verify.sh
+bash ./wait-for-deployment.sh "${NEW_ID:-$TARGET}"
+bash ./verify.sh
