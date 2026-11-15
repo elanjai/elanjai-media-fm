@@ -1,0 +1,83 @@
+name: Release
+
+# On-demand only. Bumps the version (package.json is the source of truth),
+# tags v*.*.*, pushes, and creates a GitHub Release — then optionally
+# deploys the new tag to Railway via the reusable Deploy workflow.
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "Semver bump"
+        type: choice
+        default: patch
+        options:
+          - patch
+          - minor
+          - major
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
+      deploy:
+        description: "Deploy to Railway after releasing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Tag & publish release
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.bump.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # RELEASE_TOKEN (PAT) only needed if the branch is protected against
+          # pushes from github-actions[bot]; otherwise GITHUB_TOKEN suffices.
+          token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Verify build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+        run: |
+          npm ci --no-audit --no-fund
+          npm run lint
+          npm run build
+
+      - name: Bump version & tag
+        id: bump
+        run: |
+          BRANCH="${{ github.ref_name }}"
+          git checkout -B "$BRANCH" "origin/$BRANCH"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          TAG="$(npm version "${{ inputs.bump }}" -m "chore(release): %s")"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          git push origin "$BRANCH" --follow-tags
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.bump.outputs.tag }}
+        run: |
+          PRE=""
+          [[ "$TAG" == *-* ]] && PRE="--prerelease"
+          gh release create "$TAG" --title "$TAG" --generate-notes $PRE
+
+  deploy:
+    if: ${{ inputs.deploy }}
+    needs: release
+    uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ needs.release.outputs.tag }}
+    secrets: inherit

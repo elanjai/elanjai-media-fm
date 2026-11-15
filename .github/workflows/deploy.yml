@@ -1,0 +1,72 @@
+name: Deploy
+
+# On-demand only. Deploys an exact commit to Railway — Railway builds the
+# repo's Dockerfile at that commit (service must be repo-connected).
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Tag (e.g. v1.2.0), branch, or commit SHA. Empty = latest release tag."
+        required: false
+        type: string
+        default: ""
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+
+concurrency:
+  group: railway-deploy
+  cancel-in-progress: false
+
+env:
+  RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
+  RAILWAY_SERVICE_ID: ${{ vars.RAILWAY_SERVICE_ID }}
+  RAILWAY_ENVIRONMENT_ID: ${{ vars.RAILWAY_ENVIRONMENT_ID }}
+  RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+  APP_URL: ${{ vars.APP_URL }}
+
+jobs:
+  deploy:
+    name: Deploy to Railway
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve deploy ref
+        id: resolve
+        run: |
+          REF="${{ inputs.ref }}"
+          if [ -z "$REF" ]; then
+            REF="$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+' | head -n 1 || true)"
+          fi
+          if [ -z "$REF" ]; then
+            echo "::error::No ref given and no v* release tags exist. Run the Release workflow first."
+            exit 1
+          fi
+          SHA="$(git rev-parse --verify "$REF^{commit}")"
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "Resolved $REF → $SHA"
+
+      - name: Deploy commit to Railway
+        run: bash scripts/ci/deploy.sh "${{ steps.resolve.outputs.sha }}"
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Railway deploy"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| ref | \`${{ steps.resolve.outputs.ref }}\` |"
+            echo "| commit | \`${{ steps.resolve.outputs.sha }}\` |"
+            echo "| outcome | **${{ job.status }}** |"
+          } >> "$GITHUB_STEP_SUMMARY"
