@@ -12,6 +12,27 @@ source ./railway-gql.sh
 
 SHA="${1:?usage: deploy.sh <commit-sha>}"
 
+# Preflight: fail fast with a clear message if the token can't read the
+# service instance (wrong token type, wrong scope, or wrong IDs).
+if ! railway_gql \
+    'query Preflight($serviceId: String!, $environmentId: String!) {
+       serviceInstance(serviceId: $serviceId, environmentId: $environmentId) { serviceName }
+     }' \
+    "$(jq -n \
+       --arg s "${RAILWAY_SERVICE_ID:?RAILWAY_SERVICE_ID is required}" \
+       --arg e "${RAILWAY_ENVIRONMENT_ID:?RAILWAY_ENVIRONMENT_ID is required}" \
+       '{serviceId: $s, environmentId: $e}')" \
+    >/dev/null; then
+  {
+    echo "Auth preflight failed — check your Railway token:"
+    echo "  - project token (project Settings → Tokens): set secret RAILWAY_PROJECT_TOKEN"
+    echo "  - workspace/account token (Account Settings → Tokens): set secret RAILWAY_API_TOKEN"
+    echo "  - also confirm RAILWAY_SERVICE_ID / RAILWAY_ENVIRONMENT_ID are correct"
+  } >&2
+  exit 1
+fi
+echo "Railway auth OK."
+
 DEPLOYMENT_ID="$(
   railway_gql \
     'mutation Deploy($serviceId: String!, $environmentId: String!, $commitSha: String!) {

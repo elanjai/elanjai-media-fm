@@ -62,16 +62,20 @@ railway.com/project/<PROJECT_ID>/service/<SERVICE_ID>?environmentId=<ENVIRONMENT
 
 ### 3. Create the Railway API token
 
-railway.com → avatar → **Account Settings → Tokens → New Token**:
+Two token types work — the scripts auto-detect which one you provide.
+Use **one** of them (a project token is the narrowest scope; a workspace
+token covers the whole workspace):
 
-- Pick your **workspace** in the dropdown → **Workspace token** (recommended
-  for CI — scoped to the workspace, shareable with teammates).
-- "No workspace" → **Account token** (works too, but scoped to your whole
-  personal account — broader than needed).
-- ⚠️ Do **not** use a **Project token** — those authenticate with a
-  `Project-Access-Token` header, not `Bearer`, and the CI scripts use Bearer.
+- **Project token** — Railway *project* → **Settings → Tokens → New Token**.
+  Scoped to one environment in one project; sent via `Project-Access-Token`
+  header. Store as secret **`RAILWAY_PROJECT_TOKEN`**.
+- **Workspace or account token** — railway.com → avatar →
+  **Account Settings → Tokens → New Token** → pick the workspace (or
+  "No workspace" for an account token). Sent via `Authorization: Bearer`.
+  Store as secret **`RAILWAY_API_TOKEN`**.
 
-Copy the token — it's shown once. Store it as the `RAILWAY_API_TOKEN` secret.
+If both secrets exist, `RAILWAY_PROJECT_TOKEN` wins. Copy the token — it's
+shown once.
 
 ### 4. Configure GitHub secrets & variables
 
@@ -79,10 +83,11 @@ Repo → **Settings → Secrets and variables → Actions**.
 
 **Secrets** (Secrets tab → *New repository secret*):
 
-| Name                | Value |
-|---------------------|-------|
-| `RAILWAY_API_TOKEN` | the token from step 3 |
-| `RELEASE_TOKEN`     | *(optional)* a PAT with `contents: write` — only needed if `main` has branch protection that blocks pushes from `github-actions[bot]`. Without it, the Release workflow's version-bump push fails. |
+| Name                    | Value |
+|-------------------------|-------|
+| `RAILWAY_API_TOKEN`     | a workspace/account token from step 3 **or** |
+| `RAILWAY_PROJECT_TOKEN` | a project token from step 3 (either one is enough) |
+| `RELEASE_TOKEN`         | *(optional)* a PAT with `contents: write` — only needed if `main` has branch protection that blocks pushes from `github-actions[bot]`. Without it, the Release workflow's version-bump push fails. |
 
 **Variables** (Variables tab → *New repository variable*):
 
@@ -91,7 +96,7 @@ Repo → **Settings → Secrets and variables → Actions**.
 | `RAILWAY_PROJECT_ID`     | from step 2 |
 | `RAILWAY_SERVICE_ID`     | from step 2 |
 | `RAILWAY_ENVIRONMENT_ID` | from step 2 |
-| `APP_URL`                | public https URL from step 1.4, e.g. `https://….up.railway.app` — used for post-deploy health verification |
+| `APP_URL`                | public https URL from step 1.4, e.g. `https://elanjai-fm.up.railway.app` — used for post-deploy health verification (include the `https://` scheme) |
 
 IDs and `APP_URL` are variables (not secrets) — they're identifiers, not
 credentials, and keeping them as variables makes them visible when debugging.
@@ -183,6 +188,12 @@ parallelism via `experimental.staticGenerationMaxConcurrency` in
   OOM kill, not a real error. The banner is generic; open the deployment →
   **Build logs** tab (or `railway logs --build`) for the real output. The
   memory notes above address this.
+- **`Railway API error: Not Authorized`** — the token can't act on this
+  service. Usually it's a project token stored in `RAILWAY_API_TOKEN`
+  (project tokens need the `Project-Access-Token` header — store it as
+  `RAILWAY_PROJECT_TOKEN` instead), or a workspace/account token for the
+  wrong workspace. The deploy script's preflight check prints which env var
+  to use for each token type.
 - **"No ref given and no v\* release tags exist"** — run Release first.
 - **Deploy waits then fails** — check that deployment's build logs in Railway.
 - **Rollback target not eligible** — pass a tag instead; redeploying a commit

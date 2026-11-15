@@ -15,6 +15,9 @@ if [ -z "${APP_URL:-}" ]; then
   exit 0
 fi
 
+# Tolerate a value pasted without the scheme.
+[[ "$APP_URL" != http://* && "$APP_URL" != https://* ]] && APP_URL="https://$APP_URL"
+
 url="${APP_URL%/}/api/health"
 echo "Verifying $url ..."
 body="$(curl -sfS --retry 6 --retry-all-errors --retry-delay 5 \
