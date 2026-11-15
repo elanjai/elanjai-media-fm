@@ -295,9 +295,16 @@ export default function AudioProvider({
   const toggle = useCallback(() => {
     const audio = audioRef.current;
     if (!audio || !current) return;
+    // After an error the old source is dead — go through play() again so the
+    // stream URL (or a fresh hls.js instance) is re-established instead of
+    // calling play() on a broken src. Makes "tap to retry" actually retry.
+    if (status === "error") {
+      play(current);
+      return;
+    }
     if (status === "playing") audio.pause();
     else audio.play().catch(() => setStatus("error"));
-  }, [current, status]);
+  }, [current, status, play]);
 
   const stop = useCallback(() => {
     const audio = audioRef.current;
