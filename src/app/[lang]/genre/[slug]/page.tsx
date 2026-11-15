@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "@/components/LangLink";
 import { notFound } from "next/navigation";
+import AdSlot from "@/components/AdSlot";
 import Icon from "@/components/Icon";
-import StationRow from "@/components/StationRow";
+import StationRowsWithAds from "@/components/StationRowsWithAds";
 import { getCategories, getGenre, getGenres, getStationsByGenre, toPublic } from "@/lib/data";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { langAlternates } from "@/i18n";
@@ -105,10 +106,13 @@ export default async function GenrePage({ params }: Props) {
         {g.count} live stations — tap to play
       </p>
 
-      <div className="mt-4 grid grid-cols-1 gap-2.5 md:grid-cols-2">
-        {stations.map((s) => (
-          <StationRow key={s.id} station={s} queue={stations} />
-        ))}
+      {/* Desktop right rail (§6.3) — only where it can't crowd the content */}
+      <div className="fixed right-5 top-28 z-30 hidden w-[290px] min-[1500px]:block">
+        <AdSlot id="rail-desktop" language={slug} />
+      </div>
+
+      <div className="mt-4">
+        <StationRowsWithAds stations={stations} language={slug} />
       </div>
     </div>
   );

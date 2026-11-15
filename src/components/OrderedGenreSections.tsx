@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "@/components/LangLink";
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import type { Genre, PublicStation } from "@/lib/types";
 import { orderByLangs } from "@/lib/languages";
 import { usePrefs } from "./PrefsProvider";
@@ -18,8 +18,11 @@ export type GenreSection = {
  */
 export default function OrderedGenreSections({
   sections,
+  insertAfter,
 }: {
   sections: GenreSection[];
+  /** Rendered between the 2nd and 3rd language sections (ad placement). */
+  insertAfter?: React.ReactNode;
 }) {
   const { langs } = usePrefs();
   const ordered = useMemo(
@@ -35,14 +38,15 @@ export default function OrderedGenreSections({
 
   return (
     <>
-      {ordered.map(({ genre, stations }) => {
+      {ordered.map(({ genre, stations }, idx) => {
         if (!stations.length) return null;
         return (
-          <section
-            key={genre.slug}
-            aria-labelledby={`g-${genre.slug}`}
-            className="mt-8"
-          >
+          <Fragment key={genre.slug}>
+            {idx === 2 && insertAfter}
+            <section
+              aria-labelledby={`g-${genre.slug}`}
+              className="mt-8"
+            >
             <div className="mb-3 flex items-baseline justify-between">
               <h2
                 id={`g-${genre.slug}`}
@@ -62,7 +66,8 @@ export default function OrderedGenreSections({
                 <StationRow key={s.id} station={s} queue={stations} />
               ))}
             </div>
-          </section>
+            </section>
+          </Fragment>
         );
       })}
     </>

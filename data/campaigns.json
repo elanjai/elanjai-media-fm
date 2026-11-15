@@ -1,0 +1,118 @@
+[
+  {
+    "id": "house-install",
+    "advertiser": "Elanjai FM",
+    "kind": "house",
+    "label": "From Elanjai FM",
+    "creative": {
+      "headline": "Keep radio one tap away",
+      "body": "Install Elanjai FM on your phone — favorites, Continue Listening and offline shells included.",
+      "cta": "Install free",
+      "url": "/"
+    },
+    "targeting": {
+      "slots": [
+        "home-infeed-1",
+        "home-infeed-2",
+        "list-infeed",
+        "np-sponsored",
+        "rail-desktop"
+      ]
+    },
+    "schedule": {
+      "start": "",
+      "end": ""
+    },
+    "weight": 2,
+    "caps": {
+      "perUserPerDay": 3
+    },
+    "status": "active"
+  },
+  {
+    "id": "house-simple",
+    "advertiser": "Elanjai FM",
+    "kind": "house",
+    "label": "From Elanjai FM",
+    "creative": {
+      "headline": "Radio made simple",
+      "body": "Giant station tiles, one-tap play and a big stop button — Simple mode for the whole family.",
+      "cta": "Try Simple mode",
+      "url": "/simple"
+    },
+    "targeting": {
+      "slots": [
+        "home-infeed-2",
+        "list-infeed",
+        "search-infeed",
+        "np-sponsored",
+        "station-rect"
+      ]
+    },
+    "schedule": {
+      "start": "",
+      "end": ""
+    },
+    "weight": 2,
+    "caps": {
+      "perUserPerDay": 3
+    },
+    "status": "active"
+  },
+  {
+    "id": "house-add-station",
+    "advertiser": "Elanjai FM",
+    "kind": "house",
+    "label": "From Elanjai FM",
+    "creative": {
+      "headline": "Run an Indian radio station?",
+      "body": "Get listed in the directory free — thousands of listeners discover stations here every day.",
+      "cta": "Add your station",
+      "url": "/add-station"
+    },
+    "targeting": {
+      "slots": [
+        "search-infeed",
+        "station-rect",
+        "list-infeed",
+        "rail-desktop"
+      ]
+    },
+    "schedule": {
+      "start": "",
+      "end": ""
+    },
+    "weight": 1,
+    "caps": {
+      "perUserPerDay": 2
+    },
+    "status": "active"
+  },
+  {
+    "id": "house-advertise",
+    "advertiser": "Elanjai FM",
+    "kind": "house",
+    "label": "From Elanjai FM",
+    "creative": {
+      "headline": "Reach listeners who keep radio on",
+      "body": "Featured listings, language-targeted banners and audio spots — advertise with Elanjai FM.",
+      "cta": "See the media kit",
+      "url": "/advertise"
+    },
+    "targeting": {
+      "slots": [
+        "home-infeed-2",
+        "list-infeed"
+      ]
+    },
+    "schedule": {
+      "start": "",
+      "end": ""
+    },
+    "weight": 1,
+    "caps": {
+      "perUserPerDay": 2
+    },
+    "status": "draft"
+  }
+]

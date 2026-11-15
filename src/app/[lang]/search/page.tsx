@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import SearchClient from "@/components/SearchClient";
-import { getFeatured, getGenres, toPublic } from "@/lib/data";
+import { eligibleCampaigns } from "@/lib/ads";
+import { getFeatured, getGenres, toPublic, todayCached } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Search stations",
@@ -19,6 +20,7 @@ export default async function SearchPage({ searchParams }: Props) {
           initialQ={q}
           trending={getFeatured(6).map(toPublic)}
           genres={getGenres()}
+          adCampaigns={eligibleCampaigns("search-infeed", { today: await todayCached() })}
         />
       </Suspense>
     </div>

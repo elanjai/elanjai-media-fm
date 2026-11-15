@@ -2,9 +2,11 @@
 
 import Link from "@/components/LangLink";
 import { useEffect, useRef, useState } from "react";
+import type { Campaign } from "@/lib/ads";
 import { reportStreamIssue } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
 import { isBusyStatus, useLibrary, usePlayback, usePlaybackActions, useSleepTimer } from "./AudioProvider";
+import AdSlotClient from "./AdSlotClient";
 import CastButton from "./CastButton";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
@@ -140,9 +142,12 @@ function SleepCircle() {
 /** Full-screen bottom sheet — artwork, transport, actions, volume, up next. */
 export default function NowPlayingSheet({
   total,
+  npAds = [],
   onClose,
 }: {
   total: number;
+  /** Eligible self-ad campaigns for the sponsored card (F-4.2). */
+  npAds?: Campaign[];
   onClose: () => void;
 }) {
   const { current, status, error, nowPlaying, volume, muted } = usePlayback();
@@ -427,6 +432,13 @@ export default function NowPlayingSheet({
                 <Icon name="chevR" size={18} className="text-muted" />
               </button>
             </>
+          )}
+
+          {/* Sponsored card — self-ads only inside overlays (§6.3) */}
+          {npAds.length > 0 && (
+            <div className="mt-4">
+              <AdSlotClient slot="np-sponsored" campaigns={npAds} variant="compact" />
+            </div>
           )}
           <p className="mt-5 text-center text-[11px] text-muted">
             <Link href={`/station/${current.slug}`} onClick={onClose} className="font-medium text-brand-2 underline-offset-2 hover:underline dark:text-accent">

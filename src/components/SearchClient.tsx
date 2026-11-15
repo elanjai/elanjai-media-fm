@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "@/components/LangLink";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import type { Genre, PublicStation } from "@/lib/types";
 import { NATIVE_NAMES } from "@/lib/languages";
 import { track } from "@/lib/analytics";
+import type { Campaign } from "@/lib/ads";
+import AdSlotClient from "./AdSlotClient";
 import { searchLocal } from "@/lib/search";
 import { useCatalog } from "./AudioProvider";
 import Icon from "./Icon";
@@ -24,10 +26,12 @@ export default function SearchClient({
   initialQ,
   trending,
   genres,
+  adCampaigns = [],
 }: {
   initialQ: string;
   trending: PublicStation[];
   genres: Genre[];
+  adCampaigns?: Campaign[];
 }) {
   const [q, setQ] = useState(initialQ);
   const { stations } = useCatalog();
@@ -118,8 +122,16 @@ export default function SearchClient({
 
           {results.length > 0 && (
             <div className="mt-4 grid grid-cols-1 gap-2.5 md:grid-cols-2">
-              {results.map((s) => (
-                <StationRow key={s.id} station={s} queue={results} />
+              {results.map((s, i) => (
+                <Fragment key={s.id}>
+                  <StationRow station={s} queue={results} />
+                  {/* Ad after result 5 (placement map §6.3) */}
+                  {i === 4 && adCampaigns.length > 0 && (
+                    <div className="md:col-span-2">
+                      <AdSlotClient slot="search-infeed" campaigns={adCampaigns} />
+                    </div>
+                  )}
+                </Fragment>
               ))}
             </div>
           )}

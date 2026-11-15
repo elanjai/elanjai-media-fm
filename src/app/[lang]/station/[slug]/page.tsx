@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/LangLink";
 import { notFound } from "next/navigation";
+import AdSlot from "@/components/AdSlot";
 import EmbedBlock from "@/components/EmbedBlock";
 import FavoriteButton from "@/components/FavoriteButton";
 import Icon from "@/components/Icon";
@@ -263,6 +264,14 @@ export default async function StationPage({ params }: Props) {
 
       <div className="mt-5">
         <NowPlayingCard station={pub} />
+      </div>
+
+      {/* Ad — below Now Playing, never between hero and Play (§6.3) */}
+      <AdSlot id="station-rect" language={genreSlug} className="mt-4" />
+
+      {/* Desktop right rail (§6.3) — only where it can't crowd the content */}
+      <div className="fixed right-5 top-28 z-30 hidden w-[290px] min-[1500px]:block">
+        <AdSlot id="rail-desktop" language={genreSlug} />
       </div>
 
       {/* Programme schedule — "On now" + up next (F-2.8) */}

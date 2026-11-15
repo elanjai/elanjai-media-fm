@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "@/components/LangLink";
 import { notFound } from "next/navigation";
 import Icon from "@/components/Icon";
-import StationRow from "@/components/StationRow";
+import StationRowsWithAds from "@/components/StationRowsWithAds";
 import {
   getCities,
   getCity,
@@ -101,10 +101,8 @@ export default async function CityPage({ params }: Props) {
         {stations.length} live stations — tap to play
       </p>
 
-      <div className="mt-4 grid grid-cols-1 gap-2.5 md:grid-cols-2">
-        {stations.map((s) => (
-          <StationRow key={s.id} station={s} queue={stations} />
-        ))}
+      <div className="mt-4">
+        <StationRowsWithAds stations={stations} />
       </div>
     </div>
   );

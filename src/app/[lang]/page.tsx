@@ -1,4 +1,5 @@
 import Link from "@/components/LangLink";
+import AdSlot from "@/components/AdSlot";
 import BrandLogo from "@/components/BrandLogo";
 import FavoritesRail from "@/components/FavoritesRail";
 import HeroPlay from "@/components/HeroPlay";
@@ -119,6 +120,9 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* Ad — after "Popular now" (placement map §6.3) */}
+      <AdSlot id="home-infeed-1" className="mt-8" />
+
       {/* Editorial collections — seasonal/curated rails (F-2.5) */}
       {editorial.map((col) => {
         const stations = getCollectionStations(col).map(toPublic);
@@ -188,8 +192,12 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Other languages — section per genre, rows; re-sorted by language pref */}
+      {/* Other languages — section per genre, rows; re-sorted by language pref.
+          Ad sits after the 2nd language section (placement map §6.3). */}
       <OrderedGenreSections
+        insertAfter={
+          <AdSlot id="home-infeed-2" className="mt-8" />
+        }
         sections={genres
           .filter((g) => g.slug !== "tamil")
           .slice(0, 4)

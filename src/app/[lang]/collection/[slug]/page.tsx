@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "@/components/LangLink";
 import { notFound } from "next/navigation";
 import Icon from "@/components/Icon";
-import StationRow from "@/components/StationRow";
+import StationRowsWithAds from "@/components/StationRowsWithAds";
 import {
   getCollectionStations,
   getCollections,
@@ -77,10 +77,8 @@ export default async function CollectionPage({ params }: Props) {
         {stations.length} stations — curated by our editors
       </p>
 
-      <div className="mt-4 grid grid-cols-1 gap-2.5 md:grid-cols-2">
-        {stations.map((s) => (
-          <StationRow key={s.id} station={s} queue={stations} />
-        ))}
+      <div className="mt-4">
+        <StationRowsWithAds stations={stations} />
       </div>
     </div>
   );

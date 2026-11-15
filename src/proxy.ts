@@ -36,7 +36,7 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     // UI pages only: skip _next, api, assets, metadata files, /near-me,
-    // /embed, and anything carrying a file extension.
-    "/((?!api|_next|_vercel|near-me|embed|.*\\..*).*)",
+    // /embed, /go ad redirects, /admin reports, and file-extension paths.
+    "/((?!api|_next|_vercel|near-me|embed|go|admin|.*\\..*).*)",
   ],
 };

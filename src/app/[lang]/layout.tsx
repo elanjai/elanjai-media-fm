@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Sans_Devanagari, Noto_Sans_Tamil, Poppins } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
+import { eligibleCampaigns } from "@/lib/ads";
 import AudioProvider from "@/components/AudioProvider";
 import AppBar from "@/components/AppBar";
 import ConsentBanner from "@/components/ConsentBanner";
@@ -14,7 +15,7 @@ import PlayerChrome from "@/components/PlayerChrome";
 import PrefsProvider from "@/components/PrefsProvider";
 import SwRegister from "@/components/SwRegister";
 import TabBar from "@/components/TabBar";
-import { getGenres, getStations } from "@/lib/data";
+import { getGenres, getStations, todayCached } from "@/lib/data";
 import {
   LOCALE_META,
   LOCALES,
@@ -157,7 +158,10 @@ export default async function RootLayout({
                 </div>
               </footer>
 
-              <PlayerChrome total={total} />
+              <PlayerChrome
+                total={total}
+                npAds={eligibleCampaigns("np-sponsored", { today: await todayCached() })}
+              />
               <InstallPrompt />
               <TabBar />
             </AudioProvider>

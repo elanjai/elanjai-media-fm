@@ -2,6 +2,7 @@
 
 import { useLocalePath } from "./LocaleProvider";
 import { useState } from "react";
+import type { Campaign } from "@/lib/ads";
 import { isBusyStatus, usePlayback, usePlaybackActions } from "./AudioProvider";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
@@ -9,7 +10,14 @@ import NowPlayingSheet from "./NowPlayingSheet";
 import StationLogo from "./StationLogo";
 
 /** Floating mini player docked above the tab bar; expands into the Now Playing sheet. */
-export default function PlayerChrome({ total }: { total: number }) {
+export default function PlayerChrome({
+  total,
+  npAds = [],
+}: {
+  total: number;
+  /** Eligible self-ad campaigns for the sheet's sponsored card (F-4.2). */
+  npAds?: Campaign[];
+}) {
   const { current, status, error, nowPlaying, retryAttempt, pendingPlay } =
     usePlayback();
   const { toggle, next, play, confirmPendingPlay, dismissPendingPlay } =
@@ -19,7 +27,9 @@ export default function PlayerChrome({ total }: { total: number }) {
   // /simple has its own giant controls — the mini player would overlap them.
   if (pathname === "/simple") return null;
   if (!current && !pendingPlay)
-    return open ? <NowPlayingSheet total={total} onClose={() => setOpen(false)} /> : null;
+    return open ? (
+      <NowPlayingSheet total={total} npAds={npAds} onClose={() => setOpen(false)} />
+    ) : null;
 
   const playing = status === "playing";
 
@@ -129,7 +139,9 @@ export default function PlayerChrome({ total }: { total: number }) {
           </div>
         )}
       </div>
-      {open && <NowPlayingSheet total={total} onClose={() => setOpen(false)} />}
+      {open && (
+        <NowPlayingSheet total={total} npAds={npAds} onClose={() => setOpen(false)} />
+      )}
     </>
   );
 }
