@@ -5,6 +5,7 @@ import citiesJson from "../../data/cities.json";
 import networksJson from "../../data/networks.json";
 import collectionsJson from "../../data/collections.json";
 import localLogosJson from "../../data/local-logos.json";
+import { SITE } from "./site";
 import type {
   Category,
   City,
@@ -268,6 +269,32 @@ export const getRelated = (station: Station, n = 8) => {
     (s) => s.slug !== station.slug && !same.includes(s)
   );
   return [...same, ...rest].slice(0, n);
+};
+
+/**
+ * Unique per-station copy (F-2.7). Prefers a real catalog `description`;
+ * otherwise composes one from the station's own facts so no two pages
+ * share the same boilerplate paragraph.
+ */
+export const describeStation = (s: Station) => {
+  if (s.description) return s.description;
+  const lang = s.languages.map((l) => l[0].toUpperCase() + l.slice(1)).join(" and ");
+  const where = [s.city, s.state].filter(Boolean).join(", ") || s.country || "India";
+  const facts = [
+    `${s.name} is a ${lang} radio station broadcasting from ${where}`,
+    s.network ? ` on the ${s.network} network` : "",
+    s.frequency_mhz ? `, heard locally on ${s.frequency_mhz} FM` : "",
+    `.`,
+  ].join("");
+  const kind =
+    s.categories.length > 0
+      ? ` Its programming focuses on ${s.categories.slice(0, 3).join(", ")}.`
+      : "";
+  const streams =
+    s.streams.length > 1
+      ? ` ${s.streams.length} stream qualities are available — the player picks the best one your connection can handle.`
+      : "";
+  return `${facts}${kind} Listen live and free on ${SITE.name} — no sign-up needed.${streams}`;
 };
 
 export function searchStations(q: string): Station[] {
