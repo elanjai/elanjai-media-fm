@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { reportStreamIssue } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
 
 /**
@@ -295,6 +296,14 @@ export default function AudioProvider({
       if (attempt >= RETRY_DELAYS_MS.length) {
         clearTimers();
         setStatusTracked("error");
+        const s = currentRef.current;
+        if (s) {
+          reportStreamIssue({
+            slug: s.slug,
+            reason,
+            ttfa: lastTtfaRef.current,
+          });
+        }
         setError(
           reason === "connect timeout"
             ? "Station is offline or took too long to connect"

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { reportStreamIssue } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
 import { isBusyStatus, useLibrary, usePlayback, usePlaybackActions, useSleepTimer } from "./AudioProvider";
 import EqBars from "./EqBars";
@@ -98,6 +99,8 @@ export default function NowPlayingSheet({
   const { favorites, toggleFavorite } = useLibrary();
   const [upNext, setUpNext] = useState<PublicStation | null>(null);
   const [shared, setShared] = useState(false);
+  /** Slug the user already reported — resets automatically on station change. */
+  const [reportedSlug, setReportedSlug] = useState<string | null>(null);
 
   useEffect(() => {
     let live = true;
@@ -121,6 +124,7 @@ export default function NowPlayingSheet({
   const playing = status === "playing";
   const isFav = favorites.has(current.slug);
   const vol = muted ? 0 : volume;
+  const reported = reportedSlug === current.slug;
 
   const share = async () => {
     const url = `${location.origin}/station/${current.slug}`;
@@ -211,7 +215,28 @@ export default function NowPlayingSheet({
                           : "Paused"}
               </p>
               <p className="mt-0.5 text-[11px] text-muted">
-                {status === "error" ? "Tap play to retry" : "Now playing · via ICY metadata"}
+                {status === "error" ? (
+                  <>
+                    Tap play to retry ·{" "}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        reportStreamIssue({
+                          slug: current.slug,
+                          reason: "user report",
+                          ttfa: null,
+                        });
+                        setReportedSlug(current.slug);
+                      }}
+                      disabled={reported}
+                      className="font-semibold text-brand-2 underline-offset-2 hover:underline disabled:text-muted disabled:no-underline dark:text-accent"
+                    >
+                      {reported ? "Reported — thanks" : "Not working?"}
+                    </button>
+                  </>
+                ) : (
+                  "Now playing · via ICY metadata"
+                )}
               </p>
             </div>
             {playing && !nowPlaying && <EqBars className="ml-auto" />}
