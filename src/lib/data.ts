@@ -7,19 +7,29 @@ const stations = stationsJson as Station[];
 const genres = genresJson as Genre[];
 
 /**
- * All playback goes through our same-origin /api/stream proxy — the same
- * `private-stream` trick tamilradios.com uses. It normalizes http/https,
- * dodges hostile CORS on hls.js XHR fetches, rewrites HLS manifests, and
- * keeps broadcaster origins hidden from the page.
+ * Streams only go through our same-origin /api/stream proxy when they have
+ * to (the `private-stream` trick tamilradios.com uses):
+ *  - http:// media is blocked on https:// pages (mixed content)
+ *  - hls.js fetches via XHR, so oddball hosts without CORS headers fail
+ * An <audio> element doesn't need CORS, so https:// non-HLS streams (the
+ * majority of the catalog) play directly from the broadcaster — which keeps
+ * our bandwidth bill near zero per listener-hour.
  */
 export function playableUrl(streamUrl: string): string {
   return `/api/stream?u=${Buffer.from(streamUrl).toString("base64url")}`;
+}
+
+export function isDirectStream(streamUrl: string): boolean {
+  return (
+    streamUrl.startsWith("https:") && !/\.m3u8?($|\?)/i.test(streamUrl)
+  );
 }
 
 const localLogos = localLogosJson as Record<string, string>;
 
 export function toPublic(s: Station): PublicStation {
   const local = localLogos[s.slug];
+  const direct = isDirectStream(s.stream_url);
   return {
     id: s.id,
     name: s.name,
@@ -32,8 +42,10 @@ export function toPublic(s: Station): PublicStation {
     favicon: local ?? s.favicon,
     faviconAlt: local ? s.favicon : undefined,
     votes: s.votes,
-    stream: playableUrl(s.stream_url),
+    stream: direct ? s.stream_url : playableUrl(s.stream_url),
     hls: /\.m3u8?($|\?)/i.test(s.stream_url),
+    direct,
+    u: Buffer.from(s.stream_url).toString("base64url"),
   };
 }
 

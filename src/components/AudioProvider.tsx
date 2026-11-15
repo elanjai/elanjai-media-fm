@@ -433,7 +433,9 @@ export default function AudioProvider({
   // ---------- now playing (ICY StreamTitle) ----------
   useEffect(() => {
     if (status !== "playing" || !current) return;
-    const u = streamParam(current.stream);
+    // `u` (encoded upstream) is present on fresh catalog entries; fall back
+    // to parsing the proxy URL for stations persisted before the field existed.
+    const u = current.u ?? streamParam(current.stream);
     if (!u) return;
     let cancelled = false;
     const poll = async () => {
