@@ -7,6 +7,7 @@ import LiveBadge from "@/components/LiveBadge";
 import NowPlayingCard from "@/components/NowPlayingCard";
 import PlayButton from "@/components/PlayButton";
 import ReportButton from "@/components/ReportButton";
+import ScheduleCard from "@/components/ScheduleCard";
 import ShareButton from "@/components/ShareButton";
 import StationCard from "@/components/StationCard";
 import StationLogo from "@/components/StationLogo";
@@ -21,6 +22,7 @@ import {
   toPublic,
 } from "@/lib/data";
 import { breadcrumbJsonLd, faqJsonLd, radioStationJsonLd } from "@/lib/jsonld";
+import { getSchedule } from "@/lib/schedule";
 import { SITE } from "@/lib/site";
 import type { Station } from "@/lib/types";
 
@@ -89,6 +91,7 @@ export default async function StationPage({ params }: Props) {
   const networkStations = s.network ? getStationsByNetwork(s.network) : [];
   const faqs = stationFaqs(s);
   const description = describeStation(s);
+  const schedule = getSchedule(s.slug);
 
   return (
     <div className="py-5">
@@ -248,6 +251,9 @@ export default async function StationPage({ params }: Props) {
       <div className="mt-5">
         <NowPlayingCard station={pub} />
       </div>
+
+      {/* Programme schedule — "On now" + up next (F-2.8) */}
+      {schedule && <ScheduleCard stationName={s.name} schedule={schedule} />}
 
       {/* About — unique per-station copy (F-2.7) */}
       <section aria-labelledby="about" className="mt-8">

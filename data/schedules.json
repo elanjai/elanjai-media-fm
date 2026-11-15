@@ -1,0 +1,574 @@
+{
+  "vividh-bharti-mumbai": {
+    "timezone": "Asia/Kolkata",
+    "slots": [
+      { "start": "05:00", "end": "06:00", "title": "Vandana & Suprabhatam" },
+      { "start": "06:00", "end": "07:00", "title": "Morning Bhajans" },
+      { "start": "07:00", "end": "08:00", "title": "Chhaya Geet" },
+      { "start": "08:00", "end": "09:00", "title": "Bhule Bisre Geet" },
+      { "start": "09:00", "end": "10:00", "title": "Aaj Ke Fankaar" },
+      { "start": "10:00", "end": "11:00", "title": "Tarang" },
+      { "start": "11:00", "end": "12:00", "title": "Geetmala" },
+      { "start": "12:00", "end": "13:00", "title": "Chitralok" },
+      { "start": "13:00", "end": "14:00", "title": "Aap Ki Pasand" },
+      { "start": "14:00", "end": "15:00", "title": "Rang Tarang" },
+      { "start": "15:00", "end": "16:00", "title": "Jaimala" },
+      { "start": "16:00", "end": "17:00", "title": "Aapki Farmaish" },
+      { "start": "17:00", "end": "18:00", "title": "Hawa Mahal" },
+      { "start": "18:00", "end": "19:00", "title": "Sakhi Saheli" },
+      { "start": "19:00", "end": "20:00", "title": "Chhayageet" },
+      { "start": "20:00", "end": "21:00", "title": "Jaimala" },
+      { "start": "21:00", "end": "22:00", "title": "Vividh Bharati Ki Duniya" },
+      { "start": "22:00", "end": "05:00", "title": "Late Night Melodies" }
+    ]
+  },
+  "vividhbharathitamil": {
+    "timezone": "Asia/Kolkata",
+    "slots": [
+      { "start": "06:00", "end": "07:30", "title": "Then Kinnam" },
+      { "start": "07:30", "end": "09:00", "title": "Vannam Poosa" },
+      { "start": "09:00", "end": "11:00", "title": "Sangeetha Sarithram" },
+      { "start": "11:00", "end": "13:00", "title": "Paalum Theli Thenum" },
+      { "start": "13:00", "end": "15:00", "title": "Matha Madhiri" },
+      { "start": "15:00", "end": "17:00", "title": "Vizhigal Oru Vaanavil" },
+      { "start": "17:00", "end": "19:00", "title": "Iravil Isai" },
+      { "start": "19:00", "end": "21:00", "title": "Andrum Indrum" },
+      { "start": "21:00", "end": "06:00", "title": "Iravum Pagalum" }
+    ]
+  },
+  "vividhbharatikannada": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "08:00", "title": "Morning Bhakti & Film Songs" },
+      { "start": "08:00", "end": "11:00", "title": "Kannada Film Classics" },
+      { "start": "11:00", "end": "14:00", "title": "Midday Requests" },
+      { "start": "14:00", "end": "17:00", "title": "Afternoon Melodies" },
+      { "start": "17:00", "end": "20:00", "title": "Evening Film Hits" },
+      { "start": "20:00", "end": "22:00", "title": "Namma Sangama" },
+      { "start": "22:00", "end": "06:00", "title": "Night Melodies" }
+    ]
+  },
+  "vividh-bharati-telugu-vijayawada": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "08:00", "title": "Prabhatam" },
+      { "start": "08:00", "end": "11:00", "title": "Telugu Film Classics" },
+      { "start": "11:00", "end": "14:00", "title": "Madhyahna Patalu" },
+      { "start": "14:00", "end": "17:00", "title": "Afternoon Melodies" },
+      { "start": "17:00", "end": "20:00", "title": "Sayamkala Patalu" },
+      { "start": "20:00", "end": "22:00", "title": "Listener Requests" },
+      { "start": "22:00", "end": "06:00", "title": "Ratri Patalu" }
+    ]
+  },
+  "air-fm-gold-delhi": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "07:00", "title": "Devotional & Morning News" },
+      { "start": "07:00", "end": "09:00", "title": "Morning Gold" },
+      { "start": "09:00", "end": "12:00", "title": "Golden Classics" },
+      { "start": "12:00", "end": "14:00", "title": "Lunch Time Gold" },
+      { "start": "14:00", "end": "17:00", "title": "Afternoon Melodies" },
+      { "start": "17:00", "end": "20:00", "title": "Evening Gold" },
+      { "start": "20:00", "end": "22:00", "title": "Night Gold" },
+      { "start": "22:00", "end": "06:00", "title": "Non-stop Classics" }
+    ]
+  },
+  "fm-gold-mumbai": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "09:00", "title": "Morning Gold" },
+      { "start": "09:00", "end": "12:00", "title": "Golden Classics" },
+      { "start": "12:00", "end": "15:00", "title": "Afternoon Gold" },
+      { "start": "15:00", "end": "18:00", "title": "Retro Hour" },
+      { "start": "18:00", "end": "21:00", "title": "Evening Gold" },
+      { "start": "21:00", "end": "06:00", "title": "Non-stop Classics" }
+    ]
+  },
+  "air-fm-rainbow-bangalore": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "09:00", "title": "Morning Rainbow" },
+      { "start": "09:00", "end": "12:00", "title": "Mid-Morning Hits" },
+      { "start": "12:00", "end": "15:00", "title": "Rainbow Midday" },
+      { "start": "15:00", "end": "18:00", "title": "Afternoon Drive" },
+      { "start": "18:00", "end": "21:00", "title": "Rainbow Drive Time" },
+      { "start": "21:00", "end": "06:00", "title": "Rainbow Nights" }
+    ]
+  },
+  "fmrainbowkannada": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "09:00", "title": "Morning Rainbow" },
+      { "start": "09:00", "end": "12:00", "title": "Mid-Morning Hits" },
+      { "start": "12:00", "end": "15:00", "title": "Rainbow Midday" },
+      { "start": "15:00", "end": "18:00", "title": "Afternoon Drive" },
+      { "start": "18:00", "end": "21:00", "title": "Rainbow Drive Time" },
+      { "start": "21:00", "end": "06:00", "title": "Rainbow Nights" }
+    ]
+  },
+  "fm-rainbow-vijayawada": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "09:00", "title": "Morning Rainbow" },
+      { "start": "09:00", "end": "12:00", "title": "Mid-Morning Hits" },
+      { "start": "12:00", "end": "15:00", "title": "Rainbow Midday" },
+      { "start": "15:00", "end": "18:00", "title": "Afternoon Drive" },
+      { "start": "18:00", "end": "21:00", "title": "Rainbow Drive Time" },
+      { "start": "21:00", "end": "06:00", "title": "Rainbow Nights" }
+    ]
+  },
+  "fm-rainbow-hyderabad": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "09:00", "title": "Morning Rainbow" },
+      { "start": "09:00", "end": "12:00", "title": "Mid-Morning Hits" },
+      { "start": "12:00", "end": "15:00", "title": "Rainbow Midday" },
+      { "start": "15:00", "end": "18:00", "title": "Afternoon Drive" },
+      { "start": "18:00", "end": "21:00", "title": "Rainbow Drive Time" },
+      { "start": "21:00", "end": "06:00", "title": "Rainbow Nights" }
+    ]
+  },
+  "fm-rainbow-visakhapatnam": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "09:00", "title": "Morning Rainbow" },
+      { "start": "09:00", "end": "12:00", "title": "Mid-Morning Hits" },
+      { "start": "12:00", "end": "15:00", "title": "Rainbow Midday" },
+      { "start": "15:00", "end": "18:00", "title": "Afternoon Drive" },
+      { "start": "18:00", "end": "21:00", "title": "Rainbow Drive Time" },
+      { "start": "21:00", "end": "06:00", "title": "Rainbow Nights" }
+    ]
+  },
+  "akashvani-fm-rainbow-kolkata": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "06:00", "end": "09:00", "title": "Morning Rainbow" },
+      { "start": "09:00", "end": "12:00", "title": "Mid-Morning Hits" },
+      { "start": "12:00", "end": "15:00", "title": "Rainbow Midday" },
+      { "start": "15:00", "end": "18:00", "title": "Afternoon Drive" },
+      { "start": "18:00", "end": "21:00", "title": "Rainbow Drive Time" },
+      { "start": "21:00", "end": "06:00", "title": "Rainbow Nights" }
+    ]
+  },
+  "amruthavarshini-fm": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Morning Ragas" },
+      { "start": "07:00", "end": "09:00", "title": "Devotional Music" },
+      { "start": "09:00", "end": "12:00", "title": "Carnatic Concerts" },
+      { "start": "12:00", "end": "14:00", "title": "Lecture Demonstrations" },
+      { "start": "14:00", "end": "17:00", "title": "Carnatic Concerts" },
+      { "start": "17:00", "end": "19:00", "title": "Light Classical" },
+      { "start": "19:00", "end": "22:00", "title": "Evening Concerts" },
+      { "start": "22:00", "end": "05:30", "title": "Night Ragas" }
+    ]
+  },
+  "air-news-24-7": {
+    "timezone": "Asia/Kolkata",
+    "slots": [
+      { "start": "00:00", "end": "23:59", "title": "News Bulletins — every hour on the hour" }
+    ]
+  },
+  "all-india-radio-news-24x7": {
+    "timezone": "Asia/Kolkata",
+    "slots": [
+      { "start": "00:00", "end": "23:59", "title": "News Bulletins — every hour on the hour" }
+    ]
+  },
+  "air-malayalam": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "air-telugu": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "akashvani-hyderabad": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "akashvani-visakhapatnam": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "akashvani-anantapur": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "akashvani-tirupati": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "akashvani-nizamabad": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "akashvani-warangal": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "akashvani-kothagudem": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "akashvani-markapur": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "akashvanikarnataka": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "all-india-radio-air-punjabi": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Gurbani & Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Punjabi Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical & Folk" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Punjabi Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "air-madurai-fm": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "air-kodai-fm": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "air-nagercoil": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "air-tuticorin": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "air-kozhikode-real-fm": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "airkozhikodefm": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "air-indore": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "air-kolhapur": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:30", "end": "07:00", "title": "Devotional" },
+      { "start": "07:00", "end": "09:00", "title": "Film Songs" },
+      { "start": "09:00", "end": "11:00", "title": "Talks & Features" },
+      { "start": "11:00", "end": "13:00", "title": "Classical Music" },
+      { "start": "13:00", "end": "15:00", "title": "Afternoon Melodies" },
+      { "start": "15:00", "end": "17:00", "title": "Regional Programmes" },
+      { "start": "17:00", "end": "19:00", "title": "Film Songs" },
+      { "start": "19:00", "end": "20:00", "title": "News" },
+      { "start": "20:00", "end": "22:00", "title": "Evening Melodies" },
+      { "start": "22:00", "end": "05:30", "title": "Night Music" }
+    ]
+  },
+  "suryan-fm": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:00", "end": "07:00", "title": "Early Morning Melodies" },
+      { "start": "07:00", "end": "11:00", "title": "Breakfast Show" },
+      { "start": "11:00", "end": "14:00", "title": "Midday Hits" },
+      { "start": "14:00", "end": "17:00", "title": "Afternoon Melodies" },
+      { "start": "17:00", "end": "21:00", "title": "Drive Time" },
+      { "start": "21:00", "end": "23:00", "title": "Night Requests" },
+      { "start": "23:00", "end": "05:00", "title": "Non-stop Hits" }
+    ]
+  },
+  "big-92-7-fm": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:00", "end": "07:00", "title": "Early Morning Devotional" },
+      { "start": "07:00", "end": "11:00", "title": "Breakfast Show" },
+      { "start": "11:00", "end": "14:00", "title": "Midday Hits" },
+      { "start": "14:00", "end": "17:00", "title": "Afternoon Show" },
+      { "start": "17:00", "end": "21:00", "title": "Drive Time" },
+      { "start": "21:00", "end": "23:00", "title": "Late Night Show" },
+      { "start": "23:00", "end": "05:00", "title": "Non-stop Hits" }
+    ]
+  },
+  "big-fm-tamil": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:00", "end": "07:00", "title": "Early Morning Melodies" },
+      { "start": "07:00", "end": "11:00", "title": "Breakfast Show" },
+      { "start": "11:00", "end": "14:00", "title": "Midday Hits" },
+      { "start": "14:00", "end": "17:00", "title": "Afternoon Melodies" },
+      { "start": "17:00", "end": "21:00", "title": "Drive Time" },
+      { "start": "21:00", "end": "23:00", "title": "Night Requests" },
+      { "start": "23:00", "end": "05:00", "title": "Non-stop Hits" }
+    ]
+  },
+  "hello-fm": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:00", "end": "07:00", "title": "Early Morning Melodies" },
+      { "start": "07:00", "end": "11:00", "title": "Breakfast Show" },
+      { "start": "11:00", "end": "14:00", "title": "Midday Hits" },
+      { "start": "14:00", "end": "17:00", "title": "Afternoon Melodies" },
+      { "start": "17:00", "end": "21:00", "title": "Drive Time" },
+      { "start": "21:00", "end": "23:00", "title": "Night Requests" },
+      { "start": "23:00", "end": "05:00", "title": "Non-stop Hits" }
+    ]
+  },
+  "radio-mirchi-tamil": {
+    "timezone": "Asia/Kolkata",
+    "approx": true,
+    "slots": [
+      { "start": "05:00", "end": "07:00", "title": "Early Morning Melodies" },
+      { "start": "07:00", "end": "11:00", "title": "Breakfast Show" },
+      { "start": "11:00", "end": "14:00", "title": "Midday Hits" },
+      { "start": "14:00", "end": "17:00", "title": "Afternoon Melodies" },
+      { "start": "17:00", "end": "21:00", "title": "Drive Time" },
+      { "start": "21:00", "end": "23:00", "title": "Love & Requests" },
+      { "start": "23:00", "end": "05:00", "title": "Non-stop Hits" }
+    ]
+  }
+}
