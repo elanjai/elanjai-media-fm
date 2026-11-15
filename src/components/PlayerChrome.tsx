@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePlayback, usePlaybackActions } from "./AudioProvider";
+import { isBusyStatus, usePlayback, usePlaybackActions } from "./AudioProvider";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
 import NowPlayingSheet from "./NowPlayingSheet";
@@ -9,7 +9,7 @@ import StationLogo from "./StationLogo";
 
 /** Floating mini player docked above the tab bar; expands into the Now Playing sheet. */
 export default function PlayerChrome({ total }: { total: number }) {
-  const { current, status, error, nowPlaying } = usePlayback();
+  const { current, status, error, nowPlaying, retryAttempt } = usePlayback();
   const { toggle, next, play } = usePlaybackActions();
   const [open, setOpen] = useState(false);
   if (!current) return open ? <NowPlayingSheet total={total} onClose={() => setOpen(false)} /> : null;
@@ -42,8 +42,12 @@ export default function PlayerChrome({ total }: { total: number }) {
               >
                 {status === "error" ? (
                   error ?? "Stream unavailable — retry"
-                ) : status === "loading" ? (
+                ) : status === "reconnecting" ? (
+                  `Reconnecting… (${retryAttempt}/3)`
+                ) : status === "connecting" ? (
                   "Connecting…"
+                ) : status === "buffering" ? (
+                  "Buffering…"
                 ) : playing ? (
                   <>
                     <EqBars />
@@ -73,14 +77,14 @@ export default function PlayerChrome({ total }: { total: number }) {
             aria-label={playing ? "Pause" : "Play"}
             className="mr-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-accent-ink shadow-md shadow-brand/25 transition hover:brightness-105 active:scale-95"
           >
-            {status === "loading" ? (
+            {isBusyStatus(status) ? (
               <span className="block h-[18px] w-[18px] animate-spin rounded-full border-2 border-accent-ink/30 border-t-accent-ink" />
             ) : (
               <Icon name={playing ? "pause" : "play"} size={18} />
             )}
           </button>
         </div>
-        {status === "loading" && (
+        {isBusyStatus(status) && (
           <div className="mx-auto mt-1 h-0.5 max-w-[340px] overflow-hidden rounded-full bg-surface-2">
             <div className="h-full w-1/3 animate-pulse bg-accent" />
           </div>

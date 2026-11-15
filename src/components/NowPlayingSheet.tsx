@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { PublicStation } from "@/lib/types";
-import { useLibrary, usePlayback, usePlaybackActions, useSleepTimer } from "./AudioProvider";
+import { isBusyStatus, useLibrary, usePlayback, usePlaybackActions, useSleepTimer } from "./AudioProvider";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
 import LiveBadge from "./LiveBadge";
@@ -200,11 +200,15 @@ export default function NowPlayingSheet({
               <p className="truncate text-[13px] font-semibold text-ink">
                 {status === "error"
                   ? error ?? "Stream unavailable"
-                  : status === "loading"
-                    ? "Connecting…"
-                    : playing
-                      ? (nowPlaying ?? "Live")
-                      : "Paused"}
+                  : status === "reconnecting"
+                    ? "Reconnecting…"
+                    : status === "connecting"
+                      ? "Connecting…"
+                      : status === "buffering"
+                        ? "Buffering…"
+                        : playing
+                          ? (nowPlaying ?? "Live")
+                          : "Paused"}
               </p>
               <p className="mt-0.5 text-[11px] text-muted">
                 {status === "error" ? "Tap play to retry" : "Now playing · via ICY metadata"}
@@ -229,7 +233,7 @@ export default function NowPlayingSheet({
               aria-label={playing ? "Pause" : "Play"}
               className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-accent-ink shadow-lg shadow-brand/30 transition hover:brightness-105 active:scale-95"
             >
-              {status === "loading" ? (
+              {isBusyStatus(status) ? (
                 <span className="block h-7 w-7 animate-spin rounded-full border-2 border-accent-ink/30 border-t-accent-ink" />
               ) : (
                 <Icon name={playing ? "pause" : "play"} size={26} />

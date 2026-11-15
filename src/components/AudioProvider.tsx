@@ -11,7 +11,28 @@ import {
 } from "react";
 import type { PublicStation } from "@/lib/types";
 
-type Status = "idle" | "loading" | "playing" | "paused" | "error";
+/**
+ * Playback state machine:
+ *   idle → connecting → playing ⇄ buffering → reconnecting(n) → error
+ * `paused` is the only user-driven hold; `error` means retries are exhausted.
+ */
+type Status =
+  | "idle"
+  | "connecting"
+  | "playing"
+  | "buffering"
+  | "reconnecting"
+  | "paused"
+  | "error";
+
+/** True for the states a spinner should show in transport buttons. */
+export const isBusyStatus = (s: Status) =>
+  s === "connecting" || s === "buffering" || s === "reconnecting";
+
+/** Reconnect backoff schedule (F-1.1) — 1 s, 3 s, 8 s. */
+const RETRY_DELAYS_MS = [1000, 3000, 8000];
+const CONNECT_TIMEOUT_MS = 12_000;
+const STALL_TIMEOUT_MS = 8_000;
 
 /**
  * Split contexts so components only re-render for the slices they use:
@@ -29,6 +50,8 @@ type PlaybackState = {
   nowPlaying: string | null;
   volume: number;
   muted: boolean;
+  /** Reconnect attempt in progress (0 = first try / not retrying). */
+  retryAttempt: number;
 };
 
 type PlaybackActions = {
@@ -129,17 +152,171 @@ export default function AudioProvider({
   /** Legacy station id → slug, recovered from stored snapshots. */
   const [idMap, setIdMap] = useState<Record<string, string>>({});
 
-  const destroyHls = () => {
+  // ---------- resilient playback engine ----------
+  // Extra refs for the state machine:
+  const currentRef = useRef<PublicStation | null>(null);
+  /** Sources for the active station: primary + failovers (schema v2). */
+  const streamIdxRef = useRef(0);
+  const attemptRef = useRef(0);
+  const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stallTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** True while the user wants audio — distinguishes a user pause from a drop. */
+  const wantPlayRef = useRef(false);
+  /** Was audio live when the network dropped? Drives online auto-resume. */
+  const wasLiveRef = useRef(false);
+  /** TTFA (time to first audio) measurement for health reporting. */
+  const ttfaStartRef = useRef(0);
+  const lastTtfaRef = useRef<number | null>(null);
+
+  const [retryAttempt, setRetryAttempt] = useState(0);
+
+  const destroyHls = useCallback(() => {
     hlsRef.current?.destroy();
     hlsRef.current = null;
-  };
+  }, []);
 
-  const clearWatchdog = () => {
+  const clearWatchdog = useCallback(() => {
     if (watchdogRef.current) {
       clearTimeout(watchdogRef.current);
       watchdogRef.current = null;
     }
-  };
+  }, []);
+
+  const clearRetry = useCallback(() => {
+    if (retryTimerRef.current) {
+      clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
+    }
+  }, []);
+
+  const clearStall = useCallback(() => {
+    if (stallTimerRef.current) {
+      clearTimeout(stallTimerRef.current);
+      stallTimerRef.current = null;
+    }
+  }, []);
+
+  const clearTimers = useCallback(() => {
+    clearWatchdog();
+    clearRetry();
+    clearStall();
+  }, [clearWatchdog, clearRetry, clearStall]);
+
+  /** All candidate stream URLs for a station (primary, then failovers). */
+  const sourcesOf = (s: PublicStation) => [s.stream, ...(s.altStreams ?? [])];
+
+  /** Mirror of `status` for use inside stable callbacks/one-shot listeners. */
+  const statusRef = useRef<Status>("idle");
+  const setStatusTracked = useCallback(
+    (s: Status | ((prev: Status) => Status)) => {
+      setStatus((prev) => {
+        const v = typeof s === "function" ? (s as (p: Status) => Status)(prev) : s;
+        statusRef.current = v;
+        return v;
+      });
+    },
+    []
+  );
+
+  // Indirection so the once-registered listeners and mutually recursive
+  // engine functions can reach the latest logic without stale closures.
+  const playRef = useRef<(s: PublicStation) => void>(() => {});
+  const scheduleRetryRef = useRef<(reason: string) => void>(() => {});
+
+  /** Attach + play the current candidate source. Arms the connect watchdog. */
+  const attemptConnect = useCallback(async () => {
+    const audio = audioRef.current;
+    const s = currentRef.current;
+    if (!audio || !s) return;
+    destroyHls();
+    audio.pause();
+    audio.removeAttribute("src");
+    const sources = sourcesOf(s);
+    const url = sources[streamIdxRef.current % sources.length];
+
+    clearWatchdog();
+    watchdogRef.current = setTimeout(() => {
+      watchdogRef.current = null;
+      const st = statusRef.current;
+      if (st === "connecting" || st === "reconnecting") {
+        scheduleRetryRef.current("connect timeout");
+      }
+    }, CONNECT_TIMEOUT_MS);
+
+    if (s.hls && !audio.canPlayType("application/vnd.apple.mpegurl")) {
+      const { default: Hls } = await import("hls.js");
+      if (Hls.isSupported()) {
+        const hls = new Hls({ maxBufferLength: 20, manifestLoadingMaxRetry: 2 });
+        hlsRef.current = hls;
+        hls.on(Hls.Events.ERROR, (_e, d) => {
+          if (!d.fatal) return;
+          if (d.type === Hls.ErrorTypes.NETWORK_ERROR) {
+            hls.startLoad();
+            return;
+          }
+          scheduleRetryRef.current("fatal hls error");
+        });
+        hls.attachMedia(audio);
+        hls.on(Hls.Events.MEDIA_ATTACHED, () => hls.loadSource(url));
+      } else {
+        setStatusTracked("error");
+        setError("HLS not supported in this browser");
+        return;
+      }
+    } else {
+      audio.src = url;
+      audio.load();
+    }
+
+    try {
+      await audio.play();
+    } catch (err) {
+      // AbortError fires when a newer attempt/station replaces this src.
+      if ((err as DOMException)?.name !== "AbortError") {
+        scheduleRetryRef.current("play() rejected");
+      }
+    }
+  }, [destroyHls, clearWatchdog, setStatusTracked]);
+
+  /**
+   * A dropped stream isn't an error until backoff is exhausted.
+   * Each retry fails over to the next candidate source (altStreams), then
+   * waits 1 s → 3 s → 8 s. Only then do we surface `error`.
+   */
+  const scheduleRetry = useCallback(
+    (reason: string) => {
+      if (!wantPlayRef.current || !currentRef.current) return;
+      const st = statusRef.current;
+      if (st === "error" || st === "idle") return;
+      const attempt = attemptRef.current;
+      if (attempt >= RETRY_DELAYS_MS.length) {
+        clearTimers();
+        setStatusTracked("error");
+        setError(
+          reason === "connect timeout"
+            ? "Station is offline or took too long to connect"
+            : "Stream unavailable right now"
+        );
+        return;
+      }
+      streamIdxRef.current += 1;
+      attemptRef.current = attempt + 1;
+      setRetryAttempt(attempt + 1);
+      setStatusTracked("reconnecting");
+      clearRetry();
+      retryTimerRef.current = setTimeout(() => {
+        retryTimerRef.current = null;
+        if (wantPlayRef.current) {
+          setStatusTracked("connecting");
+          attemptConnect();
+        }
+      }, RETRY_DELAYS_MS[attempt]);
+    },
+    [attemptConnect, clearRetry, clearTimers, setStatusTracked]
+  );
+  useEffect(() => {
+    scheduleRetryRef.current = scheduleRetry;
+  }, [scheduleRetry]);
 
   useEffect(() => {
     const audio = new Audio();
@@ -187,130 +364,147 @@ export default function AudioProvider({
     audio.muted = read<boolean>(MUTE_KEY, false);
 
     const onPlaying = () => {
-      clearWatchdog();
-      setStatus("playing");
+      clearTimers();
+      attemptRef.current = 0;
+      setRetryAttempt(0);
+      if (ttfaStartRef.current) {
+        lastTtfaRef.current = performance.now() - ttfaStartRef.current;
+      }
+      setStatusTracked("playing");
     };
-    const onPause = () => setStatus("paused");
-    const onWaiting = () => setStatus("loading");
-    const onError = () => {
-      setStatus("error");
-      setError("Stream unavailable right now");
+    // A pause while wantPlay is still true is an unexpected drop — retry.
+    const onPause = () => {
+      if (wantPlayRef.current) {
+        scheduleRetry("stream paused");
+      } else {
+        setStatusTracked("paused");
+      }
+    };
+    // Brief stalls are normal; only surface "buffering" after a moment, and
+    // treat a long stall the same as a dropped connection.
+    const onStall = () => {
+      if (!wantPlayRef.current) return;
+      setStatusTracked((st) => (st === "playing" ? "buffering" : st));
+      if (!stallTimerRef.current) {
+        stallTimerRef.current = setTimeout(() => {
+          stallTimerRef.current = null;
+          scheduleRetry("stream stalled");
+        }, STALL_TIMEOUT_MS);
+      }
+    };
+    const onEnded = () => scheduleRetry("stream ended");
+    const onError = () => scheduleRetry("media error");
+    const onOffline = () => {
+      wasLiveRef.current = wantPlayRef.current;
+      setError("You're offline — will reconnect when the network returns");
+      setStatusTracked("error");
+    };
+    const onOnline = () => {
+      if (wasLiveRef.current && currentRef.current) {
+        playRef.current(currentRef.current);
+      }
+      wasLiveRef.current = false;
     };
     audio.addEventListener("playing", onPlaying);
     audio.addEventListener("pause", onPause);
-    audio.addEventListener("waiting", onWaiting);
+    audio.addEventListener("waiting", onStall);
+    audio.addEventListener("stalled", onStall);
+    audio.addEventListener("ended", onEnded);
     audio.addEventListener("error", onError);
+    window.addEventListener("offline", onOffline);
+    window.addEventListener("online", onOnline);
     return () => {
       audio.removeEventListener("playing", onPlaying);
       audio.removeEventListener("pause", onPause);
-      audio.removeEventListener("waiting", onWaiting);
+      audio.removeEventListener("waiting", onStall);
+      audio.removeEventListener("stalled", onStall);
+      audio.removeEventListener("ended", onEnded);
       audio.removeEventListener("error", onError);
+      window.removeEventListener("offline", onOffline);
+      window.removeEventListener("online", onOnline);
       audio.pause();
       hlsRef.current?.destroy();
       if (watchdogRef.current) clearTimeout(watchdogRef.current);
+      if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
+      if (stallTimerRef.current) clearTimeout(stallTimerRef.current);
     };
+    // mount-once: registers element + window listeners for the provider's
+    // lifetime; all callbacks it uses are stable useCallbacks
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const play = useCallback(async (s: PublicStation) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    setCurrent(s);
-    setStatus("loading");
-    setError(null);
-    setNowPlaying(null);
-    destroyHls();
-    clearWatchdog();
-    audio.pause();
-    audio.removeAttribute("src");
+  const play = useCallback(
+    (s: PublicStation) => {
+      wantPlayRef.current = true;
+      attemptRef.current = 0;
+      setRetryAttempt(0);
+      streamIdxRef.current = 0;
+      clearTimers();
+      currentRef.current = s;
+      setCurrent(s);
+      setStatusTracked("connecting");
+      setError(null);
+      setNowPlaying(null);
+      ttfaStartRef.current = performance.now();
+      attemptConnect();
 
-    // If we never reach "playing", the stream is dead or unreachable.
-    watchdogRef.current = setTimeout(() => {
-      setStatus((st) => {
-        if (st === "loading") {
-          setError("Station is offline or took too long to connect");
-          return "error";
-        }
-        return st;
+      setRecentEntries((prev) => {
+        const next = [
+          { slug: s.slug, playedAt: Date.now() },
+          ...prev.filter((r) => r.slug !== s.slug),
+        ].slice(0, 20);
+        localStorage.setItem(RECENT_KEY, JSON.stringify(next));
+        return next;
       });
-    }, 12000);
-
-    if (s.hls && !audio.canPlayType("application/vnd.apple.mpegurl")) {
-      const { default: Hls } = await import("hls.js");
-      if (Hls.isSupported()) {
-        const hls = new Hls({ maxBufferLength: 20, manifestLoadingMaxRetry: 2 });
-        hlsRef.current = hls;
-        hls.on(Hls.Events.ERROR, (_e, d) => {
-          if (!d.fatal) return;
-          if (d.type === Hls.ErrorTypes.NETWORK_ERROR) {
-            hls.startLoad();
-            return;
-          }
-          setStatus("error");
-          setError("Stream unavailable right now");
-        });
-        hls.attachMedia(audio);
-        hls.on(Hls.Events.MEDIA_ATTACHED, () => hls.loadSource(s.stream));
-      } else {
-        setStatus("error");
-        setError("HLS not supported in this browser");
-        return;
-      }
-    } else {
-      audio.src = s.stream;
-    }
-
-    try {
-      await audio.play();
-    } catch (err) {
-      // AbortError fires when a newer station replaces this src — ignore it.
-      if ((err as DOMException)?.name !== "AbortError") {
-        setStatus("error");
-        setError("Playback was blocked or the stream is offline");
-      }
-      return;
-    }
-
-    setRecentEntries((prev) => {
-      const next = [
-        { slug: s.slug, playedAt: Date.now() },
-        ...prev.filter((r) => r.slug !== s.slug),
-      ].slice(0, 20);
-      localStorage.setItem(RECENT_KEY, JSON.stringify(next));
-      return next;
-    });
-    setSnaps((prev) => {
-      const next = { ...prev, [s.slug]: s };
-      localStorage.setItem(SNAPS_KEY, JSON.stringify(next));
-      return next;
-    });
-  }, []);
+      setSnaps((prev) => {
+        const next = { ...prev, [s.slug]: s };
+        localStorage.setItem(SNAPS_KEY, JSON.stringify(next));
+        return next;
+      });
+    },
+    [attemptConnect, clearTimers, setStatusTracked]
+  );
+  useEffect(() => {
+    playRef.current = play;
+  }, [play]);
 
   const toggle = useCallback(() => {
     const audio = audioRef.current;
-    if (!audio || !current) return;
+    const s = currentRef.current;
+    if (!audio || !s) return;
     // After an error the old source is dead — go through play() again so the
     // stream URL (or a fresh hls.js instance) is re-established instead of
     // calling play() on a broken src. Makes "tap to retry" actually retry.
     if (status === "error") {
-      play(current);
+      play(s);
       return;
     }
-    if (status === "playing") audio.pause();
-    else audio.play().catch(() => setStatus("error"));
-  }, [current, status, play]);
+    if (isBusyStatus(status) || status === "playing") {
+      wantPlayRef.current = false;
+      clearTimers();
+      audio.pause();
+      setStatusTracked("paused");
+      return;
+    }
+    wantPlayRef.current = true;
+    audio.play().catch(() => play(s));
+  }, [status, play, clearTimers, setStatusTracked]);
 
   const stop = useCallback(() => {
     const audio = audioRef.current;
+    wantPlayRef.current = false;
+    clearTimers();
     destroyHls();
-    clearWatchdog();
     audio?.pause();
     audio?.removeAttribute("src");
+    currentRef.current = null;
     setCurrent(null);
-    setStatus("idle");
+    setStatusTracked("idle");
     setNowPlaying(null);
+    setRetryAttempt(0);
     setSleepAt(null);
     setSleepRemaining(null);
-  }, []);
+  }, [clearTimers, destroyHls, setStatusTracked]);
 
   // ---------- catalog for next/prev (fetched lazily on first use) ----------
   const ensureCatalog = useCallback(async () => {
@@ -543,8 +737,8 @@ export default function AudioProvider({
   // ---------- context values ----------
 
   const playbackState = useMemo<PlaybackState>(
-    () => ({ current, status, error, nowPlaying, volume, muted }),
-    [current, status, error, nowPlaying, volume, muted]
+    () => ({ current, status, error, nowPlaying, volume, muted, retryAttempt }),
+    [current, status, error, nowPlaying, volume, muted, retryAttempt]
   );
 
   const playbackActions = useMemo<PlaybackActions>(

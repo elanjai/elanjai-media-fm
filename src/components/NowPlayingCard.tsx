@@ -22,9 +22,11 @@ export default function NowPlayingCard({ station }: { station: PublicStation }) 
           {isCurrent
             ? status === "error"
               ? "Stream unavailable — tap play to retry"
-              : status === "loading"
+              : status === "connecting" || status === "reconnecting"
                 ? "Connecting…"
-                : playing
+                : status === "buffering"
+                  ? "Buffering…"
+                  : playing
                   ? (nowPlaying ?? "Live")
                   : "Paused"
             : "Tap play to hear what's on"}

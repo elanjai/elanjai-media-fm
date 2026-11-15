@@ -38,6 +38,8 @@ export type PublicStation = Pick<
 > & {
   /** URL handed to the player — upstream for direct streams, proxy URL otherwise. */
   stream: string;
+  /** Fallback stream URLs (catalog schema v2) — tried in order on reconnect. */
+  altStreams?: string[];
   hls: boolean;
   /** True when the browser plays the broadcaster's https URL directly (no proxy). */
   direct: boolean;
