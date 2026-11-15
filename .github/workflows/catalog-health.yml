@@ -1,0 +1,57 @@
+name: Catalog health
+
+# Daily stream health check — dead stations get is_active=false, revived
+# ones come back. Opens a PR when the catalog changed so a human merges it.
+on:
+  schedule:
+    - cron: "0 3 * * *" # ~08:30 IST daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  healthcheck:
+    name: Check streams and open a PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run stream health check
+        run: python scripts/healthcheck.py
+
+      - name: Report changes
+        id: diff
+        run: |
+          if git diff --quiet -- data/stations.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Catalog unchanged — all previously-live streams still up."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff --stat -- data/stations.json
+            git diff -- data/stations.json | grep -c '"is_active": false' || true
+          fi
+
+      - name: Open pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          branch="catalog-health/$(date +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add data/stations.json
+          git commit -m "Refresh stream health ($(date +%Y-%m-%d))
+
+          Automated daily check: streams that failed to respond are marked
+          is_active=false; streams that recovered are marked active again."
+          git push --force-with-lease origin "$branch"
+          gh pr create --base main --head "$branch" --fill \
+            || gh pr view "$branch"
