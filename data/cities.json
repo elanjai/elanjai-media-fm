@@ -10,6 +10,11 @@
   "state": "Karnataka"
  },
  {
+  "slug": "bhubaneswar",
+  "name": "Bhubaneswar",
+  "state": "Odisha"
+ },
+ {
   "slug": "chennai",
   "name": "Chennai",
   "state": "Tamil Nadu"
@@ -43,6 +48,11 @@
   "slug": "kochi",
   "name": "Kochi",
   "state": "Kerala"
+ },
+ {
+  "slug": "kolhapur",
+  "name": "Kolhapur",
+  "state": "Maharashtra"
  },
  {
   "slug": "kolkata",

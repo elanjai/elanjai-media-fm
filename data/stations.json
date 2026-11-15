@@ -10798,5 +10798,2023 @@
   "votes": 0,
   "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
+ },
+ {
+  "id": "19a92626",
+  "name": "AL-QURAN BANGLA",
+  "slug": "al-quran-bangla",
+  "streams": [
+   {
+    "url": "http://66.45.232.131:9994/;stream/1/;",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://www.liveonlineradio.net/bangla/bangla-al-quran.htm",
+  "favicon": "",
+  "country": "Bangladesh",
+  "votes": 19632,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "05201777",
+  "name": "AL-QURAN BANGLA",
+  "slug": "al-quran-bangla-052017",
+  "streams": [
+   {
+    "url": "http://66.45.232.131:9994/",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://www.liveonlineradio.net/bangla/bangla-al-quran.htm",
+  "favicon": "https://www.liveonlineradio.net/wp-content/uploads/2011/08/bangla-al-quran-1.jpg",
+  "country": "Bangladesh",
+  "votes": 13328,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "2a48dacb",
+  "name": "A2Z RADIO",
+  "slug": "a2z-radio",
+  "streams": [
+   {
+    "url": "https://listen.radioking.com/radio/1743/stream/125",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [],
+  "homepage": "https://www.liveonlineradio.net/bangla/a2z-radio.htm",
+  "favicon": "https://liveonlineradio.net/img/favicon_96.png",
+  "country": "Bangladesh",
+  "votes": 10005,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "192010c6",
+  "name": "Radio GoonGoon",
+  "slug": "radio-goongoon",
+  "streams": [
+   {
+    "url": "https://audio.streamcast.xyz/listen/radiogoongoon/radio.mp3",
+    "codec": "MP3",
+    "bitrate": 192,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [],
+  "homepage": "https://radiogoongoon.com/",
+  "favicon": "",
+  "country": "Bangladesh",
+  "votes": 3875,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "18113aa8",
+  "name": "Dipak",
+  "slug": "dipak",
+  "streams": [
+   {
+    "url": "http://stream.zeno.fm/2k6xfu1pvs8uv",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [
+   "hits",
+   "retro"
+  ],
+  "homepage": "https://myradiodj4.blogspot.com/?m=1",
+  "favicon": "https://myradiodj4.blogspot.com/favicon.ico",
+  "country": "India",
+  "votes": 831,
+  "tags": [
+   "90s",
+   "bengali",
+   "hits"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "7a280148",
+  "name": "Mellow Bangla",
+  "slug": "mellow-bangla",
+  "streams": [
+   {
+    "url": "https://radio.mellowbangla.com/stream",
+    "codec": "MP3",
+    "bitrate": 192,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali",
+   "english",
+   "hindi"
+  ],
+  "categories": [],
+  "homepage": "https://www.mellowbangla.com/",
+  "favicon": "https://www.mellowbangla.com/icon.png",
+  "country": "Bangladesh",
+  "votes": 479,
+  "tags": [
+   "bangla",
+   "bangla fm",
+   "bangla music",
+   "bangla radio",
+   "bangladesh",
+   "bengali"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "59b2035c",
+  "name": "Radio Foorti",
+  "slug": "radio-foorti",
+  "streams": [
+   {
+    "url": "https://radiofoorti.fm/api/stream",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [
+   "hits"
+  ],
+  "homepage": "https://radiofoorti.fm/",
+  "favicon": "https://i.postimg.cc/0NWMBYGh/bd-radio-foorti.webp",
+  "country": "Bangladesh",
+  "votes": 181,
+  "tags": [
+   "pop"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "d974f85f",
+  "name": "Radio Quarantine Kolkata",
+  "slug": "radio-quarantine-kolkata",
+  "streams": [
+   {
+    "url": "https://stream-173.zeno.fm/krk4kw830tzuv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiJrcms0a3c4MzB0enV2IiwiaG9zdCI6InN0cmVhbS0xNzMuemVuby5mbSIsInJ0dGwiOjUsImp0aSI6Ilp1VWk3TFVWVGotNG5sc3Z5QUJmYnciLCJpYXQiOjE3MzgxNTAxOTQsImV4cCI6MTczODE1MDI1NH0.EHVaKuFJc7voIS73qqzYsmhgIJlRQ5ppsygeKYAibPo",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [],
+  "homepage": "https://radioquarantinekol.wixsite.com/rqkradio",
+  "favicon": "https://zeno.fm/_ipx/q_85&fit_cover&s_144x144/https://images.zeno.fm/fLrwT1-d1ipN6cwLwjfdV8jRenVhcSAzIfcSaNifU9Q/rs:fill:288:288/g:ce:0:0/aHR0cHM6Ly9wcm94eS56ZW5vLmZtL2NvbnRlbnQvc3RhdGlvbnMvYWd4emZucGxibTh0YzNSaGRITnlNZ3NTQ2tGMWRHaERiR2xsYm5RWWdJRGd2NUNDdWdzTUN4SU9VM1JoZEdsdmJsQnliMlpwYkdVWWdJRGc3X0hBN1FvTW9nRUVlbVZ1YncvaW1hZ2UvP3U9MTY2MTY0OTAxNDAwMA.webp",
+  "country": "India",
+  "votes": 129,
+  "tags": [],
+  "is_active": true,
+  "city": "kolkata",
+  "state": "West Bengal"
+ },
+ {
+  "id": "be1a35d7",
+  "name": "Dhaka FM",
+  "slug": "dhaka-fm",
+  "streams": [
+   {
+    "url": "https://play.dhakafm904.com/;",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [
+   "hits"
+  ],
+  "homepage": "https://dhakafm904.com/",
+  "favicon": "https://i.postimg.cc/Z5MBwBZ5/bd-dhaka-fm.webp",
+  "country": "Bangladesh",
+  "votes": 83,
+  "tags": [
+   "hit",
+   "pop"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "6e70cf66",
+  "name": "Universal Health Radio (বাংলা)",
+  "slug": "universal-health-radio-6e70cf",
+  "streams": [
+   {
+    "url": "https://radio.universalhealthradio.org/uhr-bn.mp3",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [
+   "news"
+  ],
+  "homepage": "https://universalhealthradio.org/",
+  "favicon": "https://universalhealthradio.org/favicon.png",
+  "country": "Bangladesh",
+  "votes": 63,
+  "tags": [
+   "bengali",
+   "cdc",
+   "education",
+   "fda",
+   "health",
+   "news"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "3c1764e2",
+  "name": "Ankora Radio",
+  "slug": "ankora-radio",
+  "streams": [
+   {
+    "url": "https://stream-153.zeno.fm/xush70b1cbruv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiJ4dXNoNzBiMWNicnV2IiwiaG9zdCI6InN0cmVhbS0xNTMuemVuby5mbSIsInJ0dGwiOjUsImp0aSI6IktzMUIweU9iUm9PdEFWVjVlX1F3ZGciLCJpYXQiOjE3MzgxNDk4MDcsImV4cCI6MTczODE0OTg2N30.3enB3waPQxNQtJtheCrZxm79XrRUySMma-c87DHes2E",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [
+   "hits"
+  ],
+  "homepage": "https://ankoraradio.com/website/Pages/about_us",
+  "favicon": "https://pbs.twimg.com/profile_images/1358111873523085312/JyzT_Rad_400x400.jpg",
+  "country": "India",
+  "votes": 47,
+  "tags": [
+   "pop"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "be5b5e58",
+  "name": "Spice FM",
+  "slug": "spice-fm",
+  "streams": [
+   {
+    "url": "https://stream.spicefmbd.com/stream.m3u8",
+    "codec": "UNKNOWN",
+    "bitrate": 0,
+    "hls": true
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [
+   "hits",
+   "talk"
+  ],
+  "homepage": "https://spicefmbd.com/",
+  "favicon": "https://i.postimg.cc/DZmTxs5c/bd-spice-fm.webp",
+  "country": "Bangladesh",
+  "votes": 45,
+  "tags": [
+   "pop",
+   "talk"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "83aabc97",
+  "name": "Radio Khushbu",
+  "slug": "radio-khushbu",
+  "streams": [
+   {
+    "url": "https://radio.pblab.in/radiokhushbu",
+    "codec": "AAC",
+    "bitrate": 20,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali",
+   "hindi"
+  ],
+  "categories": [
+   "film",
+   "retro"
+  ],
+  "homepage": "https://pblab.in/radio",
+  "favicon": "https://pblab.in/radio-khushbu-logo.jpg",
+  "country": "India",
+  "votes": 22,
+  "tags": [
+   "bollywood",
+   "hindi",
+   "indian",
+   "retro"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "6599c907",
+  "name": "Translation of the Quran in Bengali",
+  "slug": "translation-of-the-quran-in-bengali",
+  "streams": [
+   {
+    "url": "https://serverkw.quran-uni.com:8128/;",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://quran-uni.com/radio/%d8%aa%d8%b1%d8%ac%d9%85%d8%a9-%d8%a7%d9%84%d9%82%d8%b1%d8%a2%d9%86-%d8%a8%d8%a7%d9%84%d8%a8%d9%86%d8%ba%d8%a7%d9%84%d9%8a%d8%a9/",
+  "favicon": "",
+  "country": "Kuwait",
+  "votes": 0,
+  "tags": [
+   "bengali",
+   "islam",
+   "islamic",
+   "quran",
+   "religion"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "6242319f",
+  "name": "AIR Kolhapur",
+  "slug": "air-kolhapur",
+  "streams": [
+   {
+    "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio063/playlist.m3u8",
+    "codec": "AAC",
+    "bitrate": 93,
+    "hls": true
+   }
+  ],
+  "languages": [
+   "marathi",
+   "english",
+   "hindi"
+  ],
+  "categories": [],
+  "homepage": "https://prasarbharati.gov.in/",
+  "favicon": "",
+  "country": "India",
+  "votes": 248,
+  "tags": [
+   "infotainment",
+   "local news",
+   "radio drama"
+  ],
+  "is_active": true,
+  "network": "air",
+  "city": "kolhapur",
+  "state": "Maharashtra"
+ },
+ {
+  "id": "5e6d1141",
+  "name": "Odisha Radio",
+  "slug": "odisha-radio",
+  "streams": [
+   {
+    "url": "https://stream.zeno.fm/x23ttc8e0chvv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "odia"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "https://onlineradiohub.com/wp-content/uploads/2024/01/odisha-radio.jpg",
+  "country": "India",
+  "votes": 171,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "b942d751",
+  "name": "Love Station Odisha",
+  "slug": "love-station-odisha",
+  "streams": [
+   {
+    "url": "https://stream-156.zeno.fm/dkpdmc8e0chvv?zs=uhX7-GwNR1-D5EAX_NJ1lQ",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "odia"
+  ],
+  "categories": [
+   "love"
+  ],
+  "homepage": "",
+  "favicon": "https://onlineradiohub.com/wp-content/uploads/2024/01/love-station.jpg",
+  "country": "India",
+  "votes": 136,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "53e1556a",
+  "name": "Translation of the Quran in Assamese",
+  "slug": "translation-of-the-quran-in-assamese",
+  "streams": [
+   {
+    "url": "https://serverkw.quran-uni.com:8384/;",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "assamese"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://quran-uni.com/radio/%d8%a5%d8%b0%d8%a7%d8%b9%d8%a9-%d8%aa%d8%b1%d8%ac%d9%85%d8%a9-%d9%85%d8%b9%d8%a7%d9%86%d9%8a-%d8%a7%d9%84%d9%82%d8%b1%d8%a2%d9%86-%d8%a7%d9%84%d9%83%d8%b1%d9%8a%d9%85-%d8%a8%d8%a7%d9%84%d8%a2%d8%b3/",
+  "favicon": "",
+  "country": "Kuwait",
+  "votes": 5,
+  "tags": [
+   "assamese",
+   "islam",
+   "islamic",
+   "quran",
+   "religion"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "cbfa1fed",
+  "name": "Radio Kesari 90.0 FM",
+  "slug": "radio-kesari-90-0-fm",
+  "streams": [
+   {
+    "url": "https://stream.zeno.fm/7yhq985hnxhvv",
+    "codec": "MP3",
+    "bitrate": 192,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bhojpuri"
+  ],
+  "categories": [],
+  "homepage": "https://radiokesari.com/",
+  "favicon": "",
+  "country": "India",
+  "votes": 1056,
+  "tags": [
+   "bhojpuri"
+  ],
+  "is_active": true,
+  "frequency_mhz": 90.0
+ },
+ {
+  "id": "fe0ca91d",
+  "name": "bhojpuri hot song",
+  "slug": "bhojpuri-hot-song",
+  "streams": [
+   {
+    "url": "https://stream.zeno.fm/yz0ncx9gha0uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bhojpuri"
+  ],
+  "categories": [],
+  "homepage": "https://stream.zeno.fm/yz0ncx9gha0uv",
+  "favicon": "",
+  "country": "India",
+  "votes": 465,
+  "tags": [
+   "bhojpuri hot song"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "014f8235",
+  "name": "Sneh bhojpuri",
+  "slug": "sneh-bhojpuri",
+  "streams": [
+   {
+    "url": "https://stream.zeno.fm/zqyhigwwo5mvv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bhojpuri"
+  ],
+  "categories": [],
+  "homepage": "https://stream.zeno.fm/zqyhigwwo5mvv",
+  "favicon": "",
+  "country": "India",
+  "votes": 366,
+  "tags": [
+   "sneh bhojpuri"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "2428ea01",
+  "name": "Madhur radio",
+  "slug": "madhur-radio",
+  "streams": [
+   {
+    "url": "https://stream.zeno.fm/yv2k0dp18vzuv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bhojpuri"
+  ],
+  "categories": [],
+  "homepage": "https://stream.zeno.fm/yv2k0dp18vzuv",
+  "favicon": "",
+  "country": "India",
+  "votes": 182,
+  "tags": [
+   "madhur radio"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "f1704629",
+  "name": "VRISHTI",
+  "slug": "vrishti",
+  "streams": [
+   {
+    "url": "https://stream.zeno.fm/bps115unz5uvv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bhojpuri"
+  ],
+  "categories": [],
+  "homepage": "https://stream.zeno.fm/bps115unz5uvv",
+  "favicon": "",
+  "country": "India",
+  "votes": 97,
+  "tags": [
+   "vrishti"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "ef7748fa",
+  "name": "Bhojpuriya FM 92.8",
+  "slug": "bhojpuriya-fm-92-8",
+  "streams": [
+   {
+    "url": "http://streaming.softnep.net:8143/;stream.nsv&type=mp3&volume=60",
+    "codec": "MP3",
+    "bitrate": 32,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bhojpuri"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 8,
+  "tags": [],
+  "is_active": true,
+  "frequency_mhz": 92.8
+ },
+ {
+  "id": "688d3ff2",
+  "name": "Radio AmchiKONKANI",
+  "slug": "radio-amchikonkani",
+  "streams": [
+   {
+    "url": "http://178.32.107.151:3711/stream",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "konkani"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "http://amchikonkani.com/",
+  "favicon": "",
+  "country": "India",
+  "votes": 142,
+  "tags": [
+   "amchikonkani",
+   "bangalore",
+   "christian",
+   "devotional",
+   "gospel",
+   "konkani"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "76f5ad56",
+  "name": "Translation of the Quran in Kashmiri",
+  "slug": "translation-of-the-quran-in-kashmiri",
+  "streams": [
+   {
+    "url": "https://serverkw.quran-uni.com:8108/;",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "kashmiri"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://quran-uni.com/radio/%d8%aa%d8%b1%d8%ac%d9%85%d8%a9-%d8%a7%d9%84%d9%82%d8%b1%d8%a2%d9%86-%d8%a8%d8%a7%d9%84%d9%83%d8%b4%d9%85%d9%8a%d8%b1%d9%8a%d8%a9/",
+  "favicon": "",
+  "country": "Kuwait",
+  "votes": 0,
+  "tags": [
+   "islam",
+   "islamic",
+   "kashmiri",
+   "quran",
+   "religion"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "bd925c45",
+  "name": "Sindh fm",
+  "slug": "sindh-fm",
+  "streams": [
+   {
+    "url": "http://167.114.131.90:2758/",
+    "codec": "MP3",
+    "bitrate": 32,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "sindhi",
+   "english",
+   "hindi"
+  ],
+  "categories": [],
+  "homepage": "http://167.114.131.90:2758/",
+  "favicon": "http://167.114.131.90:2758",
+  "country": "Pakistan",
+  "votes": 8,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "1ed45adf",
+  "name": "Kalika FM 95.2 FM",
+  "slug": "kalika-fm-95-2-fm",
+  "streams": [
+   {
+    "url": "https://streaming.softnep.net:10828/stream",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "http://www.kalikafm.com.np/",
+  "favicon": "https://www.kalikanews.com/themes/kalikanews/images/favicon.png",
+  "country": "Nepal",
+  "votes": 9670,
+  "tags": [],
+  "is_active": true,
+  "frequency_mhz": 95.2
+ },
+ {
+  "id": "b3ccdf89",
+  "name": "Ujyaalo 90 Network",
+  "slug": "ujyaalo-90-network",
+  "streams": [
+   {
+    "url": "http://stream.zenolive.com/wtuvp08xq1duv",
+    "codec": "MP3",
+    "bitrate": 112,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali",
+   "english"
+  ],
+  "categories": [
+   "news"
+  ],
+  "homepage": "https://ujyaaloonline.com/",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 5817,
+  "tags": [
+   "entertainment",
+   "media",
+   "news",
+   "variety"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "322e5672",
+  "name": "Radio Nepal",
+  "slug": "radio-nepal",
+  "streams": [
+   {
+    "url": "https://stream1.radionepal.gov.np/live/",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [
+   "news"
+  ],
+  "homepage": "https://radionepal.gov.np/",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 5530,
+  "tags": [
+   "news"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "b05b384c",
+  "name": "Capital FM 92.4",
+  "slug": "capital-fm-92-4",
+  "streams": [
+   {
+    "url": "http://streaming.softnep.net:8037/;",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "http://www.cfmonair.com/",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 5100,
+  "tags": [],
+  "is_active": true,
+  "frequency_mhz": 92.4
+ },
+ {
+  "id": "e9dd5ccf",
+  "name": "Radio Himalaya",
+  "slug": "radio-himalaya",
+  "streams": [
+   {
+    "url": "https://live.itech.host/himalayaradio?1588276425741",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "http://www.radiohimalaya.com/",
+  "favicon": "http://img.sedoparking.com/templates/logos/sedo_logo.png",
+  "country": "Nepal",
+  "votes": 2903,
+  "tags": [
+   "himalaya",
+   "nepal"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "39883b0b",
+  "name": "CIN Khabar",
+  "slug": "cin-khabar",
+  "streams": [
+   {
+    "url": "https://streaming.softnep.net:10996/;stream.nsv&type=mp3&volume=60",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [
+   "hits",
+   "news",
+   "talk"
+  ],
+  "homepage": "https://www.cinkhabar.com/",
+  "favicon": "https://www.cinkhabar.com/themes/cinkhabar/images/favicon.png",
+  "country": "Nepal",
+  "votes": 1493,
+  "tags": [
+   "entertainment",
+   "news",
+   "pop",
+   "talk"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "d24f2857",
+  "name": "Naya Radio",
+  "slug": "naya-radio",
+  "streams": [
+   {
+    "url": "http://live.itech.host:1110/;",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "https://www.nayafm.com.np/",
+  "favicon": "https://www.nayafm.com.np/style/icon2.png",
+  "country": "Nepal",
+  "votes": 651,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "8fbda0f0",
+  "name": "Radio Thaha Sanchar",
+  "slug": "radio-thaha-sanchar",
+  "streams": [
+   {
+    "url": "https://streaming.softnep.net:10988/;stream.nsv&type=mp3",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "https://thahasanchar.com/live",
+  "favicon": "null",
+  "country": "Nepal",
+  "votes": 129,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "4b6013de",
+  "name": "Jayaprithvi F.M.",
+  "slug": "jayaprithvi-f-m",
+  "streams": [
+   {
+    "url": "https://streaming.softnep.net:10824/",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali",
+   "english"
+  ],
+  "categories": [
+   "classical",
+   "news"
+  ],
+  "homepage": "https://www.jpkhabar.com/",
+  "favicon": "https://cdn-profiles.tunein.com/s343823/images/logod.jpg?t=638841604500000000",
+  "country": "Nepal",
+  "votes": 79,
+  "tags": [
+   "classical",
+   "news"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "1ffdbe5b",
+  "name": "90.1 NBC FM - Narwee - 90.1 FM (AAC)",
+  "slug": "90-1-nbc-fm-narwee-90-1-fm-aac",
+  "streams": [
+   {
+    "url": "https://studio.901nbcfm.com.au:8902/newstream",
+    "codec": "AAC",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali",
+   "english"
+  ],
+  "categories": [],
+  "homepage": "https://www.901nbcfm.com.au/",
+  "favicon": "https://i.ibb.co/L683p7B/147954-d2e590e6ccda4d25a7213e2565ed7274-mv2.png",
+  "country": "Australia",
+  "votes": 31,
+  "tags": [
+   "community radio",
+   "local"
+  ],
+  "is_active": true,
+  "frequency_mhz": 90.1
+ },
+ {
+  "id": "44bfe9da",
+  "name": "Sumiran FM",
+  "slug": "sumiran-fm",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/5132813491765248",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 13,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "89c43387",
+  "name": "Radio Annapurna Nepal",
+  "slug": "radio-annapurna-nepal",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/34",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 12,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "846cf12b",
+  "name": "Napho Radio FM 88.25",
+  "slug": "napho-radio-fm-88-25",
+  "streams": [
+   {
+    "url": "https://radio11.plathong.net/7136/;stream.mp3",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "http://naphoradio.com/",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 11,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "1935efd9",
+  "name": "BBC World Service English",
+  "slug": "bbc-world-service-english",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/5639388954361856",
+    "codec": "AAC",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 11,
+  "tags": [],
+  "is_active": true,
+  "network": "bbc"
+ },
+ {
+  "id": "0acab9ca",
+  "name": "Chitwan Radio Network",
+  "slug": "chitwan-radio-network",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/123",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 11,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "168c92e3",
+  "name": "Nepali Radio Network",
+  "slug": "nepali-radio-network",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/560",
+    "codec": "AAC",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 9,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "950aead1",
+  "name": "Image FM",
+  "slug": "image-fm",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/9",
+    "codec": "AAC",
+    "bitrate": 160,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 7,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "6fa0bc3c",
+  "name": "Makalu FM",
+  "slug": "makalu-fm",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/318",
+    "codec": "MP3",
+    "bitrate": 48,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 7,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "4f608d1b",
+  "name": "Nepal Network",
+  "slug": "nepal-network",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/5092732051652608",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 6,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "ea68b367",
+  "name": "Radio Sambridha Nepal (Nesdo Fm) (92.6)",
+  "slug": "radio-sambridha-nepal-nesdo-fm-92-6",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/5712961207271424",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 6,
+  "tags": [],
+  "is_active": true,
+  "frequency_mhz": 92.6
+ },
+ {
+  "id": "38869d32",
+  "name": "Red FM",
+  "slug": "red-fm",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/5070153408577536",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 6,
+  "tags": [],
+  "is_active": true,
+  "network": "redfm"
+ },
+ {
+  "id": "bbc57b97",
+  "name": "24 Nepali Online Radio",
+  "slug": "24-nepali-online-radio",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/5648733377134592",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 5,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "7552b035",
+  "name": "Bhojpuriya FM",
+  "slug": "bhojpuriya-fm",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/64",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 5,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "096a8915",
+  "name": "Nepali Online Radio",
+  "slug": "nepali-online-radio",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/1754975892132",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 5,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "95b9a506",
+  "name": "Radio Holeri FM",
+  "slug": "radio-holeri-fm",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/613",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 4,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "8285475b",
+  "name": "Radio City",
+  "slug": "radio-city",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/192",
+    "codec": "MP3",
+    "bitrate": 48,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 4,
+  "tags": [],
+  "is_active": true,
+  "network": "radiocity"
+ },
+ {
+  "id": "a9f470d2",
+  "name": "Good News FM",
+  "slug": "good-news-fm",
+  "streams": [
+   {
+    "url": "https://www.hamropatro.com/api/radio/stream/5098435466231808",
+    "codec": "MP3",
+    "bitrate": 192,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "nepali"
+  ],
+  "categories": [
+   "news"
+  ],
+  "homepage": "",
+  "favicon": "",
+  "country": "Nepal",
+  "votes": 3,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "776041d4",
+  "name": "Radio Sanskrit Bharati",
+  "slug": "radio-sanskrit-bharati",
+  "streams": [
+   {
+    "url": "https://stream.zeno.fm/c0adewsyw8quv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "sanskrit"
+  ],
+  "categories": [],
+  "homepage": "https://www.khandbahale.com/radio/sanskritbharati/",
+  "favicon": "https://images.zeno.fm/f0fw9QbYtozQIsp0r8G3y6qmTkHSqoDDc-nNr12Zj2w/rs:fill:288:288/g:ce:0:0/aHR0cHM6Ly9wcm94eS56ZW5vLmZtL2NvbnRlbnQvc3RhdGlvbnMvYWd4emZucGxibTh0YzNSaGRITnlNZ3NTQ2tGMWRHaERiR2xsYm5RWWdJQ2ctY1N2a2dnTUN4SU9VM1JoZEdsdmJsQnliMlpwYkdVWWdJQ2duZmJ5MmdvTW9nRUVlbVZ1YncvaW1hZ2UvP3U9MTY2MDg1NzExODAwMA.webp",
+  "country": "India",
+  "votes": 18,
+  "tags": [],
+  "is_active": true
+ },
+ {
+  "id": "6cc9a8c1",
+  "name": "Radio Sai - Gayathri Mantra Stream",
+  "slug": "radio-sai-gayathri-mantra-stream",
+  "streams": [
+   {
+    "url": "http://stream.radiosai.net:8006/",
+    "codec": "MP3",
+    "bitrate": 24,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "sanskrit"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://www.radiosai.org/",
+  "favicon": "",
+  "country": "India",
+  "votes": 8,
+  "tags": [
+   "chanting",
+   "devotional",
+   "gayathri",
+   "gayatri",
+   "hindu",
+   "mantra"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "d91ceb5a",
+  "name": "Radio Sai - Vedam Stream",
+  "slug": "radio-sai-vedam-stream",
+  "streams": [
+   {
+    "url": "http://stream.radiosai.net:8010/",
+    "codec": "MP3",
+    "bitrate": 24,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "sanskrit"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://www.radiosai.org/",
+  "favicon": "",
+  "country": "India",
+  "votes": 3,
+  "tags": [
+   "chanting",
+   "devotional",
+   "hindu",
+   "mantra",
+   "rudram",
+   "spiritual"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "956c62f3",
+  "name": "Mahakatha Radio",
+  "slug": "mahakatha-radio",
+  "streams": [
+   {
+    "url": "https://mahakatharadio.com/api/station/live.mp3",
+    "codec": "MP3",
+    "bitrate": 320,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "sanskrit",
+   "english",
+   "hindi"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://mahakatharadio.com/",
+  "favicon": "https://mahakatharadio.com/logo/station-300.png",
+  "country": "India",
+  "votes": 2,
+  "tags": [
+   "bhakti",
+   "buddhist",
+   "chanting",
+   "devotional",
+   "hindu",
+   "india"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "c520e059",
+  "name": "Radio Sai - Shiva Panchakshari Stream",
+  "slug": "radio-sai-shiva-panchakshari-stream",
+  "streams": [
+   {
+    "url": "http://stream.radiosai.net:8012/",
+    "codec": "MP3",
+    "bitrate": 24,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "sanskrit"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://www.radiosai.org/",
+  "favicon": "",
+  "country": "India",
+  "votes": 1,
+  "tags": [
+   "chanting",
+   "devotional",
+   "hindu",
+   "mantra",
+   "om namah shivaya",
+   "panchakshari"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "41c313d6",
+  "name": "Radio Sai - Sai Gayathri Stream",
+  "slug": "radio-sai-sai-gayathri-stream",
+  "streams": [
+   {
+    "url": "http://stream.radiosai.net:8004/",
+    "codec": "MP3",
+    "bitrate": 24,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "sanskrit"
+  ],
+  "categories": [
+   "devotional"
+  ],
+  "homepage": "https://www.radiosai.org/",
+  "favicon": "",
+  "country": "India",
+  "votes": 1,
+  "tags": [
+   "chanting",
+   "devotional",
+   "gayatri",
+   "mantra",
+   "sai gayatri",
+   "spiritual"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "75fd8f17",
+  "name": "Dance Wave! | MP3",
+  "slug": "dance-wave-mp3",
+  "streams": [
+   {
+    "url": "https://dancewave.online/dance.mp3",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "english"
+  ],
+  "categories": [],
+  "homepage": "https://dancewave.online/",
+  "favicon": "https://dancewave.online/dw_logo.png",
+  "country": "India",
+  "votes": 576056,
+  "tags": [
+   "club dance electronic house trance"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "a9f0e1f6",
+  "name": "Dance Wave Retro! | MP3",
+  "slug": "dance-wave-retro-mp3",
+  "streams": [
+   {
+    "url": "https://dancewave.online/retrodance.mp3",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "english"
+  ],
+  "categories": [
+   "retro"
+  ],
+  "homepage": "https://dancewave.online/",
+  "favicon": "https://dancewave.online/dwr_logo.png",
+  "country": "India",
+  "votes": 55142,
+  "tags": [
+   "90s dance"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "marathi-tarang",
+  "name": "Marathi Tarang",
+  "slug": "marathi-tarang",
+  "streams": [
+   {
+    "url": "https://a10.asurahosting.com/hls/radio_marathi_tarang/live.m3u8",
+    "codec": "UNKNOWN",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "marathi"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/marathitarang.html",
+  "favicon": "https://radiosindia.com/images/marathitarangnew.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "marathi"
+  ],
+  "is_active": false
+ },
+ {
+  "id": "radio-karmaveer",
+  "name": "Radio Karmaveer",
+  "slug": "radio-karmaveer",
+  "streams": [
+   {
+    "url": "https://a4.asurahosting.com:6670/radio.mp3",
+    "codec": "AAC",
+    "bitrate": 192,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "marathi"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/radiokarmaveer.html",
+  "favicon": "https://radiosindia.com/images/radiokarmaveer.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "marathi"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "radio-vishwas",
+  "name": "Radio Vishwas",
+  "slug": "radio-vishwas",
+  "streams": [
+   {
+    "url": "https://dgnlfn5aus0c6.cloudfront.net/radiovishwas.m3u8",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "marathi"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/radiovishwas.html",
+  "favicon": "https://radiosindia.com/images/radiovishwas.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "marathi"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "radio-city-marathi",
+  "name": "Radio City Marathi",
+  "slug": "radio-city-marathi",
+  "streams": [
+   {
+    "url": "https://shripadradio.radioca.st/stream",
+    "codec": "UNKNOWN",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "marathi"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/radiocitymarathi.html",
+  "favicon": "https://radiosindia.com/images/radiocity.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "marathi"
+  ],
+  "is_active": false,
+  "network": "radiocity"
+ },
+ {
+  "id": "radio-saptarang",
+  "name": "Radio Saptarang",
+  "slug": "radio-saptarang",
+  "streams": [
+   {
+    "url": "http://85.25.185.202:8138/stream",
+    "codec": "AAC",
+    "bitrate": 64,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "marathi"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/radiosaptarang.html",
+  "favicon": "https://radiosindia.com/images/radiosaptarang.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "marathi"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "radio-sugar",
+  "name": "Radio Sugar",
+  "slug": "radio-sugar",
+  "streams": [
+   {
+    "url": "http://188.165.222.198:8157/stream",
+    "codec": "UNKNOWN",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "marathi"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/radiosugar.html",
+  "favicon": "https://radiosindia.com/images/radiosugar.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "marathi"
+  ],
+  "is_active": false
+ },
+ {
+  "id": "jesus-coming-fm",
+  "name": "Jesus Coming FM",
+  "slug": "jesus-coming-fm",
+  "streams": [
+   {
+    "url": "http://live.jesuscomingfm.com:8602/;",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "marathi"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/jesuscomingfmmarathi.html",
+  "favicon": "https://radiosindia.com/images/jesuscomingfm.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "marathi"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "rangilo-gujarat",
+  "name": "RANGILO GUJARAT",
+  "slug": "rangilo-gujarat",
+  "streams": [
+   {
+    "url": "https://s9.voscast.com:7403/stream",
+    "codec": "UNKNOWN",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "gujarati"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/rangilogujarat.html",
+  "favicon": "https://radiosindia.com/images/rangilogujarat.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "gujarati"
+  ],
+  "is_active": false
+ },
+ {
+  "id": "sheetal-sangeet",
+  "name": "SHEETAL SANGEET",
+  "slug": "sheetal-sangeet",
+  "streams": [
+   {
+    "url": "https://az13.yesstreaming.net:8200/radio.mp3",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "gujarati"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/sheetalsangeet.html",
+  "favicon": "https://radiosindia.com/images/sheetalsangeet.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "gujarati"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "radio-sabarmati",
+  "name": "Radio Sabarmati",
+  "slug": "radio-sabarmati",
+  "streams": [
+   {
+    "url": "https://icecast.bkwsu.eu/radio-sabarmati-ahmedabad.mp3",
+    "codec": "MP3",
+    "bitrate": 60,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "gujarati"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/radiosabarmati.html",
+  "favicon": "https://radiosindia.com/images/radiosabarmati.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "gujarati"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "junagadh-janvani",
+  "name": "Junagadh Janvani",
+  "slug": "junagadh-janvani",
+  "streams": [
+   {
+    "url": "https://stream.dbhatt.org/radio/8020/junagadh_janvani.mp3",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "gujarati"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/junagadhjanvani.html",
+  "favicon": "https://radiosindia.com/images/junagadhjanavani.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "gujarati"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "radio-bongonet",
+  "name": "Radio Bongonet",
+  "slug": "radio-bongonet",
+  "streams": [
+   {
+    "url": "http://188.166.176.244:8000/stream",
+    "codec": "UNKNOWN",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/radiobongonet.html",
+  "favicon": "https://radiosindia.com/images/radiobongonetnew.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "bengali"
+  ],
+  "is_active": false
+ },
+ {
+  "id": "fnf-fm",
+  "name": "FNF FM",
+  "slug": "fnf-fm",
+  "streams": [
+   {
+    "url": "https://eu6.fastcast4u.com/proxy/arrahm00?mp=/1",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/fnffmbangla.html",
+  "favicon": "https://radiosindia.com/images/fnffmbangla.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "bengali"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "jago-fm",
+  "name": "Jago Fm",
+  "slug": "jago-fm",
+  "streams": [
+   {
+    "url": "http://139.59.86.99:12496/stream",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "bengali"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/jagofm.html",
+  "favicon": "https://radiosindia.com/images/jagofm.webp",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "bengali"
+  ],
+  "is_active": true
+ },
+ {
+  "id": "radio-bhubaneswar",
+  "name": "Radio Bhubaneswar",
+  "slug": "radio-bhubaneswar",
+  "streams": [
+   {
+    "url": "http://104.243.42.94:8574/rabh8989uba",
+    "codec": "UNKNOWN",
+    "bitrate": 0,
+    "hls": false
+   }
+  ],
+  "languages": [
+   "odia"
+  ],
+  "categories": [],
+  "homepage": "https://radiosindia.com/radiobhubaneswar.html",
+  "favicon": "https://radiosindia.com/images/radiobhubaneswar.jpg",
+  "country": "India",
+  "votes": 0,
+  "tags": [
+   "odia"
+  ],
+  "is_active": false,
+  "city": "bhubaneswar",
+  "state": "Odisha"
  }
 ]
