@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/LangLink";
 import { notFound } from "next/navigation";
+import EmbedBlock from "@/components/EmbedBlock";
 import FavoriteButton from "@/components/FavoriteButton";
 import Icon from "@/components/Icon";
 import LiveBadge from "@/components/LiveBadge";
@@ -334,6 +335,19 @@ export default async function StationPage({ params }: Props) {
               <p className="mt-2 text-[13px] leading-relaxed text-muted">{f.a}</p>
             </details>
           ))}
+        </div>
+      </section>
+
+      {/* Embed — copyable iframe widget (F-3.5) */}
+      <section aria-labelledby="embed" className="mt-8">
+        <h2 id="embed" className="font-display text-[16.5px] font-semibold text-ink">
+          Embed {s.name} on your site
+        </h2>
+        <p className="mt-1 text-xs text-muted">
+          Free widget — plays the broadcaster&apos;s own stream and links back here.
+        </p>
+        <div className="mt-3">
+          <EmbedBlock embedUrl={`${SITE.url}/embed/${s.slug}`} />
         </div>
       </section>
 
