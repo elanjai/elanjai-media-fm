@@ -75,6 +75,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 <Link href="/recent" className="hover:text-ink">Recently played</Link>
                 <Link href="/add-station" className="hover:text-ink">Add your station</Link>
                 <Link href="/about" className="hover:text-ink">About</Link>
+                <Link href="/contact" className="hover:text-ink">Contact</Link>
+                <Link href="/privacy" className="hover:text-ink">Privacy</Link>
+                <Link href="/terms" className="hover:text-ink">Terms</Link>
                 <Link href="/dmca" className="hover:text-ink">DMCA</Link>
               </nav>
               <p className="mt-3 text-[11px]">© {new Date().getFullYear()} {SITE.name}</p>

@@ -104,7 +104,7 @@ export default async function StationPage({ params }: Props) {
               size={84}
               className="h-[84px] w-[84px] shrink-0 md:h-[120px] md:w-[120px]"
             />
-            <LiveBadge count={genreCount} />
+            <LiveBadge />
           </div>
           <div className="min-w-0">
             <h1 className="mt-4 font-display text-2xl font-semibold tracking-tight md:mt-0 md:text-3xl">

@@ -32,7 +32,7 @@ export default function AddStationPage() {
         ))}
       </ul>
       <a
-        href="mailto:stations@elanjai.example?subject=New%20station%20submission"
+        href={`mailto:${SITE.email.stations}?subject=New%20station%20submission`}
         className="mt-6 inline-block rounded-full bg-accent px-6 py-2.5 font-semibold text-accent-ink shadow-md transition hover:brightness-105"
       >
         Submit by email

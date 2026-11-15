@@ -19,8 +19,8 @@ export default function DmcaPage() {
       </p>
       <p className="mt-3 text-muted">
         If you operate a listed station and want it removed or the metadata corrected, email
-        <a href="mailto:dmca@elanjai.example" className="mx-1 text-brand-2 underline dark:text-accent">
-          dmca@elanjai.example
+        <a href={`mailto:${SITE.email.dmca}`} className="mx-1 text-brand-2 underline dark:text-accent">
+          {SITE.email.dmca}
         </a>
         from a domain associated with the station, including the station name and its page URL.
         Verified removal requests are processed within 7 days.

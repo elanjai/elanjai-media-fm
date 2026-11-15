@@ -1,9 +1,9 @@
-/** Yellow LIVE · n pill with animated eq bars (design "live_chip"). */
+/** Yellow LIVE [· n] pill with animated eq bars (design "live_chip"). */
 export default function LiveBadge({
   count,
   className = "",
 }: {
-  count: number;
+  count?: number;
   className?: string;
 }) {
   return (
@@ -19,7 +19,7 @@ export default function LiveBadge({
           />
         ))}
       </span>
-      LIVE · {count}
+      LIVE{count !== undefined ? ` · ${count}` : ""}
     </span>
   );
 }
