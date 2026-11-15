@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { reportStreamIssue } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
 import { isBusyStatus, useLibrary, usePlayback, usePlaybackActions, useSleepTimer } from "./AudioProvider";
+import CastButton from "./CastButton";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
 import LiveBadge from "./LiveBadge";
@@ -342,6 +343,7 @@ export default function NowPlayingSheet({
               <Icon name={isFav ? "heartF" : "heart"} size={20} strokeWidth={1.8} />
             </button>
             <SleepCircle />
+            <CastButton />
             <button
               type="button"
               onClick={share}

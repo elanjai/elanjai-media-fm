@@ -71,6 +71,8 @@ type PlaybackActions = {
   /** Confirm / dismiss a data-saver-held play request. */
   confirmPendingPlay: () => void;
   dismissPendingPlay: () => void;
+  /** The shared <audio> element — needed by Remote Playback / AirPlay (F-1.10). */
+  getAudioEl: () => HTMLAudioElement | null;
 };
 
 type Library = {
@@ -550,6 +552,8 @@ export default function AudioProvider({
 
   const dismissPendingPlay = useCallback(() => setPendingPlay(null), []);
 
+  const getAudioEl = useCallback(() => audioRef.current, []);
+
   const toggle = useCallback(() => {
     const audio = audioRef.current;
     const s = currentRef.current;
@@ -910,6 +914,7 @@ export default function AudioProvider({
       toggleMute,
       confirmPendingPlay,
       dismissPendingPlay,
+      getAudioEl,
     }),
     [
       play,
@@ -922,6 +927,7 @@ export default function AudioProvider({
       toggleMute,
       confirmPendingPlay,
       dismissPendingPlay,
+      getAudioEl,
     ]
   );
 
