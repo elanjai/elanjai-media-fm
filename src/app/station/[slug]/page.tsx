@@ -112,7 +112,9 @@ export default async function StationPage({ params }: Props) {
             </h1>
             <p className="mt-1 text-xs text-brand-ink/75">
               {s.language} · {s.country}
-              {s.bitrate ? ` · ${s.bitrate} kbps ${s.codec}` : ""}
+              {s.bitrate
+                ? ` · ${s.bitrate} kbps ${s.codec} · ≈ ${Math.round(s.bitrate * 0.45)} MB/hr`
+                : ""}
             </p>
             {s.tags.length > 0 && (
               <div className="mt-3.5 flex flex-wrap gap-2">

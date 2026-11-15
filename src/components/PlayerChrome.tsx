@@ -9,10 +9,13 @@ import StationLogo from "./StationLogo";
 
 /** Floating mini player docked above the tab bar; expands into the Now Playing sheet. */
 export default function PlayerChrome({ total }: { total: number }) {
-  const { current, status, error, nowPlaying, retryAttempt } = usePlayback();
-  const { toggle, next, play } = usePlaybackActions();
+  const { current, status, error, nowPlaying, retryAttempt, pendingPlay } =
+    usePlayback();
+  const { toggle, next, play, confirmPendingPlay, dismissPendingPlay } =
+    usePlaybackActions();
   const [open, setOpen] = useState(false);
-  if (!current) return open ? <NowPlayingSheet total={total} onClose={() => setOpen(false)} /> : null;
+  if (!current && !pendingPlay)
+    return open ? <NowPlayingSheet total={total} onClose={() => setOpen(false)} /> : null;
 
   const playing = status === "playing";
 
@@ -22,6 +25,37 @@ export default function PlayerChrome({ total }: { total: number }) {
         data-player-scope
         className="fixed inset-x-4 bottom-[calc(5.375rem+max(0.875rem,env(safe-area-inset-bottom)))] z-40 md:inset-x-auto md:bottom-6 md:right-6 md:w-[370px]"
       >
+        {/* Data-saver hold — confirm before starting a heavy stream */}
+        {pendingPlay && (
+          <div className="mx-auto mb-2 flex max-w-[370px] items-center gap-3 rounded-[18px] border border-border bg-surface px-3.5 py-3 shadow-xl shadow-brand/10">
+            <Icon name="battery" size={20} className="shrink-0 text-brand-2 dark:text-accent" />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[13px] font-semibold text-ink">
+                {pendingPlay.station.name}
+              </p>
+              <p className="text-[11px] text-muted">
+                Uses ≈ {Math.round(pendingPlay.station.bitrate * 0.45)} MB/hr
+                — data saver is on
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={confirmPendingPlay}
+              className="shrink-0 rounded-full bg-accent px-3.5 py-2 text-xs font-bold text-accent-ink transition hover:brightness-105"
+            >
+              Play
+            </button>
+            <button
+              type="button"
+              onClick={dismissPendingPlay}
+              aria-label="Cancel"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted transition hover:text-ink"
+            >
+              <Icon name="x" size={14} />
+            </button>
+          </div>
+        )}
+        {current && (
         <div className="mx-auto flex h-[68px] max-w-[370px] items-center gap-1 rounded-[22px] border border-border bg-surface px-2 shadow-xl shadow-brand/10">
           {/* Expand — single button owning logo + meta; no nested links */}
           <button
@@ -84,6 +118,7 @@ export default function PlayerChrome({ total }: { total: number }) {
             )}
           </button>
         </div>
+        )}
         {isBusyStatus(status) && (
           <div className="mx-auto mt-1 h-0.5 max-w-[340px] overflow-hidden rounded-full bg-surface-2">
             <div className="h-full w-1/3 animate-pulse bg-accent" />

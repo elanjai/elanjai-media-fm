@@ -24,9 +24,13 @@ type Prefs = {
   langPickerOpen: boolean;
   openLangPicker: () => void;
   closeLangPicker: () => void;
+  /** Warn before high-bitrate streams; pairs with the OS saveData hint. */
+  dataSaver: boolean;
+  setDataSaver: (on: boolean) => void;
 };
 
 const LANGS_KEY = "emfm:langs";
+const DATASAVER_KEY = "emfm:datasaver";
 
 const PrefsCtx = createContext<Prefs | null>(null);
 
@@ -44,18 +48,22 @@ export default function PrefsProvider({
   const [langs, setLangsState] = useState<string[] | null>(null);
   const [hasChosenLangs, setHasChosen] = useState(true); // assume returning user until hydrated
   const [langPickerOpen, setLangPickerOpen] = useState(false);
+  const [dataSaver, setDataSaverState] = useState(false);
 
   useEffect(() => {
     let stored: string[] | null = null;
+    let ds = false;
     try {
       const raw = localStorage.getItem(LANGS_KEY);
       if (raw !== null) stored = JSON.parse(raw) as string[];
+      ds = localStorage.getItem(DATASAVER_KEY) === "true";
     } catch {
       /* private mode */
     }
     queueMicrotask(() => {
       setLangsState(stored ?? []);
       setHasChosen(stored !== null);
+      setDataSaverState(ds);
       // First run — invite the listener to pick languages once.
       if (stored === null) setLangPickerOpen(true);
     });
@@ -66,6 +74,15 @@ export default function PrefsProvider({
     setHasChosen(true);
     try {
       localStorage.setItem(LANGS_KEY, JSON.stringify(slugs));
+    } catch {
+      /* private mode */
+    }
+  }, []);
+
+  const setDataSaver = useCallback((on: boolean) => {
+    setDataSaverState(on);
+    try {
+      localStorage.setItem(DATASAVER_KEY, String(on));
     } catch {
       /* private mode */
     }
@@ -82,8 +99,19 @@ export default function PrefsProvider({
       langPickerOpen,
       openLangPicker,
       closeLangPicker,
+      dataSaver,
+      setDataSaver,
     }),
-    [langs, hasChosenLangs, setLangs, langPickerOpen, openLangPicker, closeLangPicker]
+    [
+      langs,
+      hasChosenLangs,
+      setLangs,
+      langPickerOpen,
+      openLangPicker,
+      closeLangPicker,
+      dataSaver,
+      setDataSaver,
+    ]
   );
 
   return <PrefsCtx.Provider value={prefs}>{children}</PrefsCtx.Provider>;

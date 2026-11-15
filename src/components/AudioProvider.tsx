@@ -11,6 +11,7 @@ import {
 } from "react";
 import { reportStreamIssue } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
+import { usePrefs } from "./PrefsProvider";
 
 /**
  * Playback state machine:
@@ -53,6 +54,8 @@ type PlaybackState = {
   muted: boolean;
   /** Reconnect attempt in progress (0 = first try / not retrying). */
   retryAttempt: number;
+  /** High-bitrate play held back by data saver until confirmed (F-1.8). */
+  pendingPlay: { station: PublicStation; queue?: PublicStation[] } | null;
 };
 
 type PlaybackActions = {
@@ -65,6 +68,9 @@ type PlaybackActions = {
   peekNext: () => Promise<PublicStation | null>;
   setVolume: (v: number) => void;
   toggleMute: () => void;
+  /** Confirm / dismiss a data-saver-held play request. */
+  confirmPendingPlay: () => void;
+  dismissPendingPlay: () => void;
 };
 
 type Library = {
@@ -178,6 +184,13 @@ export default function AudioProvider({
   const lastTtfaRef = useRef<number | null>(null);
 
   const [retryAttempt, setRetryAttempt] = useState(0);
+  const [pendingPlay, setPendingPlay] = useState<{
+    station: PublicStation;
+    queue?: PublicStation[];
+  } | null>(null);
+  /** Stations the user already approved this session while saving data. */
+  const saverOkRef = useRef<Set<string>>(new Set());
+  const { dataSaver } = usePrefs();
 
   const destroyHls = useCallback(() => {
     hlsRef.current?.destroy();
@@ -452,7 +465,8 @@ export default function AudioProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const play = useCallback(
+  /** The actual play path — retry/online-resume calls go here directly. */
+  const startPlay = useCallback(
     (s: PublicStation, queue?: PublicStation[]) => {
       wantPlayRef.current = true;
       queueRef.current = queue?.length ? queue : null;
@@ -484,9 +498,46 @@ export default function AudioProvider({
     },
     [attemptConnect, clearTimers, setStatusTracked]
   );
+
+  /**
+   * Data-saver gate (F-1.8): before starting a >128 kbps stream while the
+   * user opted in (or the OS reports saveData), hold the request behind a
+   * one-tap confirmation — once per station per session.
+   */
+  const osSaveData = () =>
+    (
+      navigator as Navigator & {
+        connection?: { saveData?: boolean };
+      }
+    ).connection?.saveData === true;
+
+  const play = useCallback(
+    (s: PublicStation, queue?: PublicStation[]) => {
+      if (
+        s.bitrate > 128 &&
+        (dataSaver || osSaveData()) &&
+        !saverOkRef.current.has(s.slug)
+      ) {
+        setPendingPlay({ station: s, queue });
+        return;
+      }
+      setPendingPlay(null);
+      startPlay(s, queue);
+    },
+    [dataSaver, startPlay]
+  );
   useEffect(() => {
     playRef.current = play;
   }, [play]);
+
+  const confirmPendingPlay = useCallback(() => {
+    if (!pendingPlay) return;
+    saverOkRef.current.add(pendingPlay.station.slug);
+    setPendingPlay(null);
+    startPlay(pendingPlay.station, pendingPlay.queue);
+  }, [pendingPlay, startPlay]);
+
+  const dismissPendingPlay = useCallback(() => setPendingPlay(null), []);
 
   const toggle = useCallback(() => {
     const audio = audioRef.current;
@@ -803,8 +854,17 @@ export default function AudioProvider({
   // ---------- context values ----------
 
   const playbackState = useMemo<PlaybackState>(
-    () => ({ current, status, error, nowPlaying, volume, muted, retryAttempt }),
-    [current, status, error, nowPlaying, volume, muted, retryAttempt]
+    () => ({
+      current,
+      status,
+      error,
+      nowPlaying,
+      volume,
+      muted,
+      retryAttempt,
+      pendingPlay,
+    }),
+    [current, status, error, nowPlaying, volume, muted, retryAttempt, pendingPlay]
   );
 
   const playbackActions = useMemo<PlaybackActions>(
@@ -817,8 +877,21 @@ export default function AudioProvider({
       peekNext,
       setVolume,
       toggleMute,
+      confirmPendingPlay,
+      dismissPendingPlay,
     }),
-    [play, toggle, stop, next, prev, peekNext, setVolume, toggleMute]
+    [
+      play,
+      toggle,
+      stop,
+      next,
+      prev,
+      peekNext,
+      setVolume,
+      toggleMute,
+      confirmPendingPlay,
+      dismissPendingPlay,
+    ]
   );
 
   /** Resolved favorites — catalog version preferred, snapshot fallback. */

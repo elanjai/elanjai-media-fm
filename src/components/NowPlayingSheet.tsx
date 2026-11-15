@@ -12,6 +12,25 @@ import StationLogo from "./StationLogo";
 
 const SLEEP_OPTIONS = [15, 30, 45, 60];
 
+/** Session data-use estimate — ticks once a second while audio plays (F-1.8). */
+function SessionData({ bitrate, status }: { bitrate: number; status: string }) {
+  const [secs, setSecs] = useState(0);
+  useEffect(() => {
+    if (status !== "playing") return;
+    const id = setInterval(() => setSecs((s) => s + 1), 1000);
+    return () => clearInterval(id);
+  }, [status]);
+  if (!bitrate) return null;
+  // kbps → MB: bitrate * 1000 bits/s / 8 / 1e6 ≈ bitrate / 8000 per second
+  const mb = (secs * bitrate) / 8000;
+  return (
+    <p className="mt-1.5 text-center text-[11px] text-muted">
+      ≈ {mb < 10 ? mb.toFixed(1) : Math.round(mb)} MB this session · ~{" "}
+      {Math.round(bitrate * 0.45)} MB/hr
+    </p>
+  );
+}
+
 function SleepCircle() {
   const { sleepRemaining, setSleepTimer } = useSleepTimer();
   const [open, setOpen] = useState(false);
@@ -197,6 +216,11 @@ export default function NowPlayingSheet({
             {current.language} · {current.bitrate ? `${current.bitrate} kbps ` : ""}
             {current.codec || "MP3"}
           </p>
+          <SessionData
+            key={current.slug}
+            bitrate={current.bitrate}
+            status={status}
+          />
 
           <div className="mt-4 flex items-center gap-3 rounded-2xl border border-border bg-surface px-3.5 py-3">
             <Icon name="eq" size={22} className="shrink-0 text-brand-2 dark:text-accent" />
