@@ -7,11 +7,20 @@ import LanguageRail from "@/components/LanguageRail";
 import LiveBadge from "@/components/LiveBadge";
 import OrderedGenreSections from "@/components/OrderedGenreSections";
 import StationCard from "@/components/StationCard";
-import { getGenres, getStations, getStationsByGenre, toPublic } from "@/lib/data";
+import {
+  getCollectionStations,
+  getCollections,
+  getGenres,
+  getStations,
+  getStationsByGenre,
+  toPublic,
+  todayCached,
+} from "@/lib/data";
 import { genreStyle } from "@/lib/genre-style";
 import { websiteJsonLd } from "@/lib/jsonld";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const editorial = getCollections(await todayCached());
   const genres = getGenres();
   const total = getStations().length;
   const tamil = getStationsByGenre("tamil").slice(0, 8).map(toPublic);
@@ -106,6 +115,41 @@ export default function HomePage() {
           </div>
         </section>
       )}
+
+      {/* Editorial collections — seasonal/curated rails (F-2.5) */}
+      {editorial.map((col) => {
+        const stations = getCollectionStations(col).map(toPublic);
+        if (!stations.length) return null;
+        return (
+          <section
+            key={col.slug}
+            aria-labelledby={`col-${col.slug}`}
+            className="mt-8"
+          >
+            <div className="mb-3 flex items-baseline justify-between">
+              <h2
+                id={`col-${col.slug}`}
+                className="font-display text-[16.5px] font-semibold text-ink"
+              >
+                {col.title}
+              </h2>
+              <Link
+                href={`/collection/${col.slug}`}
+                className="text-xs font-semibold text-brand-2 dark:text-accent"
+              >
+                See all →
+              </Link>
+            </div>
+            <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
+              {stations.map((s) => (
+                <div key={s.id} className="w-[130px] shrink-0">
+                  <StationCard station={s} queue={stations} />
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })}
 
       {/* Favorites — user's saved stations, hidden until ≥1 exists */}
       <FavoritesRail />

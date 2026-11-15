@@ -214,11 +214,31 @@ export const getNetwork = (slug: string) =>
 export const getStationsByNetwork = (slug: string) =>
   rankStations(getStations().filter((s) => s.network === slug));
 
-/** Editorial collections currently inside their start/end window. */
-export const getCollections = (now?: Date): Collection[] => {
-  const t = (now ?? new Date()).toISOString().slice(0, 10);
+/**
+ * Today's date ("YYYY-MM-DD"), cached for the route's revalidate window —
+ * Cache Components rejects an uncached new Date() during prerender.
+ */
+export async function todayCached() {
+  "use cache";
+  return new Date().toISOString().slice(0, 10);
+}
+
+/**
+ * Editorial collections currently inside their start/end window.
+ * Windows are MM-DD strings and may wrap the year ("12-15"→"01-15"
+ * means Dec 15 → Jan 15). Pass `today` ("YYYY-MM-DD") explicitly in
+ * prerendered routes — uncached `new Date()` breaks Cache Components.
+ */
+export const getCollections = (today?: string): Collection[] => {
+  const t = today ?? new Date().toISOString().slice(0, 10);
+  const mmdd = t.slice(5);
   return collections
-    .filter((c) => (!c.start || c.start <= t) && (!c.end || c.end >= t))
+    .filter((c) => {
+      if (!c.start || !c.end) return true;
+      return c.start <= c.end
+        ? c.start <= mmdd && mmdd <= c.end
+        : mmdd >= c.start || mmdd <= c.end;
+    })
     .map((c) => ({
       ...c,
       station_slugs: c.station_slugs.filter((sl) =>
