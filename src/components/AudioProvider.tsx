@@ -912,6 +912,34 @@ export default function AudioProvider({
     }
   }, [status, current]);
 
+  // ---------- listener heartbeat (F-5.4) ----------
+  // Every 60 s while a stream is actually playing; the server keeps the
+  // sid inside a 5-min window, so pauses/stops stop counting naturally.
+  useEffect(() => {
+    if (status !== "playing" || !current) return;
+    const slug = current.slug;
+    const beat = () => {
+      const payload = JSON.stringify({ slug, sid: sessionId() });
+      try {
+        const blob = new Blob([payload], { type: "application/json" });
+        const sent = navigator.sendBeacon?.("/api/listeners", blob) ?? false;
+        if (!sent) {
+          fetch("/api/listeners", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: payload,
+            keepalive: true,
+          }).catch(() => {});
+        }
+      } catch {
+        /* best-effort */
+      }
+    };
+    beat(); // count "still playing" immediately, not a minute in
+    const iv = setInterval(beat, 60_000);
+    return () => clearInterval(iv);
+  }, [status, current]);
+
   const toggleFavorite = useCallback((station: PublicStation) => {
     const slug = station.slug;
     setFavRefs((prev) => {

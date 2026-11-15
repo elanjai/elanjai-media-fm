@@ -5,6 +5,7 @@ import AdSlot from "@/components/AdSlot";
 import EmbedBlock from "@/components/EmbedBlock";
 import FavoriteButton from "@/components/FavoriteButton";
 import Icon from "@/components/Icon";
+import ListenerCount from "@/components/ListenerCount";
 import LiveBadge from "@/components/LiveBadge";
 import NowPlayingCard from "@/components/NowPlayingCard";
 import PlayButton from "@/components/PlayButton";
@@ -185,6 +186,7 @@ export default async function StationPage({ params }: Props) {
                 ? ` · ${primary.bitrate} kbps ${primary.codec} · ≈ ${Math.round(primary.bitrate * 0.45)} MB/hr`
                 : ""}
             </p>
+            <ListenerCount slug={s.slug} className="mt-2 text-xs font-medium text-brand-ink/85" />
             {s.tags.length > 0 && (
               <div className="mt-3.5 flex flex-wrap gap-2">
                 {s.tags.slice(0, 4).map((t) => (
