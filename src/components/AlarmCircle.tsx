@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ALARM_EVENT, getAlarm, setAlarm, type Alarm } from "@/lib/alarm";
+import { ALARM_EVENT, getAlarm, localDay, setAlarm, type Alarm } from "@/lib/alarm";
 import Icon from "./Icon";
 
 /**
@@ -65,7 +65,16 @@ export default function AlarmCircle({ slug }: { slug: string }) {
             onSubmit={(e) => {
               e.preventDefault();
               if (!/^\d{2}:\d{2}$/.test(time)) return;
-              setAlarm({ slug, hhmm: time, firedDay: null });
+              // A time already passed today means tomorrow — standard
+              // alarm-app roll-forward. Otherwise it would fire ~now.
+              const [h, m] = time.split(":").map(Number);
+              const now = new Date();
+              const passed = now.getHours() * 60 + now.getMinutes() > h * 60 + m;
+              setAlarm({
+                slug,
+                hhmm: time,
+                firedDay: passed ? localDay(now) : null,
+              });
               setOpen(false);
             }}
           >

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import {
   getStats,
+  localDay,
   monthSeconds,
   resetStats,
   topStations,
@@ -47,8 +48,7 @@ export default function StatsView() {
   const week = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(now);
     d.setDate(d.getDate() - (6 - i));
-    const pad = (n: number) => String(n).padStart(2, "0");
-    const key = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    const key = localDay(d);
     return { key, sec: stats.byDay[key] ?? 0, label: d.toLocaleString(undefined, { weekday: "short" }) };
   });
   const maxDay = Math.max(...week.map((d) => d.sec), 1);
