@@ -114,5 +114,31 @@
       "perUserPerDay": 2
     },
     "status": "draft"
+  },
+  {
+    "id": "feat-example-tamil",
+    "advertiser": "Example broadcaster",
+    "kind": "sponsored_station",
+    "label": "Sponsored",
+    "creative": {
+      "headline": "",
+      "stationSlug": "suryan-fm"
+    },
+    "targeting": {
+      "slots": [
+        "featured-top",
+        "featured-rail"
+      ],
+      "languages": [
+        "tamil"
+      ]
+    },
+    "schedule": {
+      "start": "2026-01-01",
+      "end": "2099-12-31"
+    },
+    "weight": 1,
+    "caps": {},
+    "status": "draft"
   }
 ]

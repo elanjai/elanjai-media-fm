@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
 import Icon from "@/components/Icon";
 import StationRowsWithAds from "@/components/StationRowsWithAds";
-import { getCategories, getGenre, getGenres, getStationsByGenre, toPublic } from "@/lib/data";
+import { getCategories, getGenre, getGenres, getStationsByGenre, toPublic, todayCached } from "@/lib/data";
+import { featuredStations } from "@/lib/featured";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { langAlternates } from "@/i18n";
 import { SITE } from "@/lib/site";
@@ -34,6 +35,11 @@ export default async function GenrePage({ params }: Props) {
   if (!g) notFound();
   const stations = getStationsByGenre(g.slug).map(toPublic);
   const genres = getGenres();
+  const featured = featuredStations({
+    slot: "featured-top",
+    today: await todayCached(),
+    language: slug,
+  });
   const categories = getCategories();
 
   return (
@@ -112,7 +118,7 @@ export default async function GenrePage({ params }: Props) {
       </div>
 
       <div className="mt-4">
-        <StationRowsWithAds stations={stations} language={slug} />
+        <StationRowsWithAds stations={stations} language={slug} featured={featured} />
       </div>
     </div>
   );

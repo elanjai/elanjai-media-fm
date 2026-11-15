@@ -7,6 +7,7 @@ import Icon from "@/components/Icon";
 import LanguageRail from "@/components/LanguageRail";
 import LiveBadge from "@/components/LiveBadge";
 import OrderedGenreSections from "@/components/OrderedGenreSections";
+import SponsoredStationRow from "@/components/SponsoredStationRow";
 import StationCard from "@/components/StationCard";
 import {
   getCollectionStations,
@@ -17,13 +18,16 @@ import {
   toPublic,
   todayCached,
 } from "@/lib/data";
+import { featuredStations } from "@/lib/featured";
 import { genreStyle } from "@/lib/genre-style";
 import { websiteJsonLd } from "@/lib/jsonld";
 import { fmt, getDictionary } from "@/i18n";
 
 export default async function HomePage() {
   const dict = await getDictionary();
-  const editorial = getCollections(await todayCached());
+  const today = await todayCached();
+  const editorial = getCollections(today);
+  const featured = featuredStations({ slot: "featured-rail", today });
   const genres = getGenres();
   const total = getStations().length;
   const tamil = getStationsByGenre("tamil").slice(0, 8).map(toPublic);
@@ -122,6 +126,29 @@ export default async function HomePage() {
 
       {/* Ad — after "Popular now" (placement map §6.3) */}
       <AdSlot id="home-infeed-1" className="mt-8" />
+
+      {/* Featured stations (F-4.4) — broadcaster listings, Sponsored-labeled */}
+      {featured.length > 0 && (
+        <section aria-labelledby="featured" className="mt-8">
+          <h2
+            id="featured"
+            className="mb-3 font-display text-[16.5px] font-semibold text-ink"
+          >
+            Featured stations
+          </h2>
+          <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2">
+            {featured.map((f) => (
+              <SponsoredStationRow
+                key={f.campaign.id}
+                station={f.station}
+                campaignId={f.campaign.id}
+                slot="featured-rail"
+                queue={featured.map((x) => x.station)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Editorial collections — seasonal/curated rails (F-2.5) */}
       {editorial.map((col) => {

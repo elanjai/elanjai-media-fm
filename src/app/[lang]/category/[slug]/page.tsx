@@ -8,7 +8,9 @@ import {
   getCategory,
   getStationsByCategory,
   toPublic,
+  todayCached,
 } from "@/lib/data";
+import { featuredStations } from "@/lib/featured";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { langAlternates } from "@/i18n";
 import { SITE } from "@/lib/site";
@@ -40,6 +42,11 @@ export default async function CategoryPage({ params }: Props) {
   const stations = getStationsByCategory(slug).map(toPublic);
   if (!stations.length) notFound();
   const categories = getCategories();
+  const featured = featuredStations({
+    slot: "featured-top",
+    today: await todayCached(),
+    category: slug,
+  });
 
   return (
     <div className="py-5">
@@ -101,7 +108,7 @@ export default async function CategoryPage({ params }: Props) {
       </p>
 
       <div className="mt-4">
-        <StationRowsWithAds stations={stations} />
+        <StationRowsWithAds stations={stations} featured={featured} />
       </div>
     </div>
   );
