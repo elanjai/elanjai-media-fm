@@ -1,11 +1,11 @@
 import Link from "next/link";
 import BrandLogo from "@/components/BrandLogo";
 import FavoritesRail from "@/components/FavoritesRail";
+import HeroPlay from "@/components/HeroPlay";
 import Icon from "@/components/Icon";
 import LanguageRail from "@/components/LanguageRail";
 import LiveBadge from "@/components/LiveBadge";
 import OrderedGenreSections from "@/components/OrderedGenreSections";
-import PlayButton from "@/components/PlayButton";
 import StationCard from "@/components/StationCard";
 import { getGenres, getStations, getStationsByGenre, toPublic } from "@/lib/data";
 import { genreStyle } from "@/lib/genre-style";
@@ -53,12 +53,13 @@ export default function HomePage() {
           {genres.slice(0, 3).map((g) => g.name).join(" · ")} · +{Math.max(genres.length - 3, 0)} more
         </p>
         {tamil[0] && (
-          <div className="relative mt-4 flex items-center gap-3">
-            <PlayButton station={tamil[0]} size={52} />
-            <span className="text-xs font-medium text-brand-ink/70">
-              Start with {tamil[0].name}
-            </span>
-          </div>
+          <HeroPlay
+            fallback={tamil[0]}
+            flagships={collections.map((c) => ({
+              slug: c.genre.slug,
+              station: c.station,
+            }))}
+          />
         )}
       </section>
 
