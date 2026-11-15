@@ -1,6 +1,7 @@
 import { lang as rootLang } from "next/root-params";
 import { notFound } from "next/navigation";
-import { hasLocale, type Locale } from "./locales";
+import { SITE } from "@/lib/site";
+import { DEFAULT_LOCALE, LOCALES, hasLocale, type Locale } from "./locales";
 
 /**
  * Server-only i18n entry (F-3.1) — anything that needs the [lang] root
@@ -8,6 +9,14 @@ import { hasLocale, type Locale } from "./locales";
  * "@/i18n/locales" instead; next/root-params is server-only.
  */
 export * from "./locales";
+
+/** hreflang alternates for a locale-relative path ("" = home). Server-only. */
+export const langAlternates = (path: string) => ({
+  languages: Object.fromEntries([
+    ...LOCALES.map((l) => [l, `${SITE.url}/${l}${path}`]),
+    ["x-default", `${SITE.url}/${DEFAULT_LOCALE}${path}`],
+  ]),
+});
 
 const dictionaries = {
   en: () => import("./dictionaries/en.json").then((m) => m.default),

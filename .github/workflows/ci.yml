@@ -34,3 +34,8 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=6144
           NEXT_TELEMETRY_DISABLED: "1"
           NEXT_PUBLIC_SITE_URL: https://elanjai-fm.up.railway.app
+
+      # F-3.7 performance budget — measures the first-load JS the
+      # prerendered home page actually ships (hls.js stays lazy-loaded).
+      - name: JS budget check
+        run: npm run budget
