@@ -169,6 +169,26 @@ docker run --rm -p 3000:3000 elanjai-media-fm
 # → http://localhost:3000 , http://localhost:3000/api/health
 ```
 
+## Google Play via TWA (F-3.3)
+
+The PWA (F-3.2) is Play-Store-ready through a Trusted Web Activity —
+Bubblewrap wraps the existing site; no separate codebase.
+
+1. `npm i -g @bubblewrap/cli` → `bubblewrap init --manifest https://<domain>/manifest.webmanifest`
+2. Choose a package name (e.g. `media.elanjai.fm`), generate the signing
+   key (`keytool -genkey`), and let Bubblewrap print its SHA-256 cert
+   fingerprint.
+3. Set service variables in Railway:
+   - `TWA_PACKAGE_NAME` — e.g. `media.elanjai.fm`
+   - `TWA_SHA256_FINGERPRINT` — the fingerprint Bubblewrap prints
+   `/.well-known/assetlinks.json` then serves the delegation statement and
+   Android verifies the app↔site link (no URL bar in the TWA).
+4. `bubblewrap build` → upload the AAB to Play Console.
+
+Policy notes: Play requires a privacy-policy URL (`/en/privacy` works);
+check current Play policy on web ads inside a TWA before enabling display
+ads there — a "house ads only" Play build is the safe default.
+
 ## Build memory notes
 
 Railway builds the image on its own builders; `next build` is memory-hungry,
