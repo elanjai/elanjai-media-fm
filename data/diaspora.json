@@ -1,0 +1,123 @@
+{
+  "markets": [
+    {
+      "slug": "usa",
+      "name": "the USA",
+      "short": "USA",
+      "tz": "India runs about 9\u00bd\u201312\u00bd hours ahead of US time zones",
+      "community": "one of the largest Indian communities outside India"
+    },
+    {
+      "slug": "uk",
+      "name": "the UK",
+      "short": "UK",
+      "tz": "India is 4\u00bd\u20135\u00bd hours ahead of the UK",
+      "community": "a long-established Indian diaspora with deep radio habits"
+    },
+    {
+      "slug": "canada",
+      "name": "Canada",
+      "short": "Canada",
+      "tz": "India is about 9\u00bd\u201313\u00bd hours ahead of Canadian time zones",
+      "community": "one of the fastest-growing Indian communities in the world"
+    },
+    {
+      "slug": "uae",
+      "name": "the UAE",
+      "short": "UAE",
+      "tz": "India is only 1\u00bd hours behind the UAE — Indian prime time is your prime time",
+      "community": "the Gulf's largest Indian expatriate community"
+    },
+    {
+      "slug": "singapore",
+      "name": "Singapore",
+      "short": "Singapore",
+      "tz": "Singapore is 2\u00bd hours ahead of India",
+      "community": "a city where Tamil is an official language"
+    },
+    {
+      "slug": "malaysia",
+      "name": "Malaysia",
+      "short": "Malaysia",
+      "tz": "Malaysia is 2\u00bd hours ahead of India",
+      "community": "home to one of the oldest Tamil communities overseas"
+    },
+    {
+      "slug": "australia",
+      "name": "Australia",
+      "short": "Australia",
+      "tz": "Australia runs 4\u00bd\u20135\u00bd hours ahead of India",
+      "community": "one of the largest Indian student and migrant communities"
+    },
+    {
+      "slug": "qatar",
+      "name": "Qatar",
+      "short": "Qatar",
+      "tz": "India is 2\u00bd hours behind Qatar",
+      "community": "a large Indian expatriate workforce that keeps home close"
+    },
+    {
+      "slug": "saudi-arabia",
+      "name": "Saudi Arabia",
+      "short": "Saudi Arabia",
+      "tz": "India is 2\u00bd hours behind Saudi Arabia",
+      "community": "millions of Indian expatriates across the Kingdom"
+    },
+    {
+      "slug": "kuwait",
+      "name": "Kuwait",
+      "short": "Kuwait",
+      "tz": "India is 2\u00bd hours behind Kuwait",
+      "community": "a large Malayali and South Indian expatriate community"
+    },
+    {
+      "slug": "sri-lanka",
+      "name": "Sri Lanka",
+      "short": "Sri Lanka",
+      "tz": "Sri Lanka shares India's time zone exactly",
+      "community": "a neighbour with shared languages and shared airwaves"
+    },
+    {
+      "slug": "new-zealand",
+      "name": "New Zealand",
+      "short": "New Zealand",
+      "tz": "New Zealand is 6\u00bd\u20137\u00bd hours ahead of India",
+      "community": "a growing Indian and Punjabi community"
+    },
+    {
+      "slug": "japan",
+      "name": "Japan",
+      "short": "Japan",
+      "tz": "Japan is 3\u00bd hours ahead of India",
+      "community": "a growing community of Indian professionals and students"
+    },
+    {
+      "slug": "oman",
+      "name": "Oman",
+      "short": "Oman",
+      "tz": "India is 1\u00bd hours behind Oman",
+      "community": "a large Malayali expatriate community"
+    },
+    {
+      "slug": "bahrain",
+      "name": "Bahrain",
+      "short": "Bahrain",
+      "tz": "India is 2\u00bd hours behind Bahrain",
+      "community": "a long-established Indian expatriate community"
+    }
+  ],
+  "pages": [
+    { "genre": "india", "name": "Indian", "markets": ["usa", "uk", "canada", "uae", "australia", "singapore", "new-zealand"] },
+    { "genre": "tamil", "name": "Tamil", "markets": ["usa", "uk", "singapore", "malaysia", "canada", "australia", "uae", "sri-lanka"] },
+    { "genre": "malayalam", "name": "Malayalam", "markets": ["uae", "qatar", "saudi-arabia", "kuwait", "bahrain", "oman", "usa", "uk", "singapore", "australia"] },
+    { "genre": "hindi", "name": "Hindi", "markets": ["usa", "uk", "canada", "australia", "uae", "singapore", "new-zealand"] },
+    { "genre": "punjabi", "name": "Punjabi", "markets": ["canada", "uk", "usa", "australia", "new-zealand"] },
+    { "genre": "urdu", "name": "Urdu", "markets": ["uk", "usa", "canada", "uae", "saudi-arabia"] },
+    { "genre": "telugu", "name": "Telugu", "markets": ["usa", "canada", "australia", "uk", "uae"] },
+    { "genre": "kannada", "name": "Kannada", "markets": ["usa", "uae", "uk", "australia"] },
+    { "genre": "bengali", "name": "Bengali", "markets": ["uk", "usa", "canada", "australia"] },
+    { "genre": "nepali", "name": "Nepali", "markets": ["uk", "uae", "usa", "australia", "japan"] },
+    { "genre": "gujarati", "name": "Gujarati", "markets": ["usa", "uk", "canada"] },
+    { "genre": "marathi", "name": "Marathi", "markets": ["usa", "uae"] }
+  ]
+}

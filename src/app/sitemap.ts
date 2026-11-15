@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getCategories, getCities, getGenres, getNetworks, getStations } from "@/lib/data";
+import { getCategories, getCities, getDiasporaPages, getGenres, getNetworks, getStations } from "@/lib/data";
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n/locales";
 import { SITE } from "@/lib/site";
 
@@ -21,6 +21,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...getCategories().map((c) => ({ path: `/category/${c.slug}`, freq: "weekly" as const, prio: 0.7 })),
     ...getCities().map((c) => ({ path: `/city/${c.slug}`, freq: "weekly" as const, prio: 0.7 })),
     ...getNetworks().map((n) => ({ path: `/network/${n.slug}`, freq: "weekly" as const, prio: 0.6 })),
+    { path: "/listen", freq: "weekly" as const, prio: 0.7 },
+    ...getDiasporaPages().map((p) => ({ path: `/listen/${p.slug}`, freq: "weekly" as const, prio: 0.7 })),
     ...getStations().map((s) => ({ path: `/station/${s.slug}`, freq: "weekly" as const, prio: 0.6 })),
   ];
 

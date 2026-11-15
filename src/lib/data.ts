@@ -4,6 +4,7 @@ import categoriesJson from "../../data/categories.json";
 import citiesJson from "../../data/cities.json";
 import networksJson from "../../data/networks.json";
 import collectionsJson from "../../data/collections.json";
+import diasporaJson from "../../data/diaspora.json";
 import localLogosJson from "../../data/local-logos.json";
 import { SITE } from "./site";
 import type {
@@ -295,6 +296,59 @@ export const describeStation = (s: Station) => {
       ? ` ${s.streams.length} stream qualities are available — the player picks the best one your connection can handle.`
       : "";
   return `${facts}${kind} Listen live and free on ${SITE.name} — no sign-up needed.${streams}`;
+};
+
+// ---------- diaspora landing pages (F-3.6) ----------
+
+type DiasporaMarket = {
+  slug: string;
+  name: string;
+  short: string;
+  tz: string;
+  community: string;
+};
+export type DiasporaPage = {
+  slug: string;
+  genre: string;
+  genreName: string;
+  market: DiasporaMarket;
+};
+
+const diasporaData = diasporaJson as {
+  markets: DiasporaMarket[];
+  pages: { genre: string; name: string; markets: string[] }[];
+};
+
+/** Only expose combos whose language actually has stations to show. */
+export const getDiasporaPages = (): DiasporaPage[] => {
+  const marketBySlug = new Map(diasporaData.markets.map((m) => [m.slug, m]));
+  const out: DiasporaPage[] = [];
+  for (const p of diasporaData.pages) {
+    if (!getStations().some((s) => s.languages.includes(p.genre))) continue;
+    for (const ms of p.markets) {
+      const market = marketBySlug.get(ms);
+      if (!market) continue;
+      out.push({
+        slug: `${p.genre}-radio-in-${ms}`,
+        genre: p.genre,
+        genreName: p.name,
+        market,
+      });
+    }
+  }
+  return out;
+};
+export const getDiasporaPage = (slug: string) =>
+  getDiasporaPages().find((p) => p.slug === slug) ?? null;
+
+/** Long-tail SEO copy — distinct intro + body per market/language pair. */
+export const describeDiaspora = (p: DiasporaPage, count: number) => {
+  const g = p.genreName;
+  const m = p.market;
+  const intro = `${g} radio online in ${m.name} — ${count} live ${g} stations streaming free on ${SITE.name}.`;
+  const community = `Made for ${m.community} — pick a station, press play, and home is in the room.`;
+  const tz = `${m.tz}, so the shows your family is hearing right now are the ones you'll hear too.`;
+  return `${intro} ${community} ${tz} Works on any phone or laptop, no app or sign-up — favourites and Continue Listening make it feel like the dial back home.`;
 };
 
 export function searchStations(q: string): Station[] {
