@@ -10,9 +10,12 @@ import StationLogo from "./StationLogo";
 /** Compact list row — logo, title, meta (or "Playing now"), play badge. */
 export default function StationRow({
   station,
+  queue,
   trailing,
 }: {
   station: PublicStation;
+  /** List this row belongs to — passed to the player as the next/prev queue. */
+  queue?: PublicStation[];
   trailing?: React.ReactNode;
 }) {
   const { current, status } = usePlayback();
@@ -45,7 +48,7 @@ export default function StationRow({
         )}
       </div>
       {trailing}
-      <PlayButton station={station} size={32} className="relative z-10 shrink-0" />
+      <PlayButton station={station} queue={queue} size={32} className="relative z-10 shrink-0" />
     </div>
   );
 }

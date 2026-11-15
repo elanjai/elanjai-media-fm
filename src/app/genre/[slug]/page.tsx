@@ -93,7 +93,7 @@ export default async function GenrePage({ params }: Props) {
 
       <div className="mt-4 grid grid-cols-1 gap-2.5 md:grid-cols-2">
         {stations.map((s) => (
-          <StationRow key={s.id} station={s} />
+          <StationRow key={s.id} station={s} queue={stations} />
         ))}
       </div>
     </div>

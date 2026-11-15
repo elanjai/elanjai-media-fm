@@ -110,7 +110,10 @@ export default function HomePage() {
               const st = genreStyle(genre.slug);
               return (
                 <div key={station.id} className="relative w-[130px] shrink-0">
-                  <StationCard station={station} />
+                  <StationCard
+                    station={station}
+                    queue={collections.map((c) => c.station)}
+                  />
                   <span
                     className="pointer-events-none absolute left-5 top-5 z-10 rounded-full px-2 py-[3px] text-[11px] font-bold uppercase tracking-wider shadow-sm"
                     style={{ backgroundColor: st.bg, color: st.fg }}
@@ -144,7 +147,7 @@ export default function HomePage() {
           <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
             {tamil.map((s) => (
               <div key={s.id} className="w-[130px] shrink-0">
-                <StationCard station={s} />
+                <StationCard station={s} queue={tamil} />
               </div>
             ))}
             <Link
@@ -180,7 +183,7 @@ export default function HomePage() {
               </div>
               <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
                 {list.map((s) => (
-                  <StationRow key={s.id} station={s} />
+                  <StationRow key={s.id} station={s} queue={list} />
                 ))}
               </div>
             </section>

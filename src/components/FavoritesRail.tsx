@@ -28,7 +28,7 @@ export default function FavoritesRail() {
       <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
         {favoriteStations.map((s) => (
           <div key={s.id} className="w-[130px] shrink-0">
-            <StationCard station={s} />
+            <StationCard station={s} queue={favoriteStations} />
           </div>
         ))}
       </div>

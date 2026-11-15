@@ -57,7 +57,7 @@ async function Results({ searchParams }: Props) {
       ) : (
         <div className="mt-4 grid grid-cols-1 gap-2.5 md:grid-cols-2">
           {results.map((s) => (
-            <StationRow key={s.id} station={s} />
+            <StationRow key={s.id} station={s} queue={results} />
           ))}
         </div>
       )}

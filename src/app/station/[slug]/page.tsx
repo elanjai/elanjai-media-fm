@@ -132,7 +132,7 @@ export default async function StationPage({ params }: Props) {
 
       {/* CTA row — play FAB + heart + homepage */}
       <div className="mt-5 flex items-center gap-4">
-        <PlayButton station={pub} size={56} />
+        <PlayButton station={pub} queue={related.length ? related : [pub]} size={56} />
         <div className="min-w-0 flex-1">
           <p className="text-[13px] font-semibold text-ink">Tap to listen live</p>
           <p className="mt-0.5 text-xs text-muted">Free · no sign-up</p>
@@ -172,7 +172,7 @@ export default async function StationPage({ params }: Props) {
           <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 lg:mx-0 lg:grid lg:grid-cols-6 lg:overflow-visible lg:px-0">
             {related.map((r) => (
               <div key={r.id} className="w-[130px] shrink-0 lg:w-auto">
-                <StationCard station={r} />
+                <StationCard station={r} queue={related} />
               </div>
             ))}
           </div>

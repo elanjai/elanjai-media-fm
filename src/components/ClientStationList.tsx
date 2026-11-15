@@ -47,6 +47,7 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
           <StationRow
             key={s.id}
             station={s}
+            queue={list}
             trailing={
               kind === "recents" && relTime(s.playedAt) ? (
                 <span className="flex shrink-0 items-center gap-1 text-[11px] text-muted">

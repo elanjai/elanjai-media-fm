@@ -55,7 +55,8 @@ type PlaybackState = {
 };
 
 type PlaybackActions = {
-  play: (s: PublicStation) => void;
+  /** Start a station; `queue` is the list the user launched from and drives next/prev. */
+  play: (s: PublicStation, queue?: PublicStation[]) => void;
   toggle: () => void;
   stop: () => void;
   next: () => void;
@@ -222,6 +223,8 @@ export default function AudioProvider({
   // engine functions can reach the latest logic without stale closures.
   const playRef = useRef<(s: PublicStation) => void>(() => {});
   const scheduleRetryRef = useRef<(reason: string) => void>(() => {});
+  /** The list playback was launched from — next/prev follow it (F-1.2). */
+  const queueRef = useRef<PublicStation[] | null>(null);
 
   /** Attach + play the current candidate source. Arms the connect watchdog. */
   const attemptConnect = useCallback(async () => {
@@ -434,8 +437,9 @@ export default function AudioProvider({
   }, []);
 
   const play = useCallback(
-    (s: PublicStation) => {
+    (s: PublicStation, queue?: PublicStation[]) => {
       wantPlayRef.current = true;
+      queueRef.current = queue?.length ? queue : null;
       attemptRef.current = 0;
       setRetryAttempt(0);
       streamIdxRef.current = 0;
@@ -568,15 +572,30 @@ export default function AudioProvider({
     localStorage.removeItem(FAVMAP_KEY);
   }, [catalog, resolveSlug]);
 
+  /**
+   * The effective queue: the list playback launched from, or — when none was
+   * supplied — the current station's language ranked by popularity/quality.
+   */
+  const effectiveQueue = useCallback(async () => {
+    if (queueRef.current?.length) return queueRef.current;
+    const cur = currentRef.current;
+    const list = await ensureCatalog();
+    if (!cur) return list;
+    return list
+      .filter((s) => s.genre === cur.genre)
+      .sort((a, b) => b.votes - a.votes || b.bitrate - a.bitrate);
+  }, [ensureCatalog]);
+
   const step = useCallback(
     async (dir: 1 | -1) => {
-      const list = await ensureCatalog();
-      if (!list.length || !current) return;
-      const i = list.findIndex((s) => s.id === current.id);
+      const cur = currentRef.current;
+      const list = await effectiveQueue();
+      if (!list.length || !cur) return;
+      const i = list.findIndex((s) => s.id === cur.id);
       const n = (i + dir + list.length) % list.length;
-      play(list[n]);
+      play(list[n], list);
     },
-    [ensureCatalog, current, play]
+    [effectiveQueue, play]
   );
 
   const next = useCallback(() => step(1), [step]);
@@ -584,11 +603,12 @@ export default function AudioProvider({
 
   /** The station `next` would play, without switching to it. */
   const peekNext = useCallback(async () => {
-    const list = await ensureCatalog();
-    if (!list.length || !current) return null;
-    const i = list.findIndex((s) => s.id === current.id);
+    const cur = currentRef.current;
+    const list = await effectiveQueue();
+    if (!list.length || !cur) return null;
+    const i = list.findIndex((s) => s.id === cur.id);
     return list[(i + 1) % list.length] ?? null;
-  }, [ensureCatalog, current]);
+  }, [effectiveQueue]);
 
   const clearRecents = useCallback(() => {
     setRecentEntries([]);
