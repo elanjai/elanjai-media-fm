@@ -2,23 +2,24 @@
 
 import { useLibrary } from "./AudioProvider";
 import Icon from "./Icon";
+import type { PublicStation } from "@/lib/types";
 
 /** Bordered-circle favorite toggle (design action button). */
 export default function FavoriteButton({
-  id,
+  station,
   size = 44,
   className = "",
 }: {
-  id: string;
+  station: PublicStation;
   size?: number;
   className?: string;
 }) {
   const { favorites, toggleFavorite } = useLibrary();
-  const on = favorites.has(id);
+  const on = favorites.has(station.slug);
   return (
     <button
       type="button"
-      onClick={() => toggleFavorite(id)}
+      onClick={() => toggleFavorite(station)}
       aria-pressed={on}
       aria-label={on ? "Remove from favorites" : "Add to favorites"}
       title={on ? "Remove from favorites" : "Add to favorites"}

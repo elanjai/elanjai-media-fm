@@ -43,8 +43,9 @@ type PlaybackActions = {
 };
 
 type Library = {
+  /** Slugs of favorited stations. */
   favorites: Set<string>;
-  toggleFavorite: (id: string) => void;
+  toggleFavorite: (station: PublicStation) => void;
   favoriteStations: PublicStation[];
   recents: PublicStation[];
   clearRecents: () => void;
@@ -72,10 +73,25 @@ export const usePlaybackActions = () =>
 export const useLibrary = () => useCtx(LibraryCtx, "useLibrary");
 export const useSleepTimer = () => useCtx(SleepTimerCtx, "useSleepTimer");
 
+/**
+ * Storage (v2): favorites and recents persist *slugs* — never full station
+ * snapshots — so a changed stream URL in the catalog can't strand a saved
+ * station. `emfm:snaps` keeps a small slug→station map as a fallback when
+ * the catalog isn't loaded yet (or a station was removed).
+ *
+ * Legacy formats migrated on load:
+ *  - emfm:favorites   string[] of station *ids*      → slugs
+ *  - emfm:favmap      Record<id, PublicStation>      → folded into snaps
+ *  - emfm:recents     PublicStation[]                → {slug, playedAt}[]
+ */
 const FAV_KEY = "emfm:favorites";
+const FAVMAP_KEY = "emfm:favmap"; // legacy
 const RECENT_KEY = "emfm:recents";
+const SNAPS_KEY = "emfm:snaps";
 const VOL_KEY = "emfm:volume";
 const MUTE_KEY = "emfm:muted";
+
+type RecentEntry = { slug: string; playedAt: number };
 
 function read<T>(key: string, fallback: T): T {
   try {
@@ -112,9 +128,13 @@ export default function AudioProvider({
   const [muted, setMuted] = useState(false);
   const [sleepAt, setSleepAt] = useState<number | null>(null);
   const [sleepRemaining, setSleepRemaining] = useState<number | null>(null);
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
-  const [favMap, setFavMap] = useState<Record<string, PublicStation>>({});
-  const [recents, setRecents] = useState<PublicStation[]>([]);
+  /** Stored refs — slugs in v2, possibly legacy ids until the catalog migrates them. */
+  const [favRefs, setFavRefs] = useState<string[]>([]);
+  const [recentEntries, setRecentEntries] = useState<RecentEntry[]>([]);
+  const [snaps, setSnaps] = useState<Record<string, PublicStation>>({});
+  const [catalog, setCatalog] = useState<PublicStation[] | null>(null);
+  /** Legacy station id → slug, recovered from stored snapshots. */
+  const [idMap, setIdMap] = useState<Record<string, string>>({});
 
   const destroyHls = () => {
     hlsRef.current?.destroy();
@@ -134,9 +154,35 @@ export default function AudioProvider({
     audioRef.current = audio;
     // Hydrate persisted state without blocking first paint
     queueMicrotask(() => {
-      setFavorites(new Set(read<string[]>(FAV_KEY, [])));
-      setFavMap(read<Record<string, PublicStation>>("emfm:favmap", {}));
-      setRecents(read<PublicStation[]>(RECENT_KEY, []));
+      const snapsFromLegacy: Record<string, PublicStation> = {
+        ...read<Record<string, PublicStation>>(SNAPS_KEY, {}),
+      };
+      const ids: Record<string, string> = {};
+      // Legacy favmap/recents carried full station objects — keep them as
+      // slug-keyed snapshots so saved stations still render pre-catalog.
+      for (const s of Object.values(
+        read<Record<string, PublicStation>>(FAVMAP_KEY, {})
+      )) {
+        if (s?.slug) {
+          snapsFromLegacy[s.slug] ??= s;
+          if (s.id) ids[s.id] = s.slug;
+        }
+      }
+      const rawRecents = read<unknown[]>(RECENT_KEY, []);
+      const entries: RecentEntry[] = [];
+      for (const r of rawRecents) {
+        const o = r as Partial<PublicStation> & Partial<RecentEntry>;
+        if (o && typeof o.slug === "string") {
+          entries.push({ slug: o.slug, playedAt: o.playedAt ?? Date.now() });
+          // Legacy recents stored the whole station — seed snaps from it.
+          if (o.stream) snapsFromLegacy[o.slug] ??= o as PublicStation;
+          if (o.id) ids[o.id] = o.slug;
+        }
+      }
+      setIdMap(ids);
+      setSnaps(snapsFromLegacy);
+      setFavRefs(read<string[]>(FAV_KEY, []));
+      setRecentEntries(entries.slice(0, 20));
       const v = read<number>(VOL_KEY, 0.9);
       setVolumeState(v);
       audio.volume = v;
@@ -231,9 +277,17 @@ export default function AudioProvider({
       return;
     }
 
-    setRecents((prev) => {
-      const next = [{ ...s, playedAt: Date.now() }, ...prev.filter((r) => r.id !== s.id)].slice(0, 20);
+    setRecentEntries((prev) => {
+      const next = [
+        { slug: s.slug, playedAt: Date.now() },
+        ...prev.filter((r) => r.slug !== s.slug),
+      ].slice(0, 20);
       localStorage.setItem(RECENT_KEY, JSON.stringify(next));
+      return next;
+    });
+    setSnaps((prev) => {
+      const next = { ...prev, [s.slug]: s };
+      localStorage.setItem(SNAPS_KEY, JSON.stringify(next));
       return next;
     });
   }, []);
@@ -265,11 +319,60 @@ export default function AudioProvider({
       .then((r) => r.json())
       .then((d) => {
         catalogRef.current = d.stations as PublicStation[];
+        setCatalog(catalogRef.current);
         return catalogRef.current;
       })
       .catch(() => [] as PublicStation[]);
     return catalogPromiseRef.current;
   }, []);
+
+  // Warm the catalog once on mount: next/prev needs it anyway, and legacy
+  // favorite *ids* can only be migrated to slugs against it.
+  useEffect(() => {
+    ensureCatalog();
+  }, [ensureCatalog]);
+
+  // Catalog lookup maps + legacy ref → slug resolution.
+  const bySlug = useMemo(() => {
+    const m = new Map<string, PublicStation>();
+    for (const s of catalog ?? []) m.set(s.slug, s);
+    return m;
+  }, [catalog]);
+  const byId = useMemo(() => {
+    const m = new Map<string, PublicStation>();
+    for (const s of catalog ?? []) m.set(s.id, s);
+    return m;
+  }, [catalog]);
+
+  const resolveSlug = useCallback(
+    (ref: string) =>
+      bySlug.get(ref)?.slug ?? byId.get(ref)?.slug ?? idMap[ref] ?? ref,
+    [bySlug, byId, idMap]
+  );
+
+  // Once the catalog is in, rewrite any legacy id refs to slugs and persist.
+  const migratedRef = useRef(false);
+  useEffect(() => {
+    if (!catalog?.length || migratedRef.current) return;
+    migratedRef.current = true;
+    setFavRefs((refs) => {
+      const slugs = [...new Set(refs.map(resolveSlug))];
+      if (slugs.join() !== refs.join()) {
+        localStorage.setItem(FAV_KEY, JSON.stringify(slugs));
+      }
+      return slugs;
+    });
+    setRecentEntries((entries) => {
+      const next = entries
+        .map((e) => ({ ...e, slug: resolveSlug(e.slug) }))
+        .filter(
+          (e, i, arr) => arr.findIndex((x) => x.slug === e.slug) === i
+        );
+      localStorage.setItem(RECENT_KEY, JSON.stringify(next));
+      return next;
+    });
+    localStorage.removeItem(FAVMAP_KEY);
+  }, [catalog, resolveSlug]);
 
   const step = useCallback(
     async (dir: 1 | -1) => {
@@ -294,7 +397,7 @@ export default function AudioProvider({
   }, [ensureCatalog, current]);
 
   const clearRecents = useCallback(() => {
-    setRecents([]);
+    setRecentEntries([]);
     localStorage.removeItem(RECENT_KEY);
   }, []);
 
@@ -343,26 +446,22 @@ export default function AudioProvider({
     };
   }, [status, current]);
 
-  const toggleFavorite = useCallback(
-    (id: string) => {
-      setFavorites((prev) => {
-        const next = new Set(prev);
-        const on = !next.has(id);
-        if (on) next.add(id);
-        else next.delete(id);
-        localStorage.setItem(FAV_KEY, JSON.stringify([...next]));
-        setFavMap((m) => {
-          const mm = { ...m };
-          if (on && current && current.id === id) mm[id] = current;
-          if (!on) delete mm[id];
-          localStorage.setItem("emfm:favmap", JSON.stringify(mm));
-          return mm;
-        });
-        return next;
+  const toggleFavorite = useCallback((station: PublicStation) => {
+    const slug = station.slug;
+    setFavRefs((prev) => {
+      const on = !prev.includes(slug);
+      const next = on ? [slug, ...prev] : prev.filter((x) => x !== slug);
+      localStorage.setItem(FAV_KEY, JSON.stringify(next));
+      setSnaps((m) => {
+        const mm = { ...m };
+        if (on) mm[slug] = station;
+        else delete mm[slug];
+        localStorage.setItem(SNAPS_KEY, JSON.stringify(mm));
+        return mm;
       });
-    },
-    [current]
-  );
+      return next;
+    });
+  }, []);
 
   // ---------- volume / mute ----------
   const setVolume = useCallback((v: number) => {
@@ -449,12 +548,27 @@ export default function AudioProvider({
     [play, toggle, stop, next, prev, peekNext, setVolume, toggleMute]
   );
 
+  /** Resolved favorites — catalog version preferred, snapshot fallback. */
+  const favorites = useMemo(
+    () => new Set(favRefs.map(resolveSlug)),
+    [favRefs, resolveSlug]
+  );
   const favoriteStations = useMemo(
     () =>
-      [...favorites]
-        .map((id) => favMap[id])
+      favRefs
+        .map((ref) => bySlug.get(resolveSlug(ref)) ?? snaps[resolveSlug(ref)])
         .filter((x): x is PublicStation => Boolean(x)),
-    [favorites, favMap]
+    [favRefs, resolveSlug, bySlug, snaps]
+  );
+  const recents = useMemo(
+    () =>
+      recentEntries
+        .map((e) => {
+          const s = bySlug.get(resolveSlug(e.slug)) ?? snaps[resolveSlug(e.slug)];
+          return s ? { ...s, playedAt: e.playedAt } : null;
+        })
+        .filter((x): x is PublicStation => Boolean(x)),
+    [recentEntries, resolveSlug, bySlug, snaps]
   );
 
   const library = useMemo<Library>(

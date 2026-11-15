@@ -137,7 +137,7 @@ export default async function StationPage({ params }: Props) {
           <p className="text-[13px] font-semibold text-ink">Tap to listen live</p>
           <p className="mt-0.5 text-[10.5px] text-muted">Free · no sign-up</p>
         </div>
-        <FavoriteButton id={s.id} size={44} />
+        <FavoriteButton station={pub} size={44} />
         {s.homepage && (
           <a
             href={s.homepage}

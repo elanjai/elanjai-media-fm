@@ -119,7 +119,7 @@ export default function NowPlayingSheet({
 
   if (!current) return null;
   const playing = status === "playing";
-  const isFav = favorites.has(current.id);
+  const isFav = favorites.has(current.slug);
   const vol = muted ? 0 : volume;
 
   const share = async () => {
@@ -249,7 +249,7 @@ export default function NowPlayingSheet({
           <div className="mt-6 flex items-center justify-center gap-5">
             <button
               type="button"
-              onClick={() => toggleFavorite(current.id)}
+              onClick={() => toggleFavorite(current)}
               aria-pressed={isFav}
               aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
               className={`flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface transition ${
