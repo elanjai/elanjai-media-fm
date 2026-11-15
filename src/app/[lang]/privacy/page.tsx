@@ -19,8 +19,10 @@ export default function PrivacyPage() {
 
       <p className="mt-4 text-muted">
         {SITE.name} is built to be used without telling us anything about
-        yourself. There are no accounts, no sign-ups, and no analytics or
-        advertising trackers on this site today.
+        yourself. There are no accounts and no sign-ups. Optional,
+        consent-gated first-party statistics and clearly labelled
+        advertising help keep the service free — both are described below
+        and neither is required to listen.
       </p>
 
       <h2 className="mt-6 font-bold text-ink">What stays on your device</h2>
@@ -41,11 +43,37 @@ export default function PrivacyPage() {
         requests are governed by the broadcaster&apos;s own policies.
       </p>
 
+      <h2 className="mt-6 font-bold text-ink">Usage statistics (with your consent)</h2>
+      <p className="mt-2 text-muted">
+        On your first visit we ask whether you allow first-party usage
+        statistics. If you accept, we record aggregate counts — which kinds
+        of pages are viewed, which features are used, and which stations are
+        played — tied to a random per-tab session id, not to you. We do not
+        store your name, contacts, precise location or listening history on
+        our servers, and we do not build profiles across visits. Declining
+        changes nothing about listening. You can reconsider any time in
+        Settings.
+      </p>
+
+      <h2 className="mt-6 font-bold text-ink">Advertising</h2>
+      <p className="mt-2 text-muted">
+        {SITE.name} is funded by advertising. Slots marked
+        &ldquo;Sponsored&rdquo; or &ldquo;Ad&rdquo; may show our own house
+        promotions, direct-sold campaigns, or — later — programmatic
+        partners such as Google AdSense. Ad impressions and clicks are
+        counted in aggregate only. If personalized advertising is ever
+        enabled, it will be off by default and require the separate
+        &ldquo;Personalized ads&rdquo; choice in the consent choices,
+        consistent with India&apos;s DPDP Act and, for EEA/UK visitors,
+        applicable GDPR consent requirements.
+      </p>
+
       <h2 className="mt-6 font-bold text-ink">Cookies</h2>
       <p className="mt-2 text-muted">
-        We do not set cookies. If we add advertising or analytics in future,
-        this policy will be updated and any consent required by law will be
-        collected first.
+        We do not set cookies ourselves. Consent choices and preferences
+        live in your browser&apos;s localStorage. Third-party ad partners,
+        if enabled in future, may set their own cookies — that will be
+        covered here and gated by your consent choices before it happens.
       </p>
 
       <h2 className="mt-6 font-bold text-ink">Your rights</h2>

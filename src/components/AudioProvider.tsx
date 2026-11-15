@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { track } from "@/lib/analytics";
 import { reportStreamIssue, sessionId } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
 import { usePrefs } from "./PrefsProvider";
@@ -774,6 +775,7 @@ export default function AudioProvider({
     if (last && last.slug === current.slug && Date.now() - last.at < 30 * 60 * 1000)
       return;
     beaconedRef.current = { slug: current.slug, at: Date.now() };
+    track("play", { s: current.genre });
     const payload = JSON.stringify({ slug: current.slug, sid: sessionId() });
     try {
       const blob = new Blob([payload], { type: "application/json" });

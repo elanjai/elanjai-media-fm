@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "@/components/LangLink";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Genre, PublicStation } from "@/lib/types";
 import { NATIVE_NAMES } from "@/lib/languages";
+import { track } from "@/lib/analytics";
 import { searchLocal } from "@/lib/search";
 import { useCatalog } from "./AudioProvider";
 import Icon from "./Icon";
@@ -39,11 +40,17 @@ export default function SearchClient({
     [stations, term]
   );
 
-  // Keep the URL in sync without triggering a server re-render.
+  // Keep the URL in sync without triggering a server re-render, and
+  // count settled queries (≥2 chars, after the typing pause) once each.
+  const trackedRef = useRef("");
   useEffect(() => {
     const t = setTimeout(() => {
       const url = term ? `/${lang}/search?q=${encodeURIComponent(term)}` : `/${lang}/search`;
       window.history.replaceState(null, "", url);
+      if (term.length >= 2 && trackedRef.current !== term) {
+        trackedRef.current = term;
+        track("search", {});
+      }
     }, 300);
     return () => clearTimeout(t);
   }, [term, lang]);

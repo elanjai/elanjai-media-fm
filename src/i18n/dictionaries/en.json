@@ -88,5 +88,17 @@
     "installTitle": "Install Elanjai FM",
     "installHint": "One-tap radio from your home screen — no app store needed.",
     "installCta": "Install app"
+  },
+  "consent": {
+    "title": "A quick note on privacy",
+    "body": "Elanjai FM uses privacy-friendly, first-party statistics — page counts and feature use, never who you are — to keep the app free and improve it. Choose what you allow.",
+    "analytics": "Usage statistics",
+    "analyticsHint": "Anonymous page counts and feature use. Off = we learn nothing from your visit.",
+    "ads": "Personalized ads",
+    "adsHint": "For future ad partners. Elanjai FM shows no personalized ads today — leave this off if unsure.",
+    "accept": "Accept all",
+    "manage": "Manage choices",
+    "save": "Save choices",
+    "reject": "Reject all"
   }
 }

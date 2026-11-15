@@ -291,6 +291,18 @@ export default function SettingsButton() {
                     : "Copy a setup link for a senior's device"}
                 </button>
 
+                <button
+                  type="button"
+                  onClick={() => {
+                    localStorage.removeItem("emfm:consent");
+                    location.reload();
+                  }}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-[13px] font-semibold text-muted transition hover:border-brand-2/40 hover:text-ink"
+                >
+                  <Icon name="settings" size={15} strokeWidth={1.8} />
+                  Privacy choices — reconsider analytics &amp; ads consent
+                </button>
+
                 <p className="pb-1 text-center text-[11px] text-muted">
                   Everything is stored only on this device.
                 </p>

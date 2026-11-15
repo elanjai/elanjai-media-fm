@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import AudioProvider from "@/components/AudioProvider";
 import AppBar from "@/components/AppBar";
+import ConsentBanner from "@/components/ConsentBanner";
 import InstallPrompt from "@/components/InstallPrompt";
 import LanguagePickerSheet from "@/components/LanguagePickerSheet";
+import PageViewBeacon from "@/components/PageViewBeacon";
 import LangLink from "@/components/LangLink";
 import LocaleProvider from "@/components/LocaleProvider";
 import PlayerChrome from "@/components/PlayerChrome";
@@ -160,6 +162,8 @@ export default async function RootLayout({
               <TabBar />
             </AudioProvider>
             <LanguagePickerSheet genres={genres} />
+            <ConsentBanner />
+            <PageViewBeacon />
           </PrefsProvider>
         </LocaleProvider>
         <SwRegister />
