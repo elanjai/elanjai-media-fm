@@ -1,12 +1,13 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import { useEffect, useMemo, useState } from "react";
 import type { Genre, PublicStation } from "@/lib/types";
 import { NATIVE_NAMES } from "@/lib/languages";
 import { searchLocal } from "@/lib/search";
 import { useCatalog } from "./AudioProvider";
 import Icon from "./Icon";
+import { useLang, useT } from "./LocaleProvider";
 import RecentSearches from "./RecentSearches";
 import SearchInput from "./SearchInput";
 import StationRow from "./StationRow";
@@ -29,6 +30,8 @@ export default function SearchClient({
 }) {
   const [q, setQ] = useState(initialQ);
   const { stations } = useCatalog();
+  const lang = useLang();
+  const t = useT();
   const term = q.trim();
 
   const results = useMemo(
@@ -39,11 +42,11 @@ export default function SearchClient({
   // Keep the URL in sync without triggering a server re-render.
   useEffect(() => {
     const t = setTimeout(() => {
-      const url = term ? `/search?q=${encodeURIComponent(term)}` : "/search";
+      const url = term ? `/${lang}/search?q=${encodeURIComponent(term)}` : `/${lang}/search`;
       window.history.replaceState(null, "", url);
     }, 300);
     return () => clearTimeout(t);
-  }, [term]);
+  }, [term, lang]);
 
   return (
     <>
@@ -62,7 +65,7 @@ export default function SearchClient({
           <RecentSearches />
           <section aria-labelledby="trending">
             <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
-              Trending now
+              {t("search.trending")}
             </h2>
             <TrendingList stations={trending} />
           </section>
@@ -81,11 +84,10 @@ export default function SearchClient({
             <div className="mt-6 flex flex-col items-center rounded-[22px] border border-dashed border-border bg-surface px-6 py-12 text-center">
               <Icon name="search" size={30} strokeWidth={1.5} className="text-muted" />
               <p className="mt-4 font-display text-sm font-semibold text-ink">
-                No matches for “{term}”
+                {t("search.noResults")} “{term}”
               </p>
               <p className="mt-1.5 text-xs text-muted">
-                Try a station name, language, city or frequency — or browse a
-                language:
+                {t("search.noResultsHint")}
               </p>
               <div className="mt-4 flex flex-wrap justify-center gap-2">
                 {genres.slice(0, 6).map((g) => (

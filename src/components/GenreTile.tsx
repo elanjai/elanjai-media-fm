@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import type { Genre } from "@/lib/types";
 import { genreStyle } from "@/lib/genre-style";
 import Icon from "./Icon";

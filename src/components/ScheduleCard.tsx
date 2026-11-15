@@ -46,7 +46,7 @@ export default function ScheduleCard({
       out.push({ slot, when: slot.start });
     }
     return out;
-  }, [cur, schedule.slots]);
+  }, [cur, schedule]);
 
   return (
     <section aria-labelledby="schedule" className="mt-8">

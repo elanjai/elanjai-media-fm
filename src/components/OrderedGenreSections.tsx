@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import { useMemo } from "react";
 import type { Genre, PublicStation } from "@/lib/types";
 import { orderByLangs } from "@/lib/languages";

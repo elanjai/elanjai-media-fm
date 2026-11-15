@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { useLang } from "./LocaleProvider";
 import { useEffect, useMemo, useRef } from "react";
 import {
   isBusyStatus,
@@ -23,6 +24,7 @@ import StationLogo from "./StationLogo";
 export default function SimpleClient() {
   const params = useSearchParams();
   const router = useRouter();
+  const lang = useLang();
   const { stations } = useCatalog();
   const { favoriteStations, addFavorites } = useLibrary();
   const { current, status } = usePlayback();
@@ -58,7 +60,7 @@ export default function SimpleClient() {
 
   const exit = () => {
     setSimpleMode(false);
-    router.push("/");
+    router.push(`/${lang}`);
   };
 
   return (

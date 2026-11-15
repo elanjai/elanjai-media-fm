@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "home": "Home",
+    "genres": "Genres",
+    "search": "Search",
+    "favorites": "Favorites",
+    "nearMe": "Near me"
+  },
+  "hero": {
+    "kicker": "Free Indian radio",
+    "title": "Every Indian station. One tap.",
+    "subtitle": "Live radio from across India — film hits, devotional, news, classical and more. Free, no sign-up.",
+    "play": "Listen now"
+  },
+  "home": {
+    "continue": "Continue listening",
+    "collections": "Editorial picks",
+    "browseLanguages": "Browse by language",
+    "popularIn": "Popular {lang} stations",
+    "allStations": "All stations",
+    "popularNow": "Popular now",
+    "seeAll": "See all →"
+  },
+  "search": {
+    "title": "Search stations",
+    "placeholder": "Search stations, languages, cities…",
+    "trending": "Trending now",
+    "noResults": "No stations found",
+    "noResultsHint": "Try a different spelling, a city, or a language."
+  },
+  "favorites": {
+    "title": "Your favorites",
+    "empty": "Tap the heart on any station to keep it here."
+  },
+  "recent": {
+    "title": "Recently played",
+    "empty": "Stations you play will show up here."
+  },
+  "player": {
+    "nowPlaying": "Now playing",
+    "live": "Live",
+    "paused": "Paused",
+    "connecting": "Connecting…",
+    "buffering": "Buffering…",
+    "reconnecting": "Reconnecting…",
+    "listenLive": "Tap to listen live",
+    "freeNoSignup": "Free · no sign-up",
+    "upNext": "Up next"
+  },
+  "action": {
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop",
+    "favorite": "Favorite",
+    "share": "Share",
+    "next": "Next",
+    "previous": "Previous",
+    "report": "Report a problem",
+    "notWorking": "Not working?"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "textSize": "Text size",
+    "languages": "Languages",
+    "dataSaver": "Data saver",
+    "simpleMode": "Simple mode"
+  },
+  "footer": {
+    "tagline": "Free online radio — {count} languages, hundreds of live stations. Streams belong to their broadcasters.",
+    "allGenres": "All genres",
+    "cities": "Cities",
+    "networks": "Networks",
+    "recent": "Recently played",
+    "addStation": "Add your station",
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "dmca": "DMCA"
+  },
+  "meta": {
+    "homeTitle": "Free Indian Radio Online — Tamil, Hindi, Telugu & more",
+    "homeDescription": "Listen to {count}+ live Indian radio stations online for free — Tamil, Hindi, Malayalam, Telugu, Kannada, Punjabi and more. No sign-up, no app."
+  }
+}

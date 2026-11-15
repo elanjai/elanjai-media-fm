@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useLocalePath } from "./LocaleProvider";
 import { useState } from "react";
 import { isBusyStatus, usePlayback, usePlaybackActions } from "./AudioProvider";
 import EqBars from "./EqBars";
@@ -15,7 +15,7 @@ export default function PlayerChrome({ total }: { total: number }) {
   const { toggle, next, play, confirmPendingPlay, dismissPendingPlay } =
     usePlaybackActions();
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  const pathname = useLocalePath();
   // /simple has its own giant controls — the mini player would overlap them.
   if (pathname === "/simple") return null;
   if (!current && !pendingPlay)

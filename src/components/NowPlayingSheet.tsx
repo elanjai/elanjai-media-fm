@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import { useEffect, useRef, useState } from "react";
 import { reportStreamIssue } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";

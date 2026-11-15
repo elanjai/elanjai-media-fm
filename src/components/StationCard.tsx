@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import type { PublicStation } from "@/lib/types";
 import PlayButton from "./PlayButton";
 import StationLogo from "./StationLogo";

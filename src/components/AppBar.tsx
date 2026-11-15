@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import { Suspense } from "react";
 import BrandLogo from "./BrandLogo";
 import Icon from "./Icon";

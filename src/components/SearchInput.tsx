@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { GENRE_TO_SPEECH_LOCALE } from "@/lib/languages";
 import Icon from "./Icon";
+import { useLang, useT } from "./LocaleProvider";
 import { usePrefs } from "./PrefsProvider";
 
 export const RECENT_SEARCHES_KEY = "emfm:searches";
@@ -58,12 +59,14 @@ export default function SearchInput({
   withMic?: boolean;
 }) {
   const router = useRouter();
+  const lang = useLang();
   const params = useSearchParams();
   const controlled = value !== undefined;
   const [inner, setInner] = useState(params.get("q") ?? "");
   const q = controlled ? value : inner;
   const setQ = controlled ? (onValueChange ?? (() => {})) : setInner;
   const { langs } = usePrefs();
+  const t = useT();
   const [listening, setListening] = useState(false);
   const recRef = useRef<SpeechRecognitionLike | null>(null);
   const [micAvailable, setMicAvailable] = useState(false);
@@ -101,7 +104,7 @@ export default function SearchInput({
         const term = q.trim();
         if (term) remember(term);
         if (onSearchSubmit) onSearchSubmit(term);
-        else router.push(term ? `/search?q=${encodeURIComponent(term)}` : "/search");
+        else router.push(term ? `/${lang}/search?q=${encodeURIComponent(term)}` : `/${lang}/search`);
       }}
       className="relative w-full"
     >
@@ -114,8 +117,8 @@ export default function SearchInput({
         type="search"
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        placeholder="Search stations, languages…"
-        aria-label="Search stations"
+        placeholder={t("search.placeholder")}
+        aria-label={t("search.title")}
         autoFocus={autoFocus}
         className="w-full rounded-full border border-transparent bg-surface-2 py-3 pl-11 pr-20 text-sm text-ink placeholder-muted outline-none transition focus:border-brand-2 focus:bg-surface dark:focus:border-accent [&::-webkit-search-cancel-button]:hidden"
       />
@@ -138,7 +141,7 @@ export default function SearchInput({
           type="button"
           onClick={() => {
             setQ("");
-            if (!controlled) router.push("/search");
+            if (!controlled) router.push(`/${lang}/search`);
           }}
           aria-label="Clear search"
           className="hit-expand absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-muted transition hover:bg-surface hover:text-ink"

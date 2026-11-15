@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useLang } from "./LocaleProvider";
 import { useState } from "react";
 import { useLibrary } from "./AudioProvider";
 import Icon from "./Icon";
@@ -98,6 +99,7 @@ export default function SettingsButton() {
   const [cleared, setCleared] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const router = useRouter();
+  const lang = useLang();
   const {
     langs,
     openLangPicker,
@@ -252,7 +254,7 @@ export default function SettingsButton() {
                     setSimpleMode(v);
                     if (v) {
                       setOpen(false);
-                      router.push("/simple");
+                      router.push(`/${lang}/simple`);
                     }
                   }}
                 />

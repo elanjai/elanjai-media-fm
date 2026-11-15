@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import { useEffect, useState } from "react";
 import { RECENT_SEARCHES_KEY } from "./SearchInput";
 

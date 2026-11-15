@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import type { PublicStation } from "@/lib/types";
 import { usePlayback } from "./AudioProvider";
 import EqBars from "./EqBars";

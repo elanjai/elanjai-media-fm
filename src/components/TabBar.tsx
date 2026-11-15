@@ -1,20 +1,21 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "@/components/LangLink";
+import { useLocalePath, useT } from "./LocaleProvider";
 import Icon from "./Icon";
 import type { IconName } from "@/lib/icon-paths";
 
-const items: { href: string; label: string; icon: IconName }[] = [
-  { href: "/", label: "Home", icon: "home" },
-  { href: "/genres", label: "Genres", icon: "grid" },
-  { href: "/search", label: "Search", icon: "search" },
-  { href: "/favorites", label: "Favorites", icon: "heart" },
+const items: { href: string; labelKey: string; icon: IconName }[] = [
+  { href: "/", labelKey: "nav.home", icon: "home" },
+  { href: "/genres", labelKey: "nav.genres", icon: "grid" },
+  { href: "/search", labelKey: "nav.search", icon: "search" },
+  { href: "/favorites", labelKey: "nav.favorites", icon: "heart" },
 ];
 
 /** Floating pill tab bar — active tab takes the accent pill (design "tab bar"). Mobile only; md+ uses AppBar nav links. */
 export default function TabBar() {
-  const pathname = usePathname();
+  const pathname = useLocalePath();
+  const t = useT();
   // Simple mode replaces navigation with one giant player surface.
   if (pathname === "/simple") return null;
   return (
@@ -29,7 +30,7 @@ export default function TabBar() {
           return (
             <Link
               key={it.href}
-              href={it.href}
+              href={it.href === "/" ? "/" : it.href}
               aria-current={active ? "page" : undefined}
               className="flex flex-1 flex-col items-center justify-center gap-1"
             >
@@ -45,7 +46,7 @@ export default function TabBar() {
                   active ? "font-semibold text-brand-2 dark:text-accent" : "font-medium text-muted"
                 }`}
               >
-                {it.label}
+                {t(it.labelKey)}
               </span>
             </Link>
           );
