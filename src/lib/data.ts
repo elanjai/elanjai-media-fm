@@ -39,13 +39,14 @@ export function toPublic(s: Station): PublicStation {
 
 /** Canonical language ordering — priority languages first, rest alphabetical. */
 const GENRE_ORDER = [
-  "india",
   "tamil",
   "hindi",
   "telugu",
   "malayalam",
   "kannada",
   "punjabi",
+  "urdu",
+  "india",
 ];
 
 export const getStations = () => stations.filter((s) => s.is_active);

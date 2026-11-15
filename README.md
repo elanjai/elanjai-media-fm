@@ -85,6 +85,14 @@ ordered slug lists and re-apply with:
 python scripts/apply_top_rank.py
 ```
 
+## Deployment
+
+Docker + Railway. The repo ships a multi-stage `Dockerfile` (standalone
+Next.js output), `railway.json` service config, `/api/health` for checks,
+and on-demand GitHub Actions for **Release** (semver tag + GitHub Release),
+**Deploy** (any tag/ref → Railway), and **Rollback** (previous deployment or
+tagged release). See [DEPLOYMENT.md](DEPLOYMENT.md).
+
 ## Legal note
 
 Station names, logos and streams belong to their owners. The directory links to

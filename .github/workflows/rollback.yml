@@ -1,0 +1,74 @@
+name: Rollback
+
+# On-demand only. Two modes:
+#   - `to` empty  → deploymentRollback to the previous successful deployment
+#   - `to` = tag  → redeploys that release's commit (always works, even when
+#                   the previous deployment isn't rollback-eligible)
+on:
+  workflow_dispatch:
+    inputs:
+      to:
+        description: "Tag to roll back to (e.g. v1.1.0). Empty = previous successful deployment."
+        required: false
+        type: string
+        default: ""
+      confirm:
+        description: 'Type "rollback" to confirm'
+        required: true
+        type: string
+
+concurrency:
+  group: railway-deploy
+  cancel-in-progress: false
+
+env:
+  RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
+  RAILWAY_SERVICE_ID: ${{ vars.RAILWAY_SERVICE_ID }}
+  RAILWAY_ENVIRONMENT_ID: ${{ vars.RAILWAY_ENVIRONMENT_ID }}
+  RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+  APP_URL: ${{ vars.APP_URL }}
+
+jobs:
+  rollback:
+    name: Roll back Railway deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - name: Confirm
+        run: |
+          if [ "${{ inputs.confirm }}" != "rollback" ]; then
+            echo "::error::Confirmation failed — type \"rollback\" to proceed."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Roll back to previous deployment
+        if: ${{ inputs.to == '' }}
+        run: bash scripts/ci/rollback.sh
+
+      - name: Roll back to tagged release
+        if: ${{ inputs.to != '' }}
+        run: |
+          SHA="$(git rev-parse --verify "${{ inputs.to }}^{commit}")" || {
+            echo "::error::Unknown ref '${{ inputs.to }}'"
+            exit 1
+          }
+          echo "Rolling back to ${{ inputs.to }} → $SHA"
+          bash scripts/ci/deploy.sh "$SHA"
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Railway rollback"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| mode | ${{ inputs.to != '' && format('tag `{0}`', inputs.to) || 'previous deployment' }} |"
+            echo "| outcome | **${{ job.status }}** |"
+          } >> "$GITHUB_STEP_SUMMARY"

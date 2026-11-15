@@ -1,0 +1,28 @@
+# Version control / CI
+.git
+.github
+
+# Build output (rebuilt inside the image)
+.next
+out
+build
+
+# Dependencies (installed via `npm ci` in the deps stage)
+node_modules
+
+# Env files — never bake secrets into the image
+.env*
+
+# Not needed for the build (maintenance scripts & design sources)
+scripts/
+design/
+data/.logo-originals/
+
+# Misc
+*.log
+*.tsbuildinfo
+.DS_Store
+Dockerfile
+.dockerignore
+railway.json
+DEPLOYMENT.md
