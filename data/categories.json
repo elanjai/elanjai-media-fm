@@ -1,0 +1,15 @@
+[
+ {"slug": "film", "name": "Film songs", "description": "Movie music — Bollywood, Kollywood, Tollywood and more.", "icon": "note"},
+ {"slug": "retro", "name": "Retro & old songs", "description": "Golden classics and evergreen hits from past decades.", "icon": "clock"},
+ {"slug": "devotional", "name": "Devotional", "description": "Bhajans, kirtans, Gurbani, Quran recitations and Christian hymns.", "icon": "star"},
+ {"slug": "news", "name": "News", "description": "Bulletins and current affairs from AIR and private broadcasters.", "icon": "signal"},
+ {"slug": "talk", "name": "Talk & speech", "description": "Chat shows, interviews, discussions and storytelling.", "icon": "hp"},
+ {"slug": "classical", "name": "Classical", "description": "Carnatic and Hindustani classical music.", "icon": "note"},
+ {"slug": "sports", "name": "Sports", "description": "Cricket commentary and sports talk.", "icon": "live"},
+ {"slug": "kids", "name": "Kids", "description": "Stories, rhymes and songs for children.", "icon": "sun"},
+ {"slug": "community", "name": "Community radio", "description": "Local community stations — campus, rural and neighbourhood voices.", "icon": "wifi"},
+ {"slug": "folk", "name": "Folk", "description": "Regional folk music — gaana, lok geet, baul and more.", "icon": "music"},
+ {"slug": "love", "name": "Love & romance", "description": "Romantic melodies and love songs.", "icon": "heart"},
+ {"slug": "melody", "name": "Melodies", "description": "Soft, easy-listening melodies all day.", "icon": "moon"},
+ {"slug": "hits", "name": "Hits & Top 40", "description": "Current chart hits and party music.", "icon": "eq"}
+]

@@ -15,13 +15,15 @@ import { getStations } from "./data";
  */
 
 const ALLOWED_STREAMS = new Set(
-  getStations().map((s) => {
-    try {
-      return new URL(s.stream_url).toString();
-    } catch {
-      return s.stream_url;
-    }
-  })
+  getStations().flatMap((s) =>
+    s.streams.map((v) => {
+      try {
+        return new URL(v.url).toString();
+      } catch {
+        return v.url;
+      }
+    })
+  )
 );
 
 export function isCatalogStream(target: URL): boolean {
@@ -29,7 +31,8 @@ export function isCatalogStream(target: URL): boolean {
 }
 
 export function stationStreamUrl(slug: string): string | null {
-  for (const s of getStations()) if (s.slug === slug) return s.stream_url;
+  for (const s of getStations())
+    if (s.slug === slug) return s.streams[0]?.url ?? null;
   return null;
 }
 

@@ -1,0 +1,19 @@
+[
+ {"slug": "air", "name": "All India Radio / Akashvani"},
+ {"slug": "mirchi", "name": "Radio Mirchi"},
+ {"slug": "redfm", "name": "Red FM"},
+ {"slug": "bigfm", "name": "Big FM"},
+ {"slug": "radiocity", "name": "Radio City"},
+ {"slug": "suryan", "name": "Suryan FM"},
+ {"slug": "hellofm", "name": "Hello FM"},
+ {"slug": "clubfm", "name": "Club FM"},
+ {"slug": "feverfm", "name": "Fever FM"},
+ {"slug": "radioone", "name": "Radio One"},
+ {"slug": "radiomango", "name": "Radio Mango"},
+ {"slug": "ishq", "name": "Ishq FM"},
+ {"slug": "hit95", "name": "Hit 95 FM"},
+ {"slug": "chennailive", "name": "Chennai Live"},
+ {"slug": "sunnetwork", "name": "Sun Network"},
+ {"slug": "bbc", "name": "BBC"},
+ {"slug": "ndtv", "name": "NDTV"}
+]

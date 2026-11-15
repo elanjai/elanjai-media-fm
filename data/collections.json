@@ -1,0 +1,64 @@
+[
+ {
+  "slug": "margazhi-season",
+  "title": "Margazhi music season",
+  "description": "Carnatic concerts and classical airtime for the December–January festival season.",
+  "start": "12-15",
+  "end": "01-15",
+  "station_slugs": [
+   "vahonfm-vahon-hindustani-radio"
+  ]
+ },
+ {
+  "slug": "devotional-specials",
+  "title": "Devotional specials",
+  "description": "Bhajans, kirtans and sacred streams — Ram bhakti, Gurbani from Sri Harmandir Sahib, and more.",
+  "start": "",
+  "end": "",
+  "station_slugs": [
+   "live-kirtan-sri-harmandir-sahib",
+   "gurbani-kirtan",
+   "hazur-sahib-live",
+   "classic-radio-bhakti-sangeet",
+   "2b-radio-sangam-shri-ram",
+   "2b-radio-sangam-devi-maa",
+   "2b-radio-sangam-ganesha",
+   "2b-radio-sangam-guruvar",
+   "peaceradio"
+  ]
+ },
+ {
+  "slug": "retro-evergreen",
+  "title": "Evergreen classics",
+  "description": "Golden hits and old favourites — Ilaiyaraaja, Kishore Kumar and 80s/90s melodies.",
+  "start": "",
+  "end": "",
+  "station_slugs": [
+   "vanavilfm-radio-maestro",
+   "kishore-kumar-radio",
+   "radio-retro-bollywood-90s",
+   "bollywood-90s-radio",
+   "radio-retro-bollywood",
+   "90s-tamil-melodies",
+   "80s-tamil-hits",
+   "goldy-mukesh",
+   "aural-oldies",
+   "retro-ma"
+  ]
+ },
+ {
+  "slug": "navratri-devotional",
+  "title": "Navratri devotional",
+  "description": "Devi bhajans, aarti airtime and festive music for Navratri.",
+  "start": "09-15",
+  "end": "10-15",
+  "station_slugs": [
+   "2b-radio-sangam-devi-maa",
+   "classic-radio-bhakti-sangeet",
+   "2b-radio-sangam-shri-ram",
+   "2b-radio-sangam-ganesha",
+   "2b-radio-sangam-guruvar",
+   "live-kirtan-sri-harmandir-sahib"
+  ]
+ }
+]

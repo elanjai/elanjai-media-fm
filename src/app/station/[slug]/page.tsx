@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = getStationBySlug(slug);
   if (!s) return { title: "Station not found" };
   const title = `${s.name} — Listen Live Free`;
-  const description = `Listen to ${s.name} live online — free ${s.language} radio from ${s.country}, streaming 24/7 on ${SITE.name}.`;
+  const description = `Listen to ${s.name} live online — free ${s.languages.join(", ")} radio from ${s.country}, streaming 24/7 on ${SITE.name}.`;
   return {
     title,
     description,
@@ -45,7 +45,9 @@ export default async function StationPage({ params }: Props) {
 
   const pub = toPublic(s);
   const related = getRelated(s).map(toPublic);
-  const genreCount = getStations().filter((x) => x.genre === s.genre).length;
+  const lang = s.languages[0] ?? "india";
+  const primary = s.streams[0];
+  const genreCount = getStations().filter((x) => x.languages.includes(lang)).length;
 
   return (
     <div className="py-5">
@@ -59,7 +61,7 @@ export default async function StationPage({ params }: Props) {
           __html: JSON.stringify(
             breadcrumbJsonLd([
               { name: "Home", url: SITE.url },
-              { name: s.genre, url: `${SITE.url}/genre/${s.genre}` },
+              { name: lang, url: `${SITE.url}/genre/${lang}` },
               { name: s.name, url: `${SITE.url}/station/${s.slug}` },
             ])
           ),
@@ -69,8 +71,8 @@ export default async function StationPage({ params }: Props) {
       {/* Header — back to genre + share */}
       <div className="flex items-center gap-3">
         <Link
-          href={`/genre/${s.genre}`}
-          aria-label={`Back to ${s.genre} stations`}
+          href={`/genre/${lang}`}
+          aria-label={`Back to ${lang} stations`}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
@@ -78,8 +80,8 @@ export default async function StationPage({ params }: Props) {
         <nav aria-label="Breadcrumb" className="min-w-0 flex-1 truncate text-xs text-muted">
           <Link href="/" className="hover:text-ink">Home</Link>
           <span className="mx-1.5">/</span>
-          <Link href={`/genre/${s.genre}`} className="capitalize hover:text-ink">
-            {s.genre}
+          <Link href={`/genre/${lang}`} className="capitalize hover:text-ink">
+            {lang}
           </Link>
         </nav>
         <ShareButton slug={s.slug} name={s.name} />
@@ -111,9 +113,9 @@ export default async function StationPage({ params }: Props) {
               {s.name}
             </h1>
             <p className="mt-1 text-xs text-brand-ink/75">
-              {s.language} · {s.country}
-              {s.bitrate
-                ? ` · ${s.bitrate} kbps ${s.codec} · ≈ ${Math.round(s.bitrate * 0.45)} MB/hr`
+              {pub.language} · {s.country}
+              {primary?.bitrate
+                ? ` · ${primary.bitrate} kbps ${primary.codec} · ≈ ${Math.round(primary.bitrate * 0.45)} MB/hr`
                 : ""}
             </p>
             {s.tags.length > 0 && (
@@ -162,10 +164,10 @@ export default async function StationPage({ params }: Props) {
         <section aria-labelledby="related" className="mt-8">
           <div className="mb-3 flex items-baseline justify-between">
             <h2 id="related" className="font-display text-[16.5px] font-semibold text-ink">
-              More {s.genre} stations
+              More {lang} stations
             </h2>
             <Link
-              href={`/genre/${s.genre}`}
+              href={`/genre/${lang}`}
               className="text-xs font-semibold text-brand-2 dark:text-accent"
             >
               All {genreCount} →

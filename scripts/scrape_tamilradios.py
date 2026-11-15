@@ -108,7 +108,7 @@ def main():
 
     stations = json.load(open(os.path.join(ROOT, "data", "stations.json"), encoding="utf-8"))
     have_names = {norm(s["name"]) for s in stations}
-    have_hosts = {host_of(s["stream_url"]) for s in stations}
+    have_hosts = {host_of(st["url"]) for s in stations for st in s.get("streams", [])}
     taken = {s["slug"] for s in stations}
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
@@ -144,12 +144,13 @@ def main():
         if "tamil" not in tags:
             tags.append("tamil")
         new.append({
-            "id": s2, "name": name, "slug": s2, "stream_url": url,
+            "id": s2, "name": name, "slug": s2,
+            "streams": [{"url": url, "codec": codec if codec != "UNKNOWN" else "MP3",
+                         "bitrate": int(obj.get("bitrate") or 0), "hls": False}],
+            "languages": ["tamil"], "categories": [],
             "homepage": f"{BASE}/{obj.get('slug') or slug}",
             "favicon": obj.get("image") or "",
-            "genre": "tamil", "language": "Tamil", "country": "India",
-            "codec": codec if codec != "UNKNOWN" else "MP3",
-            "bitrate": int(obj.get("bitrate") or 0), "votes": 0,
+            "country": "India", "votes": 0,
             "tags": tags, "is_active": ok,
         })
         if not ok:

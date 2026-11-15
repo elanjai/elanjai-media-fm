@@ -13,8 +13,8 @@ import {
 describe("stream allowlist", () => {
   it("accepts an exact catalog stream URL", () => {
     const first = (stationsJson as Station[]).find((s) => s.is_active)!;
-    expect(isCatalogStream(new URL(first.stream_url))).toBe(true);
-    expect(stationStreamUrl(first.slug)).toBe(first.stream_url);
+    expect(isCatalogStream(new URL(first.streams[0].url))).toBe(true);
+    expect(stationStreamUrl(first.slug)).toBe(first.streams[0].url);
   });
 
   it("rejects an arbitrary URL on an allowlisted host (no open-proxy by origin)", () => {

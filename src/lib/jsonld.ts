@@ -9,11 +9,13 @@ export function radioStationJsonLd(s: Station) {
     mainEntityOfPage: `${SITE.url}/station/${s.slug}`,
     url: `${SITE.url}/station/${s.slug}`,
     name: s.name,
-    description: `Listen to ${s.name} live online — free ${s.language} radio streaming 24/7 on ${SITE.name}.`,
-    genre: [s.genre],
+    description:
+      s.description ??
+      `Listen to ${s.name} live online — free ${s.languages.join(", ")} radio streaming 24/7 on ${SITE.name}.`,
+    genre: [...s.languages, ...s.categories],
     image: s.favicon || `${SITE.url}/icon.svg`,
     areaServed: s.country || "India",
-    inLanguage: s.language,
+    inLanguage: s.languages,
     potentialAction: {
       "@type": "ListenAction",
       target: `${SITE.url}/station/${s.slug}`,

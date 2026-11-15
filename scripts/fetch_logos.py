@@ -167,7 +167,8 @@ def main():
     for genre in genres:
         todo = []
         for i, s in enumerate(
-            x for x in stations if x.get("genre") == genre and x.get("is_active")):
+            x for x in stations
+            if genre in x.get("languages", []) and x.get("is_active")):
             p = os.path.join(OUT, genre, f"{s['slug']}.png")
             # re-run only what's missing or was a generated placeholder
             if os.path.exists(p) and s["slug"] not in genset:

@@ -13,45 +13,54 @@ const base: Station = {
   id: "t1",
   name: "Test FM",
   slug: "test-fm",
-  stream_url: "https://example.com/stream",
+  streams: [{ url: "https://example.com/stream", codec: "MP3", bitrate: 128, hls: false }],
+  languages: ["tamil"],
+  categories: [],
   homepage: "",
   favicon: "",
-  genre: "tamil",
-  language: "tamil",
   country: "India",
-  codec: "MP3",
-  bitrate: 128,
   votes: 10,
   tags: [],
   is_active: true,
 };
 
+const withStream = (url: string, hls = false): Station => ({
+  ...base,
+  streams: [{ url, codec: "MP3", bitrate: 128, hls }],
+});
+
 describe("isDirectStream / toPublic", () => {
   it("plays https non-HLS streams directly", () => {
     const p = toPublic(base);
     expect(p.direct).toBe(true);
-    expect(p.stream).toBe(base.stream_url);
+    expect(p.stream).toBe(base.streams[0].url);
     expect(p.hls).toBe(false);
   });
 
+  it("exposes remaining streams as altStreams for failover", () => {
+    const s = withStream("https://example.com/a");
+    s.streams.push({ url: "http://example.com/b", codec: "AAC", bitrate: 64, hls: false });
+    const p = toPublic(s);
+    expect(p.altStreams?.[0]).toMatch(/^\/api\/stream\?u=/);
+  });
+
   it("proxies http streams (mixed content)", () => {
-    const p = toPublic({ ...base, stream_url: "http://example.com/stream" });
+    const p = toPublic(withStream("http://example.com/stream"));
     expect(p.direct).toBe(false);
     expect(p.stream).toMatch(/^\/api\/stream\?u=/);
   });
 
   it("proxies https HLS streams (hls.js needs same-origin XHR)", () => {
-    const p = toPublic({ ...base, stream_url: "https://example.com/a.m3u8" });
+    const p = toPublic(withStream("https://example.com/a.m3u8", true));
     expect(p.direct).toBe(false);
     expect(p.hls).toBe(true);
     expect(p.stream).toMatch(/^\/api\/stream\?u=/);
   });
 
   it("detects HLS URLs with query strings", () => {
-    const p = toPublic({
-      ...base,
-      stream_url: "https://example.com/live.m3u8?token=x",
-    });
+    const p = toPublic(
+      withStream("https://example.com/live.m3u8?token=x", true)
+    );
     expect(p.hls).toBe(true);
     expect(p.direct).toBe(false);
   });

@@ -1,10 +1,33 @@
 import stationsJson from "../../data/stations.json";
 import genresJson from "../../data/genres.json";
+import categoriesJson from "../../data/categories.json";
+import citiesJson from "../../data/cities.json";
+import networksJson from "../../data/networks.json";
+import collectionsJson from "../../data/collections.json";
 import localLogosJson from "../../data/local-logos.json";
-import type { Genre, PublicStation, Station } from "./types";
+import type {
+  Category,
+  City,
+  Genre,
+  Network,
+  PublicStation,
+  Station,
+} from "./types";
 
 const stations = stationsJson as Station[];
 const genres = genresJson as Genre[];
+const localLogos = localLogosJson as Record<string, string>;
+
+export type Collection = {
+  slug: string;
+  title: string;
+  description: string;
+  /** Inclusive ISO dates the rail should appear between ("", "" = always). */
+  start: string;
+  end: string;
+  station_slugs: string[];
+};
+const collections = collectionsJson as Collection[];
 
 /**
  * Streams only go through our same-origin /api/stream proxy when they have
@@ -25,26 +48,41 @@ export function isDirectStream(streamUrl: string): boolean {
   );
 }
 
-const localLogos = localLogosJson as Record<string, string>;
+const title = (s: string) =>
+  s
+    .split(/[-_\s]+/)
+    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+    .join(" ");
 
 export function toPublic(s: Station): PublicStation {
   const local = localLogos[s.slug];
-  const direct = isDirectStream(s.stream_url);
+  const primary = s.streams[0];
+  const alts = s.streams.slice(1).map((v) => v.url);
+  const direct = primary ? isDirectStream(primary.url) : false;
   return {
     id: s.id,
     name: s.name,
     slug: s.slug,
-    genre: s.genre,
-    language: s.language,
+    genre: s.languages[0] ?? "india",
+    language: s.languages.map(title).join(", "),
     country: s.country,
-    codec: s.codec,
-    bitrate: s.bitrate,
+    codec: primary?.codec ?? "",
+    bitrate: primary?.bitrate ?? 0,
     favicon: local ?? s.favicon,
     faviconAlt: local ? s.favicon : undefined,
     votes: s.votes,
-    stream: direct ? s.stream_url : playableUrl(s.stream_url),
-    hls: /\.m3u8?($|\?)/i.test(s.stream_url),
+    stream: primary ? (direct ? primary.url : playableUrl(primary.url)) : "",
+    altStreams: alts.length
+      ? alts.map((u) => (isDirectStream(u) ? u : playableUrl(u)))
+      : undefined,
+    hls: primary?.hls ?? false,
     direct,
+    categories: s.categories.length ? s.categories : undefined,
+    network: s.network,
+    city: s.city,
+    frequencyMhz: s.frequency_mhz,
+    nameNative: s.name_native,
+    aliases: s.aliases,
   };
 }
 
@@ -63,7 +101,8 @@ const GENRE_ORDER = [
 export const getStations = () => stations.filter((s) => s.is_active);
 export const getGenres = () => {
   const live = new Map<string, number>();
-  for (const s of getStations()) live.set(s.genre, (live.get(s.genre) ?? 0) + 1);
+  for (const s of getStations())
+    for (const l of s.languages) live.set(l, (live.get(l) ?? 0) + 1);
   return genres
     .map((g) => ({ ...g, count: live.get(g.slug) ?? 0 }))
     .sort((a, b) => {
@@ -87,9 +126,10 @@ export const getStationBySlug = (slug: string) =>
  *  - reliability: https transport +5%, known codec & bitrate +5%
  */
 const rankScore = (s: Station) => {
-  const quality = Math.min(s.bitrate ?? 0, 192) / 512;
-  const https = s.stream_url.startsWith("https") ? 0.05 : 0;
-  const known = s.codec !== "UNKNOWN" && s.bitrate > 0 ? 0.05 : 0;
+  const primary = s.streams[0];
+  const quality = Math.min(primary?.bitrate ?? 0, 192) / 512;
+  const https = primary?.url.startsWith("https") ? 0.05 : 0;
+  const known = primary && primary.codec !== "UNKNOWN" && primary.bitrate > 0 ? 0.05 : 0;
   return s.votes * (1 + quality + https + known);
 };
 
@@ -102,14 +142,113 @@ export const rankStations = (list: Station[]) =>
   );
 
 export const getStationsByGenre = (genre: string) =>
-  rankStations(getStations().filter((s) => s.genre === genre));
+  rankStations(getStations().filter((s) => s.languages.includes(genre)));
 
 export const getFeatured = (n = 18) => rankStations(getStations()).slice(0, n);
 
-export const getRelated = (station: Station, n = 8) =>
-  getStationsByGenre(station.genre)
-    .filter((s) => s.slug !== station.slug)
-    .slice(0, n);
+// ---------- categories / cities / networks / collections (F-2.3..F-2.5) ----------
+
+type CategoryMeta = { slug: string; name: string; description: string; icon?: string };
+type CityMeta = { slug: string; name: string; state: string };
+type NetworkMeta = { slug: string; name: string };
+
+const categoryMeta = categoriesJson as CategoryMeta[];
+const cityMeta = citiesJson as CityMeta[];
+const networkMeta = networksJson as NetworkMeta[];
+
+export const getCategories = (): Category[] => {
+  const live = new Map<string, number>();
+  for (const s of getStations())
+    for (const c of s.categories) live.set(c, (live.get(c) ?? 0) + 1);
+  return categoryMeta
+    .map((c) => ({ ...c, count: live.get(c.slug) ?? 0 }))
+    .filter((c) => c.count > 0)
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+};
+export const getCategory = (slug: string) =>
+  categoryMeta.find((c) => c.slug === slug) ?? null;
+export const getStationsByCategory = (slug: string) =>
+  rankStations(getStations().filter((s) => s.categories.includes(slug)));
+
+export const getCities = (): City[] => {
+  const live = new Map<string, { name: string; state: string; count: number }>();
+  for (const s of getStations()) {
+    if (!s.city) continue;
+    const meta = cityMeta.find((c) => c.slug === s.city);
+    const cur = live.get(s.city) ?? {
+      name: meta?.name ?? title(s.city),
+      state: meta?.state ?? s.state ?? "",
+      count: 0,
+    };
+    cur.count += 1;
+    live.set(s.city, cur);
+  }
+  return [...live.entries()]
+    .map(([slug, v]) => ({ slug, ...v }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+};
+export const getCity = (slug: string) => {
+  const meta = cityMeta.find((c) => c.slug === slug);
+  const st = getStations().find((s) => s.city === slug);
+  if (!meta && !st) return null;
+  return {
+    slug,
+    name: meta?.name ?? title(slug),
+    state: meta?.state ?? st?.state ?? "",
+  };
+};
+export const getStationsByCity = (slug: string) =>
+  rankStations(getStations().filter((s) => s.city === slug));
+
+export const getNetworks = (): Network[] => {
+  const live = new Map<string, number>();
+  for (const s of getStations())
+    if (s.network) live.set(s.network, (live.get(s.network) ?? 0) + 1);
+  return networkMeta
+    .map((n) => ({ ...n, count: live.get(n.slug) ?? 0 }))
+    .filter((n) => n.count > 0)
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+};
+export const getNetwork = (slug: string) =>
+  networkMeta.find((n) => n.slug === slug) ?? null;
+export const getStationsByNetwork = (slug: string) =>
+  rankStations(getStations().filter((s) => s.network === slug));
+
+/** Editorial collections currently inside their start/end window. */
+export const getCollections = (now?: Date): Collection[] => {
+  const t = (now ?? new Date()).toISOString().slice(0, 10);
+  return collections
+    .filter((c) => (!c.start || c.start <= t) && (!c.end || c.end >= t))
+    .map((c) => ({
+      ...c,
+      station_slugs: c.station_slugs.filter((sl) =>
+        getStations().some((s) => s.slug === sl)
+      ),
+    }))
+    .filter((c) => c.station_slugs.length >= 3);
+};
+export const getCollectionStations = (c: Collection) =>
+  rankStations(
+    c.station_slugs
+      .map((sl) => getStationBySlug(sl))
+      .filter((s): s is Station => s !== null)
+  );
+
+/** Related stations — same network or city first, then same language (F-2.7). */
+export const getRelated = (station: Station, n = 8) => {
+  const same = rankStations(
+    getStations().filter(
+      (s) =>
+        s.slug !== station.slug &&
+        ((station.network && s.network === station.network) ||
+          (station.city && s.city === station.city))
+    )
+  );
+  const rest = getStationsByGenre(station.languages[0]).filter(
+    (s) => s.slug !== station.slug && !same.includes(s)
+  );
+  return [...same, ...rest].slice(0, n);
+};
 
 export function searchStations(q: string): Station[] {
   const needle = q.trim().toLowerCase();
@@ -117,8 +256,13 @@ export function searchStations(q: string): Station[] {
   return rankStations(getStations()).filter(
     (s) =>
       s.name.toLowerCase().includes(needle) ||
-      s.genre.includes(needle) ||
-      s.tags.some((t) => t.toLowerCase().includes(needle)) ||
-      s.language.toLowerCase().includes(needle)
+      (s.name_native ?? "").includes(q.trim()) ||
+      s.languages.some((l) => l.includes(needle)) ||
+      s.categories.some((c) => c.includes(needle)) ||
+      (s.aliases ?? []).some((a) => a.toLowerCase().includes(needle)) ||
+      (s.city ?? "").includes(needle) ||
+      (s.network ?? "").includes(needle) ||
+      String(s.frequency_mhz ?? "").startsWith(needle) ||
+      s.tags.some((t) => t.toLowerCase().includes(needle))
   );
 }

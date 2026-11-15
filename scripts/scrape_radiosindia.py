@@ -121,7 +121,7 @@ def main():
 
     stations = json.load(open(os.path.join(ROOT, "data", "stations.json"), encoding="utf-8"))
     have_names = {norm(s["name"]) for s in stations}
-    have_hosts = {host_of(s["stream_url"]) for s in stations}
+    have_hosts = {host_of(st["url"]) for s in stations for st in s.get("streams", [])}
     taken = {s["slug"] for s in stations}
 
     # scrape all pages — keep it polite, the site throttles bursts
@@ -163,11 +163,12 @@ def main():
         alive = err is None
         new.append({
             "id": slug, "name": name, "slug": slug,
-            "stream_url": stream or "",
+            "streams": [{"url": stream or "", "codec": codec,
+                         "bitrate": br, "hls": False}],
+            "languages": [genre], "categories": [],
             "homepage": f"https://radiosindia.com/{href}",
             "favicon": scraped[href][2] or "",
-            "genre": genre, "language": language, "country": "India",
-            "codec": codec, "bitrate": br, "votes": 0,
+            "country": "India", "votes": 0,
             "tags": [language.lower()], "is_active": alive,
         })
         if not alive:
