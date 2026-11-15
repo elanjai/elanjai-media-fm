@@ -21,42 +21,92 @@ configured by the repo itself.
 
 ## One-time setup
 
-### 1. Railway service
+### 1. Create the Railway service
 
-1. Railway dashboard → **New Project** → **Deploy from GitHub repo** → pick
-   this repo and the production branch (e.g. `main`).
-2. `railway.json` is picked up automatically — verify under service **Settings**
-   that builder = Dockerfile and Dockerfile Path = `Dockerfile`
-   (the field shown when editing the service).
-3. Add a public domain (service → **Networking** → generate domain or add a
-   custom one). Note the HTTPS URL — you'll use it as `APP_URL`.
-4. Service variables:
+1. [railway.com](https://railway.com) → **New Project** → **Deploy from GitHub repo**.
+   Install/authorize the Railway GitHub App if prompted (it needs read access
+   to this repo).
+2. Pick this repository and the production branch (e.g. `main`). Railway
+   creates a **service** inside a **project**, inside an **environment**
+   (default `production`).
+3. `railway.json` at the repo root is applied automatically. Verify under
+   service **Settings → Build**:
+   - Builder: `Dockerfile`
+   - Dockerfile Path: `Dockerfile`  ← the field in the settings UI
+   - Healthcheck path (Settings → Deploy): `/api/health`
+4. **Public domain** — service → **Networking → Public Networking** →
+   **Generate Domain** (or attach a custom domain). You'll get something like
+   `https://elanjai-media-fm-production.up.railway.app`. Copy it — it becomes
+   `APP_URL` below.
+5. **Service variables** (service → **Variables**):
    - `NEXT_PUBLIC_SITE_URL` — your public origin, e.g.
-     `https://fm.example.com` (inlined into the build for canonical URLs,
-     sitemap, JSON-LD).
-   - `PORT` is injected by Railway automatically — do **not** set it.
+     `https://fm.example.com`. It's inlined into the build for canonical
+     URLs, sitemap and JSON-LD. Railway forwards service variables as Docker
+     build args; the Dockerfile's `ARG` line picks it up. (If unset, the app
+     falls back to a placeholder origin — set it before the first real release.)
+   - Do **not** set `PORT`/`HOSTNAME` — Railway injects `PORT` at runtime and
+     `server.js` binds `0.0.0.0:$PORT` automatically.
 
-### 2. GitHub secrets & variables
+### 2. Collect the three Railway IDs
+
+Open your project in the Railway dashboard and look at the URL:
+
+```
+railway.com/project/<PROJECT_ID>/service/<SERVICE_ID>?environmentId=<ENVIRONMENT_ID>
+```
+
+- `RAILWAY_PROJECT_ID` — also in Project → **Settings → General**
+- `RAILWAY_SERVICE_ID` — also in Service → **Settings → General**
+- `RAILWAY_ENVIRONMENT_ID` — also under the environment menu (⋯ next to the
+  environment name → copy ID)
+
+### 3. Create the Railway API token
+
+railway.com → avatar → **Account Settings → Tokens → New Token**:
+
+- Pick your **workspace** in the dropdown → **Workspace token** (recommended
+  for CI — scoped to the workspace, shareable with teammates).
+- "No workspace" → **Account token** (works too, but scoped to your whole
+  personal account — broader than needed).
+- ⚠️ Do **not** use a **Project token** — those authenticate with a
+  `Project-Access-Token` header, not `Bearer`, and the CI scripts use Bearer.
+
+Copy the token — it's shown once. Store it as the `RAILWAY_API_TOKEN` secret.
+
+### 4. Configure GitHub secrets & variables
 
 Repo → **Settings → Secrets and variables → Actions**.
 
-| Name                       | Type     | Where to find it |
-|----------------------------|----------|------------------|
-| `RAILWAY_API_TOKEN`        | Secret   | railway.com → account → **Tokens**. A **Workspace token** is best for CI/CD; an Account token also works (project tokens use a different auth header — don't use one here). |
-| `RAILWAY_PROJECT_ID`       | Variable | Railway project URL / Settings → General |
-| `RAILWAY_SERVICE_ID`       | Variable | Service → Settings → General |
-| `RAILWAY_ENVIRONMENT_ID`   | Variable | Environment dropdown → ⋯ → copy ID, or project canvas URL |
-| `APP_URL`                  | Variable | Public https URL from step 1.3 — used for post-deploy health verification |
-| `RELEASE_TOKEN`            | Secret (optional) | PAT with `contents: write` — only needed if `main` is protected against pushes by `github-actions[bot]` |
+**Secrets** (Secrets tab → *New repository secret*):
 
-IDs are visible in the Railway dashboard URL too:
-`railway.com/project/<PROJECT_ID>/service/<SERVICE_ID>?environmentId=<ENVIRONMENT_ID>`.
+| Name                | Value |
+|---------------------|-------|
+| `RAILWAY_API_TOKEN` | the token from step 3 |
+| `RELEASE_TOKEN`     | *(optional)* a PAT with `contents: write` — only needed if `main` has branch protection that blocks pushes from `github-actions[bot]`. Without it, the Release workflow's version-bump push fails. |
 
-### 3. Disable auto-deploy (optional but recommended)
+**Variables** (Variables tab → *New repository variable*):
 
-Since releases are driven manually via workflows, turn off
-service → **Settings → Source → auto-deploy on push** (or leave it on if you
-want `main` pushes to deploy too — the workflows are unaffected).
+| Name                     | Value |
+|--------------------------|-------|
+| `RAILWAY_PROJECT_ID`     | from step 2 |
+| `RAILWAY_SERVICE_ID`     | from step 2 |
+| `RAILWAY_ENVIRONMENT_ID` | from step 2 |
+| `APP_URL`                | public https URL from step 1.4, e.g. `https://….up.railway.app` — used for post-deploy health verification |
+
+IDs and `APP_URL` are variables (not secrets) — they're identifiers, not
+credentials, and keeping them as variables makes them visible when debugging.
+
+### 5. Choose your deploy trigger model
+
+The workflows are fully on-demand — nothing deploys on push by itself.
+Decide what a push to `main` should do:
+
+- **Recommended: disable auto-deploy.** Service → **Settings → Source /
+  Deploy Triggers** → turn off automatic deploys for the connected branch.
+  Every deploy then goes through the Release/Deploy workflows, which keeps
+  the version tag ⇄ deployed commit mapping clean.
+- *Or* leave it on if you want pushes to deploy immediately too — the
+  workflows still work for releases/rollbacks on top of that.
 
 ## Versioning model
 
@@ -77,8 +127,8 @@ Actions → **Release** → Run workflow:
 - `bump`: `patch` / `minor` / `major` / `pre*` variants
 - `deploy`: keep checked to deploy the new tag right after releasing
 
-It lints + builds, bumps `package.json`, pushes the tag, creates the GitHub
-Release, then chains into **Deploy** with the new tag.
+It lints + typechecks + builds, bumps `package.json`, pushes the tag,
+creates the GitHub Release, then chains into **Deploy** with the new tag.
 
 ### Deploy — *"put a specific commit/ref live"*
 
@@ -110,12 +160,33 @@ docker run --rm -p 3000:3000 elanjai-media-fm
 # → http://localhost:3000 , http://localhost:3000/api/health
 ```
 
+## Build memory notes
+
+Railway builds the image on its own builders; `next build` is memory-hungry.
+Two mitigations are already in place:
+
+- **`NEXT_BUILD_SKIP_CHECKS=true`** (Dockerfile builder stage) →
+  `typescript.ignoreBuildErrors` — skips the in-build `tsc` pass, the
+  heaviest step. Type safety is still enforced: the Release workflow runs
+  `npm run lint` + `npm run typecheck` + `npm run build` before any tag is
+  pushed, so Railway only ever rebuilds already-verified commits.
+- **`NODE_OPTIONS=--max-old-space-size=6144`** — raises the V8 heap cap so
+  turbopack/prerendering don't hit Node's default limit.
+
+If a build *still* dies around "Generating static pages", reduce worker
+parallelism via `experimental.staticGenerationMaxConcurrency` in
+`next.config.ts` (e.g. `4`), or raise the heap further.
+
 ## Troubleshooting
 
+- **"Failed to build an image" with logs that just stop** — almost always an
+  OOM kill, not a real error. The banner is generic; open the deployment →
+  **Build logs** tab (or `railway logs --build`) for the real output. The
+  memory notes above address this.
 - **"No ref given and no v\* release tags exist"** — run Release first.
-- **Deploy waits then fails** — check build logs in Railway for that
-  deployment (`deployments` list → the failed id).
+- **Deploy waits then fails** — check that deployment's build logs in Railway.
 - **Rollback target not eligible** — pass a tag instead; redeploying a commit
   always works.
 - **Health verify warns on commit** — Railway didn't inject
   `RAILWAY_GIT_COMMIT_SHA` for that build type; version check still applies.
+- **Release push rejected** — `main` is protected; add `RELEASE_TOKEN` (PAT).

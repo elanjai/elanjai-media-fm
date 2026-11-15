@@ -48,9 +48,13 @@ jobs:
       - name: Verify build
         env:
           NEXT_TELEMETRY_DISABLED: 1
+          # Same flag the Docker build uses — checks run explicitly below,
+          # and this exercises the exact build path Railway will run.
+          NEXT_BUILD_SKIP_CHECKS: "true"
         run: |
           npm ci --no-audit --no-fund
           npm run lint
+          npm run typecheck
           npm run build
 
       - name: Bump version & tag
