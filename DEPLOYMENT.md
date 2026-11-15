@@ -213,6 +213,56 @@ Policy notes: Play requires a privacy-policy URL (`/en/privacy` works);
 check current Play policy on web ads inside a TWA before enabling display
 ads there — a "house ads only" Play build is the safe default.
 
+## Phase 5 platform gates — what's deferred and why
+
+Phase 5 shipped everything the browser/local-first architecture can
+honestly deliver. Two roadmap items need infrastructure this codebase
+deliberately doesn't have yet, so they're documented here rather than
+faked.
+
+### F-5.1 — Optional accounts (deferred)
+
+Real sync needs all of: an identity provider (phone OTP — Firebase
+Auth / Supabase Auth / MSG91 OTP — or Google OAuth), a persistent user
+store, a session model, and DPDP-compliant consent, export, and
+deletion flows. Shipping "accounts" without those would be theatre.
+
+Until then the local-first model covers the same need:
+
+- favorites/recents/stats live in `localStorage` (`emfm:favorites`,
+  `emfm:recents`, `emfm:snaps`, `emfm:stats`);
+- cross-device transfer works today without an account: Settings →
+  share favorites produces a `/f?s=slug1,slug2` link + QR (F-5.2).
+
+When accounts arrive, the migration path is: keep localStorage as the
+source of truth, upload the local snapshots on first sign-in, and merge
+server-side by `last`-modified. The `/f?s=` format stays as a no-account
+fallback forever.
+
+### F-5.6 — Smart speakers and Android Auto (deferred)
+
+Both require native shells — a browser tab can't register an Android
+Auto `MediaBrowserService` or an Alexa skill:
+
+- **Android Auto** — the TWA shell (above) is the prerequisite; Auto
+  integration then needs a native `MediaBrowserServiceCompat`/`Media3`
+  layer, which is a real Android app, not a PWA feature.
+- **Alexa / Google Home** — custom skills/actions need a separate
+  backend endpoint + certification; nothing in this repo can claim it.
+- What *does* work today: Media Session metadata (Assistant can show
+  what's playing from the browser), Chromecast via the Cast button,
+  and the TWA once published.
+
+### Partial items shipped in Phase 5
+
+- **F-5.3** — the claim-intake half is live (`/claim` → in-memory inbox
+  at `/admin/claims`, gated by `ADMIN_CLAIMS_KEY`). The portal half
+  (station self-service editing, logo upload, stats dashboard) rides on
+  the same F-5.1/F-7 backend work — auth + persistent storage.
+- **F-5.5** — the open-app alarm shipped (Now Playing sheet → clock
+  button). Reliable background wake alarms are a TWA/native feature —
+  the web version says so in the UI.
+
 ## Build memory notes
 
 Railway builds the image on its own builders; `next build` is memory-hungry,
