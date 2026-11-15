@@ -511,11 +511,25 @@ export default function AudioProvider({
   }, [current, nowPlaying, toggle, stop, next, prev]);
 
   // ---------- keyboard shortcuts ----------
+  // Scoped so we don't fight the browser or the user's focus:
+  //  - modifier combos (Ctrl+M etc.) belong to the browser — never handled
+  //  - typing in a field/editable area is untouched
+  //  - Space toggles only when no interactive element has focus (otherwise
+  //    the focused button both activates AND toggles playback)
+  //  - Arrow volume keys only inside the player ([data-player-scope]) so
+  //    they never hijack page scroll
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      const el = e.target as HTMLElement;
-      if (el?.tagName === "INPUT" || el?.tagName === "TEXTAREA") return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const el = e.target as HTMLElement | null;
+      if (!el || el.tagName === "INPUT" || el.tagName === "TEXTAREA" ||
+          el.tagName === "SELECT" || el.isContentEditable) return;
+      const interactive = el.closest(
+        "button, a, input, select, textarea, [role='button'], [role='slider'], [role='switch'], [role='link'], summary"
+      );
+      const inPlayer = !!el.closest("[data-player-scope]");
       if (e.code === "Space") {
+        if (interactive) return;
         e.preventDefault();
         toggle();
       } else if (e.key === "m" || e.key === "M") {
@@ -524,10 +538,9 @@ export default function AudioProvider({
         next();
       } else if (e.key === "p" || e.key === "P") {
         prev();
-      } else if (e.key === "ArrowUp") {
-        setVolume(volume + 0.1);
-      } else if (e.key === "ArrowDown") {
-        setVolume(volume - 0.1);
+      } else if (inPlayer && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
+        e.preventDefault();
+        setVolume(volume + (e.key === "ArrowUp" ? 0.1 : -0.1));
       }
     };
     window.addEventListener("keydown", onKey);

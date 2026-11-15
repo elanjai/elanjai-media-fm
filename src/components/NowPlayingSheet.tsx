@@ -137,7 +137,7 @@ export default function NowPlayingSheet({
   };
 
   return (
-    <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Now playing">
+    <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Now playing" data-player-scope>
       <button
         type="button"
         aria-label="Close"
