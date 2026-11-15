@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { reportStreamIssue } from "@/lib/report";
+import { reportStreamIssue, sessionId } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
 import { usePrefs } from "./PrefsProvider";
 
@@ -762,6 +762,33 @@ export default function AudioProvider({
       cancelled = true;
       clearInterval(id);
     };
+  }, [status, current]);
+
+  // ---------- play beacon (F-2.6) ----------
+  // One play per station per ~30min session gap — pause/resume doesn't
+  // recount, and retry/auto-resume of the same station stays deduped.
+  const beaconedRef = useRef<{ slug: string; at: number } | null>(null);
+  useEffect(() => {
+    if (status !== "playing" || !current) return;
+    const last = beaconedRef.current;
+    if (last && last.slug === current.slug && Date.now() - last.at < 30 * 60 * 1000)
+      return;
+    beaconedRef.current = { slug: current.slug, at: Date.now() };
+    const payload = JSON.stringify({ slug: current.slug, sid: sessionId() });
+    try {
+      const blob = new Blob([payload], { type: "application/json" });
+      const sent = navigator.sendBeacon?.("/api/play", blob) ?? false;
+      if (!sent) {
+        fetch("/api/play", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: payload,
+          keepalive: true,
+        }).catch(() => {});
+      }
+    } catch {
+      /* analytics is best-effort */
+    }
   }, [status, current]);
 
   const toggleFavorite = useCallback((station: PublicStation) => {

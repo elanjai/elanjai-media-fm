@@ -6,8 +6,8 @@
 const SID_KEY = "emfm:sid";
 let sid: string | null = null;
 
-/** One anonymous id per tab session — used only to de-dupe reports. */
-function sessionId(): string {
+/** One anonymous id per tab session — used only to de-dupe reports/plays. */
+export function sessionId(): string {
   if (sid) return sid;
   try {
     sid = sessionStorage.getItem(SID_KEY);

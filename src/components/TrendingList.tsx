@@ -1,14 +1,16 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { PublicStation } from "@/lib/types";
 import { orderByLangs } from "@/lib/languages";
 import { usePrefs } from "./PrefsProvider";
 import StationRow from "./StationRow";
 
 /**
- * Trending stations on the search page — preferred languages bubble to the
- * top once prefs are hydrated (F-1.5).
+ * Trending stations on the search page — live 24h/7d play counts blended
+ * with editorial rank (F-2.6), preferred languages bubble up once prefs
+ * hydrate (F-1.5). The server-rendered `stations` prop is the fallback
+ * until the fetch lands or if it fails.
  */
 export default function TrendingList({
   stations,
@@ -16,15 +18,31 @@ export default function TrendingList({
   stations: PublicStation[];
 }) {
   const { langs } = usePrefs();
+  const [live, setLive] = useState<PublicStation[] | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/trending?n=12")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!cancelled && d?.stations?.length) setLive(d.stations);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const base = live ?? stations;
   const ordered = useMemo(
     () =>
       langs?.length
         ? orderByLangs(
-            stations.map((s) => ({ slug: s.genre, s })),
+            base.map((s) => ({ slug: s.genre, s })),
             langs
           ).map((x) => x.s)
-        : stations,
-    [stations, langs]
+        : base,
+    [base, langs]
   );
 
   return (
