@@ -15,6 +15,8 @@ const items: { href: string; label: string; icon: IconName }[] = [
 /** Floating pill tab bar — active tab takes the accent pill (design "tab bar"). Mobile only; md+ uses AppBar nav links. */
 export default function TabBar() {
   const pathname = usePathname();
+  // Simple mode replaces navigation with one giant player surface.
+  if (pathname === "/simple") return null;
   return (
     <nav
       aria-label="Main"

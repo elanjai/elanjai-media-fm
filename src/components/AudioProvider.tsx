@@ -79,6 +79,8 @@ type Library = {
   /** Slugs of favorited stations. */
   favorites: Set<string>;
   toggleFavorite: (station: PublicStation) => void;
+  /** Merge stations into favorites — never removes (setup links, /simple). */
+  addFavorites: (stations: PublicStation[]) => void;
   favoriteStations: PublicStation[];
   recents: PublicStation[];
   clearRecents: () => void;
@@ -779,6 +781,22 @@ export default function AudioProvider({
     });
   }, []);
 
+  const addFavorites = useCallback((stations: PublicStation[]) => {
+    if (!stations.length) return;
+    setFavRefs((prev) => {
+      const fresh = stations.map((s) => s.slug).filter((sl) => !prev.includes(sl));
+      const next = [...fresh, ...prev];
+      localStorage.setItem(FAV_KEY, JSON.stringify(next));
+      return next;
+    });
+    setSnaps((m) => {
+      const mm = { ...m };
+      for (const s of stations) mm[s.slug] = s;
+      localStorage.setItem(SNAPS_KEY, JSON.stringify(mm));
+      return mm;
+    });
+  }, []);
+
   // ---------- volume / mute ----------
   const setVolume = useCallback((v: number) => {
     const clamped = Math.min(1, Math.max(0, v));
@@ -959,11 +977,19 @@ export default function AudioProvider({
     () => ({
       favorites,
       toggleFavorite,
+      addFavorites,
       favoriteStations,
       recents,
       clearRecents,
     }),
-    [favorites, toggleFavorite, favoriteStations, recents, clearRecents]
+    [
+      favorites,
+      toggleFavorite,
+      addFavorites,
+      favoriteStations,
+      recents,
+      clearRecents,
+    ]
   );
 
   const sleep = useMemo<SleepTimer>(

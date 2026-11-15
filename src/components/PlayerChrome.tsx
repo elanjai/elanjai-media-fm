@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { isBusyStatus, usePlayback, usePlaybackActions } from "./AudioProvider";
 import EqBars from "./EqBars";
@@ -14,6 +15,9 @@ export default function PlayerChrome({ total }: { total: number }) {
   const { toggle, next, play, confirmPendingPlay, dismissPendingPlay } =
     usePlaybackActions();
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  // /simple has its own giant controls — the mini player would overlap them.
+  if (pathname === "/simple") return null;
   if (!current && !pendingPlay)
     return open ? <NowPlayingSheet total={total} onClose={() => setOpen(false)} /> : null;
 
