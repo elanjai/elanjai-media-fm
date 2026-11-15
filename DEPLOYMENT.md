@@ -194,6 +194,12 @@ parallelism via `experimental.staticGenerationMaxConcurrency` in
   `RAILWAY_PROJECT_TOKEN` instead), or a workspace/account token for the
   wrong workspace. The deploy script's preflight check prints which env var
   to use for each token type.
+- **`Failed to collect page data` / `Invalid URL` during build** —
+  `NEXT_PUBLIC_SITE_URL` was set to an empty value somewhere (service var or
+  build arg); `new URL("")` in the root layout throws. `site.ts` treats empty
+  as unset, and the Dockerfile `ARG` carries a default — set a real
+  `https://…` value in Railway for correct SEO, but builds no longer break
+  when it's missing.
 - **"No ref given and no v\* release tags exist"** — run Release first.
 - **Deploy waits then fails** — check that deployment's build logs in Railway.
 - **Rollback target not eligible** — pass a tag instead; redeploying a commit

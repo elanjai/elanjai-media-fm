@@ -24,7 +24,7 @@ COPY . .
 
 # Public env vars are inlined into the bundle at build time. Railway passes
 # service variables as build args for Dockerfile builds.
-ARG NEXT_PUBLIC_SITE_URL
+ARG NEXT_PUBLIC_SITE_URL=https://elanjai-fm.up.railway.app
 # NEXT_BUILD_SKIP_CHECKS: lint/typecheck run in the Release workflow before a
 # tag exists — Railway only rebuilds tagged commits, so skipping them here is
 # safe and keeps build memory low (tsc is the heaviest build step).
