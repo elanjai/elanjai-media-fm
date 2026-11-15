@@ -1,6 +1,6 @@
 "use client";
 
-import { useAudio } from "./AudioProvider";
+import { usePlayback, usePlaybackActions } from "./AudioProvider";
 import Icon from "./Icon";
 import type { PublicStation } from "@/lib/types";
 
@@ -13,7 +13,8 @@ export default function PlayButton({
   size?: number;
   className?: string;
 }) {
-  const { current, status, play, toggle } = useAudio();
+  const { current, status } = usePlayback();
+  const { play, toggle } = usePlaybackActions();
   const isCurrent = current?.id === station.id;
   const playing = isCurrent && status === "playing";
   const loading = isCurrent && status === "loading";

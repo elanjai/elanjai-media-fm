@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { PublicStation } from "@/lib/types";
-import { useAudio } from "./AudioProvider";
+import { useLibrary, usePlayback, usePlaybackActions, useSleepTimer } from "./AudioProvider";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
 import LiveBadge from "./LiveBadge";
@@ -12,7 +12,7 @@ import StationLogo from "./StationLogo";
 const SLEEP_OPTIONS = [15, 30, 45, 60];
 
 function SleepCircle() {
-  const { sleepRemaining, setSleepTimer } = useAudio();
+  const { sleepRemaining, setSleepTimer } = useSleepTimer();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -92,10 +92,10 @@ export default function NowPlayingSheet({
   total: number;
   onClose: () => void;
 }) {
-  const {
-    current, status, error, nowPlaying, toggle, stop, next, prev,
-    volume, setVolume, muted, toggleMute, favorites, toggleFavorite, peekNext,
-  } = useAudio();
+  const { current, status, error, nowPlaying, volume, muted } = usePlayback();
+  const { toggle, stop, next, prev, setVolume, toggleMute, peekNext } =
+    usePlaybackActions();
+  const { favorites, toggleFavorite } = useLibrary();
   const [upNext, setUpNext] = useState<PublicStation | null>(null);
   const [shared, setShared] = useState(false);
 

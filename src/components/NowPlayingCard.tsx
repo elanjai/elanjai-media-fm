@@ -1,13 +1,13 @@
 "use client";
 
 import type { PublicStation } from "@/lib/types";
-import { useAudio } from "./AudioProvider";
+import { usePlayback } from "./AudioProvider";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
 
 /** "Now playing · via ICY metadata" card on the station page. */
 export default function NowPlayingCard({ station }: { station: PublicStation }) {
-  const { current, status, nowPlaying } = useAudio();
+  const { current, status, nowPlaying } = usePlayback();
   const isCurrent = current?.id === station.id;
   const playing = isCurrent && status === "playing";
 

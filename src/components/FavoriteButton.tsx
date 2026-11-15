@@ -1,6 +1,6 @@
 "use client";
 
-import { useAudio } from "./AudioProvider";
+import { useLibrary } from "./AudioProvider";
 import Icon from "./Icon";
 
 /** Bordered-circle favorite toggle (design action button). */
@@ -13,7 +13,7 @@ export default function FavoriteButton({
   size?: number;
   className?: string;
 }) {
-  const { favorites, toggleFavorite } = useAudio();
+  const { favorites, toggleFavorite } = useLibrary();
   const on = favorites.has(id);
   return (
     <button

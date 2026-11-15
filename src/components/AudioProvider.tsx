@@ -13,36 +13,64 @@ import type { PublicStation } from "@/lib/types";
 
 type Status = "idle" | "loading" | "playing" | "paused" | "error";
 
-type AudioCtx = {
+/**
+ * Split contexts so components only re-render for the slices they use:
+ *  - PlaybackState:   current/status/error/nowPlaying/volume/muted
+ *  - PlaybackActions: stable callbacks (play/toggle/next/…)
+ *  - Library:         favorites + recents
+ *  - SleepTimer:      sleepRemaining ticks once a second — isolated so the
+ *                     whole app doesn't re-render every tick.
+ */
+
+type PlaybackState = {
   current: PublicStation | null;
   status: Status;
   error: string | null;
   nowPlaying: string | null;
   volume: number;
-  setVolume: (v: number) => void;
   muted: boolean;
-  toggleMute: () => void;
+};
+
+type PlaybackActions = {
   play: (s: PublicStation) => void;
   toggle: () => void;
   stop: () => void;
   next: () => void;
   prev: () => void;
-  sleepRemaining: number | null; // seconds until auto-stop
-  setSleepTimer: (minutes: number | null) => void;
-  favorites: Set<string>;
-  toggleFavorite: (id: string) => void;
-  recents: PublicStation[];
-  clearRecents: () => void;
-  favoriteStations: PublicStation[];
   peekNext: () => Promise<PublicStation | null>;
+  setVolume: (v: number) => void;
+  toggleMute: () => void;
 };
 
-const Ctx = createContext<AudioCtx | null>(null);
-export const useAudio = () => {
-  const v = useContext(Ctx);
-  if (!v) throw new Error("useAudio outside AudioProvider");
-  return v;
+type Library = {
+  favorites: Set<string>;
+  toggleFavorite: (id: string) => void;
+  favoriteStations: PublicStation[];
+  recents: PublicStation[];
+  clearRecents: () => void;
 };
+
+type SleepTimer = {
+  sleepRemaining: number | null; // seconds until auto-stop
+  setSleepTimer: (minutes: number | null) => void;
+};
+
+const PlaybackStateCtx = createContext<PlaybackState | null>(null);
+const PlaybackActionsCtx = createContext<PlaybackActions | null>(null);
+const LibraryCtx = createContext<Library | null>(null);
+const SleepTimerCtx = createContext<SleepTimer | null>(null);
+
+function useCtx<T>(ctx: React.Context<T | null>, name: string): T {
+  const v = useContext(ctx);
+  if (!v) throw new Error(`${name} outside AudioProvider`);
+  return v;
+}
+
+export const usePlayback = () => useCtx(PlaybackStateCtx, "usePlayback");
+export const usePlaybackActions = () =>
+  useCtx(PlaybackActionsCtx, "usePlaybackActions");
+export const useLibrary = () => useCtx(LibraryCtx, "useLibrary");
+export const useSleepTimer = () => useCtx(SleepTimerCtx, "useSleepTimer");
 
 const FAV_KEY = "emfm:favorites";
 const RECENT_KEY = "emfm:recents";
@@ -400,38 +428,60 @@ export default function AudioProvider({
     return () => window.removeEventListener("keydown", onKey);
   }, [toggle, toggleMute, next, prev, setVolume, volume]);
 
-  const value = useMemo<AudioCtx>(
+  // ---------- context values ----------
+
+  const playbackState = useMemo<PlaybackState>(
+    () => ({ current, status, error, nowPlaying, volume, muted }),
+    [current, status, error, nowPlaying, volume, muted]
+  );
+
+  const playbackActions = useMemo<PlaybackActions>(
     () => ({
-      current,
-      status,
-      error,
-      nowPlaying,
-      volume,
-      setVolume,
-      muted,
-      toggleMute,
       play,
       toggle,
       stop,
       next,
       prev,
-      sleepRemaining,
-      setSleepTimer,
-      favorites,
-      toggleFavorite,
-      recents,
-      clearRecents,
-      favoriteStations: [...favorites]
-        .map((id) => favMap[id])
-        .filter((x): x is PublicStation => Boolean(x)),
       peekNext,
+      setVolume,
+      toggleMute,
     }),
-    [
-      current, status, error, nowPlaying, volume, setVolume, muted, toggleMute,
-      play, toggle, stop, next, prev, sleepRemaining, setSleepTimer,
-      favorites, toggleFavorite, recents, favMap, clearRecents, peekNext,
-    ]
+    [play, toggle, stop, next, prev, peekNext, setVolume, toggleMute]
   );
 
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+  const favoriteStations = useMemo(
+    () =>
+      [...favorites]
+        .map((id) => favMap[id])
+        .filter((x): x is PublicStation => Boolean(x)),
+    [favorites, favMap]
+  );
+
+  const library = useMemo<Library>(
+    () => ({
+      favorites,
+      toggleFavorite,
+      favoriteStations,
+      recents,
+      clearRecents,
+    }),
+    [favorites, toggleFavorite, favoriteStations, recents, clearRecents]
+  );
+
+  const sleep = useMemo<SleepTimer>(
+    () => ({ sleepRemaining, setSleepTimer }),
+    [sleepRemaining, setSleepTimer]
+  );
+
+  return (
+    <PlaybackStateCtx.Provider value={playbackState}>
+      <PlaybackActionsCtx.Provider value={playbackActions}>
+        <LibraryCtx.Provider value={library}>
+          <SleepTimerCtx.Provider value={sleep}>
+            {children}
+          </SleepTimerCtx.Provider>
+        </LibraryCtx.Provider>
+      </PlaybackActionsCtx.Provider>
+    </PlaybackStateCtx.Provider>
+  );
 }

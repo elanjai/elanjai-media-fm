@@ -1,6 +1,6 @@
 "use client";
 
-import { useAudio } from "./AudioProvider";
+import { useLibrary } from "./AudioProvider";
 import Icon from "./Icon";
 import StationRow from "./StationRow";
 
@@ -17,7 +17,7 @@ function relTime(at?: number): string | null {
 
 /** Renders stations stored client-side (favorites map / recents). */
 export default function ClientStationList({ kind }: { kind: "favorites" | "recents" }) {
-  const { favoriteStations, recents, clearRecents } = useAudio();
+  const { favoriteStations, recents, clearRecents } = useLibrary();
   const list = kind === "favorites" ? favoriteStations : recents;
 
   if (list.length === 0) {

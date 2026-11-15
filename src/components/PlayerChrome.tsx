@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useAudio } from "./AudioProvider";
+import { usePlayback, usePlaybackActions } from "./AudioProvider";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
 import NowPlayingSheet from "./NowPlayingSheet";
@@ -10,7 +10,8 @@ import StationLogo from "./StationLogo";
 
 /** Floating mini player docked above the tab bar; expands into the Now Playing sheet. */
 export default function PlayerChrome({ total }: { total: number }) {
-  const { current, status, error, nowPlaying, toggle, next, play } = useAudio();
+  const { current, status, error, nowPlaying } = usePlayback();
+  const { toggle, next, play } = usePlaybackActions();
   const [open, setOpen] = useState(false);
   if (!current) return open ? <NowPlayingSheet total={total} onClose={() => setOpen(false)} /> : null;
 

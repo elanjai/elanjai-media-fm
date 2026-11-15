@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { PublicStation } from "@/lib/types";
-import { useAudio } from "./AudioProvider";
+import { usePlayback } from "./AudioProvider";
 import EqBars from "./EqBars";
 import PlayButton from "./PlayButton";
 import StationLogo from "./StationLogo";
@@ -15,7 +15,7 @@ export default function StationRow({
   station: PublicStation;
   trailing?: React.ReactNode;
 }) {
-  const { current, status } = useAudio();
+  const { current, status } = usePlayback();
   const isCurrent = current?.id === station.id;
   const playing = isCurrent && status === "playing";
 

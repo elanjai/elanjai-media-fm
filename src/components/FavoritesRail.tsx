@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useAudio } from "./AudioProvider";
+import { useLibrary } from "./AudioProvider";
 import StationCard from "./StationCard";
 
 /** Home-page favorites rail — renders only once the user has ≥1 saved station. */
 export default function FavoritesRail() {
-  const { favoriteStations } = useAudio();
+  const { favoriteStations } = useLibrary();
   if (!favoriteStations.length) return null;
 
   return (
