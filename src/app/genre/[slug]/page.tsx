@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Icon from "@/components/Icon";
 import StationRow from "@/components/StationRow";
-import { getGenre, getGenres, getStationsByGenre, toPublic } from "@/lib/data";
+import { getCategories, getGenre, getGenres, getStationsByGenre, toPublic } from "@/lib/data";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { SITE } from "@/lib/site";
 
@@ -32,6 +32,7 @@ export default async function GenrePage({ params }: Props) {
   if (!g) notFound();
   const stations = getStationsByGenre(g.slug).map(toPublic);
   const genres = getGenres();
+  const categories = getCategories();
 
   return (
     <div className="py-5">
@@ -86,6 +87,18 @@ export default async function GenrePage({ params }: Props) {
             </Link>
           )
         )}
+      </div>
+      {/* Category chips — browse by mood/content across languages */}
+      <div className="rail -mx-4 mt-3 flex gap-2 overflow-x-auto px-4 pb-1">
+        {categories.map((c) => (
+          <Link
+            key={c.slug}
+            href={`/category/${c.slug}`}
+            className="shrink-0 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-medium text-muted transition hover:border-brand-2/50 hover:text-ink"
+          >
+            {c.name}
+          </Link>
+        ))}
       </div>
       <p className="mt-3 text-xs text-muted">
         {g.count} live stations — tap to play
