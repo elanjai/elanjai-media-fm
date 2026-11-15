@@ -81,10 +81,16 @@ type SleepTimer = {
   setSleepTimer: (minutes: number | null) => void;
 };
 
+type Catalog = {
+  /** Full active-station list; null until the first /api/stations fetch lands. */
+  stations: PublicStation[] | null;
+};
+
 const PlaybackStateCtx = createContext<PlaybackState | null>(null);
 const PlaybackActionsCtx = createContext<PlaybackActions | null>(null);
 const LibraryCtx = createContext<Library | null>(null);
 const SleepTimerCtx = createContext<SleepTimer | null>(null);
+const CatalogCtx = createContext<Catalog | null>(null);
 
 function useCtx<T>(ctx: React.Context<T | null>, name: string): T {
   const v = useContext(ctx);
@@ -97,6 +103,7 @@ export const usePlaybackActions = () =>
   useCtx(PlaybackActionsCtx, "usePlaybackActions");
 export const useLibrary = () => useCtx(LibraryCtx, "useLibrary");
 export const useSleepTimer = () => useCtx(SleepTimerCtx, "useSleepTimer");
+export const useCatalog = () => useCtx(CatalogCtx, "useCatalog");
 
 /**
  * Storage (v2): favorites and recents persist *slugs* — never full station
@@ -854,12 +861,16 @@ export default function AudioProvider({
     [sleepRemaining, setSleepTimer]
   );
 
+  const catalogValue = useMemo<Catalog>(() => ({ stations: catalog }), [catalog]);
+
   return (
     <PlaybackStateCtx.Provider value={playbackState}>
       <PlaybackActionsCtx.Provider value={playbackActions}>
         <LibraryCtx.Provider value={library}>
           <SleepTimerCtx.Provider value={sleep}>
-            {children}
+            <CatalogCtx.Provider value={catalogValue}>
+              {children}
+            </CatalogCtx.Provider>
           </SleepTimerCtx.Provider>
         </LibraryCtx.Provider>
       </PlaybackActionsCtx.Provider>

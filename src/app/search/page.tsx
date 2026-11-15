@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import RecentSearches from "@/components/RecentSearches";
-import SearchInput from "@/components/SearchInput";
-import StationRow from "@/components/StationRow";
-import TrendingList from "@/components/TrendingList";
-import { getFeatured, searchStations, toPublic } from "@/lib/data";
+import SearchClient from "@/components/SearchClient";
+import { getFeatured, getGenres, toPublic } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Search stations",
@@ -13,56 +10,16 @@ export const metadata: Metadata = {
 
 type Props = { searchParams: Promise<{ q?: string }> };
 
-async function Results({ searchParams }: Props) {
+export default async function SearchPage({ searchParams }: Props) {
   const { q = "" } = await searchParams;
-  const results = searchStations(q).map(toPublic);
-  const trending = getFeatured(6).map(toPublic);
-
-  if (!q.trim()) {
-    return (
-      <div className="mt-6 flex flex-col gap-6">
-        <RecentSearches />
-        <section aria-labelledby="trending">
-          <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
-            Trending now
-          </h2>
-          <TrendingList stations={trending} />
-        </section>
-      </div>
-    );
-  }
-
-  return (
-    <div className="mt-6">
-      <p className="text-xs text-muted">
-        {results.length} station{results.length === 1 ? "" : "s"} for “{q}”
-      </p>
-      {results.length === 0 ? (
-        <div className="mt-6 flex flex-col items-center rounded-[22px] border border-dashed border-border bg-surface px-6 py-12 text-center">
-          <p className="font-display text-sm font-semibold text-ink">No matches</p>
-          <p className="mt-1.5 text-xs text-muted">
-            Try a station name, language, or tag.
-          </p>
-        </div>
-      ) : (
-        <div className="mt-4 grid grid-cols-1 gap-2.5 md:grid-cols-2">
-          {results.map((s) => (
-            <StationRow key={s.id} station={s} queue={results} />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-export default function SearchPage(props: Props) {
   return (
     <div className="py-5">
       <Suspense fallback={<div className="h-12 rounded-full bg-surface-2" />}>
-        <SearchInput autoFocus />
-      </Suspense>
-      <Suspense fallback={<p className="mt-6 text-sm text-muted">Searching…</p>}>
-        <Results {...props} />
+        <SearchClient
+          initialQ={q}
+          trending={getFeatured(6).map(toPublic)}
+          genres={getGenres()}
+        />
       </Suspense>
     </div>
   );
