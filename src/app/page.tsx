@@ -1,16 +1,16 @@
 import Link from "next/link";
 import BrandLogo from "@/components/BrandLogo";
+import FavoritesRail from "@/components/FavoritesRail";
 import Icon from "@/components/Icon";
 import LiveBadge from "@/components/LiveBadge";
 import PlayButton from "@/components/PlayButton";
 import StationCard from "@/components/StationCard";
 import StationRow from "@/components/StationRow";
-import { getFeatured, getGenres, getStations, getStationsByGenre, toPublic } from "@/lib/data";
+import { getGenres, getStations, getStationsByGenre, toPublic } from "@/lib/data";
 import { genreStyle } from "@/lib/genre-style";
 import { websiteJsonLd } from "@/lib/jsonld";
 
 export default function HomePage() {
-  const featured = getFeatured(14).map(toPublic);
   const genres = getGenres();
   const total = getStations().length;
   const tamil = getStationsByGenre("tamil").slice(0, 8).map(toPublic);
@@ -51,11 +51,11 @@ export default function HomePage() {
         <p className="relative mt-2 text-[11.5px] text-brand-ink/75">
           {genres.slice(0, 3).map((g) => g.name).join(" · ")} · +{Math.max(genres.length - 3, 0)} more
         </p>
-        {featured[0] && (
+        {tamil[0] && (
           <div className="relative mt-4 flex items-center gap-3">
-            <PlayButton station={featured[0]} size={52} />
+            <PlayButton station={tamil[0]} size={52} />
             <span className="text-[11px] font-medium text-brand-ink/70">
-              Start with {featured[0].name}
+              Start with {tamil[0].name}
             </span>
           </div>
         )}
@@ -96,14 +96,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Popular collections — flagship station per language */}
+      {/* Popular now — flagship station per language */}
       {collections.length > 0 && (
-        <section aria-labelledby="collections" className="mt-8">
+        <section aria-labelledby="popular" className="mt-8">
           <h2
-            id="collections"
+            id="popular"
             className="mb-3 font-display text-[16.5px] font-semibold text-ink lg:text-lg"
           >
-            Popular collections
+            Popular now
           </h2>
           <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
             {collections.map(({ genre, station }) => {
@@ -124,17 +124,8 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Popular now — next best after the collection flagships */}
-      <section aria-labelledby="popular" className="mt-8">
-        <h2 id="popular" className="mb-3 font-display text-[16.5px] font-semibold text-ink lg:text-lg">
-          Popular now
-        </h2>
-        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.slice(collections.length, collections.length + 6).map((s) => (
-            <StationRow key={s.id} station={s} />
-          ))}
-        </div>
-      </section>
+      {/* Favorites — user's saved stations, hidden until ≥1 exists */}
+      <FavoritesRail />
 
       {/* Tamil radio — card rail */}
       {tamilGenre && tamil.length > 0 && (
