@@ -13,7 +13,7 @@ export function radioStationJsonLd(s: Station) {
       s.description ??
       `Listen to ${s.name} live online — free ${s.languages.join(", ")} radio streaming 24/7 on ${SITE.name}.`,
     genre: [...s.languages, ...s.categories],
-    image: s.favicon || `${SITE.url}/icon.svg`,
+    image: s.favicon || `${SITE.url}/icons/icon-512.png`,
     areaServed: s.country || "India",
     inLanguage: s.languages,
     potentialAction: {

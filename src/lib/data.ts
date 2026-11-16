@@ -33,7 +33,7 @@ const collections = collectionsJson as Collection[];
 
 /**
  * Streams only go through our same-origin /api/stream proxy when they have
- * to (the `private-stream` trick tamilradios.com uses):
+ * to (the `private-stream` trick radio directories use):
  *  - http:// media is blocked on https:// pages (mixed content)
  *  - hls.js fetches via XHR, so oddball hosts without CORS headers fail
  * An <audio> element doesn't need CORS, so https:// non-HLS streams (the

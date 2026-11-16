@@ -14,7 +14,7 @@ const stationCount = Math.floor(liveCount / 10) * 10;
 
 // Contact addresses — override per mailbox with env vars before launch.
 const contactEmail =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@elanjai.media";
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL || "fm@elanjai.com";
 
 export const SITE = {
   name: "Elanjai Media FM",
