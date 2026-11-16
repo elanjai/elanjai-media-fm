@@ -1,8 +1,9 @@
 "use client";
 
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { useLang } from "./LocaleProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLibrary } from "./AudioProvider";
 import Icon from "./Icon";
 import { usePrefs, type TextSize, type ThemeChoice } from "./PrefsProvider";
@@ -115,6 +116,15 @@ export default function SettingsButton() {
   } = usePrefs();
   const { favoriteStations, clearRecents } = useLibrary();
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const exportFavorites = () => {
     const payload = favoriteStations.map((s) => ({
       slug: s.slug,
@@ -177,7 +187,8 @@ export default function SettingsButton() {
         <Icon name="settings" size={17} strokeWidth={1.7} />
       </button>
 
-      {open && (
+      {open &&
+        createPortal(
         <div
           className="fixed inset-0 z-50"
           role="dialog"
@@ -336,7 +347,8 @@ export default function SettingsButton() {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
