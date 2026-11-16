@@ -1035,7 +1035,7 @@ export default function AudioProvider({
       : [];
     navigator.mediaSession.metadata = new MediaMetadata({
       title: nowPlaying || current.name,
-      artist: nowPlaying ? current.name : "Elanjai Media FM",
+      artist: nowPlaying ? current.name : "Elanjai FM",
       album: `${current.language} · ${current.country}`,
       artwork: art,
     });

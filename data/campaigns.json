@@ -17,7 +17,8 @@
         "list-infeed",
         "np-sponsored",
         "rail-desktop"
-      ]
+      ],
+      "devices": ["desktop"]
     },
     "schedule": {
       "start": "",

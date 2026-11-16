@@ -1,4 +1,4 @@
-# Elanjai Media FM
+# Elanjai FM
 
 Free online radio directory — 360+ live Indian stations (Tamil, Hindi, Malayalam,
 Telugu, Kannada, Punjabi, Urdu and more), playable instantly in the browser.
