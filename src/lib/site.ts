@@ -17,7 +17,7 @@ const contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL || "fm@elanjai.com";
 
 export const SITE = {
-  name: "Elanjai Media FM",
+  name: "Elanjai FM",
   shortName: "Elanjai FM",
   stationCount,
   description: `Listen to ${stationCount}+ live Indian radio stations online for free — Tamil, Hindi, Malayalam, Telugu, Kannada, Punjabi and more. No sign-up, no app.`,

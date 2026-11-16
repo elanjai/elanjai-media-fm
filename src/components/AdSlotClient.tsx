@@ -63,8 +63,16 @@ export default function AdSlotClient({
   useEffect(() => {
     queueMicrotask(() => {
       setAdFree(isAdFree());
-      const open = campaigns.filter((c) => !capHit(c));
-      setPicked(pickWeighted(open.length ? open : campaigns, Math.random()));
+      // Device targeting (targeting.devices) is client-only by design —
+      // the server render is static, so lg (≥1024px) decides "desktop".
+      const device = window.matchMedia("(min-width: 1024px)").matches
+        ? "desktop"
+        : "mobile";
+      const eligible = campaigns.filter(
+        (c) => !c.targeting.devices || c.targeting.devices.includes(device)
+      );
+      const open = eligible.filter((c) => !capHit(c));
+      setPicked(pickWeighted(open.length ? open : eligible, Math.random()));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slot]);
