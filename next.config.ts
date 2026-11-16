@@ -28,9 +28,13 @@ const AD_FRAME = ADSENSE
   ? " https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://securepubads.g.doubleclick.net https://*.googlesyndication.com https://fundingchoicesmessages.google.com"
   : "";
 
+// React dev mode uses eval() for debugging features — allow it only
+// outside production so the shipped policy stays tight.
+const DEV_EVAL = process.env.NODE_ENV === "production" ? "" : " 'unsafe-eval'";
+
 const CSP_BASE = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${AD_SCRIPT}`,
+  `script-src 'self' 'unsafe-inline'${DEV_EVAL}${AD_SCRIPT}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https: http:",
   "font-src 'self' data:",

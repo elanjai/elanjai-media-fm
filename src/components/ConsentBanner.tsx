@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { setConsent } from "@/lib/consent";
+import { useEffect, useState } from "react";
+import { getConsent, setConsent } from "@/lib/consent";
 import { useT } from "./LocaleProvider";
 import Icon from "./Icon";
 
@@ -12,9 +12,12 @@ import Icon from "./Icon";
  */
 export default function ConsentBanner() {
   const t = useT();
-  const [open, setOpen] = useState(() =>
-    typeof window === "undefined" ? false : !localStorage.getItem("emfm:consent")
-  );
+  const [open, setOpen] = useState(false);
+  // Read post-mount so SSR and the first client render agree — a
+  // localStorage read in the initializer is a hydration mismatch.
+  useEffect(() => {
+    queueMicrotask(() => setOpen(!getConsent()));
+  }, []);
   const [detail, setDetail] = useState(false);
   const [analytics, setAnalytics] = useState(true);
   const [ads, setAds] = useState(false);

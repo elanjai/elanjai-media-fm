@@ -125,10 +125,8 @@ export default async function RootLayout({
       className={`${inter.variable} ${poppins.variable} ${notoTamil.variable} ${notoDevanagari.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
-      </head>
       <body className="min-h-full bg-bg pb-44 font-sans text-ink md:pb-32">
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <LocaleProvider lang={lang} dict={dict}>
           <PrefsProvider>
             <AudioProvider
