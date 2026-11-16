@@ -8,13 +8,17 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "budget": "node scripts/check-budget.mjs",
     "start": "next start",
     "lint": "eslint",
+    "test": "vitest run",
     "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@types/qrcode": "^1.5.5",
     "hls.js": "^1.7.4",
     "next": "16.4.6",
+    "qrcode": "^1.5.4",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
@@ -26,6 +30,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "tailwindcss": "4.3.3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   }
 }

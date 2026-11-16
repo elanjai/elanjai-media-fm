@@ -44,6 +44,34 @@ configured by the repo itself.
      URLs, sitemap and JSON-LD. Railway forwards service variables as Docker
      build args; the Dockerfile's `ARG` line picks it up. (If unset, the app
      falls back to a placeholder origin — set it before the first real release.)
+   - `STREAM_URL_SECRET` — any long random string. It signs the HLS URLs the
+     `/api/stream` proxy emits; when unset a random per-process secret is used,
+     so signed URLs break on every restart/redeploy. Set it once — it's a
+     runtime variable, no build arg needed.
+   - `ADMIN_ADS_KEY` — any long random string. It gates the admin pages
+     (`/admin/ads?key=<token>`, `/admin/claims?key=<token>`) and the CSV
+     export at `/api/ads/report.csv?key=<token>`. When unset all of them
+     return 404, which is the desired state until you want the reports.
+     Runtime variable.
+   - `NEXT_PUBLIC_ADSENSE_CLIENT` / `NEXT_PUBLIC_ADSENSE_SLOT` — the
+     `ca-pub-…` client id and one manual ad-unit id once the site is
+     AdSense-approved. Until both are set, ad slots serve only our own
+     campaigns and `/ads.txt` returns 404. Both are `NEXT_PUBLIC_` build
+     args — the CSP ad allowlist is compiled in at build time, so set them
+     before the release that turns ads on (changing them later needs a
+     rebuild). Ads default to non-personalized unless the listener opted
+     into ad personalization in the consent banner; a Google-certified
+     TCF CMP is still required for EEA/UK/CH personalization — do not
+     remove that gating until a real CMP is in place.
+   - `NEXT_PUBLIC_PREROLL_ENABLED` — set to `1` to arm the audio pre-roll
+     pilot (F-4.5). Even armed, a clip only plays when an
+     `audio_preroll` campaign is `active` in `data/campaigns.json` —
+     the pilot ships dark with both gates off by default. Build arg.
+   - `NEXT_PUBLIC_ADFREE_URL` / `NEXT_PUBLIC_ADFREE_CODE` — the
+     supporter plan (F-4.7). The URL is the payment link shown on
+     `/ad-free` (Razorpay page, UPI intent, …). The CODE is the
+     activation code sent to supporters after payment; when unset,
+     `/ad-free` runs in honor mode. Build args.
    - Do **not** set `PORT`/`HOSTNAME` — Railway injects `PORT` at runtime and
      `server.js` binds `0.0.0.0:$PORT` automatically.
 
@@ -164,6 +192,76 @@ docker build -t elanjai-media-fm .
 docker run --rm -p 3000:3000 elanjai-media-fm
 # → http://localhost:3000 , http://localhost:3000/api/health
 ```
+
+## Google Play via TWA (F-3.3)
+
+The PWA (F-3.2) is Play-Store-ready through a Trusted Web Activity —
+Bubblewrap wraps the existing site; no separate codebase.
+
+1. `npm i -g @bubblewrap/cli` → `bubblewrap init --manifest https://<domain>/manifest.webmanifest`
+2. Choose a package name (e.g. `media.elanjai.fm`), generate the signing
+   key (`keytool -genkey`), and let Bubblewrap print its SHA-256 cert
+   fingerprint.
+3. Set service variables in Railway:
+   - `TWA_PACKAGE_NAME` — e.g. `media.elanjai.fm`
+   - `TWA_SHA256_FINGERPRINT` — the fingerprint Bubblewrap prints
+   `/.well-known/assetlinks.json` then serves the delegation statement and
+   Android verifies the app↔site link (no URL bar in the TWA).
+4. `bubblewrap build` → upload the AAB to Play Console.
+
+Policy notes: Play requires a privacy-policy URL (`/en/privacy` works);
+check current Play policy on web ads inside a TWA before enabling display
+ads there — a "house ads only" Play build is the safe default.
+
+## Phase 5 platform gates — what's deferred and why
+
+Phase 5 shipped everything the browser/local-first architecture can
+honestly deliver. Two roadmap items need infrastructure this codebase
+deliberately doesn't have yet, so they're documented here rather than
+faked.
+
+### F-5.1 — Optional accounts (deferred)
+
+Real sync needs all of: an identity provider (phone OTP — Firebase
+Auth / Supabase Auth / MSG91 OTP — or Google OAuth), a persistent user
+store, a session model, and DPDP-compliant consent, export, and
+deletion flows. Shipping "accounts" without those would be theatre.
+
+Until then the local-first model covers the same need:
+
+- favorites/recents/stats live in `localStorage` (`emfm:favorites`,
+  `emfm:recents`, `emfm:snaps`, `emfm:stats`);
+- cross-device transfer works today without an account: Settings →
+  share favorites produces a `/f?s=slug1,slug2` link + QR (F-5.2).
+
+When accounts arrive, the migration path is: keep localStorage as the
+source of truth, upload the local snapshots on first sign-in, and merge
+server-side by `last`-modified. The `/f?s=` format stays as a no-account
+fallback forever.
+
+### F-5.6 — Smart speakers and Android Auto (deferred)
+
+Both require native shells — a browser tab can't register an Android
+Auto `MediaBrowserService` or an Alexa skill:
+
+- **Android Auto** — the TWA shell (above) is the prerequisite; Auto
+  integration then needs a native `MediaBrowserServiceCompat`/`Media3`
+  layer, which is a real Android app, not a PWA feature.
+- **Alexa / Google Home** — custom skills/actions need a separate
+  backend endpoint + certification; nothing in this repo can claim it.
+- What *does* work today: Media Session metadata (Assistant can show
+  what's playing from the browser), Chromecast via the Cast button,
+  and the TWA once published.
+
+### Partial items shipped in Phase 5
+
+- **F-5.3** — the claim-intake half is live (`/claim` → in-memory inbox
+  at `/admin/claims`, gated by `ADMIN_CLAIMS_KEY`). The portal half
+  (station self-service editing, logo upload, stats dashboard) rides on
+  the same F-5.1/F-7 backend work — auth + persistent storage.
+- **F-5.5** — the open-app alarm shipped (Now Playing sheet → clock
+  button). Reliable background wake alarms are a TWA/native feature —
+  the web version says so in the UI.
 
 ## Build memory notes
 

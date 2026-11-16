@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import { useAudio } from "./AudioProvider";
+import Link from "@/components/LangLink";
+import { useLibrary } from "./AudioProvider";
 import StationCard from "./StationCard";
 
 /** Home-page favorites rail — renders only once the user has ≥1 saved station. */
 export default function FavoritesRail() {
-  const { favoriteStations } = useAudio();
+  const { favoriteStations } = useLibrary();
   if (!favoriteStations.length) return null;
 
   return (
@@ -20,7 +20,7 @@ export default function FavoritesRail() {
         </h2>
         <Link
           href="/favorites"
-          className="text-[11.5px] font-semibold text-brand-2 dark:text-accent"
+          className="text-xs font-semibold text-brand-2 dark:text-accent"
         >
           See all →
         </Link>
@@ -28,7 +28,7 @@ export default function FavoritesRail() {
       <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
         {favoriteStations.map((s) => (
           <div key={s.id} className="w-[130px] shrink-0">
-            <StationCard station={s} />
+            <StationCard station={s} queue={favoriteStations} />
           </div>
         ))}
       </div>

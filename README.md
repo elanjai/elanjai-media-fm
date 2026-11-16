@@ -1,9 +1,9 @@
 # Elanjai Media FM
 
-Free online radio directory — 290+ live Indian stations (Tamil, Hindi, Malayalam,
+Free online radio directory — 360+ live Indian stations (Tamil, Hindi, Malayalam,
 Telugu, Kannada, Punjabi, Urdu and more), playable instantly in the browser.
 
-Modeled on how directories like tamilradios.com / radiosindia.com work: broadcasters
+Modeled on how online radio directories work: broadcasters
 already publish public streams (Shoutcast / Icecast / HLS); this app catalogs those
 endpoints and adds search, genres, a persistent player and SEO landing pages. No audio
 is hosted or re-encoded — the browser connects to the broadcaster's own stream
@@ -37,11 +37,14 @@ is hosted or re-encoded — the browser connects to the broadcaster's own stream
 - Persistent bottom player — play/pause, volume, Media Session keys, 12s
   connect watchdog with clear offline errors
 - JSON API: `GET /api/stations`, `GET /api/stations?genre=tamil&q=`, `GET /api/stations/<slug>`
-- Same-origin stream proxy `GET /api/stream?u=<base64url>` — **all** playback
-  goes through it (like tamilradios' `private-stream`): fixes mixed content for
-  `http://` streams, dodges CORS for `hls.js`, forwards ICY metadata headers,
-  and **rewrites HLS manifests** so playlists + segments stay same-origin.
-  Origin-allowlisted to catalog hosts (not an open proxy).
+- Same-origin stream proxy `GET /api/stream?u=<base64url>`: used
+  **only when a stream can't play directly** — `http://`
+  streams (mixed content) and HLS manifests that `hls.js` couldn't fetch
+  cross-origin. The proxy rewrites HLS manifests so playlists + segments stay
+  same-origin. `https://` non-HLS streams (~2/3 of the catalog) play directly
+  from the broadcaster, so proxy bandwidth stays minimal. Access is restricted
+  to exact catalog stream URLs plus URLs the proxy signed itself — not an open
+  proxy.
 - `sitemap.xml`, `robots.txt`, `manifest.webmanifest`, PWA icon
 - Add-station / DMCA / About pages
 

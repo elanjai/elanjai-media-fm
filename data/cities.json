@@ -1,0 +1,137 @@
+[
+ {
+  "slug": "anantapur",
+  "name": "Anantapur",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "slug": "bengaluru",
+  "name": "Bengaluru",
+  "state": "Karnataka"
+ },
+ {
+  "slug": "bhubaneswar",
+  "name": "Bhubaneswar",
+  "state": "Odisha"
+ },
+ {
+  "slug": "chennai",
+  "name": "Chennai",
+  "state": "Tamil Nadu"
+ },
+ {
+  "slug": "coimbatore",
+  "name": "Coimbatore",
+  "state": "Tamil Nadu"
+ },
+ {
+  "slug": "delhi",
+  "name": "Delhi",
+  "state": "Delhi"
+ },
+ {
+  "slug": "erode",
+  "name": "Erode",
+  "state": "Tamil Nadu"
+ },
+ {
+  "slug": "hyderabad",
+  "name": "Hyderabad",
+  "state": "Telangana"
+ },
+ {
+  "slug": "indore",
+  "name": "Indore",
+  "state": "Madhya Pradesh"
+ },
+ {
+  "slug": "kochi",
+  "name": "Kochi",
+  "state": "Kerala"
+ },
+ {
+  "slug": "kolhapur",
+  "name": "Kolhapur",
+  "state": "Maharashtra"
+ },
+ {
+  "slug": "kolkata",
+  "name": "Kolkata",
+  "state": "West Bengal"
+ },
+ {
+  "slug": "kozhikode",
+  "name": "Kozhikode",
+  "state": "Kerala"
+ },
+ {
+  "slug": "madurai",
+  "name": "Madurai",
+  "state": "Tamil Nadu"
+ },
+ {
+  "slug": "mumbai",
+  "name": "Mumbai",
+  "state": "Maharashtra"
+ },
+ {
+  "slug": "nagercoil",
+  "name": "Nagercoil",
+  "state": "Tamil Nadu"
+ },
+ {
+  "slug": "nellore",
+  "name": "Nellore",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "slug": "nizamabad",
+  "name": "Nizamabad",
+  "state": "Telangana"
+ },
+ {
+  "slug": "pollachi",
+  "name": "Pollachi",
+  "state": "Tamil Nadu"
+ },
+ {
+  "slug": "srinagar",
+  "name": "Srinagar",
+  "state": "Jammu and Kashmir"
+ },
+ {
+  "slug": "thoothukudi",
+  "name": "Thoothukudi",
+  "state": "Tamil Nadu"
+ },
+ {
+  "slug": "tirunelveli",
+  "name": "Tirunelveli",
+  "state": "Tamil Nadu"
+ },
+ {
+  "slug": "tirupati",
+  "name": "Tirupati",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "slug": "trichy",
+  "name": "Tiruchirappalli",
+  "state": "Tamil Nadu"
+ },
+ {
+  "slug": "vijayawada",
+  "name": "Vijayawada",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "slug": "visakhapatnam",
+  "name": "Visakhapatnam",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "slug": "warangal",
+  "name": "Warangal",
+  "state": "Telangana"
+ }
+]

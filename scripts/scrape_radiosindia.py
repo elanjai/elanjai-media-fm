@@ -110,9 +110,20 @@ def slugify(name, taken):
 def main():
     page = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else "tamilradios"
     dry = "--dry" in sys.argv
-    genre = page.replace("radios", "").replace("radio", "") or "tamil"
+    # radiosindia page name → our genre slug (page names don't match slugs 1:1)
+    PAGE_GENRE = {
+        "banglaradio": "bengali", "marathiradio": "marathi",
+        "gujaratiradio": "gujarati", "odiaradio": "odia",
+        "englishradio": "english", "punjabiradio": "punjabi",
+        "kannadaradio": "kannada", "malayalamradio": "malayalam",
+        "hindiradio": "hindi", "bollywoodradios": "hindi",
+    }
+    genre = PAGE_GENRE.get(
+        page, page.replace("radios", "").replace("radio", "") or "tamil")
     LANG = {"tamil": "Tamil", "hindi": "Hindi", "malayalam": "Malayalam",
-            "kannada": "Kannada", "punjabi": "Punjabi"}
+            "kannada": "Kannada", "punjabi": "Punjabi", "bengali": "Bengali",
+            "marathi": "Marathi", "gujarati": "Gujarati", "odia": "Odia",
+            "english": "English"}
     language = LANG.get(genre, genre.capitalize())
 
     idx = fetch(INDEX.format(page)).decode("utf-8", "replace")
@@ -121,7 +132,7 @@ def main():
 
     stations = json.load(open(os.path.join(ROOT, "data", "stations.json"), encoding="utf-8"))
     have_names = {norm(s["name"]) for s in stations}
-    have_hosts = {host_of(s["stream_url"]) for s in stations}
+    have_hosts = {host_of(st["url"]) for s in stations for st in s.get("streams", [])}
     taken = {s["slug"] for s in stations}
 
     # scrape all pages — keep it polite, the site throttles bursts
@@ -163,11 +174,12 @@ def main():
         alive = err is None
         new.append({
             "id": slug, "name": name, "slug": slug,
-            "stream_url": stream or "",
+            "streams": [{"url": stream or "", "codec": codec,
+                         "bitrate": br, "hls": False}],
+            "languages": [genre], "categories": [],
             "homepage": f"https://radiosindia.com/{href}",
             "favicon": scraped[href][2] or "",
-            "genre": genre, "language": language, "country": "India",
-            "codec": codec, "bitrate": br, "votes": 0,
+            "country": "India", "votes": 0,
             "tags": [language.lower()], "is_active": alive,
         })
         if not alive:

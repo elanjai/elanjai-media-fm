@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import type { Genre } from "@/lib/types";
 import { genreStyle } from "@/lib/genre-style";
 import Icon from "./Icon";
@@ -26,7 +26,7 @@ export default function GenreTile({ genre }: { genre: Genre }) {
         <Icon name="note" size={20} className="mt-0.5" strokeWidth={1.8} />
       </span>
       <span className="mt-4 block font-display text-[15px] font-semibold">{genre.name}</span>
-      <span className="mt-0.5 block text-[11px] font-medium">{genre.count} stations</span>
+      <span className="mt-0.5 block text-xs font-medium">{genre.count} stations</span>
     </Link>
   );
 }

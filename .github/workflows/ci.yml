@@ -1,0 +1,41 @@
+name: CI
+
+# Runs on every pull request and push to main. This is the required check —
+# Release/Deploy workflows stay manual-only and rebuild only tagged commits.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test
+
+      # Memory: same heap cap the Dockerfile uses for turbopack/prerendering.
+      - name: Build
+        run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+          NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_PUBLIC_SITE_URL: https://elanjai-fm.up.railway.app
+
+      # F-3.7 performance budget — measures the first-load JS the
+      # prerendered home page actually ships (hls.js stays lazy-loaded).
+      - name: JS budget check
+        run: npm run budget

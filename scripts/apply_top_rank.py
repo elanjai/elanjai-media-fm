@@ -221,8 +221,8 @@ def main():
             if not s:
                 problems.append(f"{genre}: missing slug {slug}")
                 continue
-            if s["genre"] != genre:
-                problems.append(f"{slug}: genre {s['genre']} != {genre}")
+            if genre not in s.get("languages", [s.get("genre")]):
+                problems.append(f"{slug}: languages {s.get('languages')} !~ {genre}")
             if not s.get("is_active"):
                 problems.append(f"{slug}: inactive")
             s["top_rank"] = i
@@ -230,9 +230,11 @@ def main():
     # keep stable field order — insert top_rank before is_active
     def reorder(s):
         out = {}
-        for k in ("id", "name", "slug", "stream_url", "homepage", "favicon",
-                  "genre", "language", "country", "codec", "bitrate", "votes",
-                  "tags", "top_rank", "is_active"):
+        for k in ("id", "name", "name_native", "slug", "streams", "languages",
+                  "categories", "network", "city", "state", "country",
+                  "frequency_mhz", "homepage", "description", "favicon",
+                  "aliases", "votes", "tags", "top_rank", "is_active",
+                  "last_checked_at", "health_score"):
             if k in s:
                 out[k] = s[k]
         out.update(s)  # any extra keys

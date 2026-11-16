@@ -16,7 +16,7 @@ socket.setdefaulttimeout(8)
 
 
 def check(station):
-    url = station["stream_url"]
+    url = station["streams"][0]["url"]
     try:
         req = urllib.request.Request(
             url,

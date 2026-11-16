@@ -2,7 +2,7 @@
  {
   "slug": "hindi",
   "name": "Hindi",
-  "count": 40
+  "count": 45
  },
  {
   "slug": "india",
@@ -12,22 +12,22 @@
  {
   "slug": "kannada",
   "name": "Kannada",
-  "count": 23
+  "count": 22
  },
  {
   "slug": "malayalam",
   "name": "Malayalam",
-  "count": 39
+  "count": 38
  },
  {
   "slug": "punjabi",
   "name": "Punjabi",
-  "count": 37
+  "count": 36
  },
  {
   "slug": "tamil",
   "name": "Tamil",
-  "count": 79
+  "count": 157
  },
  {
   "slug": "telugu",
@@ -38,5 +38,65 @@
   "slug": "urdu",
   "name": "Urdu",
   "count": 27
+ },
+ {
+  "slug": "assamese",
+  "name": "Assamese",
+  "count": 1
+ },
+ {
+  "slug": "bengali",
+  "name": "Bengali",
+  "count": 16
+ },
+ {
+  "slug": "bhojpuri",
+  "name": "Bhojpuri",
+  "count": 6
+ },
+ {
+  "slug": "english",
+  "name": "English",
+  "count": 9
+ },
+ {
+  "slug": "kashmiri",
+  "name": "Kashmiri",
+  "count": 1
+ },
+ {
+  "slug": "konkani",
+  "name": "Konkani",
+  "count": 1
+ },
+ {
+  "slug": "marathi",
+  "name": "Marathi",
+  "count": 5
+ },
+ {
+  "slug": "nepali",
+  "name": "Nepali",
+  "count": 27
+ },
+ {
+  "slug": "odia",
+  "name": "Odia",
+  "count": 2
+ },
+ {
+  "slug": "sanskrit",
+  "name": "Sanskrit",
+  "count": 6
+ },
+ {
+  "slug": "sindhi",
+  "name": "Sindhi",
+  "count": 1
+ },
+ {
+  "slug": "gujarati",
+  "name": "Gujarati",
+  "count": 3
  }
 ]

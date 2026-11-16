@@ -1,0 +1,168 @@
+[
+  {
+    "id": "house-install",
+    "advertiser": "Elanjai FM",
+    "kind": "house",
+    "label": "From Elanjai FM",
+    "creative": {
+      "headline": "Keep radio one tap away",
+      "body": "Install Elanjai FM on your phone — favorites, Continue Listening and offline shells included.",
+      "cta": "Install free",
+      "url": "/"
+    },
+    "targeting": {
+      "slots": [
+        "home-infeed-1",
+        "home-infeed-2",
+        "list-infeed",
+        "np-sponsored",
+        "rail-desktop"
+      ]
+    },
+    "schedule": {
+      "start": "",
+      "end": ""
+    },
+    "weight": 2,
+    "caps": {
+      "perUserPerDay": 3
+    },
+    "status": "active"
+  },
+  {
+    "id": "house-simple",
+    "advertiser": "Elanjai FM",
+    "kind": "house",
+    "label": "From Elanjai FM",
+    "creative": {
+      "headline": "Radio made simple",
+      "body": "Giant station tiles, one-tap play and a big stop button — Simple mode for the whole family.",
+      "cta": "Try Simple mode",
+      "url": "/simple"
+    },
+    "targeting": {
+      "slots": [
+        "home-infeed-2",
+        "list-infeed",
+        "search-infeed",
+        "np-sponsored",
+        "station-rect"
+      ]
+    },
+    "schedule": {
+      "start": "",
+      "end": ""
+    },
+    "weight": 2,
+    "caps": {
+      "perUserPerDay": 3
+    },
+    "status": "active"
+  },
+  {
+    "id": "house-add-station",
+    "advertiser": "Elanjai FM",
+    "kind": "house",
+    "label": "From Elanjai FM",
+    "creative": {
+      "headline": "Run an Indian radio station?",
+      "body": "Get listed in the directory free — thousands of listeners discover stations here every day.",
+      "cta": "Add your station",
+      "url": "/add-station"
+    },
+    "targeting": {
+      "slots": [
+        "search-infeed",
+        "station-rect",
+        "list-infeed",
+        "rail-desktop"
+      ]
+    },
+    "schedule": {
+      "start": "",
+      "end": ""
+    },
+    "weight": 1,
+    "caps": {
+      "perUserPerDay": 2
+    },
+    "status": "active"
+  },
+  {
+    "id": "house-advertise",
+    "advertiser": "Elanjai FM",
+    "kind": "house",
+    "label": "From Elanjai FM",
+    "creative": {
+      "headline": "Reach listeners who keep radio on",
+      "body": "Featured listings, language-targeted banners and audio spots — advertise with Elanjai FM.",
+      "cta": "See the media kit",
+      "url": "/advertise"
+    },
+    "targeting": {
+      "slots": [
+        "home-infeed-2",
+        "list-infeed"
+      ]
+    },
+    "schedule": {
+      "start": "",
+      "end": ""
+    },
+    "weight": 1,
+    "caps": {
+      "perUserPerDay": 2
+    },
+    "status": "active"
+  },
+  {
+    "id": "feat-example-tamil",
+    "advertiser": "Example broadcaster",
+    "kind": "sponsored_station",
+    "label": "Sponsored",
+    "creative": {
+      "headline": "",
+      "stationSlug": "suryan-fm"
+    },
+    "targeting": {
+      "slots": [
+        "featured-top",
+        "featured-rail"
+      ],
+      "languages": [
+        "tamil"
+      ]
+    },
+    "schedule": {
+      "start": "2026-01-01",
+      "end": "2099-12-31"
+    },
+    "weight": 1,
+    "caps": {},
+    "status": "draft"
+  },
+  {
+    "id": "preroll-example",
+    "advertiser": "Example sponsor",
+    "kind": "audio_preroll",
+    "label": "Sponsored",
+    "creative": {
+      "headline": "",
+      "audioUrl": "/audio/preroll-example.mp3"
+    },
+    "targeting": {
+      "slots": [
+        "preroll"
+      ]
+    },
+    "schedule": {
+      "start": "2026-01-01",
+      "end": "2099-12-31"
+    },
+    "weight": 1,
+    "caps": {
+      "perUserPerDay": 1
+    },
+    "status": "draft"
+  }
+]

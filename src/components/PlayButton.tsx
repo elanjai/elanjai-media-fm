@@ -1,22 +1,26 @@
 "use client";
 
-import { useAudio } from "./AudioProvider";
+import { isBusyStatus, usePlayback, usePlaybackActions } from "./AudioProvider";
 import Icon from "./Icon";
 import type { PublicStation } from "@/lib/types";
 
 export default function PlayButton({
   station,
+  queue,
   size = 44,
   className = "",
 }: {
   station: PublicStation;
+  /** List this play was launched from — becomes the next/prev queue. */
+  queue?: PublicStation[];
   size?: number;
   className?: string;
 }) {
-  const { current, status, play, toggle } = useAudio();
+  const { current, status } = usePlayback();
+  const { play, toggle } = usePlaybackActions();
   const isCurrent = current?.id === station.id;
   const playing = isCurrent && status === "playing";
-  const loading = isCurrent && status === "loading";
+  const loading = isCurrent && isBusyStatus(status);
 
   return (
     <button
@@ -26,9 +30,9 @@ export default function PlayButton({
         e.preventDefault();
         e.stopPropagation();
         if (isCurrent) toggle();
-        else play(station);
+        else play(station, queue);
       }}
-      className={`flex items-center justify-center rounded-full bg-accent text-accent-ink shadow-md shadow-brand/25 transition hover:scale-105 hover:brightness-105 active:scale-95 ${className}`}
+      className={`flex items-center justify-center rounded-full bg-accent text-accent-ink shadow-md shadow-brand/25 transition hover:scale-105 hover:brightness-105 active:scale-95 ${size < 44 ? "hit-expand " : ""}${className}`}
       style={{ width: size, height: size }}
     >
       {loading ? (

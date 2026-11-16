@@ -1,18 +1,19 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "@/components/LangLink";
+import { useLocalePath, useT } from "./LocaleProvider";
 import { Suspense } from "react";
 
 const LINKS = [
-  { href: "/genres", label: "Genres" },
-  { href: "/search", label: "Search" },
-  { href: "/favorites", label: "Favorites" },
-  { href: "/recent", label: "Recent" },
+  { href: "/genres", labelKey: "nav.genres" },
+  { href: "/search", labelKey: "nav.search" },
+  { href: "/favorites", labelKey: "nav.favorites" },
+  { href: "/recent", labelKey: "footer.recent" },
 ];
 
 function Links() {
-  const pathname = usePathname();
+  const pathname = useLocalePath();
+  const t = useT();
   return (
     <>
       {LINKS.map((l) => {
@@ -28,7 +29,7 @@ function Links() {
                 : "font-medium text-muted hover:bg-surface-2 hover:text-ink"
             }`}
           >
-            {l.label}
+            {t(l.labelKey)}
           </Link>
         );
       })}

@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/LangLink";
 import type { PublicStation } from "@/lib/types";
-import { useAudio } from "./AudioProvider";
+import { usePlayback } from "./AudioProvider";
 import EqBars from "./EqBars";
 import PlayButton from "./PlayButton";
 import StationLogo from "./StationLogo";
@@ -10,12 +10,15 @@ import StationLogo from "./StationLogo";
 /** Compact list row — logo, title, meta (or "Playing now"), play badge. */
 export default function StationRow({
   station,
+  queue,
   trailing,
 }: {
   station: PublicStation;
+  /** List this row belongs to — passed to the player as the next/prev queue. */
+  queue?: PublicStation[];
   trailing?: React.ReactNode;
 }) {
-  const { current, status } = useAudio();
+  const { current, status } = usePlayback();
   const isCurrent = current?.id === station.id;
   const playing = isCurrent && status === "playing";
 
@@ -32,20 +35,20 @@ export default function StationRow({
       />
       <StationLogo src={station.favicon} fallbackSrc={station.faviconAlt} name={station.name} size={44} className="h-11 w-11 shrink-0" />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[13.5px] font-semibold text-ink">{station.name}</p>
+        <p className="truncate text-sm font-semibold text-ink">{station.name}</p>
         {playing ? (
-          <p className="mt-0.5 flex items-center gap-1.5 text-[10.5px] font-medium text-brand-2 dark:text-accent">
+          <p className="mt-0.5 flex items-center gap-1.5 text-xs font-medium text-brand-2 dark:text-accent">
             <EqBars /> Playing now
           </p>
         ) : (
-          <p className="mt-0.5 truncate text-[10.5px] capitalize text-muted">
+          <p className="mt-0.5 truncate text-xs capitalize text-muted">
             {station.genre}
             {station.bitrate ? ` · ${station.bitrate} kbps` : ` · ${station.country}`}
           </p>
         )}
       </div>
       {trailing}
-      <PlayButton station={station} size={32} className="relative z-10 shrink-0" />
+      <PlayButton station={station} queue={queue} size={32} className="relative z-10 shrink-0" />
     </div>
   );
 }

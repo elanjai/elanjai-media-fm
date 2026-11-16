@@ -1,39 +1,30 @@
-import { createHmac, randomBytes } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
-import { getStations } from "@/lib/data";
+import {
+  acquireSlot,
+  clientKey,
+  isCatalogStream,
+  rateLimit,
+  signedProxyParams,
+  verifySignature,
+} from "@/lib/stream-guard";
 
 /**
  * Same-origin audio proxy — the `private-stream` role.
  *
- * Why every stream goes through here:
+ * Why proxied streams go through here:
  *  - http:// media is blocked on https:// pages (mixed content)
  *  - hls.js fetches via XHR, so oddball hosts without CORS headers fail
  *  - a single origin keeps referrer/policy behavior predictable
  *
- * Anti-abuse: `u` must resolve to a URL on an origin present in our catalog
- * (stream CDNs serve manifests/segments on the same origin, so this covers
- * HLS playlists + segments without becoming an open proxy).
+ * Anti-abuse:
+ *  - `u` must be an *exact* catalog stream URL (not just an allowlisted
+ *    origin) or carry a valid HMAC signature + expiry (`s`/`e`) — the only
+ *    signed URLs in the wild are ones this route emitted while rewriting an
+ *    HLS manifest, so nothing here can be forged into an open proxy.
+ *  - requests declared cross-site (hotlinked from another origin) are refused
+ *  - per-IP request window + concurrent-stream caps
+ *  - no CORS headers are set: the proxy is only usable same-origin
  */
-
-const ALLOWED_ORIGINS = new Set(
-  getStations().map((s) => new URL(s.stream_url).origin)
-);
-
-/**
- * HLS manifests often reference *other* origins (Akamai master playlist →
- * yuppcdn.net segments). Only URLs we emitted ourselves get past the
- * allowlist: rewriteManifest signs each URI with a per-process secret, and
- * the signature is re-verified on the way back in. Signatures die with the
- * process, so nothing here can be forged into an open proxy.
- */
-const URL_SECRET = randomBytes(32);
-
-function signUrl(u: URL): string {
-  return createHmac("sha256", URL_SECRET)
-    .update(u.toString())
-    .digest("base64url")
-    .slice(0, 20);
-}
 
 const HOP_BY_HOP = new Set([
   "connection",
@@ -45,6 +36,11 @@ const HOP_BY_HOP = new Set([
 
 const UPSTREAM_HEADERS_TIMEOUT = 12000;
 
+/** Per-client limits — generous for real listeners, useless for hotlinkers. */
+const REQ_WINDOW_MS = 60_000;
+const REQ_MAX_PER_WINDOW = 120;
+const CONCURRENT_MAX = 10;
+
 function decodeTarget(encoded: string | null): URL | null {
   if (!encoded) return null;
   try {
@@ -55,8 +51,8 @@ function decodeTarget(encoded: string | null): URL | null {
 }
 
 function proxiedUrl(u: URL): string {
-  const b64 = Buffer.from(u.toString()).toString("base64url");
-  return `/api/stream?u=${b64}&s=${signUrl(u)}`;
+  const { u: b64, s, e } = signedProxyParams(u);
+  return `/api/stream?u=${b64}&s=${s}&e=${e}`;
 }
 
 /** Rewrite an HLS manifest so every URI routes back through this proxy. */
@@ -111,20 +107,68 @@ async function fetchUpstream(target: URL, range: string | null) {
   }
 }
 
+/** Release the concurrency slot when the streamed body ends or is cancelled. */
+function releaseOnClose(
+  body: ReadableStream<Uint8Array>,
+  release: () => void
+) {
+  const reader = body.getReader();
+  return new ReadableStream<Uint8Array>({
+    async pull(controller) {
+      try {
+        const { done, value } = await reader.read();
+        if (done) {
+          release();
+          controller.close();
+        } else {
+          controller.enqueue(value);
+        }
+      } catch (err) {
+        release();
+        controller.error(err);
+      }
+    },
+    cancel() {
+      release();
+      reader.cancel().catch(() => {});
+    },
+  });
+}
+
 export async function GET(request: NextRequest) {
+  // Other sites may not hotlink us as their stream source.
+  if (request.headers.get("sec-fetch-site") === "cross-site") {
+    return NextResponse.json({ error: "Cross-site embedding not allowed" }, { status: 403 });
+  }
+
   const target = decodeTarget(request.nextUrl.searchParams.get("u"));
   if (!target) return NextResponse.json({ error: "Bad u" }, { status: 400 });
+
   const sig = request.nextUrl.searchParams.get("s") ?? "";
-  const trusted =
-    ALLOWED_ORIGINS.has(target.origin) || sig === signUrl(target);
+  const exp = Number(request.nextUrl.searchParams.get("e") ?? NaN);
+  const signed = verifySignature(target, sig, exp);
+  const trusted = isCatalogStream(target) || signed;
   if (!/^https?:$/.test(target.protocol) || !trusted) {
     return NextResponse.json({ error: "Not an allowed stream" }, { status: 403 });
   }
+
+  // Per-IP limits. Signed requests are proxy-emitted (segments of a manifest
+  // we already served), so only unsigned catalog requests count per window.
+  const ip = clientKey(request);
+  if (!signed && !rateLimit(`req:${ip}`, REQ_MAX_PER_WINDOW, REQ_WINDOW_MS)) {
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+  }
+  const release = acquireSlot(ip, CONCURRENT_MAX);
+  if (!release) {
+    return NextResponse.json({ error: "Too many concurrent streams" }, { status: 429 });
+  }
+  request.signal.addEventListener("abort", release, { once: true });
 
   const upstream = await fetchUpstream(target, request.headers.get("range")).catch(
     () => null
   );
   if (!upstream || !upstream.ok || !upstream.body) {
+    release();
     return NextResponse.json({ error: "Upstream stream unavailable" }, { status: 502 });
   }
 
@@ -136,14 +180,19 @@ export async function GET(request: NextRequest) {
   upstream.headers.forEach((v, k) => {
     if (!HOP_BY_HOP.has(k.toLowerCase())) headers.set(k, v);
   });
-  headers.set("Access-Control-Allow-Origin", "*");
+  headers.delete("access-control-allow-origin");
   headers.set("Cache-Control", "no-store");
+  headers.set("X-Content-Type-Options", "nosniff");
 
   if (isManifest) {
     const text = await upstream.text();
+    release();
     headers.set("Content-Type", "application/vnd.apple.mpegurl");
     return new Response(rewriteManifest(text, target), { status: 200, headers });
   }
 
-  return new Response(upstream.body, { status: upstream.status, headers });
+  return new Response(releaseOnClose(upstream.body, release), {
+    status: upstream.status,
+    headers,
+  });
 }
