@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Icon from "@/components/Icon";
-import { getDictionary } from "@/i18n";
+import { dictionaryFor, getDictionary, hasLocale } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "Offline",
-  robots: { index: false },
-};
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
+  return {
+    title: dict.meta.offlineTitle,
+    robots: { index: false },
+  };
+}
 
 /** Offline shell — the service worker serves this when navigation fails. */
 export default async function OfflinePage() {
@@ -16,12 +22,10 @@ export default async function OfflinePage() {
         <Icon name="wifi" size={30} strokeWidth={1.8} />
       </span>
       <h1 className="mt-5 font-display text-xl font-bold text-ink">
-        You&apos;re offline
+        {dict.offline.title}
       </h1>
       <p className="mt-2 max-w-sm text-sm text-muted">
-        No internet connection right now. Your {dict.favorites.title.toLowerCase()} and recent
-        stations are saved on this device — they&apos;ll be back as soon as
-        you&apos;re online.
+        {dict.offline.body}
       </p>
     </div>
   );

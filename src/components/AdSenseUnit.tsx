@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { isAdFree } from "@/lib/ads";
 import { ADSENSE_CLIENT as CLIENT, ADSENSE_SLOT as SLOT } from "@/lib/adsense";
 import { getConsent } from "@/lib/consent";
+import { useT } from "./LocaleProvider";
 
 /**
  * Google AdSense manual unit (F-4.3). Renders only when
@@ -51,6 +52,7 @@ export default function AdSenseUnit({
   minHeight?: number;
   className?: string;
 }) {
+  const t = useT();
   const ref = useRef<HTMLModElement>(null);
   const [adFree, setAdFree] = useState(false);
 
@@ -71,11 +73,11 @@ export default function AdSenseUnit({
     <div
       className={`rounded-[18px] border border-dashed border-border bg-surface p-2 ${className}`}
       role="complementary"
-      aria-label="Advertisement"
+      aria-label={t("sponsored.region")}
       style={{ minHeight }}
     >
       <p className="px-1 pb-1 text-[10px] font-bold uppercase tracking-wide text-muted">
-        Ad
+        {t("sponsored.ad")}
       </p>
       <ins
         ref={ref}

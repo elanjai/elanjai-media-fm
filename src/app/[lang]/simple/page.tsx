@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import SimpleClient from "@/components/SimpleClient";
+import { dictionaryFor, hasLocale } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "Simple mode — big buttons, one tap to play",
-  description:
-    "A giant, easy radio screen for seniors: huge station buttons, one tap to play, one big stop button.",
-  robots: { index: false },
-};
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
+  return {
+    title: dict.meta.simpleTitle,
+    description: dict.meta.simpleDesc,
+    robots: { index: false },
+  };
+}
 
 export default function SimplePage() {
   return (

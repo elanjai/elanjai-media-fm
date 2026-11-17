@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ALARM_EVENT, getAlarm, localDay, setAlarm, type Alarm } from "@/lib/alarm";
+import { fmt } from "@/i18n/locales";
 import Icon from "./Icon";
+import { useT } from "./LocaleProvider";
 
 /**
  * Wake-up alarm button (F-5.5) — arms "play this station at HH:MM".
@@ -10,6 +12,7 @@ import Icon from "./Icon";
  * the background); the popover says so next to the control.
  */
 export default function AlarmCircle({ slug }: { slug: string }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [alarm, setAlarmState] = useState<Alarm | null>(null);
   const [time, setTime] = useState("");
@@ -43,9 +46,9 @@ export default function AlarmCircle({ slug }: { slug: string }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Wake-up alarm"
+        aria-label={t("alarm.title")}
         aria-expanded={open}
-        title={armedHere ? `Alarm set for ${alarm.hhmm}` : "Wake-up alarm"}
+        title={armedHere ? fmt(t("alarm.setFor"), { time: alarm.hhmm }) : t("alarm.title")}
         className={`relative flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
           armedHere ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
         }`}
@@ -58,7 +61,9 @@ export default function AlarmCircle({ slug }: { slug: string }) {
       {open && (
         <div className="absolute bottom-12 left-1/2 z-10 w-52 -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-surface shadow-xl">
           <p className="border-b border-border px-3 py-2 text-xs font-semibold text-muted">
-            Wake me {armedHere ? `at ${alarm.hhmm}` : "with this station"}
+            {armedHere
+              ? fmt(t("alarm.wakeAt"), { time: alarm.hhmm })
+              : t("alarm.wakeWith")}
           </p>
           <form
             className="flex items-center gap-2 px-3 py-2.5"
@@ -83,7 +88,7 @@ export default function AlarmCircle({ slug }: { slug: string }) {
               value={time}
               onChange={(e) => setTime(e.target.value)}
               required
-              aria-label="Wake-up time"
+              aria-label={t("alarm.timeLabel")}
               className="w-24 rounded-lg border border-border bg-surface-2 px-2.5 py-1.5 text-sm text-ink outline-none focus:border-brand-2"
             />
             <button
@@ -91,7 +96,7 @@ export default function AlarmCircle({ slug }: { slug: string }) {
               disabled={!/^\d{2}:\d{2}$/.test(time)}
               className="text-sm font-semibold text-brand-2 disabled:text-muted dark:text-accent"
             >
-              Set
+              {t("alarm.set")}
             </button>
           </form>
           {armedHere && (
@@ -103,17 +108,13 @@ export default function AlarmCircle({ slug }: { slug: string }) {
               }}
               className="block w-full border-t border-border px-3 py-2 text-left text-sm font-medium text-danger transition hover:bg-surface-2"
             >
-              Cancel alarm
+              {t("alarm.cancel")}
             </button>
           )}
           <p className="border-t border-border px-3 py-2 text-[11px] leading-4 text-muted">
-            Fires while the app is open — keep this tab running overnight.
+            {t("alarm.scopeNote")}
             {armedElsewhere && (
-              <>
-                {" "}
-                Currently armed for another station at {alarm.hhmm} — setting
-                one here replaces it.
-              </>
+              <> {fmt(t("alarm.armedElsewhere"), { time: alarm.hhmm })}</>
             )}
           </p>
         </div>

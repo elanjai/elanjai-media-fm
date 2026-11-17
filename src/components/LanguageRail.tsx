@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import type { Genre } from "@/lib/types";
 import { genreStyle } from "@/lib/genre-style";
 import { orderByLangs } from "@/lib/languages";
+import { useGenreName } from "./LocaleProvider";
 import { usePrefs } from "./PrefsProvider";
 
 /**
@@ -14,6 +15,7 @@ import { usePrefs } from "./PrefsProvider";
  */
 export default function LanguageRail({ genres }: { genres: Genre[] }) {
   const { langs } = usePrefs();
+  const gn = useGenreName();
   const ordered = useMemo(
     () => (langs?.length ? orderByLangs(genres, langs) : genres),
     [genres, langs]
@@ -37,7 +39,7 @@ export default function LanguageRail({ genres }: { genres: Genre[] }) {
               {st.short[0]}
             </span>
             <span className="text-[13px] font-semibold" style={{ color: st.fg }}>
-              {g.name}
+              {gn(g.slug, g.name)}
             </span>
           </Link>
         );

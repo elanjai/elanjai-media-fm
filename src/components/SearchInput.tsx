@@ -126,9 +126,9 @@ export default function SearchInput({
         <button
           type="button"
           onClick={startVoice}
-          aria-label={listening ? "Listening…" : "Voice search"}
+          aria-label={listening ? t("search.listening") : t("search.voiceSearch")}
           aria-pressed={listening}
-          title="Voice search"
+          title={t("search.voiceSearch")}
           className={`hit-expand absolute right-10 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full transition hover:bg-surface ${
             listening ? "animate-pulse text-danger" : "text-muted hover:text-ink"
           }`}
@@ -143,7 +143,7 @@ export default function SearchInput({
             setQ("");
             if (!controlled) router.push(`/${lang}/search`);
           }}
-          aria-label="Clear search"
+          aria-label={t("search.clear")}
           className="hit-expand absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-muted transition hover:bg-surface hover:text-ink"
         >
           <Icon name="x" size={15} />

@@ -2,10 +2,12 @@
 
 import Link from "@/components/LangLink";
 import { useLibrary } from "./AudioProvider";
+import { useT } from "./LocaleProvider";
 import StationCard from "./StationCard";
 
 /** Home-page favorites rail — renders only once the user has ≥1 saved station. */
 export default function FavoritesRail() {
+  const t = useT();
   const { favoriteStations } = useLibrary();
   if (!favoriteStations.length) return null;
 
@@ -16,13 +18,13 @@ export default function FavoritesRail() {
           id="favorites"
           className="font-display text-[16.5px] font-semibold text-ink"
         >
-          Favorites
+          {t("nav.favorites")}
         </h2>
         <Link
           href="/favorites"
           className="text-xs font-semibold text-brand-2 dark:text-accent"
         >
-          See all →
+          {t("home.seeAll")}
         </Link>
       </div>
       <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">

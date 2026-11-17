@@ -1,19 +1,21 @@
 "use client";
 
 import Icon from "./Icon";
+import { useT } from "./LocaleProvider";
 import { usePrefs } from "./PrefsProvider";
 
 /** Quick light/dark flip — the System option lives in Settings. */
 export default function ThemeToggle() {
   const { resolvedTheme, setTheme } = usePrefs();
+  const t = useT();
   const dark = resolvedTheme === "dark";
 
   return (
     <button
       type="button"
       onClick={() => setTheme(dark ? "light" : "dark")}
-      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-      title={dark ? "Light mode" : "Dark mode"}
+      aria-label={dark ? t("a11y.toLight") : t("a11y.toDark")}
+      title={dark ? t("settings.lightMode") : t("settings.darkMode")}
       className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
     >
       {dark ? (

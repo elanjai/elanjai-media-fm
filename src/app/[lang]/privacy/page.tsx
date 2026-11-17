@@ -1,21 +1,31 @@
 import type { Metadata } from "next";
 import Link from "@/components/LangLink";
 import { SITE } from "@/lib/site";
+import { dictionaryFor, fmt, getDictionary, hasLocale } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "Privacy policy",
-  description: `How ${SITE.name} handles your data — local-first, no accounts, no tracking.`,
-};
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
+  return {
+    title: dict.meta.privacyTitle,
+    description: fmt(dict.meta.privacyDesc, { site: SITE.name }),
+  };
+}
 
 const EFFECTIVE = "November 15, 2026";
 
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  const dict = await getDictionary();
   return (
     <div className="mx-auto max-w-2xl py-10 text-sm leading-7 text-ink">
       <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-        Privacy policy
+        {dict.privacy.title}
       </h1>
-      <p className="mt-2 text-xs text-muted">Effective: {EFFECTIVE}</p>
+      <p className="mt-2 text-xs text-muted">
+        {fmt(dict.privacy.effective, { date: EFFECTIVE })}
+      </p>
 
       <p className="mt-4 text-muted">
         {SITE.name} is built to be used without telling us anything about
@@ -25,7 +35,7 @@ export default function PrivacyPage() {
         and neither is required to listen.
       </p>
 
-      <h2 className="mt-6 font-bold text-ink">What stays on your device</h2>
+      <h2 className="mt-6 font-bold text-ink">{dict.privacy.h2Device}</h2>
       <p className="mt-2 text-muted">
         Favorites, recently played stations, theme, volume, sleep-timer and
         search preferences are stored in your browser&apos;s localStorage on
@@ -33,7 +43,7 @@ export default function PrivacyPage() {
         servers. Clearing your browser storage removes them completely.
       </p>
 
-      <h2 className="mt-6 font-bold text-ink">What our servers see</h2>
+      <h2 className="mt-6 font-bold text-ink">{dict.privacy.h2Servers}</h2>
       <p className="mt-2 text-muted">
         When you press play on a stream that needs it, your request passes
         through our stream proxy, which sees your IP address and browser
@@ -43,7 +53,7 @@ export default function PrivacyPage() {
         requests are governed by the broadcaster&apos;s own policies.
       </p>
 
-      <h2 className="mt-6 font-bold text-ink">Usage statistics (with your consent)</h2>
+      <h2 className="mt-6 font-bold text-ink">{dict.privacy.h2Stats}</h2>
       <p className="mt-2 text-muted">
         On your first visit we ask whether you allow first-party usage
         statistics. If you accept, we record aggregate counts — which kinds
@@ -55,7 +65,7 @@ export default function PrivacyPage() {
         Settings.
       </p>
 
-      <h2 className="mt-6 font-bold text-ink">Advertising</h2>
+      <h2 className="mt-6 font-bold text-ink">{dict.privacy.h2Ads}</h2>
       <p className="mt-2 text-muted">
         {SITE.name} is funded by advertising. Slots marked
         &ldquo;Sponsored&rdquo; or &ldquo;Ad&rdquo; may show our own house
@@ -68,7 +78,7 @@ export default function PrivacyPage() {
         applicable GDPR consent requirements.
       </p>
 
-      <h2 className="mt-6 font-bold text-ink">Cookies</h2>
+      <h2 className="mt-6 font-bold text-ink">{dict.privacy.h2Cookies}</h2>
       <p className="mt-2 text-muted">
         We do not set cookies ourselves. Consent choices and preferences
         live in your browser&apos;s localStorage. Third-party ad partners,
@@ -76,7 +86,7 @@ export default function PrivacyPage() {
         covered here and gated by your consent choices before it happens.
       </p>
 
-      <h2 className="mt-6 font-bold text-ink">Your rights</h2>
+      <h2 className="mt-6 font-bold text-ink">{dict.privacy.h2Rights}</h2>
       <p className="mt-2 text-muted">
         Because we keep no account or listener profile data, there is nothing
         of yours to export or delete on our side — everything lives in your
@@ -84,7 +94,7 @@ export default function PrivacyPage() {
         and we will respond within a reasonable time.
       </p>
 
-      <h2 className="mt-6 font-bold text-ink">Contact</h2>
+      <h2 className="mt-6 font-bold text-ink">{dict.privacy.h2Contact}</h2>
       <p className="mt-2 text-muted">
         Privacy questions:
         <a

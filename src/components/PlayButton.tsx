@@ -1,7 +1,9 @@
 "use client";
 
 import { isBusyStatus, usePlayback, usePlaybackActions } from "./AudioProvider";
+import { fmt } from "@/i18n/locales";
 import Icon from "./Icon";
+import { useT } from "./LocaleProvider";
 import type { PublicStation } from "@/lib/types";
 
 export default function PlayButton({
@@ -18,6 +20,7 @@ export default function PlayButton({
 }) {
   const { current, status } = usePlayback();
   const { play, toggle } = usePlaybackActions();
+  const t = useT();
   const isCurrent = current?.id === station.id;
   const playing = isCurrent && status === "playing";
   const loading = isCurrent && isBusyStatus(status);
@@ -25,7 +28,7 @@ export default function PlayButton({
   return (
     <button
       type="button"
-      aria-label={playing ? `Pause ${station.name}` : `Play ${station.name}`}
+      aria-label={playing ? fmt(t("action.pauseStation"), { name: station.name }) : fmt(t("action.playStation"), { name: station.name })}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();

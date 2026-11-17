@@ -4,6 +4,7 @@ import Link from "@/components/LangLink";
 import type { PublicStation } from "@/lib/types";
 import { usePlayback } from "./AudioProvider";
 import EqBars from "./EqBars";
+import { useGenreName, useT } from "./LocaleProvider";
 import PlayButton from "./PlayButton";
 import StationLogo from "./StationLogo";
 
@@ -19,6 +20,8 @@ export default function StationRow({
   trailing?: React.ReactNode;
 }) {
   const { current, status } = usePlayback();
+  const t = useT();
+  const gn = useGenreName();
   const isCurrent = current?.id === station.id;
   const playing = isCurrent && status === "playing";
 
@@ -38,11 +41,11 @@ export default function StationRow({
         <p className="truncate text-sm font-semibold text-ink">{station.name}</p>
         {playing ? (
           <p className="mt-0.5 flex items-center gap-1.5 text-xs font-medium text-brand-2 dark:text-accent">
-            <EqBars /> Playing now
+            <EqBars /> {t("player.playingNow")}
           </p>
         ) : (
           <p className="mt-0.5 truncate text-xs capitalize text-muted">
-            {station.genre}
+            {gn(station.genre)}
             {station.bitrate ? ` · ${station.bitrate} kbps` : ` · ${station.country}`}
           </p>
         )}

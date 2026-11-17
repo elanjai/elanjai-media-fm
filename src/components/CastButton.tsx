@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePlayback, usePlaybackActions } from "./AudioProvider";
 import Icon from "./Icon";
+import { useT } from "./LocaleProvider";
 
 type RemoteCapableAudio = HTMLAudioElement & {
   remote?: { prompt: () => Promise<void> };
@@ -18,6 +19,7 @@ type RemoteCapableAudio = HTMLAudioElement & {
 export default function CastButton() {
   const { current } = usePlayback();
   const { getAudioEl } = usePlaybackActions();
+  const t = useT();
   const [supported, setSupported] = useState(false);
 
   useEffect(() => {
@@ -47,8 +49,8 @@ export default function CastButton() {
     <button
       type="button"
       onClick={open}
-      aria-label="Cast to a device"
-      title="Cast"
+      aria-label={t("player.castTo")}
+      title={t("player.cast")}
       className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
     >
       <Icon name="cast" size={19} strokeWidth={1.8} />

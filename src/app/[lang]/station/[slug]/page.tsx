@@ -26,7 +26,14 @@ import {
 } from "@/lib/data";
 import { breadcrumbJsonLd, faqJsonLd, radioStationJsonLd } from "@/lib/jsonld";
 import { getSchedule } from "@/lib/schedule";
-import { langAlternates } from "@/i18n";
+import {
+  dictionaryFor,
+  fmt,
+  genreName,
+  getDictionary,
+  hasLocale,
+  langAlternates,
+} from "@/i18n";
 import { SITE } from "@/lib/site";
 import type { Station } from "@/lib/types";
 
@@ -38,9 +45,10 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
   const s = getStationBySlug(slug);
-  if (!s) return { title: "Station not found" };
-  const title = `${s.name} — Listen Live Free`;
+  if (!s) return { title: dict.meta.notFound };
+  const title = fmt(dict.meta.stationTitle, { name: s.name });
   const description = describeStation(s);
   return {
     title,
@@ -93,6 +101,7 @@ function stationFaqs(s: Station): { q: string; a: string }[] {
 
 export default async function StationPage({ params }: Props) {
   const { lang, slug } = await params;
+  const dict = await getDictionary();
   const s = getStationBySlug(slug);
   if (!s) notFound();
 
@@ -135,16 +144,16 @@ export default async function StationPage({ params }: Props) {
       <div className="flex items-center gap-3">
         <Link
           href={`/genre/${genreSlug}`}
-          aria-label={`Back to ${genreSlug} stations`}
+          aria-label={fmt(dict.station.backToGenre, { genre: genreName(dict, genreSlug) })}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
         </Link>
-        <nav aria-label="Breadcrumb" className="min-w-0 flex-1 truncate text-xs text-muted">
-          <Link href="/" className="hover:text-ink">Home</Link>
+        <nav aria-label={dict.nav.breadcrumb} className="min-w-0 flex-1 truncate text-xs text-muted">
+          <Link href="/" className="hover:text-ink">{dict.nav.home}</Link>
           <span className="mx-1.5">/</span>
           <Link href={`/genre/${genreSlug}`} className="capitalize hover:text-ink">
-            {genreSlug}
+            {genreName(dict, genreSlug)}
           </Link>
         </nav>
         <ShareButton url={`${SITE.url}/${lang}/station/${s.slug}`} name={s.name} />
@@ -181,9 +190,9 @@ export default async function StationPage({ params }: Props) {
               )}
             </h1>
             <p className="mt-1 text-xs text-brand-ink/75">
-              {pub.language} · {s.country}
+              {s.languages.map((l) => genreName(dict, l)).join(", ")} · {s.country}
               {primary?.bitrate
-                ? ` · ${primary.bitrate} kbps ${primary.codec} · ≈ ${Math.round(primary.bitrate * 0.45)} MB/hr`
+                ? " " + fmt(dict.station.streamMeta, { bitrate: primary.bitrate, codec: primary.codec, mbHr: Math.round(primary.bitrate * 0.45) })
                 : ""}
             </p>
             <ListenerCount slug={s.slug} className="mt-2 text-xs font-medium text-brand-ink/85" />
@@ -246,8 +255,8 @@ export default async function StationPage({ params }: Props) {
       <div className="mt-5 flex items-center gap-4">
         <PlayButton station={pub} queue={related.length ? related : [pub]} size={56} />
         <div className="min-w-0 flex-1">
-          <p className="text-[13px] font-semibold text-ink">Tap to listen live</p>
-          <p className="mt-0.5 text-xs text-muted">Free · no sign-up</p>
+          <p className="text-[13px] font-semibold text-ink">{dict.player.listenLive}</p>
+          <p className="mt-0.5 text-xs text-muted">{dict.player.freeNoSignup}</p>
         </div>
         <FavoriteButton station={pub} size={44} />
         {s.homepage && (
@@ -255,8 +264,8 @@ export default async function StationPage({ params }: Props) {
             href={s.homepage}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Official site"
-            title="Official site"
+            aria-label={dict.station.officialSite}
+            title={dict.station.officialSite}
             className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
           >
             <Icon name="globe" size={20} strokeWidth={1.7} />
@@ -282,7 +291,7 @@ export default async function StationPage({ params }: Props) {
       {/* About — unique per-station copy (F-2.7) */}
       <section aria-labelledby="about" className="mt-8">
         <h2 id="about" className="font-display text-[16.5px] font-semibold text-ink">
-          About {s.name}
+          {fmt(dict.station.aboutTitle, { name: s.name })}
         </h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
           {description}
@@ -293,10 +302,10 @@ export default async function StationPage({ params }: Props) {
       {s.streams.length > 0 && (
         <section aria-labelledby="streams" className="mt-8">
           <h2 id="streams" className="font-display text-[16.5px] font-semibold text-ink">
-            Stream quality
+            {dict.station.streamQuality}
           </h2>
           <p className="mt-1 text-xs text-muted">
-            The player picks the best stream for your connection and falls back automatically.
+            {dict.station.streamHint}
           </p>
           <ul className="mt-3 space-y-2">
             {s.streams.map((st, i) => (
@@ -305,7 +314,7 @@ export default async function StationPage({ params }: Props) {
                 className="flex items-center gap-3 rounded-[14px] border border-border bg-surface px-4 py-3 text-[13px]"
               >
                 <span className="font-semibold text-ink">
-                  {st.bitrate > 0 ? `${st.bitrate} kbps` : "Adaptive"}
+                  {st.bitrate > 0 ? fmt(dict.station.kbps, { bitrate: st.bitrate }) : dict.station.adaptive}
                 </span>
                 <span className="text-muted uppercase">{st.codec}</span>
                 {st.hls && (
@@ -315,7 +324,7 @@ export default async function StationPage({ params }: Props) {
                 )}
                 {i === 0 && (
                   <span className="ml-auto rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-semibold text-brand-2 dark:text-accent">
-                    Default
+                    {dict.station.defaultBadge}
                   </span>
                 )}
               </li>
@@ -327,7 +336,7 @@ export default async function StationPage({ params }: Props) {
       {/* FAQ — visible + FAQPage JSON-LD */}
       <section aria-labelledby="faq" className="mt-8">
         <h2 id="faq" className="font-display text-[16.5px] font-semibold text-ink">
-          Frequently asked questions
+          {dict.station.faqTitle}
         </h2>
         <div className="mt-3 space-y-2">
           {faqs.map((f) => (
@@ -352,10 +361,10 @@ export default async function StationPage({ params }: Props) {
       {/* Embed — copyable iframe widget (F-3.5) */}
       <section aria-labelledby="embed" className="mt-8">
         <h2 id="embed" className="font-display text-[16.5px] font-semibold text-ink">
-          Embed {s.name} on your site
+          {fmt(dict.station.embedTitle, { name: s.name })}
         </h2>
         <p className="mt-1 text-xs text-muted">
-          Free widget — plays the broadcaster&apos;s own stream and links back here.
+          {dict.station.embedHint}
         </p>
         <div className="mt-3">
           <EmbedBlock embedUrl={`${SITE.url}/embed/${s.slug}`} />
@@ -367,13 +376,13 @@ export default async function StationPage({ params }: Props) {
         <section aria-labelledby="network-more" className="mt-8">
           <div className="mb-3 flex items-baseline justify-between">
             <h2 id="network-more" className="font-display text-[16.5px] font-semibold text-ink">
-              More from {network.name}
+              {fmt(dict.station.moreFrom, { name: network.name })}
             </h2>
             <Link
               href={`/network/${network.slug}`}
               className="text-xs font-semibold text-brand-2 dark:text-accent"
             >
-              All {networkStations.length} →
+              {fmt(dict.common.allCount, { count: networkStations.length })}
             </Link>
           </div>
           <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 lg:mx-0 lg:grid lg:grid-cols-6 lg:overflow-visible lg:px-0">
@@ -396,13 +405,13 @@ export default async function StationPage({ params }: Props) {
         <section aria-labelledby="related" className="mt-8">
           <div className="mb-3 flex items-baseline justify-between">
             <h2 id="related" className="font-display text-[16.5px] font-semibold text-ink">
-              {city ? `More ${city.name} & ${genreSlug} stations` : `More ${genreSlug} stations`}
+              {city ? fmt(dict.station.moreCityGenre, { city: city.name, genre: genreName(dict, genreSlug) }) : fmt(dict.station.moreGenre, { genre: genreName(dict, genreSlug) })}
             </h2>
             <Link
               href={`/genre/${genreSlug}`}
               className="text-xs font-semibold text-brand-2 dark:text-accent"
             >
-              All {genreCount} →
+              {fmt(dict.common.allCount, { count: genreCount })}
             </Link>
           </div>
           <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 lg:mx-0 lg:grid lg:grid-cols-6 lg:overflow-visible lg:px-0">
@@ -421,7 +430,7 @@ export default async function StationPage({ params }: Props) {
           href={`/claim?slug=${s.slug}`}
           className="text-xs font-semibold text-muted underline-offset-2 transition hover:text-ink hover:underline"
         >
-          Broadcaster? Claim this station
+          {dict.station.claimCta}
         </Link>
       </div>
     </div>

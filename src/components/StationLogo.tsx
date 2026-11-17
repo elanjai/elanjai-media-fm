@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { fmt } from "@/i18n/locales";
+import { useT } from "./LocaleProvider";
 
 /** Station logo — local asset → remote favicon → colored initials fallback. */
 export default function StationLogo({
@@ -17,6 +19,7 @@ export default function StationLogo({
   className?: string;
 }) {
   const urls = [src, fallbackSrc].filter(Boolean) as string[];
+  const t = useT();
   const [stage, setStage] = useState(0);
   const url = urls[Math.min(stage, urls.length)];
 
@@ -48,7 +51,7 @@ export default function StationLogo({
     // eslint-disable-next-line @next/next/no-img-element -- arbitrary remote favicons can't go through next/image
     <img
       src={url}
-      alt={`${name} logo`}
+      alt={fmt(t("a11y.stationLogo"), { name })}
       width={size}
       height={size}
       loading="lazy"

@@ -10,20 +10,28 @@ import {
   type StatsData,
 } from "@/lib/stats";
 import { useCatalog } from "./AudioProvider";
+import { useLang, useT } from "./LocaleProvider";
 import StationLogo from "./StationLogo";
 import LangLink from "@/components/LangLink";
-
-function fmtTime(sec: number): string {
-  if (sec < 60) return `${sec}s`;
-  const h = Math.floor(sec / 3600);
-  const m = Math.round((sec % 3600) / 60);
-  return h > 0 ? `${h}h ${m}m` : `${m}m`;
-}
 
 /** F-5.7 — renders localStorage stats; local-only, never beaconed. */
 export default function StatsView() {
   const { stations } = useCatalog();
+  const t = useT();
+  const lang = useLang();
   const [stats, setStats] = useState<StatsData | null>(null);
+
+  // Localized narrow units ("3h 20m" → "3 ம 20 நி" etc.) via Intl.
+  const unit = (u: "hour" | "minute" | "second") =>
+    new Intl.NumberFormat(lang, { style: "unit", unit: u, unitDisplay: "narrow" });
+  const fmtTime = (sec: number): string => {
+    if (sec < 60) return unit("second").format(sec);
+    const h = Math.floor(sec / 3600);
+    const m = Math.round((sec % 3600) / 60);
+    return h > 0
+      ? `${unit("hour").format(h)} ${unit("minute").format(m)}`
+      : unit("minute").format(m);
+  };
 
   useEffect(() => {
     const load = () => setStats(getStats());
@@ -43,13 +51,13 @@ export default function StatsView() {
   if (!stats) return null;
   const now = new Date();
   const month = monthSeconds(stats, now.getFullYear(), now.getMonth());
-  const monthName = now.toLocaleString(undefined, { month: "long" });
+  const monthName = now.toLocaleString(lang, { month: "long" });
   const top = topStations(stats, 5);
   const week = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(now);
     d.setDate(d.getDate() - (6 - i));
     const key = localDay(d);
-    return { key, sec: stats.byDay[key] ?? 0, label: d.toLocaleString(undefined, { weekday: "short" }) };
+    return { key, sec: stats.byDay[key] ?? 0, label: d.toLocaleString(lang, { weekday: "short" }) };
   });
   const maxDay = Math.max(...week.map((d) => d.sec), 1);
   const nameOf = (slug: string) =>
@@ -58,8 +66,7 @@ export default function StatsView() {
   if (stats.totalSec === 0)
     return (
       <p className="mt-6 rounded-2xl border border-dashed border-border bg-surface p-5 text-sm text-muted">
-        Nothing here yet — press play and your listening time will start
-        counting up on this page.
+        {t("stats.empty")}
       </p>
     );
 
@@ -67,9 +74,9 @@ export default function StatsView() {
     <div className="mt-6 space-y-6">
       <div className="grid grid-cols-3 gap-3">
         {[
-          ["All time", fmtTime(stats.totalSec)],
+          [t("stats.allTime"), fmtTime(stats.totalSec)],
           [monthName, fmtTime(month)],
-          ["Sessions", String(stats.sessions)],
+          [t("stats.sessions"), String(stats.sessions)],
         ].map(([label, value]) => (
           <div
             key={label}
@@ -85,7 +92,7 @@ export default function StatsView() {
 
       <div className="rounded-2xl border border-border bg-surface p-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-          Last 7 days
+          {t("stats.last7Days")}
         </p>
         <div className="mt-3 flex items-end justify-between gap-2">
           {week.map((d) => (
@@ -104,7 +111,7 @@ export default function StatsView() {
       {top.length > 0 && (
         <div className="rounded-2xl border border-border bg-surface p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-            Top stations
+            {t("stats.topStations")}
           </p>
           <ul className="mt-2 divide-y divide-border">
             {top.map((t) => {
@@ -142,7 +149,7 @@ export default function StatsView() {
         }}
         className="text-xs font-medium text-muted underline underline-offset-2 transition hover:text-danger"
       >
-        Reset all stats on this device
+        {t("stats.reset")}
       </button>
     </div>
   );

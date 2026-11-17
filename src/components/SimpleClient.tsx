@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useLang } from "./LocaleProvider";
+import { useLang, useT } from "./LocaleProvider";
 import { useEffect, useMemo, useRef } from "react";
 import {
   isBusyStatus,
@@ -25,6 +25,7 @@ export default function SimpleClient() {
   const params = useSearchParams();
   const router = useRouter();
   const lang = useLang();
+  const t = useT();
   const { stations } = useCatalog();
   const { favoriteStations, addFavorites } = useLibrary();
   const { current, status } = usePlayback();
@@ -66,17 +67,17 @@ export default function SimpleClient() {
   return (
     <div className="pt-4 pb-44">
       <div className="flex items-center justify-between">
-        <p className="font-display text-xl font-semibold text-ink">My Radio</p>
+        <p className="font-display text-xl font-semibold text-ink">{t("simple.title")}</p>
         <button
           type="button"
           onClick={exit}
           className="rounded-full border border-border bg-surface px-4 py-2 text-[13px] font-semibold text-muted transition hover:text-ink"
         >
-          Exit simple mode
+          {t("simple.exit")}
         </button>
       </div>
       <p className="mt-1 text-[13px] text-muted">
-        Tap a station to listen. Tap the big button to stop.
+        {t("simple.hint")}
       </p>
 
       <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -107,7 +108,7 @@ export default function SimpleClient() {
                 {isCurrent && (
                   <span className="mt-1 flex items-center justify-center gap-1.5 text-[12px] font-semibold text-brand-2 dark:text-accent">
                     {playing && <EqBars />}
-                    {busy ? "Connecting…" : playing ? "Playing" : "Paused"}
+                    {busy ? t("player.connecting") : playing ? t("player.playing") : t("player.paused")}
                   </span>
                 )}
               </span>
@@ -129,13 +130,13 @@ export default function SimpleClient() {
             <div className="min-w-0 flex-1">
               <p className="truncate text-[16px] font-bold text-ink">{current.name}</p>
               <p className="text-[13px] font-medium text-muted">
-                {busy ? "Connecting…" : playing ? "Playing now" : "Paused"}
+                {busy ? t("player.connecting") : playing ? t("player.playingNow") : t("player.paused")}
               </p>
             </div>
             <button
               type="button"
               onClick={playing ? stop : toggle}
-              aria-label={playing ? "Stop" : "Play"}
+              aria-label={playing ? t("action.stop") : t("action.play")}
               className={`flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-full shadow-lg transition active:scale-95 ${
                 playing
                   ? "bg-rose text-white"

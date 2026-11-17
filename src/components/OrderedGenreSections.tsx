@@ -2,8 +2,10 @@
 
 import Link from "@/components/LangLink";
 import { Fragment, useMemo } from "react";
+import { fmt } from "@/i18n/locales";
 import type { Genre, PublicStation } from "@/lib/types";
 import { orderByLangs } from "@/lib/languages";
+import { useGenreName, useT } from "./LocaleProvider";
 import { usePrefs } from "./PrefsProvider";
 import StationRow from "./StationRow";
 
@@ -25,6 +27,8 @@ export default function OrderedGenreSections({
   insertAfter?: React.ReactNode;
 }) {
   const { langs } = usePrefs();
+  const t = useT();
+  const gn = useGenreName();
   const ordered = useMemo(
     () =>
       langs?.length
@@ -52,13 +56,13 @@ export default function OrderedGenreSections({
                 id={`g-${genre.slug}`}
                 className="font-display text-[16.5px] font-semibold text-ink"
               >
-                {genre.name} radio
+                {fmt(t("home.genreRadio"), { lang: gn(genre.slug, genre.name) })}
               </h2>
               <Link
                 href={`/genre/${genre.slug}`}
                 className="text-xs font-semibold text-brand-2 dark:text-accent"
               >
-                All {genre.count} →
+                {fmt(t("common.allCount"), { count: genre.count })}
               </Link>
             </div>
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">

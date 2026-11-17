@@ -20,7 +20,7 @@ export default function TabBar() {
   if (pathname === "/simple") return null;
   return (
     <nav
-      aria-label="Main"
+      aria-label={t("a11y.mainNav")}
       className="fixed inset-x-4 bottom-[max(0.875rem,env(safe-area-inset-bottom))] z-40 md:hidden"
     >
       <div className="mx-auto flex h-16 max-w-[370px] items-stretch rounded-full border border-border bg-surface px-2 shadow-xl shadow-brand/10">

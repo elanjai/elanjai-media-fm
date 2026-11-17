@@ -130,7 +130,7 @@ export default function InstallPrompt() {
             set(DISMISS_KEY, String(Date.now()));
             setDismissed(true);
           }}
-          aria-label="Dismiss"
+          aria-label={t("a11y.dismiss")}
           className="hit-expand -mr-1 -mt-1 flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-ink"
         >
           <Icon name="x" size={15} />

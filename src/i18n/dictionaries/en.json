@@ -4,13 +4,19 @@
     "genres": "Genres",
     "search": "Search",
     "favorites": "Favorites",
-    "nearMe": "Near me"
+    "nearMe": "Near me",
+    "breadcrumb": "Breadcrumb",
+    "footerNav": "Footer",
+    "main": "Main"
   },
   "hero": {
     "kicker": "Free Indian radio",
     "title": "Every Indian station. One tap.",
     "subtitle": "Live radio from across India — film hits, devotional, news, classical and more. Free, no sign-up.",
-    "play": "Listen now"
+    "play": "Listen now",
+    "moreLangs": "+{count} more",
+    "startWithName": "Start with {name}",
+    "continueName": "Continue listening · {name}"
   },
   "home": {
     "continue": "Continue listening",
@@ -19,22 +25,81 @@
     "popularIn": "Popular {lang} stations",
     "allStations": "All stations",
     "popularNow": "Popular now",
-    "seeAll": "See all →"
+    "seeAll": "See all →",
+    "seeAllCount": "See all {count} →",
+    "featured": "Featured stations",
+    "genreRadio": "{lang} radio"
+  },
+  "common": {
+    "stations": "{count} stations",
+    "allCount": "All {count} →",
+    "allCountPlain": "All {count}",
+    "liveStationsTap": "{count} live stations — tap to play",
+    "backHome": "Back home",
+    "listening": "{count} listening"
+  },
+  "genreNames": {
+    "hindi": "Hindi",
+    "india": "India",
+    "kannada": "Kannada",
+    "malayalam": "Malayalam",
+    "punjabi": "Punjabi",
+    "tamil": "Tamil",
+    "telugu": "Telugu",
+    "urdu": "Urdu",
+    "assamese": "Assamese",
+    "bengali": "Bengali",
+    "bhojpuri": "Bhojpuri",
+    "english": "English",
+    "kashmiri": "Kashmiri",
+    "konkani": "Konkani",
+    "marathi": "Marathi",
+    "nepali": "Nepali",
+    "odia": "Odia",
+    "sanskrit": "Sanskrit",
+    "sindhi": "Sindhi",
+    "gujarati": "Gujarati"
   },
   "search": {
     "title": "Search stations",
     "placeholder": "Search stations, languages, cities…",
     "trending": "Trending now",
     "noResults": "No stations found",
-    "noResultsHint": "Try a different spelling, a city, or a language."
+    "noResultsFor": "No stations found for “{term}”",
+    "noResultsHint": "Try a different spelling, a city, or a language.",
+    "loading": "Loading stations…",
+    "resultCount": "{count} stations for “{term}”",
+    "requestStation": "Request this station →",
+    "recentSearches": "Recent searches",
+    "listening": "Listening…",
+    "voiceSearch": "Voice search",
+    "clear": "Clear search"
   },
   "favorites": {
     "title": "Your favorites",
-    "empty": "Tap the heart on any station to keep it here."
+    "empty": "Tap the heart on any station to keep it here.",
+    "deviceOnly": "Saved on this device only.",
+    "emptyTitle": "No favorites yet",
+    "emptyHint": "Tap the heart on any station and it lands here.",
+    "deviceNote": "Favorites never leave your device.",
+    "add": "Add to favorites",
+    "remove": "Remove from favorites",
+    "imported": "Added to your favorites",
+    "open": "Open favorites →",
+    "importCta": "Add {count} stations to my favorites"
   },
   "recent": {
     "title": "Recently played",
-    "empty": "Stations you play will show up here."
+    "empty": "Stations you play will show up here.",
+    "deviceOnly": "Last {count} stations · this device only.",
+    "emptyTitle": "Nothing played yet",
+    "emptyHint": "Pick a station to get started.",
+    "clear": "Clear history",
+    "now": "now",
+    "minsAgo": "{count} min",
+    "hoursAgo": "{count} h",
+    "yesterday": "Yesterday",
+    "daysAgo": "{count} d"
   },
   "player": {
     "nowPlaying": "Now playing",
@@ -45,7 +110,30 @@
     "reconnecting": "Reconnecting…",
     "listenLive": "Tap to listen live",
     "freeNoSignup": "Free · no sign-up",
-    "upNext": "Up next"
+    "upNext": "Up next",
+    "playing": "Playing",
+    "playingNow": "Playing now",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "volume": "Volume",
+    "cast": "Cast",
+    "castTo": "Cast to a device"
+  },
+  "nowPlaying": {
+    "tapToHear": "Tap play to hear what's on",
+    "tapToRetry": "Tap play to retry",
+    "viaIcy": "Now playing · via ICY metadata",
+    "expandPlayer": "Now playing: {name} — expand player",
+    "sessionData": "≈ {mb} MB this session · ~ {rate} MB/hr",
+    "sleepTimer": "Sleep timer",
+    "sleepingIn": "Sleeping in {time}",
+    "timeLeft": "{time} left",
+    "minutes": "{count} minutes",
+    "customMinutes": "Custom minutes",
+    "cancelTimer": "Cancel timer",
+    "reconnectingN": "Reconnecting… ({attempt}/{max})",
+    "dataSaverHold": "Uses ≈ {rate} MB/hr — data saver is on",
+    "preroll": "Ad · station starts in a moment"
   },
   "action": {
     "play": "Play",
@@ -56,7 +144,12 @@
     "next": "Next",
     "previous": "Previous",
     "report": "Report a problem",
-    "notWorking": "Not working?"
+    "notWorking": "Not working?",
+    "set": "Set",
+    "change": "Change",
+    "cancel": "Cancel",
+    "playStation": "Play {name}",
+    "pauseStation": "Pause {name}"
   },
   "settings": {
     "title": "Settings",
@@ -64,7 +157,286 @@
     "textSize": "Text size",
     "languages": "Languages",
     "dataSaver": "Data saver",
-    "simpleMode": "Simple mode"
+    "simpleMode": "Simple mode",
+    "appLanguage": "App language",
+    "themeSystem": "System",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "sizeDefault": "Default",
+    "sizeLarge": "Large",
+    "sizeXl": "Extra large",
+    "allLanguages": "All languages",
+    "languagesHint": "Languages shown first on Home and Search",
+    "dataSaverHint": "Ask before playing streams over 128 kbps and prefer lighter streams",
+    "simpleModeHint": "A giant one-tap screen for seniors — opens the simple player",
+    "cleared": "Cleared",
+    "clearHistory": "Clear history",
+    "exportFavorites": "Export favorites",
+    "setupLink": "Copy a setup link for a senior's device",
+    "setupLinkCopied": "Setup link copied",
+    "myStats": "My listening stats",
+    "goAdFree": "Go ad-free — support the app",
+    "privacyChoices": "Privacy choices — reconsider analytics & ads consent",
+    "localOnly": "Everything is stored only on this device.",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode"
+  },
+  "a11y": {
+    "close": "Close",
+    "dismiss": "Dismiss",
+    "closeSettings": "Close settings",
+    "mainNav": "Main",
+    "prevStation": "Previous station",
+    "nextStation": "Next station",
+    "collapsePlayer": "Collapse player",
+    "stopPlayback": "Stop playback",
+    "toLight": "Switch to light mode",
+    "toDark": "Switch to dark mode",
+    "stationLogo": "{name} logo"
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "body": "This page hit a problem on our end. You can retry or head back to the stations.",
+    "ref": "Ref: {digest}",
+    "retry": "Try again",
+    "hls": "HLS not supported in this browser",
+    "timeout": "Station is offline or took too long to connect",
+    "unavailable": "Stream unavailable right now",
+    "streamUnavailable": "Stream unavailable",
+    "streamUnavailableRetry": "Stream unavailable — tap play to retry",
+    "network": "You're offline — will reconnect when the network returns"
+  },
+  "notFound": {
+    "title": "Station not found",
+    "body": "This frequency doesn't reach us.",
+    "back": "Back to all stations"
+  },
+  "offline": {
+    "title": "You're offline",
+    "body": "No internet connection right now. Favorites and recent stations are saved on this device — they'll be back when you're online."
+  },
+  "station": {
+    "live": "LIVE",
+    "liveCount": "LIVE · {count}",
+    "backToGenre": "Back to {genre} stations",
+    "officialSite": "Official site",
+    "streamMeta": "{bitrate} kbps {codec} · ≈ {mbHr} MB/hr",
+    "aboutTitle": "About {name}",
+    "streamQuality": "Stream quality",
+    "streamHint": "The player picks the best stream for your connection and falls back automatically.",
+    "kbps": "{bitrate} kbps",
+    "adaptive": "Adaptive",
+    "defaultBadge": "Default",
+    "faqTitle": "Frequently asked questions",
+    "embedTitle": "Embed {name} on your site",
+    "embedHint": "Free widget — plays the broadcaster's own stream and links back here.",
+    "moreFrom": "More from {name}",
+    "moreCityGenre": "More {city} & {genre} stations",
+    "moreGenre": "More {genre} stations",
+    "claimCta": "Broadcaster? Claim this station",
+    "openPage": "Open station page →"
+  },
+  "genre": {
+    "back": "Back to genres"
+  },
+  "genres": {
+    "titleA": "Browse by",
+    "titleB": "language",
+    "stats": "{langCount} languages · {stationCount} live stations",
+    "moodTitle": "Browse by mood",
+    "moodHint": "Film songs, devotional, classics and more — across all languages."
+  },
+  "category": {
+    "back": "Back to browse"
+  },
+  "city": {
+    "title": "Radio by city",
+    "subtitle": "{count} cities — local stations, closest first",
+    "back": "Back to cities"
+  },
+  "network": {
+    "title": "Radio by network",
+    "subtitle": "{count} broadcaster networks",
+    "streams": "{count} streams",
+    "back": "Back to networks",
+    "count": "{count} live streams — tap to play"
+  },
+  "collection": {
+    "count": "{count} stations — curated by our editors"
+  },
+  "listen": {
+    "title": "Indian radio abroad",
+    "intro": "Missing home? Every station below streams free, works on any phone or laptop, and needs no sign-up. Pick your language and where you live — the page lists only stations on air right now.",
+    "genreCount": "{genre} · {count} stations",
+    "chip": "{genre} radio in {market}",
+    "liveNow": "{count} {genre} stations live now"
+  },
+  "about": {
+    "title": "About {site}",
+    "intro": "{site} is a free directory of live Indian internet radio — {stations}+ stations across {languages} languages, playable instantly in your browser.",
+    "howTitle": "How it works",
+    "freeTitle": "Free, how?"
+  },
+  "adFree": {
+    "title": "Go ad-free",
+    "f1Title": "No display ads",
+    "f1Desc": "Every banner, sponsored row, and featured listing disappears.",
+    "f2Title": "No audio pre-roll",
+    "f2Desc": "Streams start instantly — no sponsored messages first.",
+    "f3Title": "Same privacy",
+    "f3Desc": "The flag lives on this device. We don't create an account or track you differently.",
+    "active": "Ad-free is on — thank you for the support",
+    "activeHint": "Every ad surface on this device is already switched off.",
+    "turnOff": "Turn off ad-free",
+    "stepPay": "1 · Support the app",
+    "payCta": "Pay securely →",
+    "stepActivate": "2 · Activate on this device",
+    "activate": "Activate on this device",
+    "codePlaceholder": "Enter the code from your payment",
+    "codeWrong": "That code doesn't match — check the message from your payment.",
+    "pilotLink": "Early pilot — activation is honor-based for now. If you've supported us via the link above, switch it on below.",
+    "pilotRecent": "Early pilot — activation is honor-based for now. If you've supported us recently, switch it on below.",
+    "cta": "Activate ad-free"
+  },
+  "addStation": {
+    "item1": "Station name",
+    "item2": "Public stream URL (Shoutcast / Icecast / HLS .m3u8 / AAC / MP3)",
+    "item3": "Language & country",
+    "item4": "Logo (link or attachment)",
+    "item5": "Official website",
+    "submit": "Submit by email",
+    "footer1": "Already listed and want to manage it?",
+    "footer2": "Removal requests are handled the same way — see our"
+  },
+  "advertise": {
+    "title": "Advertise with us",
+    "statStations": "live stations",
+    "statLanguages": "languages",
+    "statMarkets": "diaspora markets",
+    "productsTitle": "What you can book",
+    "rulesTitle": "Our advertising rules",
+    "pilotTitle": "Introductory pilot pricing",
+    "addStationHint": "Broadcaster looking for a free listing instead?"
+  },
+  "claim": {
+    "title": "Claim your station",
+    "received": "Claim received",
+    "receivedHint": "We'll verify it against the station's public footprint and reply to your email — usually within a few days.",
+    "stationLabel": "Station: {name}",
+    "slugPlaceholder": "Station page slug (from its URL, e.g. suryan-fm)",
+    "namePlaceholder": "Your name",
+    "rolePlaceholder": "Your role (e.g. Station manager, Digital lead)",
+    "emailPlaceholder": "Work email — ideally on the station's domain",
+    "evidencePlaceholder": "Proof you represent the station (official site, LinkedIn, mail from station domain)",
+    "messagePlaceholder": "What needs correcting? (optional — new stream URL, logo, description, frequency…)",
+    "sendError": "Couldn't send — check the fields and try again.",
+    "sending": "Sending…",
+    "submit": "Submit claim"
+  },
+  "contact": {
+    "title": "Contact us",
+    "intro": "We read every message. Pick the mailbox that fits — it helps us reply faster.",
+    "row1Title": "General & support",
+    "row1Body": "Questions, feedback, bug reports, or a station that isn't playing.",
+    "row2Title": "Station submissions & corrections",
+    "row2Body": "Get your station listed, update its details, or supply a better stream/logo.",
+    "row3Title": "Copyright & takedown",
+    "row3Body": "Removal requests from broadcasters or rights holders — see the DMCA page for what's needed.",
+    "grievanceTitle": "Grievance Officer",
+    "grievanceName": "Grievance Officer, {site}"
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "effective": "Effective: {date}",
+    "h2Device": "What stays on your device",
+    "h2Servers": "What our servers see",
+    "h2Stats": "Usage statistics (with your consent)",
+    "h2Ads": "Advertising",
+    "h2Cookies": "Cookies",
+    "h2Rights": "Your rights",
+    "h2Contact": "Contact"
+  },
+  "terms": {
+    "title": "Terms of use",
+    "h2Service": "The service",
+    "h2Use": "Acceptable use",
+    "h2Warranty": "No warranty",
+    "h2Broadcasters": "Broadcasters",
+    "h2Changes": "Changes"
+  },
+  "stats": {
+    "title": "Your listening stats",
+    "intro": "How long you listen and which stations you keep coming back to — counted only while a stream is playing, stored only on this device, and never sent to our servers. Clearing browser data resets it.",
+    "empty": "Nothing here yet — press play on a station and come back.",
+    "allTime": "All time",
+    "sessions": "Sessions",
+    "last7Days": "Last 7 days",
+    "topStations": "Top stations",
+    "reset": "Reset all stats on this device"
+  },
+  "share": {
+    "title": "Shared favorites",
+    "empty": "This link doesn't match any stations — it may be old, or those stations have left the directory.",
+    "browseAll": "Browse all stations →",
+    "sharedCount": "Someone shared {count} stations with you",
+    "missing": "{count} no longer in the directory",
+    "listeningTo": "Listening to {name} on Elanjai FM",
+    "whatsapp": "Share on WhatsApp",
+    "station": "Share station",
+    "linkCopied": "Link copied!",
+    "hideOptions": "Hide share options",
+    "favorites": "Share favorites (link + QR)",
+    "qrAlt": "QR code for the share link",
+    "copied": "Copied",
+    "copyLink": "Copy link"
+  },
+  "embed": {
+    "iframeTitle": "Radio player",
+    "copy": "Copy embed code",
+    "copied": "Copied!"
+  },
+  "alarm": {
+    "title": "Wake-up alarm",
+    "setFor": "Alarm set for {time}",
+    "wakeAt": "Wake me at {time}",
+    "wakeWith": "Wake me with this station",
+    "timeLabel": "Wake-up time",
+    "set": "Set",
+    "cancel": "Cancel alarm",
+    "scopeNote": "Fires while the app is open — keep this tab running overnight.",
+    "armedElsewhere": "Currently armed for another station at {time} — setting one here replaces it."
+  },
+  "prefs": {
+    "chooseLabel": "Choose your languages",
+    "chooseTitle": "Which languages do you listen to?",
+    "chooseHint": "We'll put those stations first — you can change this anytime in Settings.",
+    "done": "Done",
+    "doneCount": "Done · {count} selected",
+    "clear": "Clear",
+    "skip": "Skip",
+    "privacyNote": "Your pick stays on this device — no sign-up."
+  },
+  "sponsored": {
+    "sponsored": "Sponsored",
+    "ad": "Ad",
+    "house": "From Elanjai FM",
+    "region": "Advertisement"
+  },
+  "simple": {
+    "title": "My Radio",
+    "exit": "Exit simple mode",
+    "hint": "Tap a station to listen. Tap the big button to stop."
+  },
+  "schedule": {
+    "title": "Programmes today",
+    "approx": "typical broadcast day",
+    "onNow": "On now",
+    "liveOn": "Live on {name}",
+    "allTimes": "All times in {tz}",
+    "timesApprox": "times are approximate"
+  },
+  "report": {
+    "thanks": "Reported — thanks"
   },
   "footer": {
     "tagline": "Free online radio — {count} languages, hundreds of live stations. Streams belong to their broadcasters.",
@@ -83,7 +455,49 @@
   },
   "meta": {
     "homeTitle": "Free Indian Radio Online — Tamil, Hindi, Telugu & more",
-    "homeDescription": "Listen to {count}+ live Indian radio stations online for free — Tamil, Hindi, Malayalam, Telugu, Kannada, Punjabi and more. No sign-up, no app."
+    "homeDescription": "Listen to {count}+ live Indian radio stations online for free — Tamil, Hindi, Malayalam, Telugu, Kannada, Punjabi and more. No sign-up, no app.",
+    "notFound": "Not found",
+    "radioTitle": "{name} Radio — {count} Live Stations",
+    "stationTitle": "{name} — Listen Live Free",
+    "genreDesc": "Listen to {count} live {name} radio stations online for free — 24/7 streaming on {site}, no sign-up needed.",
+    "genresTitle": "All genres & languages",
+    "genresDesc": "Browse live radio stations by language — Tamil, Hindi, Malayalam, Telugu, Kannada, Punjabi, Urdu and more.",
+    "categoryDesc": "{description} Listen to {count} live stations free on {site}.",
+    "cityTitle": "Radio by city",
+    "cityDesc": "Listen to live local radio from Indian cities — Chennai, Mumbai, Delhi, Bengaluru, Kolkata and more.",
+    "cityDetailDesc": "Listen to {count} live radio stations from {city} — free 24/7 streaming on {site}.",
+    "networkTitle": "Radio by network",
+    "networkDesc": "Listen to every stream from India's big radio networks — All India Radio, Radio Mirchi, Red FM, Big FM and more.",
+    "networkDetailTitle": "{name} — {count} Live Stations",
+    "networkDetailDesc": "Listen to all {count} {name} streams live and free on {site}.",
+    "collectionTitle": "{title} — curated radio",
+    "listenTitle": "Indian radio abroad — listen from anywhere",
+    "listenDesc": "Missing home? Live Indian radio stations for the diaspora — Tamil, Malayalam, Hindi, Punjabi, Telugu, Urdu and more, free in the USA, UK, UAE, Canada, Singapore, Australia and beyond.",
+    "listenDetailTitle": "{genre} radio online in {market} — listen free",
+    "simpleTitle": "Simple mode — big buttons, one tap to play",
+    "simpleDesc": "A giant, easy radio screen for seniors: huge station buttons, one tap to play, one big stop button.",
+    "offlineTitle": "Offline",
+    "aboutTitle": "About",
+    "aboutDesc": "About {site} — a free directory of live Indian radio streams.",
+    "adFreeTitle": "Ad-free supporter plan",
+    "adFreeDesc": "Remove every display ad and the sponsored audio pre-roll on {site} — a small monthly support that keeps the app free for everyone.",
+    "addStationTitle": "Add your station",
+    "addStationDesc": "Get your radio station listed on {site} — free directory submission for broadcasters.",
+    "advertiseTitle": "Advertise with us",
+    "advertiseDesc": "Reach Indian radio listeners — featured station listings, language- and city-targeted placements, and sponsored audio on {site}.",
+    "claimTitle": "Claim your station",
+    "claimDesc": "Broadcaster portal — claim your station's listing on {site} to correct details, supply a better logo, and see listener stats.",
+    "contactTitle": "Contact & grievance",
+    "contactDesc": "Contact {site} — support, station submissions, takedowns, and the Grievance Officer under the IT Rules, 2021.",
+    "dmcaTitle": "DMCA & takedown policy",
+    "privacyTitle": "Privacy policy",
+    "privacyDesc": "How {site} handles your data — local-first, no accounts, no tracking.",
+    "termsTitle": "Terms of use",
+    "termsDesc": "Terms of use for {site} — a free directory of public Indian radio streams.",
+    "statsTitle": "Your listening stats",
+    "statsDesc": "Listening time, sessions, and top stations on {site} — counted on this device only, never sent anywhere.",
+    "shareTitle": "Shared favorites",
+    "shareDesc": "Import a shared favorite-station list into {site}."
   },
   "pwa": {
     "installTitle": "Install Elanjai FM",

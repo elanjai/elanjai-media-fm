@@ -39,8 +39,9 @@ function Links() {
 
 /** Desktop/tablet nav — replaces the floating tab bar at md+. */
 export default function NavLinks() {
+  const t = useT();
   return (
-    <nav aria-label="Main" className="ml-4 hidden items-center gap-0.5 md:flex">
+    <nav aria-label={t("a11y.mainNav")} className="ml-4 hidden items-center gap-0.5 md:flex">
       <Suspense>
         <Links />
       </Suspense>

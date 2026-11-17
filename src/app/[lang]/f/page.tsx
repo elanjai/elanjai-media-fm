@@ -3,12 +3,22 @@ import Link from "@/components/LangLink";
 import ImportFavorites from "@/components/ImportFavorites";
 import { getStationBySlug, toPublic } from "@/lib/data";
 import { SITE } from "@/lib/site";
+import { dictionaryFor, fmt, getDictionary, hasLocale } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "Shared favorites",
-  description: `Import a shared favorite-station list into ${SITE.name}.`,
-  robots: { index: false },
+type Props = {
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{ s?: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
+  return {
+    title: dict.meta.shareTitle,
+    description: fmt(dict.meta.shareDesc, { site: SITE.name }),
+    robots: { index: false },
+  };
+}
 
 /**
  * F-5.2 — account-free favorites transfer. A share link carries slugs
@@ -18,10 +28,9 @@ export const metadata: Metadata = {
  */
 export default async function SharedFavoritesPage({
   searchParams,
-}: {
-  searchParams: Promise<{ s?: string }>;
-}) {
+}: Props) {
   const { s } = await searchParams;
+  const dict = await getDictionary();
   const slugs = (s ?? "")
     .split(",")
     .map((x) => x.trim().toLowerCase())
@@ -36,27 +45,25 @@ export default async function SharedFavoritesPage({
   return (
     <div className="mx-auto max-w-lg py-10">
       <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-        Shared favorites
+        {dict.share.title}
       </h1>
       {found.length === 0 ? (
         <div className="mt-6 rounded-2xl border border-dashed border-border bg-surface p-6 text-center">
           <p className="text-sm text-muted">
-            This link doesn&rsquo;t match any stations — it may be old, or
-            those stations have left the directory.
+            {dict.share.empty}
           </p>
           <Link
             href="/"
             className="mt-4 inline-block text-sm font-semibold text-brand-2 underline-offset-2 hover:underline dark:text-accent"
           >
-            Browse all stations →
+            {dict.share.browseAll}
           </Link>
         </div>
       ) : (
         <>
           <p className="mt-3 text-sm text-muted">
-            Someone shared {found.length} station
-            {found.length === 1 ? "" : "s"} with you
-            {missing > 0 ? ` (${missing} no longer in the directory)` : ""}.
+            {fmt(dict.share.sharedCount, { count: found.length })}
+            {missing > 0 ? ` (${fmt(dict.share.missing, { count: missing })})` : ""}.
           </p>
           <ImportFavorites stations={found} />
         </>

@@ -37,3 +37,27 @@ export async function getDictionary(): Promise<Dictionary> {
 export async function dictionaryFor(locale: Locale): Promise<Dictionary> {
   return dictionaries[locale]();
 }
+
+const titleCase = (s: string) =>
+  s
+    .split(/[-_\s]+/)
+    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+    .join(" ");
+
+/**
+ * Localized display name for a catalog genre/language slug — "tamil" →
+ * "தமிழ்" under ta, "तमिल" under hi. Falls back to the English data name
+ * (or a title-cased slug) so unknown slugs still render. Server-side;
+ * client components use useGenreName() from LocaleProvider instead.
+ */
+export function genreName(
+  dict: Dictionary,
+  slug: string,
+  fallback?: string
+): string {
+  return (
+    (dict.genreNames as Record<string, string>)[slug] ??
+    fallback ??
+    titleCase(slug)
+  );
+}

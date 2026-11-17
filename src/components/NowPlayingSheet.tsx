@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Campaign } from "@/lib/ads";
 import { reportStreamIssue } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
+import { fmt } from "@/i18n/locales";
 import { isBusyStatus, useLibrary, usePlayback, usePlaybackActions, useSleepTimer } from "./AudioProvider";
 import AdSlotClient from "./AdSlotClient";
 import AlarmCircle from "./AlarmCircle";
@@ -12,7 +13,7 @@ import CastButton from "./CastButton";
 import EqBars from "./EqBars";
 import Icon from "./Icon";
 import LiveBadge from "./LiveBadge";
-import { useLang } from "./LocaleProvider";
+import { useGenreName, useLang, useT } from "./LocaleProvider";
 import { shareText } from "./ShareButton";
 import StationLogo from "./StationLogo";
 
@@ -20,6 +21,7 @@ const SLEEP_OPTIONS = [15, 30, 45, 60, 90];
 
 /** Session data-use estimate — ticks once a second while audio plays (F-1.8). */
 function SessionData({ bitrate, status }: { bitrate: number; status: string }) {
+  const t = useT();
   const [secs, setSecs] = useState(0);
   useEffect(() => {
     if (status !== "playing") return;
@@ -31,14 +33,17 @@ function SessionData({ bitrate, status }: { bitrate: number; status: string }) {
   const mb = (secs * bitrate) / 8000;
   return (
     <p className="mt-1.5 text-center text-[11px] text-muted">
-      ≈ {mb < 10 ? mb.toFixed(1) : Math.round(mb)} MB this session · ~{" "}
-      {Math.round(bitrate * 0.45)} MB/hr
+      {fmt(t("nowPlaying.sessionData"), {
+        mb: mb < 10 ? mb.toFixed(1) : Math.round(mb),
+        rate: Math.round(bitrate * 0.45),
+      })}
     </p>
   );
 }
 
 function SleepCircle() {
   const { sleepRemaining, setSleepTimer } = useSleepTimer();
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [customMin, setCustomMin] = useState("");
   const ref = useRef<HTMLDivElement>(null);
@@ -61,9 +66,9 @@ function SleepCircle() {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Sleep timer"
+        aria-label={t("nowPlaying.sleepTimer")}
         aria-expanded={open}
-        title={active ? `Sleeping in ${mm}:${ss}` : "Sleep timer"}
+        title={active ? fmt(t("nowPlaying.sleepingIn"), { time: `${mm}:${ss}` }) : t("nowPlaying.sleepTimer")}
         className={`relative flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
           active ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
         }`}
@@ -78,7 +83,7 @@ function SleepCircle() {
       {open && (
         <div className="absolute bottom-12 left-1/2 z-10 w-44 -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-surface shadow-xl">
           <p className="border-b border-border px-3 py-2 text-xs font-semibold text-muted">
-            Sleep timer {active && <span className="text-brand-2 dark:text-accent">· {mm}:{ss} left</span>}
+            {t("nowPlaying.sleepTimer")} {active && <span className="text-brand-2 dark:text-accent">· {fmt(t("nowPlaying.timeLeft"), { time: `${mm}:${ss}` })}</span>}
           </p>
           {SLEEP_OPTIONS.map((m) => (
             <button
@@ -90,7 +95,7 @@ function SleepCircle() {
               }}
               className="block w-full px-3 py-2 text-left text-sm text-ink transition hover:bg-surface-2"
             >
-              {m} minutes
+              {fmt(t("nowPlaying.minutes"), { count: m })}
             </button>
           ))}
           <form
@@ -110,8 +115,8 @@ function SleepCircle() {
               max={480}
               value={customMin}
               onChange={(e) => setCustomMin(e.target.value)}
-              placeholder="Custom"
-              aria-label="Custom minutes"
+              placeholder={t("nowPlaying.customMinutes")}
+              aria-label={t("nowPlaying.customMinutes")}
               className="w-20 rounded-lg border border-border bg-surface-2 px-2.5 py-1.5 text-sm text-ink outline-none focus:border-brand-2"
             />
             <button
@@ -119,7 +124,7 @@ function SleepCircle() {
               className="text-sm font-semibold text-brand-2 disabled:text-muted dark:text-accent"
               disabled={!customMin}
             >
-              Set
+              {t("action.set")}
             </button>
           </form>
           {active && (
@@ -131,7 +136,7 @@ function SleepCircle() {
               }}
               className="block w-full border-t border-border px-3 py-2 text-left text-sm font-medium text-danger transition hover:bg-surface-2"
             >
-              Cancel timer
+              {t("nowPlaying.cancelTimer")}
             </button>
           )}
         </div>
@@ -156,6 +161,8 @@ export default function NowPlayingSheet({
     usePlaybackActions();
   const { favorites, toggleFavorite } = useLibrary();
   const lang = useLang();
+  const t = useT();
+  const gn = useGenreName();
   const [upNext, setUpNext] = useState<PublicStation | null>(null);
   const [shared, setShared] = useState(false);
   /** Slug the user already reported — resets automatically on station change. */
@@ -186,14 +193,14 @@ export default function NowPlayingSheet({
   const reported = reportedSlug === current.slug;
 
   const url = `${location.origin}/${lang}/station/${current.slug}`;
-  const wa = `https://wa.me/?text=${encodeURIComponent(`${shareText(current.name)}\n${url}`)}`;
+  const wa = `https://wa.me/?text=${encodeURIComponent(`${shareText(t("share.listeningTo"), current.name)}\n${url}`)}`;
 
   const share = async () => {
     try {
       if (navigator.share)
         await navigator.share({
           title: current.name,
-          text: shareText(current.name),
+          text: shareText(t("share.listeningTo"), current.name),
           url,
         });
       else {
@@ -207,10 +214,10 @@ export default function NowPlayingSheet({
   };
 
   return (
-    <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Now playing" data-player-scope>
+    <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label={t("player.nowPlaying")} data-player-scope>
       <button
         type="button"
-        aria-label="Close"
+        aria-label={t("a11y.close")}
         onClick={onClose}
         className="fade-in absolute inset-0 bg-ink/40 backdrop-blur-[2px]"
       />
@@ -221,13 +228,13 @@ export default function NowPlayingSheet({
             <button
               type="button"
               onClick={onClose}
-              aria-label="Collapse player"
+              aria-label={t("a11y.collapsePlayer")}
               className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
             >
               <Icon name="chevD" size={16} />
             </button>
             <p className="absolute inset-x-0 text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-muted">
-              Now playing
+              {t("player.nowPlaying")}
             </p>
             <button
               type="button"
@@ -235,8 +242,8 @@ export default function NowPlayingSheet({
                 stop();
                 onClose();
               }}
-              aria-label="Stop playback"
-              title="Stop"
+              aria-label={t("a11y.stopPlayback")}
+              title={t("action.stop")}
               className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-danger"
             >
               <Icon name="x" size={15} />
@@ -260,7 +267,7 @@ export default function NowPlayingSheet({
             {current.name}
           </h2>
           <p className="mt-1 text-center text-[13px] capitalize text-muted">
-            {current.language} · {current.bitrate ? `${current.bitrate} kbps ` : ""}
+            {current.languages?.map((l) => gn(l)).join(", ") ?? current.language} · {current.bitrate ? `${current.bitrate} kbps ` : ""}
             {current.codec || "MP3"}
           </p>
           <SessionData
@@ -274,21 +281,21 @@ export default function NowPlayingSheet({
             <div className="min-w-0">
               <p className="truncate text-[13px] font-semibold text-ink">
                 {status === "error"
-                  ? error ?? "Stream unavailable"
+                  ? error ? t(error) : t("errors.streamUnavailable")
                   : status === "reconnecting"
-                    ? "Reconnecting…"
+                    ? t("player.reconnecting")
                     : status === "connecting"
-                      ? "Connecting…"
+                      ? t("player.connecting")
                       : status === "buffering"
-                        ? "Buffering…"
+                        ? t("player.buffering")
                         : playing
-                          ? (nowPlaying ?? "Live")
-                          : "Paused"}
+                          ? (nowPlaying ?? t("player.live"))
+                          : t("player.paused")}
               </p>
               <p className="mt-0.5 text-[11px] text-muted">
                 {status === "error" ? (
                   <>
-                    Tap play to retry ·{" "}
+                    {t("nowPlaying.tapToRetry")} ·{" "}
                     <button
                       type="button"
                       onClick={() => {
@@ -302,11 +309,11 @@ export default function NowPlayingSheet({
                       disabled={reported}
                       className="font-semibold text-brand-2 underline-offset-2 hover:underline disabled:text-muted disabled:no-underline dark:text-accent"
                     >
-                      {reported ? "Reported — thanks" : "Not working?"}
+                      {reported ? t("report.thanks") : t("action.notWorking")}
                     </button>
                   </>
                 ) : (
-                  "Now playing · via ICY metadata"
+                  t("nowPlaying.viaIcy")
                 )}
               </p>
             </div>
@@ -318,7 +325,7 @@ export default function NowPlayingSheet({
             <button
               type="button"
               onClick={prev}
-              aria-label="Previous station"
+              aria-label={t("a11y.prevStation")}
               className="flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:text-brand-2 dark:hover:text-accent"
             >
               <Icon name="prev" size={34} />
@@ -326,7 +333,7 @@ export default function NowPlayingSheet({
             <button
               type="button"
               onClick={toggle}
-              aria-label={playing ? "Pause" : "Play"}
+              aria-label={playing ? t("action.pause") : t("action.play")}
               className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-accent-ink shadow-lg shadow-brand/30 transition hover:brightness-105 active:scale-95"
             >
               {isBusyStatus(status) ? (
@@ -338,7 +345,7 @@ export default function NowPlayingSheet({
             <button
               type="button"
               onClick={next}
-              aria-label="Next station"
+              aria-label={t("a11y.nextStation")}
               className="flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:text-brand-2 dark:hover:text-accent"
             >
               <Icon name="next" size={34} />
@@ -351,7 +358,7 @@ export default function NowPlayingSheet({
               type="button"
               onClick={() => toggleFavorite(current)}
               aria-pressed={isFav}
-              aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
+              aria-label={isFav ? t("favorites.remove") : t("favorites.add")}
               className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
                 isFav ? "text-rose" : "text-muted hover:text-rose"
               }`}
@@ -365,8 +372,8 @@ export default function NowPlayingSheet({
               href={wa}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Share on WhatsApp"
-              title="Share on WhatsApp"
+              aria-label={t("share.whatsapp")}
+              title={t("share.whatsapp")}
               className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25d366]/15 text-[#1da851] transition hover:bg-[#25d366]/25"
             >
               <Icon name="whatsapp" size={18} />
@@ -374,8 +381,8 @@ export default function NowPlayingSheet({
             <button
               type="button"
               onClick={share}
-              aria-label="Share station"
-              title={shared ? "Link copied!" : "Share station"}
+              aria-label={t("share.station")}
+              title={shared ? t("share.linkCopied") : t("share.station")}
               className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
                 shared ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
               }`}
@@ -385,7 +392,7 @@ export default function NowPlayingSheet({
             <button
               type="button"
               onClick={toggleMute}
-              aria-label={muted ? "Unmute" : "Mute"}
+              aria-label={muted ? t("player.unmute") : t("player.mute")}
               className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
                 muted ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
               }`}
@@ -404,7 +411,7 @@ export default function NowPlayingSheet({
               step={0.05}
               value={vol}
               onChange={(e) => setVolume(Number(e.target.value))}
-              aria-label="Volume"
+              aria-label={t("player.volume")}
               className="vol w-full"
               style={{ "--fill": `${vol * 100}%` } as React.CSSProperties}
             />
@@ -415,7 +422,7 @@ export default function NowPlayingSheet({
           {upNext && (
             <>
               <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
-                Up next
+                {t("player.upNext")}
               </p>
               <button
                 type="button"
@@ -428,7 +435,7 @@ export default function NowPlayingSheet({
                     {upNext.name}
                   </span>
                   <span className="mt-0.5 block truncate text-[11px] capitalize text-muted">
-                    {upNext.genre} {upNext.bitrate ? `· ${upNext.bitrate}k` : ""}
+                    {gn(upNext.genre)} {upNext.bitrate ? `· ${upNext.bitrate}k` : ""}
                   </span>
                 </span>
                 <Icon name="chevR" size={18} className="text-muted" />
@@ -444,7 +451,7 @@ export default function NowPlayingSheet({
           )}
           <p className="mt-5 text-center text-[11px] text-muted">
             <Link href={`/station/${current.slug}`} onClick={onClose} className="font-medium text-brand-2 underline-offset-2 hover:underline dark:text-accent">
-              Open station page →
+              {t("station.openPage")}
             </Link>
           </p>
         </div>

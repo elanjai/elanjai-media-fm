@@ -67,6 +67,7 @@ export function toPublic(s: Station): PublicStation {
     slug: s.slug,
     genre: s.languages[0] ?? "india",
     language: s.languages.map(title).join(", "),
+    languages: s.languages,
     country: s.country,
     codec: primary?.codec ?? "",
     bitrate: primary?.bitrate ?? 0,

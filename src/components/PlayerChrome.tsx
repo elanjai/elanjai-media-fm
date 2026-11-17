@@ -1,6 +1,7 @@
 "use client";
 
-import { useLocalePath } from "./LocaleProvider";
+import { useLocalePath, useT } from "./LocaleProvider";
+import { fmt } from "@/i18n/locales";
 import { useState } from "react";
 import type { Campaign } from "@/lib/ads";
 import { isBusyStatus, usePlayback, usePlaybackActions } from "./AudioProvider";
@@ -24,6 +25,7 @@ export default function PlayerChrome({
     usePlaybackActions();
   const [open, setOpen] = useState(false);
   const pathname = useLocalePath();
+  const t = useT();
   // /simple has its own giant controls — the mini player would overlap them.
   if (pathname === "/simple") return null;
   if (!current && !pendingPlay)
@@ -48,8 +50,7 @@ export default function PlayerChrome({
                 {pendingPlay.station.name}
               </p>
               <p className="text-[11px] text-muted">
-                Uses ≈ {Math.round(pendingPlay.station.bitrate * 0.45)} MB/hr
-                — data saver is on
+                {fmt(t("nowPlaying.dataSaverHold"), { rate: Math.round(pendingPlay.station.bitrate * 0.45) })}
               </p>
             </div>
             <button
@@ -57,12 +58,12 @@ export default function PlayerChrome({
               onClick={confirmPendingPlay}
               className="shrink-0 rounded-full bg-accent px-3.5 py-2 text-xs font-bold text-accent-ink transition hover:brightness-105"
             >
-              Play
+              {t("action.play")}
             </button>
             <button
               type="button"
               onClick={dismissPendingPlay}
-              aria-label="Cancel"
+              aria-label={t("action.cancel")}
               className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted transition hover:text-ink"
             >
               <Icon name="x" size={14} />
@@ -75,7 +76,7 @@ export default function PlayerChrome({
           <button
             type="button"
             onClick={() => setOpen(true)}
-            aria-label={`Now playing: ${current.name} — expand player`}
+            aria-label={fmt(t("nowPlaying.expandPlayer"), { name: current.name })}
             className="flex min-w-0 flex-1 items-center gap-3 rounded-2xl px-1 py-1.5 text-left"
           >
             <StationLogo src={current.favicon} fallbackSrc={current.faviconAlt} name={current.name} size={44} className="h-11 w-11 shrink-0" />
@@ -89,22 +90,22 @@ export default function PlayerChrome({
                 }`}
               >
                 {status === "error" ? (
-                  error ?? "Stream unavailable — retry"
+                  error ? t(error) : t("errors.streamUnavailableRetry")
                 ) : preroll ? (
-                  "Ad · station starts in a moment"
+                  t("nowPlaying.preroll")
                 ) : status === "reconnecting" ? (
-                  `Reconnecting… (${retryAttempt}/3)`
+                  fmt(t("nowPlaying.reconnectingN"), { attempt: retryAttempt, max: 3 })
                 ) : status === "connecting" ? (
-                  "Connecting…"
+                  t("player.connecting")
                 ) : status === "buffering" ? (
-                  "Buffering…"
+                  t("player.buffering")
                 ) : playing ? (
                   <>
                     <EqBars />
-                    <span className="truncate">{nowPlaying ?? "Live"}</span>
+                    <span className="truncate">{nowPlaying ?? t("player.live")}</span>
                   </>
                 ) : (
-                  "Paused"
+                  t("player.paused")
                 )}
               </span>
             </span>
@@ -113,7 +114,7 @@ export default function PlayerChrome({
           <button
             type="button"
             onClick={next}
-            aria-label="Next station"
+            aria-label={t("a11y.nextStation")}
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-muted transition hover:text-ink"
           >
             <Icon name="next" size={22} />
@@ -124,7 +125,7 @@ export default function PlayerChrome({
               if (status === "idle") play(current);
               else toggle();
             }}
-            aria-label={playing ? "Pause" : "Play"}
+            aria-label={playing ? t("action.pause") : t("action.play")}
             className="mr-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-accent-ink shadow-md shadow-brand/25 transition hover:brightness-105 active:scale-95"
           >
             {isBusyStatus(status) ? (

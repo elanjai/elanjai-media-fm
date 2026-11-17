@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import Icon from "./Icon";
+import { useT } from "./LocaleProvider";
 
 /** Copyable iframe snippet for the /embed/<slug> widget (F-3.5). */
 export default function EmbedBlock({ embedUrl }: { embedUrl: string }) {
+  const t = useT();
   const [copied, setCopied] = useState(false);
-  const snippet = `<iframe src="${embedUrl}" width="340" height="84" style="border:0;border-radius:16px" loading="lazy" title="Radio player"></iframe>`;
+  const snippet = `<iframe src="${embedUrl}" width="340" height="84" style="border:0;border-radius:16px" loading="lazy" title="${t("embed.iframeTitle")}"></iframe>`;
   return (
     <div className="relative">
       <pre className="overflow-x-auto rounded-[14px] border border-border bg-surface px-4 py-3 pr-14 text-xs leading-relaxed text-muted">
@@ -14,8 +16,8 @@ export default function EmbedBlock({ embedUrl }: { embedUrl: string }) {
       </pre>
       <button
         type="button"
-        aria-label={copied ? "Copied" : "Copy embed code"}
-        title={copied ? "Copied!" : "Copy embed code"}
+        aria-label={copied ? t("embed.copied") : t("embed.copy")}
+        title={copied ? t("embed.copied") : t("embed.copy")}
         onClick={async () => {
           try {
             await navigator.clipboard.writeText(snippet);
