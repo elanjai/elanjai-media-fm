@@ -7,7 +7,14 @@ import StationRowsWithAds from "@/components/StationRowsWithAds";
 import { getCategories, getGenre, getGenres, getStationsByGenre, toPublic, todayCached } from "@/lib/data";
 import { featuredStations } from "@/lib/featured";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
-import { langAlternates } from "@/i18n";
+import {
+  dictionaryFor,
+  fmt,
+  genreName,
+  getDictionary,
+  hasLocale,
+  langAlternates,
+} from "@/i18n";
 import { SITE } from "@/lib/site";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
@@ -18,10 +25,11 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
   const g = getGenre(slug);
-  if (!g) return { title: "Genre not found" };
-  const title = `${g.name} Radio — ${g.count} Live Stations`;
-  const description = `Listen to ${g.count} live ${g.name} radio stations online for free — 24/7 streaming on ${SITE.name}, no sign-up needed.`;
+  if (!g) return { title: dict.meta.notFound };
+  const title = fmt(dict.meta.radioTitle, { name: g.name, count: g.count });
+  const description = fmt(dict.meta.genreDesc, { count: g.count, name: g.name, site: SITE.name });
   return {
     title,
     description,
@@ -31,6 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GenrePage({ params }: Props) {
   const { lang, slug } = await params;
+  const dict = await getDictionary();
   const g = getGenre(slug);
   if (!g) notFound();
   const stations = getStationsByGenre(g.slug).map(toPublic);
@@ -60,15 +69,15 @@ export default async function GenrePage({ params }: Props) {
       <div className="flex items-center gap-3">
         <Link
           href="/genres"
-          aria-label="Back to genres"
+          aria-label={dict.genre.back}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
         </Link>
-        <h1 className="font-display text-lg font-semibold capitalize text-ink">{g.name}</h1>
+        <h1 className="font-display text-lg font-semibold capitalize text-ink">{fmt(dict.home.genreRadio, { lang: genreName(dict, g.slug, g.name) })}</h1>
         <Link
           href="/search"
-          aria-label="Search"
+          aria-label={dict.nav.search}
           className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
         >
           <Icon name="search" size={18} />
@@ -83,7 +92,7 @@ export default async function GenrePage({ params }: Props) {
               key={x.slug}
               className="shrink-0 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-accent-ink"
             >
-              {x.name}
+              {genreName(dict, x.slug, x.name)}
             </span>
           ) : (
             <Link
@@ -91,7 +100,7 @@ export default async function GenrePage({ params }: Props) {
               href={`/genre/${x.slug}`}
               className="shrink-0 rounded-full border border-border bg-surface-2 px-4 py-2 text-xs font-medium text-ink transition hover:border-brand-2/50"
             >
-              {x.name}
+              {genreName(dict, x.slug, x.name)}
             </Link>
           )
         )}
@@ -109,7 +118,7 @@ export default async function GenrePage({ params }: Props) {
         ))}
       </div>
       <p className="mt-3 text-xs text-muted">
-        {g.count} live stations — tap to play
+        {fmt(dict.common.liveStationsTap, { count: g.count })}
       </p>
 
       {/* Desktop right rail (§6.3) — only where it can't crowd the content */}

@@ -9,6 +9,18 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "https://stream-145.zeno.fm/6n6ewddtad0uv?zs=Hc47dloSRx-vBgJnNOT8DA",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://stream.zeno.fm/hem5rrfn07zuv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -23,7 +35,7 @@
   "tags": [],
   "votes": 43386,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 1
  },
  {
@@ -31,6 +43,12 @@
   "slug": "fnf-fm-hindi",
   "name": "Fnf.Fm Hindi",
   "streams": [
+   {
+    "url": "https://usa1.fastcast4u.com/proxy/qrekthei?mp=/",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
+   },
    {
     "url": "http://192.99.8.192:5032/;stream",
     "codec": "MP3",
@@ -52,13 +70,19 @@
   ],
   "votes": 42274,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "a6f73416",
   "slug": "my-radio-dj",
   "name": "MY RADIO DJ",
   "streams": [
+   {
+    "url": "https://stream.zeno.fm/84h97t3ewg0uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
    {
     "url": "http://stream.zeno.fm/84h97t3ewg0uv",
     "codec": "MP3",
@@ -76,7 +100,7 @@
   "tags": [],
   "votes": 33022,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "693deae1",
@@ -84,7 +108,19 @@
   "name": "Radio BollyFm",
   "streams": [
    {
+    "url": "https://stream.zeno.fm/zu59ykebs2zuv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://stream.radiobollyfm.in:8201/hd?t=1526570335",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "http://stream.zeno.fm/zu59ykebs2zuv",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -100,7 +136,7 @@
   "tags": [],
   "votes": 28663,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 10
  },
  {
@@ -134,7 +170,19 @@
   "name": "Hits Of Bollywood",
   "streams": [
    {
+    "url": "https://node-08.zeno.fm/a2gyqzwpwfeuv.aac",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://stream.zeno.fm/8ty8szwpwfeuv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "http://stream-290.surfernetwork.com/8ty8szwpwfeuv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiI4dHk4c3p3cHdmZXV2IiwiaG9zdCI6InN0cmVhbS0yOTAuc3VyZmVybmV0d29yay5jb20iLCJydHRsIjo1LCJqdGkiOiI4RXRWLXNnMVI3S21udDdteHpGeDl3IiwiaWF0IjoxNzk0ODg2Mzc2LCJleHAiOjE3OTQ4ODY0MzZ9.vJMI49BR_yB8OHrKmQeYtp0qFxFstET8RNbHfjwqQXc",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -158,7 +206,7 @@
   ],
   "votes": 18597,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 2
  },
  {
@@ -168,6 +216,12 @@
   "streams": [
    {
     "url": "http://stream.zeno.fm/g95zm67prfhvv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "http://stream-280.surfernetwork.com/g95zm67prfhvv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiJnOTV6bTY3cHJmaHZ2IiwiaG9zdCI6InN0cmVhbS0yODAuc3VyZmVybmV0d29yay5jb20iLCJydHRsIjo1LCJqdGkiOiJsMDA2dXJxRVJyR3cwSEZTM21oV3B3IiwiaWF0IjoxNzk0ODg2Mzc2LCJleHAiOjE3OTQ4ODY0MzZ9.MhejlSMChVs1ELpeI4Wfhjv-2Mq1xk-u_UsL3ZGJBtc",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -191,7 +245,7 @@
   ],
   "votes": 16112,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "314a207e",
@@ -232,8 +286,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio005/hlspbaudio00564kbps.m3u8",
-    "codec": "UNKNOWN",
-    "bitrate": 0,
+    "codec": "AAC",
+    "bitrate": 564,
     "hls": true
    }
   ],
@@ -247,7 +301,7 @@
   "tags": [],
   "votes": 14071,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "delhi",
   "state": "Delhi",
@@ -320,6 +374,12 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "http://stream-284.surfernetwork.com/0zkr7x8ztm0uv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiIwemtyN3g4enRtMHV2IiwiaG9zdCI6InN0cmVhbS0yODQuc3VyZmVybmV0d29yay5jb20iLCJydHRsIjo1LCJqdGkiOiIzaHhTaXZrVVF4MkpwZEZtdFFtQzhBIiwiaWF0IjoxNzk0ODg2Mzc2LCJleHAiOjE3OTQ4ODY0MzZ9.THiq2ga41yvEWJJsy7UJt553aZGuTIpDhzobo6MKOiA",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -339,7 +399,7 @@
   ],
   "votes": 13130,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "d1f643cd",
@@ -584,7 +644,19 @@
   "name": "radioBollyFM",
   "streams": [
    {
+    "url": "https://stream.zeno.fm/zu59ykebs2zuv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://stream.zeno.fm/zu59ykebs2zuv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "http://stream.radiobollyfm.in:8201/hd?t=1526570335",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -602,7 +674,7 @@
   ],
   "votes": 5825,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 10
  },
  {
@@ -695,7 +767,7 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio138/chunklist.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -713,7 +785,7 @@
   ],
   "votes": 5389,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 18
  },
@@ -725,7 +797,7 @@
    {
     "url": "https://carol.epichosts.co.uk:8570/;",
     "codec": "AAC+",
-    "bitrate": 128,
+    "bitrate": 48,
     "hls": false
    }
   ],
@@ -739,7 +811,7 @@
   "tags": [],
   "votes": 5383,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "4d5c8da0",
@@ -862,6 +934,12 @@
   "name": "Bollywood_Dance",
   "streams": [
    {
+    "url": "https://drive.uber.radio/uber/bollywooddance/icecast.audio",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://drive.uber.radio/uber/bollywooddance/icecast.audio",
     "codec": "MP3",
     "bitrate": 128,
@@ -881,7 +959,7 @@
   ],
   "votes": 4021,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 14
  },
  {
@@ -977,7 +1055,7 @@
    {
     "url": "https://stream.zeno.fm/d0rwvvwa6p8uv",
     "codec": "AAC",
-    "bitrate": 128,
+    "bitrate": 112,
     "hls": false
    }
   ],
@@ -991,7 +1069,7 @@
   "tags": [],
   "votes": 3559,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 13
  },
  {
@@ -1001,8 +1079,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio002/hlspbaudio002_Auto.m3u8",
-    "codec": "AAC+",
-    "bitrate": 32,
+    "codec": "AAC",
+    "bitrate": 64,
     "hls": true
    }
   ],
@@ -1023,7 +1101,7 @@
   ],
   "votes": 3445,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 18
  },
@@ -1119,7 +1197,7 @@
    {
     "url": "https://feeds.intoday.in/aajtak/api/master.m3u8",
     "codec": "AAC",
-    "bitrate": 255,
+    "bitrate": 1443,
     "hls": true
    }
   ],
@@ -1135,7 +1213,7 @@
   "tags": [],
   "votes": 3048,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 19
  },
  {
@@ -1200,7 +1278,13 @@
    {
     "url": "http://air.pc.cdn.bitgravity.com/air/live/pbaudio230/playlist.m3u8",
     "codec": "AAC",
-    "bitrate": 94,
+    "bitrate": 95,
+    "hls": true
+   },
+   {
+    "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio230/playlist.m3u8",
+    "codec": "AAC",
+    "bitrate": 95,
     "hls": true
    }
   ],
@@ -1219,7 +1303,7 @@
   ],
   "votes": 2729,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 4
  },
@@ -1335,6 +1419,18 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "https://stream.zeno.fm/6n6ewddtad0uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://stream.zeno.fm/hem5rrfn07zuv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -1349,7 +1445,7 @@
   "tags": [],
   "votes": 2491,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 12
  },
  {
@@ -1417,6 +1513,12 @@
     "codec": "MP3",
     "bitrate": 64,
     "hls": false
+   },
+   {
+    "url": "http://stream-280.surfernetwork.com/48kybvzrwfeuv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiI0OGt5YnZ6cndmZXV2IiwiaG9zdCI6InN0cmVhbS0yODAuc3VyZmVybmV0d29yay5jb20iLCJydHRsIjo1LCJqdGkiOiJsVzVRTUpqeFJDcWxfRHVxZjVZS3ZnIiwiaWF0IjoxNzk0ODg2Mzc3LCJleHAiOjE3OTQ4ODY0Mzd9.UNdXDUxLAqMJ7llCw9as45JM_F55wWq83p8iw-SCchs",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
    }
   ],
   "languages": [
@@ -1429,7 +1531,7 @@
   "tags": [],
   "votes": 2132,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 17
  },
  {
@@ -1474,6 +1576,12 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "https://stream.zeno.fm/g372rxef798uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -1489,7 +1597,7 @@
   "tags": [],
   "votes": 2012,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 6
  },
  {
@@ -1556,6 +1664,12 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "http://stream.zeno.fm/84h97t3ewg0uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -1568,7 +1682,7 @@
   "tags": [],
   "votes": 1904,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "22ed1f0a",
@@ -1603,8 +1717,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio011/hlspbaudio011_Auto.m3u8",
-    "codec": "AAC+",
-    "bitrate": 32,
+    "codec": "AAC",
+    "bitrate": 64,
     "hls": true
    }
   ],
@@ -1618,7 +1732,7 @@
   "tags": [],
   "votes": 1851,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "city": "mumbai",
   "state": "Maharashtra",
   "top_rank": 2
@@ -1630,8 +1744,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio007/hlspbaudio007_Auto.m3u8",
-    "codec": "AAC+",
-    "bitrate": 32,
+    "codec": "AAC",
+    "bitrate": 64,
     "hls": true
    }
   ],
@@ -1645,7 +1759,7 @@
   "tags": [],
   "votes": 1797,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "mumbai",
   "state": "Maharashtra",
@@ -1656,6 +1770,12 @@
   "slug": "radio-badal",
   "name": "Radio Badal",
   "streams": [
+   {
+    "url": "https://stream.zeno.fm/nhrtcxg09u8uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
    {
     "url": "http://stream.zenolive.com/nhrtcxg09u8uv",
     "codec": "MP3",
@@ -1673,7 +1793,7 @@
   "tags": [],
   "votes": 1743,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 20
  },
  {
@@ -1744,8 +1864,8 @@
   "streams": [
    {
     "url": "https://ndtv24x7elemarchana.akamaized.net/hls/live/2003678/ndtv24x7/ndtv24x7master.m3u8",
-    "codec": "UNKNOWN",
-    "bitrate": 0,
+    "codec": "AAC",
+    "bitrate": 3330,
     "hls": true
    }
   ],
@@ -1759,7 +1879,7 @@
   "tags": [],
   "votes": 1598,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "ndtv",
   "top_rank": 14
  },
@@ -1823,6 +1943,12 @@
   "name": "Pollachi Fm",
   "streams": [
    {
+    "url": "https://stream.zeno.fm/f29eh57d3qzuv",
+    "codec": "AAC",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://104.200.16.182:8000/stream/1/",
     "codec": "AAC+",
     "bitrate": 128,
@@ -1841,7 +1967,7 @@
   ],
   "votes": 1506,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "city": "pollachi",
   "state": "Tamil Nadu",
   "top_rank": 19
@@ -1878,7 +2004,13 @@
   "name": "Kishore Kumar Radio",
   "streams": [
    {
-    "url": "https://stream-48.zeno.fm/0ghtfp8ztm0uv?zs=Kr_rJK1kSsKPKeUo9zgTxw&rj-ttl=5&rj-tok=AAABefQSIpIAGxcgV3Wv5gK8Kg",
+    "url": "https://stream-48.zeno.fm/0ghtfp8ztm0uv?zs=Kr_rJK1kSsKPKeUo9zgTxw",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://stream.zeno.fm/0ghtfp8ztm0uv",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -1894,7 +2026,7 @@
   "tags": [],
   "votes": 1474,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "8e7766f9",
@@ -1930,8 +2062,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio058/hlspbaudio05864kbps.m3u8",
-    "codec": "UNKNOWN",
-    "bitrate": 0,
+    "codec": "AAC",
+    "bitrate": 864,
     "hls": true
    }
   ],
@@ -1945,7 +2077,7 @@
   "tags": [],
   "votes": 1397,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "kolkata",
   "state": "West Bengal",
@@ -2042,8 +2174,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio002/hlspbaudio00264kbps.m3u8",
-    "codec": "UNKNOWN",
-    "bitrate": 0,
+    "codec": "AAC",
+    "bitrate": 264,
     "hls": true
    }
   ],
@@ -2061,7 +2193,7 @@
   ],
   "votes": 1281,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 20
  },
@@ -2121,7 +2253,7 @@
   "name": "hitsofbollywood",
   "streams": [
    {
-    "url": "https://node-08.zeno.fm/a2gyqzwpwfeuv.aac?rj-ttl=5&rj-tok=AAABc6yhYroA-BQkZAca7Yj0jA",
+    "url": "https://node-08.zeno.fm/a2gyqzwpwfeuv.aac",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -2177,7 +2309,7 @@
   "name": "Bollywood classic songs",
   "streams": [
    {
-    "url": "https://node-12.zeno.fm/60ef4p33vxquv?rj-ttl=5&rj-tok=AAABc-OCFngAs_AvDsY_StEpMg",
+    "url": "https://node-12.zeno.fm/60ef4p33vxquv",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -2230,6 +2362,18 @@
   "name": "Radio Paramankurichi Tamil",
   "streams": [
    {
+    "url": "https://vpmurugun.radioca.st/autodj",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://vpmurugun.radioca.st/stream",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://proxima.shoutca.st:8009/stream",
     "codec": "MP3",
     "bitrate": 128,
@@ -2246,7 +2390,7 @@
   "tags": [],
   "votes": 1123,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "4c712546",
@@ -2338,8 +2482,8 @@
   "streams": [
    {
     "url": "https://stream.zeno.fm/r2gn1pgm4qruv",
-    "codec": "AAC",
-    "bitrate": 128,
+    "codec": "MP3",
+    "bitrate": 64,
     "hls": false
    }
   ],
@@ -2353,7 +2497,7 @@
   "tags": [],
   "votes": 1004,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 3
  },
  {
@@ -2582,6 +2726,12 @@
   "name": "Oli 968 Radio",
   "streams": [
    {
+    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/OLI968FM_PREM.aac",
+    "codec": "AAC+",
+    "bitrate": 64,
+    "hls": false
+   },
+   {
     "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/OLI968FMAAC.aac",
     "codec": "AAC+",
     "bitrate": 48,
@@ -2598,7 +2748,7 @@
   "tags": [],
   "votes": 825,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 8
  },
  {
@@ -2768,6 +2918,12 @@
     "codec": "AAC",
     "bitrate": 95,
     "hls": true
+   },
+   {
+    "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio141/hlspbaudio141_Auto.m3u8",
+    "codec": "AAC",
+    "bitrate": 64,
+    "hls": true
    }
   ],
   "languages": [
@@ -2780,7 +2936,7 @@
   "tags": [],
   "votes": 766,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 9
  },
  {
@@ -2815,7 +2971,7 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio051/chunklist.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -2833,7 +2989,7 @@
   ],
   "votes": 709,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 16
  },
@@ -2845,7 +3001,7 @@
    {
     "url": "https://whmsonic.radio.gov.pk:8088/stream?type=http&nocache=4",
     "codec": "MP3",
-    "bitrate": 160,
+    "bitrate": 128,
     "hls": false
    }
   ],
@@ -2859,7 +3015,7 @@
   "tags": [],
   "votes": 693,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 19
  },
  {
@@ -3089,6 +3245,12 @@
   "name": "Chillax FM",
   "streams": [
    {
+    "url": "https://stream.zeno.fm/ohhsihm2byluv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://stream.zeno.fm/ohhsihm2byluv",
     "codec": "MP3",
     "bitrate": 128,
@@ -3112,7 +3274,7 @@
   ],
   "votes": 628,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "35763512",
@@ -3225,8 +3387,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio026/hlspbaudio026_Auto.m3u8",
-    "codec": "AAC+",
-    "bitrate": 32,
+    "codec": "AAC",
+    "bitrate": 64,
     "hls": true
    }
   ],
@@ -3240,7 +3402,7 @@
   "tags": [],
   "votes": 527,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 4
  },
@@ -3457,7 +3619,7 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio126/chunklist.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -3477,7 +3639,7 @@
   ],
   "votes": 462,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "madurai",
   "state": "Tamil Nadu",
@@ -3617,6 +3779,12 @@
   "name": "Harman Radio Australia",
   "streams": [
    {
+    "url": "https://radio.sanbroz.com/listen/harman_radio_australia/radio.mp3",
+    "codec": "AAC+",
+    "bitrate": 48,
+    "hls": false
+   },
+   {
     "url": "http://harmanradio.net:8000/main_48.mp3",
     "codec": "MP3",
     "bitrate": 48,
@@ -3640,7 +3808,7 @@
   ],
   "votes": 409,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "c21cc27e",
@@ -3675,8 +3843,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio027/hlspbaudio027_Auto.m3u8",
-    "codec": "AAC+",
-    "bitrate": 32,
+    "codec": "AAC",
+    "bitrate": 64,
     "hls": true
    }
   ],
@@ -3690,7 +3858,7 @@
   "tags": [],
   "votes": 377,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 2
  },
@@ -3753,7 +3921,13 @@
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio230/playlist.m3u8",
     "codec": "AAC",
-    "bitrate": 94,
+    "bitrate": 95,
+    "hls": true
+   },
+   {
+    "url": "http://air.pc.cdn.bitgravity.com/air/live/pbaudio230/playlist.m3u8",
+    "codec": "AAC",
+    "bitrate": 95,
     "hls": true
    }
   ],
@@ -3767,7 +3941,7 @@
   "tags": [],
   "votes": 372,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 5
  },
  {
@@ -3904,9 +4078,9 @@
   "name": "Harris Jayaraj Radio",
   "streams": [
    {
-    "url": "https://psrlive2.listenon.in/hjr?ah=0e81749e37789e5fb8c290926ce87e3f",
-    "codec": "AAC+",
-    "bitrate": 64,
+    "url": "https://stream.zeno.fm/0bhsthssutzuv",
+    "codec": "MP3",
+    "bitrate": 128,
     "hls": false
    }
   ],
@@ -3922,8 +4096,8 @@
    "tamil music"
   ],
   "votes": 355,
-  "is_active": false,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "1b125973",
@@ -4039,8 +4213,8 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio022/playlist.m3u8",
-    "codec": "AAC+",
-    "bitrate": 78,
+    "codec": "AAC",
+    "bitrate": 79,
     "hls": true
    }
   ],
@@ -4054,7 +4228,7 @@
   "tags": [],
   "votes": 319,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 4
  },
@@ -4089,7 +4263,19 @@
   "name": "Radio Central 24",
   "streams": [
    {
+    "url": "https://casper.radioca.st/;",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://138.201.52.248:8459/stream",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "http://philae.shoutca.st:8459/",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -4111,7 +4297,7 @@
   ],
   "votes": 309,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "87469676",
@@ -4177,7 +4363,7 @@
    {
     "url": "https://psrlive4.listenon.in/mohan?station=mohanradio",
     "codec": "AAC+",
-    "bitrate": 64,
+    "bitrate": 48,
     "hls": false
    }
   ],
@@ -4193,8 +4379,8 @@
    "tamil"
   ],
   "votes": 306,
-  "is_active": false,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "8142e388",
@@ -4309,7 +4495,7 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio129/chunklist.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -4327,7 +4513,7 @@
   ],
   "votes": 284,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "nagercoil",
   "state": "Tamil Nadu",
@@ -4498,7 +4684,19 @@
   "name": "Radio Suno Tamil",
   "streams": [
    {
+    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SUNO917_SC",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_SUNO_TAMIL_S01.mp3",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
+   },
+   {
+    "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_SUNO_TAMIL_S01.mp3",
     "codec": "MP3",
     "bitrate": 96,
     "hls": false
@@ -4514,7 +4712,7 @@
   "tags": [],
   "votes": 264,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "9184bf4f",
@@ -4574,6 +4772,12 @@
   "name": "JN FM TAMIL",
   "streams": [
    {
+    "url": "https://stream.zeno.fm/0wck59rarchvv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://stream.zeno.fm/0wck59rarchvv",
     "codec": "MP3",
     "bitrate": 128,
@@ -4592,7 +4796,7 @@
   ],
   "votes": 256,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "36bd297a",
@@ -4741,7 +4945,7 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio062/chunklist.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -4761,7 +4965,7 @@
   ],
   "votes": 237,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "city": "tirunelveli",
   "state": "Tamil Nadu"
  },
@@ -4823,6 +5027,12 @@
     "codec": "AAC",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "http://104.200.16.182:8000/stream/1/",
+    "codec": "AAC+",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -4835,7 +5045,7 @@
   "tags": [],
   "votes": 236,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "e868a599",
@@ -4894,7 +5104,7 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio025/playlist.m3u8",
-    "codec": "AAC+",
+    "codec": "AAC",
     "bitrate": 78,
     "hls": true
    }
@@ -4909,7 +5119,7 @@
   "tags": [],
   "votes": 233,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 20
  },
  {
@@ -5117,7 +5327,7 @@
   "streams": [
    {
     "url": "https://d3n2o48cmfppr2.cloudfront.net/svymradio.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -5131,8 +5341,8 @@
   "homepage": "",
   "tags": [],
   "votes": 214,
-  "is_active": false,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "a7e0a923",
@@ -5168,6 +5378,12 @@
     "codec": "AAC",
     "bitrate": 95,
     "hls": true
+   },
+   {
+    "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio229/chunklist.m3u8",
+    "codec": "AAC",
+    "bitrate": 0,
+    "hls": true
    }
   ],
   "languages": [
@@ -5180,7 +5396,7 @@
   "tags": [],
   "votes": 213,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 1
  },
  {
@@ -5262,8 +5478,8 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio024/playlist.m3u8",
-    "codec": "AAC+",
-    "bitrate": 78,
+    "codec": "AAC",
+    "bitrate": 80,
     "hls": true
    }
   ],
@@ -5277,7 +5493,7 @@
   "tags": [],
   "votes": 210,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 6
  },
  {
@@ -5440,8 +5656,8 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio025/masterlist.m3u8",
-    "codec": "AAC+",
-    "bitrate": 79,
+    "codec": "AAC",
+    "bitrate": 78,
     "hls": true
    }
   ],
@@ -5461,7 +5677,7 @@
   ],
   "votes": 201,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "thoothukudi",
   "state": "Tamil Nadu",
@@ -5533,6 +5749,12 @@
   "name": "PeaceRadio",
   "streams": [
    {
+    "url": "https://peaceradio.out.airtime.pro/peaceradio_a",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
+   },
+   {
     "url": "http://stream.peaceradio.com:8000/high",
     "codec": "MP3",
     "bitrate": 96,
@@ -5553,7 +5775,7 @@
   ],
   "votes": 198,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "e40b59c9",
@@ -5661,7 +5883,7 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio021/playlist.m3u8",
-    "codec": "AAC+",
+    "codec": "AAC",
     "bitrate": 78,
     "hls": true
    }
@@ -5676,7 +5898,7 @@
   "tags": [],
   "votes": 192,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 5
  },
@@ -5711,7 +5933,19 @@
   "name": "Radio Central 24",
   "streams": [
    {
+    "url": "https://casper.radioca.st/;",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://philae.shoutca.st:8459/",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "http://138.201.52.248:8459/stream",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -5736,7 +5970,7 @@
   ],
   "votes": 189,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "6000281e",
@@ -5775,7 +6009,7 @@
    {
     "url": "http://ais-sa1.streamon.fm/7681_64k.mp3",
     "codec": "MP3",
-    "bitrate": 68,
+    "bitrate": 70,
     "hls": false
    }
   ],
@@ -5796,7 +6030,7 @@
   ],
   "votes": 168,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "448a781e",
@@ -5832,6 +6066,12 @@
     "codec": "MP3",
     "bitrate": 96,
     "hls": false
+   },
+   {
+    "url": "http://198.178.123.5:7016/;stream.mp3",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
    }
   ],
   "languages": [
@@ -5846,7 +6086,7 @@
   ],
   "votes": 157,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 5
  },
  {
@@ -5856,7 +6096,13 @@
   "streams": [
    {
     "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio138/playlist.m3u8",
-    "codec": "MP3",
+    "codec": "AAC",
+    "bitrate": 126,
+    "hls": true
+   },
+   {
+    "url": "http://air.pc.cdn.bitgravity.com/air/live/pbaudio138/playlist.m3u8",
+    "codec": "AAC",
     "bitrate": 126,
     "hls": true
    }
@@ -5871,7 +6117,7 @@
   "tags": [],
   "votes": 155,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 19
  },
  {
@@ -5879,6 +6125,12 @@
   "slug": "aural-oldies",
   "name": "AURAL OLDIES",
   "streams": [
+   {
+    "url": "https://stream-158.zeno.fm/tksfwb1mgzzuv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
    {
     "url": "http://stream.zeno.fm/anrf216cu68uv",
     "codec": "MP3",
@@ -5900,7 +6152,7 @@
   ],
   "votes": 151,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "e0757452",
@@ -5936,8 +6188,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio030/hlspbaudio030_Auto.m3u8",
-    "codec": "AAC+",
-    "bitrate": 32,
+    "codec": "AAC",
+    "bitrate": 64,
     "hls": true
    }
   ],
@@ -5951,7 +6203,7 @@
   "tags": [],
   "votes": 150,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 5
  },
@@ -5987,7 +6239,7 @@
    {
     "url": "http://mehramedia.com:8021/;",
     "codec": "MP3",
-    "bitrate": 128,
+    "bitrate": 48,
     "hls": false
    }
   ],
@@ -6007,7 +6259,7 @@
   ],
   "votes": 147,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "59f7a11d",
@@ -6043,6 +6295,12 @@
     "codec": "MP3",
     "bitrate": 96,
     "hls": false
+   },
+   {
+    "url": "http://s2.voscast.com:7016/",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
    }
   ],
   "languages": [
@@ -6057,7 +6315,7 @@
   ],
   "votes": 139,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 6
  },
  {
@@ -6144,6 +6402,12 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "http://stream.zeno.fm/anrf216cu68uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -6158,7 +6422,7 @@
   "tags": [],
   "votes": 127,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "df17fe3c",
@@ -6330,8 +6594,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio028/hlspbaudio028_Auto.m3u8",
-    "codec": "AAC+",
-    "bitrate": 32,
+    "codec": "AAC",
+    "bitrate": 64,
     "hls": true
    }
   ],
@@ -6345,7 +6609,7 @@
   "tags": [],
   "votes": 108,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 3
  },
  {
@@ -6404,10 +6668,22 @@
   "name": "Air telugu",
   "streams": [
    {
+    "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio032/playlist.m3u8",
+    "codec": "AAC",
+    "bitrate": 95,
+    "hls": true
+   },
+   {
     "url": "https://stream-151.zeno.fm/7kbt507d3qzuv",
     "codec": "MP3",
     "bitrate": 64,
     "hls": false
+   },
+   {
+    "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio141/hlspbaudio141_Auto.m3u8",
+    "codec": "AAC",
+    "bitrate": 64,
+    "hls": true
    }
   ],
   "languages": [
@@ -6422,7 +6698,7 @@
   ],
   "votes": 105,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 10
  },
@@ -6433,6 +6709,12 @@
   "streams": [
    {
     "url": "https://s2.radio.co/s3801784f1/listen",
+    "codec": "MP3",
+    "bitrate": 192,
+    "hls": false
+   },
+   {
+    "url": "http://s2.radio.co/s3801784f1/listen",
     "codec": "MP3",
     "bitrate": 192,
     "hls": false
@@ -6448,7 +6730,7 @@
   "tags": [],
   "votes": 104,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "d1f5ccd4",
@@ -6647,7 +6929,7 @@
   "streams": [
    {
     "url": "https://d98pmgd7by0qx.cloudfront.net/radiomalabar.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -6662,7 +6944,7 @@
   "tags": [],
   "votes": 94,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 15
  },
  {
@@ -6696,7 +6978,13 @@
   "name": "sakkathradio",
   "streams": [
    {
-    "url": "https://node-31.zeno.fm/fcsk9ryerd0uv?rj-ttl=5&rj-tok=AAABdXnVZ3sA-61zQpwDIgRWvw",
+    "url": "https://node-31.zeno.fm/fcsk9ryerd0uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://stream.zeno.fm/3e6k4ryerd0uv",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -6712,7 +7000,7 @@
   "tags": [],
   "votes": 93,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 19
  },
  {
@@ -6723,7 +7011,7 @@
    {
     "url": "https://d3ctxlq1ktw2nl.cloudfront.net/staging/2023-8-27/24e94d7f-07dc-9d45-95d0-ddfbbda2b7ae.mp3",
     "codec": "MP3",
-    "bitrate": 0,
+    "bitrate": 27,
     "hls": false
    }
   ],
@@ -6737,7 +7025,7 @@
   "tags": [],
   "votes": 92,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 20
  },
  {
@@ -6820,7 +7108,7 @@
   "streams": [
    {
     "url": "https://d3caeelfr0kslf.cloudfront.net/radiokochi.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -6835,7 +7123,7 @@
   "tags": [],
   "votes": 86,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "city": "kochi",
   "state": "Kerala",
   "top_rank": 7
@@ -6904,6 +7192,12 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "http://stream.zeno.fm/a3250rmrga0uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -6916,7 +7210,7 @@
   "tags": [],
   "votes": 83,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "97175e3d",
@@ -6948,6 +7242,12 @@
   "name": "Radio Onattukara",
   "streams": [
    {
+    "url": "https://stream.zeno.fm/fu94u25kqd0uv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "http://stream.zeno.fm/fu94u25kqd0uv/;stream.mp3",
     "codec": "MP3",
     "bitrate": 128,
@@ -6964,7 +7264,7 @@
   "tags": [],
   "votes": 78,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 18
  },
  {
@@ -6974,6 +7274,12 @@
   "streams": [
    {
     "url": "https://cast1.my-control-panel.com/proxy/radiomattoli/stream",
+    "codec": "MP3",
+    "bitrate": 320,
+    "hls": false
+   },
+   {
+    "url": "http://cast1.my-control-panel.com/proxy/radiomattoli/stream",
     "codec": "MP3",
     "bitrate": 320,
     "hls": false
@@ -6989,7 +7295,7 @@
   "tags": [],
   "votes": 78,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 6
  },
  {
@@ -7048,8 +7354,8 @@
   "streams": [
    {
     "url": "https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudioragam/hlspbaudioragam_Auto.m3u8",
-    "codec": "AAC+",
-    "bitrate": 32,
+    "codec": "AAC",
+    "bitrate": 64,
     "hls": true
    }
   ],
@@ -7063,7 +7369,7 @@
   "tags": [],
   "votes": 73,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 12
  },
  {
@@ -7276,7 +7582,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/89969ad91f106dde/89969ad91f106dde.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7294,7 +7600,7 @@
   ],
   "votes": 22,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "city": "hyderabad",
   "state": "Telangana",
   "top_rank": 4
@@ -7306,7 +7612,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/0beac8e921bbfdbb/0beac8e921bbfdbb.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7324,7 +7630,7 @@
   ],
   "votes": 22,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "vijayawada",
   "state": "Andhra Pradesh",
@@ -7337,7 +7643,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/bad174fd7eac38d0/bad174fd7eac38d0.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7356,7 +7662,7 @@
   ],
   "votes": 16,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "vijayawada",
   "state": "Andhra Pradesh",
@@ -7403,7 +7709,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/1c701f7b70df2568/1c701f7b70df2568.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7421,7 +7727,7 @@
   ],
   "votes": 9,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "hyderabad",
   "state": "Telangana",
@@ -7434,7 +7740,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/8362d532bd498fd0/8362d532bd498fd0.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7452,7 +7758,7 @@
   ],
   "votes": 9,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "visakhapatnam",
   "state": "Andhra Pradesh",
@@ -7465,7 +7771,13 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/3a02c5c035815bb9/3a02c5c035815bb9.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
+    "bitrate": 0,
+    "hls": true
+   },
+   {
+    "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio031/chunklist.m3u8",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7484,7 +7796,7 @@
   ],
   "votes": 9,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "hyderabad",
   "state": "Telangana",
@@ -7497,7 +7809,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/147314c8aedf4389/147314c8aedf4389.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7516,7 +7828,7 @@
   ],
   "votes": 9,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "visakhapatnam",
   "state": "Andhra Pradesh",
@@ -7529,7 +7841,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/3bcd83926d6c3cca/3bcd83926d6c3cca.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7547,7 +7859,7 @@
   ],
   "votes": 6,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "anantapur",
   "state": "Andhra Pradesh",
@@ -7560,7 +7872,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/1119aa26b4e9f653/1119aa26b4e9f653.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7578,7 +7890,7 @@
   ],
   "votes": 6,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "tirupati",
   "state": "Andhra Pradesh",
@@ -7592,7 +7904,7 @@
    {
     "url": "http://stream.radiosai.net:8020/",
     "codec": "MP3",
-    "bitrate": 24,
+    "bitrate": 32,
     "hls": false
    }
   ],
@@ -7615,7 +7927,7 @@
   ],
   "votes": 5,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 17
  },
  {
@@ -7625,7 +7937,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/8416764ec0889597/8416764ec0889597.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7643,7 +7955,7 @@
   ],
   "votes": 4,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air"
  },
  {
@@ -7653,7 +7965,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/b11784e3b37b7620/b11784e3b37b7620.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7671,7 +7983,7 @@
   ],
   "votes": 4,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air"
  },
  {
@@ -7681,7 +7993,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/5d9989b5189a8f4a/5d9989b5189a8f4a.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7699,7 +8011,7 @@
   ],
   "votes": 4,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "nizamabad",
   "state": "Telangana"
@@ -7711,7 +8023,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/deae7120a205bfff/deae7120a205bfff.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7729,7 +8041,7 @@
   ],
   "votes": 4,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "warangal",
   "state": "Telangana"
@@ -7741,6 +8053,18 @@
   "streams": [
    {
     "url": "https://radio.universalhealthradio.org/uhr-te.mp3",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   },
+   {
+    "url": "https://radio.universalhealthradio.org/uhr-ta.mp3",
+    "codec": "MP3",
+    "bitrate": 0,
+    "hls": false
+   },
+   {
+    "url": "https://radio.universalhealthradio.org/uhr-hi.mp3",
     "codec": "MP3",
     "bitrate": 0,
     "hls": false
@@ -7765,7 +8089,7 @@
   ],
   "votes": 3,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "43c4f828",
@@ -7774,7 +8098,7 @@
   "streams": [
    {
     "url": "https://radio.wavespb.com/live/8bc9175bb717c13b/8bc9175bb717c13b.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -7793,7 +8117,7 @@
   ],
   "votes": 2,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "city": "nellore",
   "state": "Andhra Pradesh",
   "top_rank": 19
@@ -7805,6 +8129,12 @@
   "streams": [
    {
     "url": "https://radio.shaivam.org/listen/shaiva-lahari/radio.mp3",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://samcloud.spacial.com/api/listen?sid=107886&rid=186750&f=mp3,any&br=128000,any&m=pls&t=ssl",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -7822,7 +8152,7 @@
   ],
   "votes": 1,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "c3ed6227",
@@ -7957,8 +8287,14 @@
   "streams": [
    {
     "url": "https://listen.openstream.co/4428/audio",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://radios.crabdance.com:8002/2",
+    "codec": "MP3",
+    "bitrate": 24,
     "hls": false
    }
   ],
@@ -7974,7 +8310,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "hellofm",
   "top_rank": 2
  },
@@ -8011,6 +8347,18 @@
   "name": "Suryan FM",
   "streams": [
    {
+    "url": "https://radios.crabdance.com:8002/1",
+    "codec": "AAC+",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://radios.crabdance.com:8002/3",
+    "codec": "AAC+",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "https://listen.openstream.co/6714/audio",
     "codec": "MP3",
     "bitrate": 24,
@@ -8045,6 +8393,12 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "http://centova.aarenworld.com/proxy/894tamilfm/stream",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -8059,7 +8413,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 7
  },
  {
@@ -8069,7 +8423,7 @@
   "streams": [
    {
     "url": "https://mbc.thestreamtech.com:8086/index.html",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 64,
     "hls": false
    }
@@ -8086,7 +8440,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 9
  },
  {
@@ -8177,6 +8531,12 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "https://azuracast.vibesounds.in:8000/radio.mp3",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -8191,7 +8551,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "a9-new-hits",
@@ -8228,7 +8588,7 @@
   "streams": [
    {
     "url": "https://streamlky.alsolnet.com/vanakkamaudio",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 0,
     "hls": false
    }
@@ -8245,7 +8605,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "natham-fm",
@@ -8358,8 +8718,8 @@
   "streams": [
    {
     "url": "https://cast3.asurahosting.com/proxy/pudhugai/stream",
-    "codec": "UNKNOWN",
-    "bitrate": 0,
+    "codec": "MP3",
+    "bitrate": 128,
     "hls": false
    }
   ],
@@ -8374,8 +8734,8 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": false,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "beat-love",
@@ -8489,6 +8849,12 @@
   "name": "Radio Vaanam",
   "streams": [
    {
+    "url": "https://fra-ranger01.dedicateware.com:8008/stream",
+    "codec": "MP3",
+    "bitrate": 192,
+    "hls": false
+   },
+   {
     "url": "https://sathees.radioca.st/;",
     "codec": "MP3",
     "bitrate": 128,
@@ -8507,7 +8873,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "azhagi-fm",
@@ -8620,8 +8986,14 @@
   "streams": [
    {
     "url": "https://s7.voscast.com/cdn/?k=68ebe2f19c920&m=;stream1760289678470/1",
-    "codec": "UNKNOWN",
-    "bitrate": 0,
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "http://s7.voscast.com:10864/stream",
+    "codec": "MP3",
+    "bitrate": 128,
     "hls": false
    }
   ],
@@ -8637,7 +9009,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "dance-tamizha",
@@ -8646,8 +9018,8 @@
   "streams": [
    {
     "url": "https://listen.openstream.co/3558/audio",
-    "codec": "UNKNOWN",
-    "bitrate": 0,
+    "codec": "AAC",
+    "bitrate": 64,
     "hls": false
    }
   ],
@@ -8662,8 +9034,8 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": false,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "arni-city-fm",
@@ -8672,7 +9044,13 @@
   "streams": [
    {
     "url": "https://usa9.fastcast4u.com/proxy/arnifm?mp=/1",
-    "codec": "AAC",
+    "codec": "AAC+",
+    "bitrate": 64,
+    "hls": false
+   },
+   {
+    "url": "http://192.95.39.65:5018/stream",
+    "codec": "AAC+",
     "bitrate": 64,
     "hls": false
    }
@@ -8689,13 +9067,19 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "thendral-fm",
   "slug": "thendral-fm",
   "name": "Thendral FM",
   "streams": [
+   {
+    "url": "https://stream.zeno.fm/xzt706p3h2zuv",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
    {
     "url": "http://220.247.227.20:8000/Threndralstream",
     "codec": "MP3",
@@ -8715,7 +9099,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "vasantham",
@@ -8805,6 +9189,12 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "https://neramfm.com:8000/stream",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -8819,7 +9209,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "a-9-radio",
@@ -8855,7 +9245,7 @@
    {
     "url": "https://thenaruvivaanoli.radioca.st/stream",
     "codec": "MP3",
-    "bitrate": 96,
+    "bitrate": 64,
     "hls": false
    }
   ],
@@ -8871,7 +9261,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "retro-fm",
@@ -8880,8 +9270,14 @@
   "streams": [
    {
     "url": "https://cast6.asurahosting.com/proxy/retrotamil/stream",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 64,
+    "hls": false
+   },
+   {
+    "url": "https://stream-154.zeno.fm/b6augfmdanzuv",
+    "codec": "MP3",
+    "bitrate": 128,
     "hls": false
    }
   ],
@@ -8899,7 +9295,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "erode-jai-fm",
@@ -8991,6 +9387,12 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio025/playlist.m3u8",
+    "codec": "AAC",
+    "bitrate": 78,
+    "hls": true
    }
   ],
   "languages": [
@@ -9005,7 +9407,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "muslim-vaanoli",
@@ -9093,7 +9495,7 @@
    {
     "url": "https://usa11.fastcast4u.com/proxy/ajaydk?mp=/;",
     "codec": "MP3",
-    "bitrate": 64,
+    "bitrate": 128,
     "hls": false
    }
   ],
@@ -9109,7 +9511,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "sirpi-fm",
@@ -9118,7 +9520,7 @@
   "streams": [
    {
     "url": "https://sirpifmhd-unicast2u.radioca.st/stream",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 64,
     "hls": false
    }
@@ -9135,7 +9537,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "pothigai-fm",
@@ -9144,6 +9546,12 @@
   "streams": [
    {
     "url": "http://perseverance.shoutca.st:8131/stream",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://mars.streamerr.co/8274/stream",
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
@@ -9161,7 +9569,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "thiruvarur-fm",
@@ -9196,7 +9604,7 @@
   "streams": [
    {
     "url": "https://cast6.asurahosting.com/proxy/ssradio/stream",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 64,
     "hls": false
    }
@@ -9213,7 +9621,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "amaravathi-fm",
@@ -9306,6 +9714,12 @@
     "codec": "MP3",
     "bitrate": 320,
     "hls": false
+   },
+   {
+    "url": "https://server6.radio-streams.net:18048/stream",
+    "codec": "MP3",
+    "bitrate": 160,
+    "hls": false
    }
   ],
   "languages": [
@@ -9320,7 +9734,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "jtr-fm",
@@ -9621,6 +10035,18 @@
     "codec": "MP3",
     "bitrate": 128,
     "hls": false
+   },
+   {
+    "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio126/playlist.m3u8",
+    "codec": "AAC",
+    "bitrate": 120,
+    "hls": true
+   },
+   {
+    "url": "http://perseverance.shoutca.st:8151/stream?type=http&nocache=1",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
    }
   ],
   "languages": [
@@ -9635,7 +10061,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "city": "madurai",
   "state": "Tamil Nadu"
  },
@@ -9698,7 +10124,7 @@
   "streams": [
    {
     "url": "https://eu4.fastcast4u.com/proxy/goguna00?mp=/;",
-    "codec": "MP3",
+    "codec": "UNKNOWN",
     "bitrate": 0,
     "hls": false
    }
@@ -9715,13 +10141,19 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "ctr-24",
   "slug": "ctr-24",
   "name": "CTR 24",
   "streams": [
+   {
+    "url": "http://198.27.66.225:8498/stream",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
    {
     "url": "https://ctr24-backend.vercel.app/api/stream/live",
     "codec": "MP3",
@@ -9741,7 +10173,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "aadhi-tamil-fm",
@@ -9931,6 +10363,12 @@
   "name": "ATBC Radio",
   "streams": [
    {
+    "url": "https://stream.zeno.fm/632sng7hwzzuv",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
+   },
+   {
     "url": "http://s7.viastreaming.net:7920/;stream.mp3",
     "codec": "MP3",
     "bitrate": 64,
@@ -9949,7 +10387,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "tamilnadu-fm",
@@ -10065,6 +10503,12 @@
     "codec": "MP3",
     "bitrate": 160,
     "hls": false
+   },
+   {
+    "url": "https://tamilmurasam.radioca.st/live",
+    "codec": "MP3",
+    "bitrate": 160,
+    "hls": false
    }
   ],
   "languages": [
@@ -10079,7 +10523,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "cmr-fm",
@@ -10244,7 +10688,7 @@
   "streams": [
    {
     "url": "https://cast6.asurahosting.com/proxy/sstamilradio/stream?n=e65242363afe40d9f404",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 64,
     "hls": false
    }
@@ -10261,7 +10705,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "sunlite-fm",
@@ -10374,7 +10818,7 @@
   "streams": [
    {
     "url": "https://cast6.asurahosting.com/proxy/valasaivanoli/stream",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 64,
     "hls": false
    }
@@ -10391,7 +10835,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "kodai-aruvi-fm",
@@ -10400,9 +10844,15 @@
   "streams": [
    {
     "url": "https://cast6.asurahosting.com/proxy/kodaiaruvifm/stream",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 64,
     "hls": false
+   },
+   {
+    "url": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio022/master.m3u8",
+    "codec": "AAC",
+    "bitrate": 79,
+    "hls": true
    }
   ],
   "languages": [
@@ -10417,7 +10867,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "vetrivel-fm",
@@ -10530,7 +10980,7 @@
   "streams": [
    {
     "url": "https://cast6.asurahosting.com/proxy/rjtamil/live",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 64,
     "hls": false
    }
@@ -10547,7 +10997,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "surabi-fm",
@@ -10637,7 +11087,7 @@
   "streams": [
    {
     "url": "https://d1d1ao70vmf9ux.cloudfront.net/jipmer.m3u8",
-    "codec": "MP3",
+    "codec": "AAC",
     "bitrate": 128,
     "hls": true
    }
@@ -10655,7 +11105,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "news18-tamil-live",
@@ -10664,7 +11114,7 @@
   "streams": [
    {
     "url": "https://nw18live.cdn.jio.com/bpk-tv/News18_Tamil_Nadu_NW18_MOB/output01/index.m3u8",
-    "codec": "MP3",
+    "codec": "AAC",
     "bitrate": 128,
     "hls": true
    }
@@ -10682,7 +11132,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "polimer-news-live",
@@ -10691,8 +11141,8 @@
   "streams": [
    {
     "url": "https://yuppmedtaorire.akamaized.net/v1/master/a0d007312bfd99c47f76b77ae26b1ccdaae76cb1/polimernews_nim_https/110322/polimernews/playlist.m3u8",
-    "codec": "MP3",
-    "bitrate": 128,
+    "codec": "AAC",
+    "bitrate": 1900,
     "hls": true
    }
   ],
@@ -10711,7 +11161,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "shaivam-radio",
@@ -10722,6 +11172,18 @@
     "url": "https://samcloud.spacial.com/api/listen?sid=107848&m=sc&rid=186695&t=ssl",
     "codec": "MP3",
     "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://radio.shaivam.org/listen/shaiva-lahari/radio.mp3",
+    "codec": "MP3",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "http://stream.radiosai.net:8000/",
+    "codec": "MP3",
+    "bitrate": 24,
     "hls": false
    }
   ],
@@ -10740,7 +11202,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "sun-news-live",
@@ -10749,8 +11211,8 @@
   "streams": [
    {
     "url": "https://yuppmedtaorire.akamaized.net/v1/master/a0d007312bfd99c47f76b77ae26b1ccdaae76cb1/news7_nim_https/240122/news7/playlist.m3u8",
-    "codec": "MP3",
-    "bitrate": 128,
+    "codec": "AAC",
+    "bitrate": 1900,
     "hls": true
    }
   ],
@@ -10769,7 +11231,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00",
+  "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "sunnetwork"
  },
  {
@@ -10780,7 +11242,7 @@
    {
     "url": "https://thenralw.radioca.st/LiveStream",
     "codec": "MP3",
-    "bitrate": 128,
+    "bitrate": 96,
     "hls": false
    }
   ],
@@ -10797,7 +11259,7 @@
   ],
   "votes": 0,
   "is_active": true,
-  "last_checked_at": "2026-11-15T17:36:11+00:00"
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "19a92626",
@@ -11103,7 +11565,7 @@
   "streams": [
    {
     "url": "https://stream.spicefmbd.com/stream.m3u8",
-    "codec": "UNKNOWN",
+    "codec": "AAC",
     "bitrate": 0,
     "hls": true
    }
@@ -11123,7 +11585,8 @@
    "pop",
    "talk"
   ],
-  "is_active": true
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "83aabc97",
@@ -11455,6 +11918,12 @@
   "slug": "radio-amchikonkani",
   "streams": [
    {
+    "url": "https://eu9.fastcast4u.com/proxy/alfagodwin?mp=/1",
+    "codec": "MP3",
+    "bitrate": 96,
+    "hls": false
+   },
+   {
     "url": "http://178.32.107.151:3711/stream",
     "codec": "MP3",
     "bitrate": 96,
@@ -11479,7 +11948,8 @@
    "gospel",
    "konkani"
   ],
-  "is_active": true
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "76f5ad56",
@@ -11519,8 +11989,8 @@
   "streams": [
    {
     "url": "http://167.114.131.90:2758/",
-    "codec": "MP3",
-    "bitrate": 32,
+    "codec": "AAC+",
+    "bitrate": 64,
     "hls": false
    }
   ],
@@ -11535,7 +12005,8 @@
   "country": "Pakistan",
   "votes": 8,
   "tags": [],
-  "is_active": true
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "1ed45adf",
@@ -11677,7 +12148,7 @@
    {
     "url": "https://streaming.softnep.net:10996/;stream.nsv&type=mp3&volume=60",
     "codec": "MP3",
-    "bitrate": 96,
+    "bitrate": 128,
     "hls": false
    }
   ],
@@ -11699,7 +12170,8 @@
    "pop",
    "talk"
   ],
-  "is_active": true
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "d24f2857",
@@ -12185,7 +12657,7 @@
    {
     "url": "https://www.hamropatro.com/api/radio/stream/5098435466231808",
     "codec": "MP3",
-    "bitrate": 192,
+    "bitrate": 32,
     "hls": false
    }
   ],
@@ -12200,7 +12672,8 @@
   "country": "Nepal",
   "votes": 3,
   "tags": [],
-  "is_active": true
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "776041d4",
@@ -12496,9 +12969,9 @@
   "streams": [
    {
     "url": "https://dgnlfn5aus0c6.cloudfront.net/radiovishwas.m3u8",
-    "codec": "MP3",
+    "codec": "AAC",
     "bitrate": 0,
-    "hls": false
+    "hls": true
    }
   ],
   "languages": [
@@ -12512,7 +12985,8 @@
   "tags": [
    "marathi"
   ],
-  "is_active": true
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "radio-city-marathi",
@@ -12547,7 +13021,7 @@
   "streams": [
    {
     "url": "http://85.25.185.202:8138/stream",
-    "codec": "AAC",
+    "codec": "AAC+",
     "bitrate": 64,
     "hls": false
    }
@@ -12563,7 +13037,8 @@
   "tags": [
    "marathi"
   ],
-  "is_active": true
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "radio-sugar",
@@ -12600,6 +13075,12 @@
     "codec": "MP3",
     "bitrate": 64,
     "hls": false
+   },
+   {
+    "url": "http://live.jesuscomingfm.com:8282/stream/",
+    "codec": "MP3",
+    "bitrate": 64,
+    "hls": false
    }
   ],
   "languages": [
@@ -12613,7 +13094,8 @@
   "tags": [
    "marathi"
   ],
-  "is_active": true
+  "is_active": true,
+  "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
   "id": "rangilo-gujarat",

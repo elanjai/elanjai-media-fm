@@ -145,7 +145,7 @@ export default async function RootLayout({
                   <p className="mt-1 leading-relaxed">
                     {fmt(dict.footer.tagline, { count: genres.length })}
                   </p>
-                  <nav className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5" aria-label="Footer">
+                  <nav className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5" aria-label={dict.nav.footerNav}>
                     <LangLink href="/genres" className="hover:text-ink">{dict.footer.allGenres}</LangLink>
                     <LangLink href="/city" className="hover:text-ink">{dict.footer.cities}</LangLink>
                     <LangLink href="/network" className="hover:text-ink">{dict.footer.networks}</LangLink>

@@ -3,13 +3,21 @@ import { Suspense } from "react";
 import SearchClient from "@/components/SearchClient";
 import { eligibleCampaigns } from "@/lib/ads";
 import { getFeatured, getGenres, toPublic, todayCached } from "@/lib/data";
+import { dictionaryFor, hasLocale } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "Search stations",
-  robots: { index: false },
+type Props = {
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{ q?: string }>;
 };
 
-type Props = { searchParams: Promise<{ q?: string }> };
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
+  return {
+    title: dict.search.title,
+    robots: { index: false },
+  };
+}
 
 export default async function SearchPage({ searchParams }: Props) {
   const { q = "" } = await searchParams;

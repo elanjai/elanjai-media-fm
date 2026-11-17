@@ -51,6 +51,7 @@ const STALL_TIMEOUT_MS = 8_000;
 type PlaybackState = {
   current: PublicStation | null;
   status: Status;
+  /** Dictionary key (errors.*) for the current failure — render via t(error), never raw. */
   error: string | null;
   nowPlaying: string | null;
   volume: number;
@@ -341,7 +342,7 @@ export default function AudioProvider({
         hls.on(Hls.Events.MEDIA_ATTACHED, () => hls.loadSource(url));
       } else {
         setStatusTracked("error");
-        setError("HLS not supported in this browser");
+        setError("errors.hls");
         return;
       }
     } else {
@@ -383,8 +384,8 @@ export default function AudioProvider({
         }
         setError(
           reason === "connect timeout"
-            ? "Station is offline or took too long to connect"
-            : "Stream unavailable right now"
+            ? "errors.timeout"
+            : "errors.unavailable"
         );
         return;
       }
@@ -485,7 +486,7 @@ export default function AudioProvider({
     const onError = () => scheduleRetry("media error");
     const onOffline = () => {
       wasLiveRef.current = wantPlayRef.current;
-      setError("You're offline — will reconnect when the network returns");
+      setError("errors.network");
       setStatusTracked("error");
     };
     const onOnline = () => {

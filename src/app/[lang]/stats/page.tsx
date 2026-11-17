@@ -1,29 +1,34 @@
 import type { Metadata } from "next";
 import StatsView from "@/components/StatsView";
 import { SITE } from "@/lib/site";
+import { dictionaryFor, fmt, getDictionary, hasLocale } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "Your listening stats",
-  description: `Listening time, sessions, and top stations on ${SITE.name} — counted on this device only, never sent anywhere.`,
-  alternates: { canonical: `${SITE.url}/en/stats` },
-};
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
+  return {
+    title: dict.meta.statsTitle,
+    description: fmt(dict.meta.statsDesc, { site: SITE.name }),
+    alternates: { canonical: `${SITE.url}/en/stats` },
+  };
+}
 
 /**
  * F-5.7 — local-first listening stats. Everything is localStorage:
  * no beacons, no account, so the page is honest about describing
  * "this device" rather than "you".
  */
-export default function StatsPage() {
+export default async function StatsPage() {
+  const dict = await getDictionary();
   return (
     <div className="mx-auto max-w-2xl py-10">
       <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-        Your listening stats
+        {dict.stats.title}
       </h1>
       <p className="mt-3 text-sm leading-6 text-muted">
-        How long you listen and which stations you keep coming back to —
-        counted only while a stream is playing, stored only on this
-        device, and never sent to our servers. Clearing browser data
-        resets it.
+        {dict.stats.intro}
       </p>
       <StatsView />
     </div>

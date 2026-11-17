@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
+import { dictionaryFor, getDictionary, hasLocale } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "DMCA & takedown policy",
-  robots: { index: false },
-};
+type Props = { params: Promise<{ lang: string }> };
 
-export default function DmcaPage() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
+  return {
+    title: dict.meta.dmcaTitle,
+    robots: { index: false },
+  };
+}
+
+export default async function DmcaPage() {
+  const dict = await getDictionary();
   return (
     <div className="mx-auto max-w-2xl py-10 text-sm leading-7 text-ink">
       <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-        DMCA & takedown policy
+        {dict.meta.dmcaTitle}
       </h1>
       <p className="mt-4 text-muted">
         {SITE.name} is a directory. We do not host, re-encode, or restream any audio — playback

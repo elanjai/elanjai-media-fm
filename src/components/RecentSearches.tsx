@@ -2,10 +2,12 @@
 
 import Link from "@/components/LangLink";
 import { useEffect, useState } from "react";
+import { useT } from "./LocaleProvider";
 import { RECENT_SEARCHES_KEY } from "./SearchInput";
 
 /** Recent-search chips (stored in localStorage by SearchInput). */
 export default function RecentSearches() {
+  const t = useT();
   const [items, setItems] = useState<string[]>([]);
   useEffect(() => {
     queueMicrotask(() => {
@@ -18,9 +20,9 @@ export default function RecentSearches() {
   }, []);
   if (!items.length) return null;
   return (
-    <section aria-label="Recent searches">
+    <section aria-label={t("search.recentSearches")}>
       <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
-        Recent searches
+        {t("search.recentSearches")}
       </h2>
       <div className="mt-2.5 flex flex-wrap gap-2">
         {items.map((q) => (

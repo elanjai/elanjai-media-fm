@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { adBeacon, isAdFree, pickWeighted, type Campaign } from "@/lib/ads";
 import Icon from "./Icon";
+import { useT } from "./LocaleProvider";
 
 /**
  * Client half of the ad slot (F-4.2): weighted rotation, per-user daily
@@ -10,6 +11,13 @@ import Icon from "./Icon";
  * clicks through /go/<id> for CTR. Ad-free supporters (F-4.7) see nothing.
  */
 const CAP_KEY = "emfm:adcap";
+
+/** Campaign `label` enum (campaigns.json) → dictionary key for the badge. */
+const LABEL_KEYS: Record<string, string> = {
+  Sponsored: "sponsored.sponsored",
+  Ad: "sponsored.ad",
+  "From Elanjai FM": "sponsored.house",
+};
 
 
 function capHit(c: Campaign): boolean {
@@ -53,6 +61,7 @@ export default function AdSlotClient({
   campaigns: Campaign[];
   variant?: "card" | "compact";
 }) {
+  const t = useT();
   const ref = useRef<HTMLDivElement>(null);
   const [picked, setPicked] = useState<Campaign | null>(null);
   const [adFree, setAdFree] = useState(false);
@@ -122,7 +131,7 @@ export default function AdSlotClient({
           className="flex items-center gap-2.5 text-[13px] no-underline"
         >
           <span className="shrink-0 rounded bg-muted/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">
-            {picked.label}
+            {t(LABEL_KEYS[picked.label] ?? "sponsored.sponsored")}
           </span>
           <span className="min-w-0 flex-1 truncate font-semibold text-ink">
             {picked.creative.headline}
@@ -142,7 +151,7 @@ export default function AdSlotClient({
       ref={ref}
       className="min-h-[92px] rounded-[18px] border border-dashed border-border bg-surface px-4 py-3.5"
       role="complementary"
-      aria-label={picked.label}
+      aria-label={t(LABEL_KEYS[picked.label] ?? "sponsored.sponsored")}
     >
       <div className="flex items-start gap-3">
         <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-2/10 text-brand-2 dark:text-accent">
@@ -154,7 +163,7 @@ export default function AdSlotClient({
               {picked.creative.headline}
             </p>
             <span className="shrink-0 rounded bg-muted/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">
-              {picked.label}
+              {t(LABEL_KEYS[picked.label] ?? "sponsored.sponsored")}
             </span>
           </div>
           {picked.creative.body && (

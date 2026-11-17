@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { PublicStation } from "@/lib/types";
 import { adBeacon, isAdFree } from "@/lib/ads";
+import { useT } from "./LocaleProvider";
 import StationRow from "./StationRow";
 
 /**
@@ -25,6 +26,7 @@ export default function SponsoredStationRow({
   queue?: PublicStation[];
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const t = useT();
   const [adFree, setAdFree] = useState(false);
   const sent = useRef(false);
 
@@ -65,7 +67,7 @@ export default function SponsoredStationRow({
         queue={queue}
         trailing={
           <span className="mr-1 shrink-0 rounded bg-muted/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">
-            Sponsored
+            {t("sponsored.sponsored")}
           </span>
         }
       />

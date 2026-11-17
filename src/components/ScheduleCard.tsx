@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { fmt } from "@/i18n/locales";
 import type { StationSchedule } from "@/lib/schedule";
 import { currentSlot, timeInZone } from "@/lib/schedule";
 import Icon from "./Icon";
+import { useT } from "./LocaleProvider";
 
 const toMin = (hhmm: string) => {
   const [h, m] = hhmm.split(":").map(Number);
@@ -22,6 +24,7 @@ export default function ScheduleCard({
   stationName: string;
   schedule: StationSchedule;
 }) {
+  const t = useT();
   const [nowMin, setNowMin] = useState(() => {
     const hhmm = timeInZone(schedule.timezone, new Date());
     return toMin(hhmm);
@@ -52,10 +55,10 @@ export default function ScheduleCard({
     <section aria-labelledby="schedule" className="mt-8">
       <div className="flex items-baseline justify-between">
         <h2 id="schedule" className="font-display text-[16.5px] font-semibold text-ink">
-          Programmes today
+          {t("schedule.title")}
         </h2>
         {schedule.approx && (
-          <span className="text-[11px] text-muted">typical broadcast day</span>
+          <span className="text-[11px] text-muted">{t("schedule.approx")}</span>
         )}
       </div>
       <div className="mt-3 rounded-[18px] border border-border bg-surface px-4 py-3.5">
@@ -65,10 +68,10 @@ export default function ScheduleCard({
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
-              On now
+              {t("schedule.onNow")}
             </p>
             <p className="mt-0.5 truncate text-[14px] font-semibold text-ink">
-              {cur ? cur.slot.title : `Live on ${stationName}`}
+              {cur ? cur.slot.title : fmt(t("schedule.liveOn"), { name: stationName })}
             </p>
           </div>
           <span
@@ -76,7 +79,7 @@ export default function ScheduleCard({
             aria-hidden
           >
             <span className="h-1.5 w-1.5 rounded-full bg-current" />
-            Live
+            {t("player.live")}
           </span>
         </div>
         {upNext.length > 0 && (
@@ -95,8 +98,8 @@ export default function ScheduleCard({
           </ul>
         )}
         <p className="mt-3 text-[11px] text-muted">
-          All times in {schedule.timezone.replace("_", " ")}
-          {schedule.approx ? " · times are approximate" : ""}
+          {fmt(t("schedule.allTimes"), { tz: schedule.timezone.replace("_", " ") })}
+          {schedule.approx ? ` · ${t("schedule.timesApprox")}` : ""}
         </p>
       </div>
     </section>

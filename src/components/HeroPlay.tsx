@@ -2,7 +2,9 @@
 
 import { useMemo } from "react";
 import type { PublicStation } from "@/lib/types";
+import { fmt } from "@/i18n/locales";
 import { useLibrary } from "./AudioProvider";
+import { useT } from "./LocaleProvider";
 import { usePrefs } from "./PrefsProvider";
 import PlayButton from "./PlayButton";
 
@@ -21,15 +23,16 @@ export default function HeroPlay({
   /** genre slug → flagship station, for the language-picker landing. */
   flagships: { slug: string; station: PublicStation }[];
 }) {
+  const t = useT();
   const { recents } = useLibrary();
   const { langs } = usePrefs();
 
-  const { station, queue, label } = useMemo(() => {
+  const { station, queue, labelKey } = useMemo(() => {
     if (recents.length) {
       return {
         station: recents[0],
         queue: recents,
-        label: "Continue listening",
+        labelKey: "hero.continueName",
       };
     }
     if (langs?.length) {
@@ -38,18 +41,18 @@ export default function HeroPlay({
         return {
           station: hit.station,
           queue: [hit.station],
-          label: "Start with",
+          labelKey: "hero.startWithName",
         };
       }
     }
-    return { station: fallback, queue: [fallback], label: "Start with" };
+    return { station: fallback, queue: [fallback], labelKey: "hero.startWithName" };
   }, [recents, langs, flagships, fallback]);
 
   return (
     <div className="relative mt-4 flex items-center gap-3">
       <PlayButton station={station} queue={queue} size={52} />
       <span className="text-xs font-medium text-brand-ink/70">
-        {label} {station.name}
+        {fmt(t(labelKey), { name: station.name })}
       </span>
     </div>
   );

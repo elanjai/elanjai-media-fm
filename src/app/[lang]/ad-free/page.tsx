@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import AdFreeClient from "@/components/AdFreeClient";
 import { SITE } from "@/lib/site";
+import { dictionaryFor, fmt, getDictionary, hasLocale } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "Ad-free supporter plan",
-  description: `Remove every display ad and the sponsored audio pre-roll on ${SITE.name} — a small monthly support that keeps the app free for everyone.`,
-  alternates: { canonical: `${SITE.url}/en/ad-free` },
-};
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
+  return {
+    title: dict.meta.adFreeTitle,
+    description: fmt(dict.meta.adFreeDesc, { site: SITE.name }),
+    alternates: { canonical: `${SITE.url}/en/ad-free` },
+  };
+}
 
 /**
  * F-4.7: the supporter plan. NEXT_PUBLIC_ADFREE_URL is the payment
@@ -15,11 +22,12 @@ export const metadata: Metadata = {
  * activation code sent to supporters after payment; when unset the
  * page runs in honor mode (early pilot).
  */
-export default function AdFreePage() {
+export default async function AdFreePage() {
+  const dict = await getDictionary();
   return (
     <div className="mx-auto max-w-2xl py-10">
       <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-        Go ad-free
+        {dict.adFree.title}
       </h1>
       <p className="mt-3 text-sm leading-6 text-muted">
         {SITE.name} is free for everyone and always will be — ads are what
@@ -29,9 +37,9 @@ export default function AdFreePage() {
 
       <div className="mt-6 space-y-3">
         {[
-          ["No display ads", "Every banner, sponsored row, and featured listing disappears."],
-          ["No audio pre-roll", "Streams start instantly — no sponsored messages first."],
-          ["Same privacy", "The flag lives on this device. We don't create an account or track you differently."],
+          [dict.adFree.f1Title, dict.adFree.f1Desc],
+          [dict.adFree.f2Title, dict.adFree.f2Desc],
+          [dict.adFree.f3Title, dict.adFree.f3Desc],
         ].map(([t, d]) => (
           <div key={t} className="flex gap-3 rounded-2xl border border-border bg-surface p-4">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-2" />

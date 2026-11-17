@@ -1,10 +1,12 @@
 import Link from "@/components/LangLink";
 import type { Genre } from "@/lib/types";
 import { genreStyle } from "@/lib/genre-style";
+import { fmt, genreName, getDictionary } from "@/i18n";
 import Icon from "./Icon";
 
 /** Pastel language tile — letter badge, name, station count (design "genre tile"). */
-export default function GenreTile({ genre }: { genre: Genre }) {
+export default async function GenreTile({ genre }: { genre: Genre }) {
+  const dict = await getDictionary();
   const st = genreStyle(genre.slug);
   return (
     <Link
@@ -25,8 +27,8 @@ export default function GenreTile({ genre }: { genre: Genre }) {
         </span>
         <Icon name="note" size={20} className="mt-0.5" strokeWidth={1.8} />
       </span>
-      <span className="mt-4 block font-display text-[15px] font-semibold">{genre.name}</span>
-      <span className="mt-0.5 block text-xs font-medium">{genre.count} stations</span>
+      <span className="mt-4 block font-display text-[15px] font-semibold">{genreName(dict, genre.slug, genre.name)}</span>
+      <span className="mt-0.5 block text-xs font-medium">{fmt(dict.common.stations, { count: genre.count })}</span>
     </Link>
   );
 }

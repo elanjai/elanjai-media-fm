@@ -3,14 +3,14 @@
 import Link from "@/components/LangLink";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import type { Genre, PublicStation } from "@/lib/types";
-import { NATIVE_NAMES } from "@/lib/languages";
+import { fmt } from "@/i18n/locales";
 import { track } from "@/lib/analytics";
 import type { Campaign } from "@/lib/ads";
 import AdSlotClient from "./AdSlotClient";
 import { searchLocal } from "@/lib/search";
 import { useCatalog } from "./AudioProvider";
 import Icon from "./Icon";
-import { useLang, useT } from "./LocaleProvider";
+import { useGenreName, useLang, useT } from "./LocaleProvider";
 import RecentSearches from "./RecentSearches";
 import SearchInput from "./SearchInput";
 import StationRow from "./StationRow";
@@ -37,6 +37,7 @@ export default function SearchClient({
   const { stations } = useCatalog();
   const lang = useLang();
   const t = useT();
+  const gn = useGenreName();
   const term = q.trim();
 
   const results = useMemo(
@@ -87,15 +88,15 @@ export default function SearchClient({
         <div className="mt-6">
           <p className="text-xs text-muted" aria-live="polite">
             {stations === null
-              ? "Loading stations…"
-              : `${results.length} station${results.length === 1 ? "" : "s"} for “${term}”`}
+              ? t("search.loading")
+              : fmt(t("search.resultCount"), { count: results.length, term })}
           </p>
 
           {stations !== null && results.length === 0 && (
             <div className="mt-6 flex flex-col items-center rounded-[22px] border border-dashed border-border bg-surface px-6 py-12 text-center">
               <Icon name="search" size={30} strokeWidth={1.5} className="text-muted" />
               <p className="mt-4 font-display text-sm font-semibold text-ink">
-                {t("search.noResults")} “{term}”
+                {fmt(t("search.noResultsFor"), { term })}
               </p>
               <p className="mt-1.5 text-xs text-muted">
                 {t("search.noResultsHint")}
@@ -107,7 +108,7 @@ export default function SearchClient({
                     href={`/genre/${g.slug}`}
                     className="rounded-full border border-border bg-surface-2 px-4 py-2 text-xs font-medium text-ink transition hover:border-brand-2/50"
                   >
-                    {NATIVE_NAMES[g.slug] ?? g.name}
+                    {gn(g.slug, g.name)}
                   </Link>
                 ))}
               </div>
@@ -115,7 +116,7 @@ export default function SearchClient({
                 href="/add-station"
                 className="mt-4 text-xs font-semibold text-brand-2 underline-offset-2 hover:underline dark:text-accent"
               >
-                Request this station →
+                {t("search.requestStation")}
               </Link>
             </div>
           )}

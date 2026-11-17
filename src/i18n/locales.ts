@@ -14,6 +14,13 @@ export type Locale = keyof typeof LOCALE_META;
 export const LOCALES = Object.keys(LOCALE_META) as Locale[];
 export const DEFAULT_LOCALE: Locale = "en";
 
+/**
+ * Cookie written by the locale switcher. The proxy prefers it over
+ * Accept-Language when redirecting bare paths, so an explicit UI-language
+ * choice sticks across visits (the browser header can't be changed).
+ */
+export const LOCALE_COOKIE = "emfm_locale";
+
 export const hasLocale = (l: string): l is Locale => l in LOCALE_META;
 
 /** Tiny "{count} stations" interpolation used by dictionary strings. */

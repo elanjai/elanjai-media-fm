@@ -70,6 +70,8 @@ export type PublicStation = Pick<
 > & {
   /** Primary language slug — used for genre links and queue fallback. */
   genre: string;
+  /** Language slugs for localized display — absent on older stored snapshots. */
+  languages?: string[];
   /** Human-readable language list for display ("Tamil, English"). */
   language: string;
   codec: string;

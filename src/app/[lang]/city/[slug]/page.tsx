@@ -10,7 +10,7 @@ import {
   toPublic,
 } from "@/lib/data";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
-import { langAlternates } from "@/i18n";
+import { dictionaryFor, fmt, getDictionary, hasLocale, langAlternates } from "@/i18n";
 import { SITE } from "@/lib/site";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
@@ -21,11 +21,12 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
   const c = getCity(slug);
-  if (!c) return { title: "City not found" };
+  if (!c) return { title: dict.meta.notFound };
   const list = getStationsByCity(slug);
-  const title = `${c.name} Radio — ${list.length} Live Stations`;
-  const description = `Listen to ${list.length} live radio stations from ${c.name}${c.state ? `, ${c.state}` : ""} — free 24/7 streaming on ${SITE.name}.`;
+  const title = fmt(dict.meta.radioTitle, { name: c.name, count: list.length });
+  const description = fmt(dict.meta.cityDetailDesc, { count: list.length, city: c.state ? `${c.name}, ${c.state}` : c.name, site: SITE.name });
   return {
     title,
     description,
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CityPage({ params }: Props) {
   const { lang, slug } = await params;
+  const dict = await getDictionary();
   const c = getCity(slug);
   if (!c) notFound();
   const stations = getStationsByCity(slug).map(toPublic);
@@ -59,7 +61,7 @@ export default async function CityPage({ params }: Props) {
       <div className="flex items-center gap-3">
         <Link
           href="/city"
-          aria-label="Back to cities"
+          aria-label={dict.city.back}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
@@ -70,7 +72,7 @@ export default async function CityPage({ params }: Props) {
         </h1>
         <Link
           href="/search"
-          aria-label="Search"
+          aria-label={dict.nav.search}
           className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
         >
           <Icon name="search" size={18} />
@@ -98,7 +100,7 @@ export default async function CityPage({ params }: Props) {
         )}
       </div>
       <p className="mt-3 text-xs text-muted">
-        {stations.length} live stations — tap to play
+        {fmt(dict.common.liveStationsTap, { count: stations.length })}
       </p>
 
       <div className="mt-4">

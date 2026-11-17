@@ -1,9 +1,14 @@
 "use client";
 
-import { createContext, useContext, type ReactNode } from "react";
-import { useParams, usePathname } from "next/navigation";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  type ReactNode,
+} from "react";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import type { Dictionary } from "@/i18n";
-import { hasLocale, type Locale } from "@/i18n/locales";
+import { hasLocale, LOCALE_COOKIE, type Locale } from "@/i18n/locales";
 
 type Ctx = { lang: Locale; dict: Dictionary };
 
@@ -41,8 +46,51 @@ export function useT() {
   };
 }
 
+/**
+ * Localized display name for a catalog genre/language slug ("tamil" →
+ * "தமிழ்" under ta, "तमिल" under hi). Falls back to the given English
+ * name, then to a title-cased slug. Server components use genreName()
+ * from "@/i18n" instead.
+ */
+export function useGenreName() {
+  const ctx = useContext(LocaleCtx);
+  return useCallback(
+    (slug: string, fallback?: string): string => {
+      const names = (
+        ctx?.dict as { genreNames?: Record<string, string> } | undefined
+      )?.genreNames;
+      return names?.[slug] ?? fallback ?? slug[0].toUpperCase() + slug.slice(1);
+    },
+    [ctx]
+  );
+}
+
 /** Pathname without the /{lang} prefix — for active-tab comparisons. */
 export function useLocalePath(): string {
   const pathname = usePathname() ?? "/";
   return pathname.replace(/^\/(en|ta|hi)(?=\/|$)/, "") || "/";
+}
+
+/**
+ * Switch the UI locale: navigates to the same page under /{locale} (keeping
+ * the query string and hash) and remembers the choice in a cookie the proxy
+ * reads before Accept-Language. Client-side nav keeps AudioProvider mounted,
+ * so playback continues across the switch.
+ */
+export function useSwitchLocale() {
+  const router = useRouter();
+  const path = useLocalePath();
+  return useCallback(
+    (l: Locale) => {
+      try {
+        document.cookie = `${LOCALE_COOKIE}=${l};path=/;max-age=31536000;SameSite=Lax`;
+      } catch {
+        /* cookie unavailable */
+      }
+      router.push(
+        `/${l}${path === "/" ? "" : path}${window.location.search}${window.location.hash}`
+      );
+    },
+    [router, path]
+  );
 }

@@ -11,7 +11,14 @@ import {
   toPublic,
 } from "@/lib/data";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
-import { langAlternates } from "@/i18n";
+import {
+  dictionaryFor,
+  fmt,
+  genreName,
+  getDictionary,
+  hasLocale,
+  langAlternates,
+} from "@/i18n";
 import { SITE } from "@/lib/site";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
@@ -22,10 +29,11 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
   const p = getDiasporaPage(slug);
-  if (!p) return { title: "Not found" };
+  if (!p) return { title: dict.meta.notFound };
   const count = getStationsByGenre(p.genre).length;
-  const title = `${p.genreName} radio online in ${p.market.name} — listen free`;
+  const title = fmt(dict.meta.listenDetailTitle, { genre: genreName(dict, p.genre, p.genreName), market: p.market.name });
   return {
     title,
     description: describeDiaspora(p, count),
@@ -40,6 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /** Diaspora SEO landing page — /en/listen/tamil-radio-in-usa (F-3.6). */
 export default async function ListenPage({ params }: Props) {
   const { lang, slug } = await params;
+  const dict = await getDictionary();
   const p = getDiasporaPage(slug);
   if (!p) notFound();
 
@@ -64,13 +73,13 @@ export default async function ListenPage({ params }: Props) {
       <div className="flex items-center gap-3">
         <Link
           href="/"
-          aria-label="Back home"
+          aria-label={dict.common.backHome}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
         </Link>
         <h1 className="font-display text-lg font-semibold text-ink">
-          {p.genreName} radio in {p.market.name}
+          {fmt(dict.listen.chip, { genre: genreName(dict, p.genre, p.genreName), market: p.market.name })}
         </h1>
       </div>
 
@@ -78,7 +87,7 @@ export default async function ListenPage({ params }: Props) {
         {intro}
       </p>
       <p className="mt-3 text-xs font-semibold text-ink">
-        {stations.length} {p.genreName} stations live now
+        {fmt(dict.listen.liveNow, { count: stations.length, genre: genreName(dict, p.genre, p.genreName) })}
       </p>
 
       <div className="mt-4">

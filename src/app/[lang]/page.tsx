@@ -21,7 +21,7 @@ import {
 import { featuredStations } from "@/lib/featured";
 import { genreStyle } from "@/lib/genre-style";
 import { websiteJsonLd } from "@/lib/jsonld";
-import { fmt, getDictionary } from "@/i18n";
+import { fmt, genreName, getDictionary } from "@/i18n";
 
 export default async function HomePage() {
   const dict = await getDictionary();
@@ -67,7 +67,7 @@ export default async function HomePage() {
           {dict.hero.subtitle}
         </p>
         <p className="relative mt-1.5 text-[11px] text-brand-ink/60">
-          {genres.slice(0, 3).map((g) => g.name).join(" · ")} · +{Math.max(genres.length - 3, 0)} more
+          {genres.slice(0, 3).map((g) => genreName(dict, g.slug, g.name)).join(" · ")} · {fmt(dict.hero.moreLangs, { count: Math.max(genres.length - 3, 0) })}
         </p>
         {tamil[0] && (
           <HeroPlay
@@ -115,7 +115,7 @@ export default async function HomePage() {
                     className="pointer-events-none absolute left-5 top-5 z-10 rounded-full px-2 py-[3px] text-[11px] font-bold uppercase tracking-wider shadow-sm"
                     style={{ backgroundColor: st.bg, color: st.fg }}
                   >
-                    {genre.name}
+                    {genreName(dict, genre.slug, genre.name)}
                   </span>
                 </div>
               );
@@ -134,7 +134,7 @@ export default async function HomePage() {
             id="featured"
             className="mb-3 font-display text-[16.5px] font-semibold text-ink"
           >
-            Featured stations
+            {dict.home.featured}
           </h2>
           <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2">
             {featured.map((f) => (
@@ -193,13 +193,13 @@ export default async function HomePage() {
         <section aria-labelledby="tamil-rail" className="mt-8">
           <div className="mb-3 flex items-baseline justify-between">
             <h2 id="tamil-rail" className="font-display text-[16.5px] font-semibold text-ink">
-              {fmt(dict.home.popularIn, { lang: tamilGenre.name })}
+              {fmt(dict.home.popularIn, { lang: genreName(dict, "tamil", tamilGenre.name) })}
             </h2>
             <Link
               href="/genre/tamil"
               className="text-xs font-semibold text-brand-2 dark:text-accent"
             >
-              {dict.home.seeAll} {tamilGenre.count}
+              {fmt(dict.home.seeAllCount, { count: tamilGenre.count })}
             </Link>
           </div>
           <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
@@ -213,7 +213,7 @@ export default async function HomePage() {
               className="flex w-[80px] shrink-0 flex-col items-center justify-center gap-2 rounded-[20px] border border-dashed border-border text-muted transition hover:border-brand-2 hover:text-brand-2"
             >
               <Icon name="chevR" size={20} />
-              <span className="text-[11px] font-semibold">All {tamilGenre.count}</span>
+              <span className="text-[11px] font-semibold">{fmt(dict.common.allCountPlain, { count: tamilGenre.count })}</span>
             </Link>
           </div>
         </section>

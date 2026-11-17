@@ -2,24 +2,28 @@
 
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import { useLang } from "./LocaleProvider";
+import { useLang, useSwitchLocale, useT } from "./LocaleProvider";
+import { LOCALE_META, LOCALES } from "@/i18n/locales";
+import { NATIVE_NAMES } from "@/lib/languages";
 import { useEffect, useState } from "react";
 import { useLibrary } from "./AudioProvider";
 import Icon from "./Icon";
 import { usePrefs, type TextSize, type ThemeChoice } from "./PrefsProvider";
 import ShareFavorites from "./ShareFavorites";
 
-const THEME_OPTS: { v: ThemeChoice; label: string }[] = [
-  { v: "system", label: "System" },
-  { v: "light", label: "Light" },
-  { v: "dark", label: "Dark" },
+const THEME_OPTS: { v: ThemeChoice; labelKey: string }[] = [
+  { v: "system", labelKey: "settings.themeSystem" },
+  { v: "light", labelKey: "settings.themeLight" },
+  { v: "dark", labelKey: "settings.themeDark" },
 ];
 
-const SIZE_OPTS: { v: TextSize; label: string }[] = [
-  { v: "default", label: "Default" },
-  { v: "large", label: "Large" },
-  { v: "xl", label: "Extra large" },
+const SIZE_OPTS: { v: TextSize; labelKey: string }[] = [
+  { v: "default", labelKey: "settings.sizeDefault" },
+  { v: "large", labelKey: "settings.sizeLarge" },
+  { v: "xl", labelKey: "settings.sizeXl" },
 ];
+
+const LOCALE_OPTS = LOCALES.map((l) => ({ v: l, label: LOCALE_META[l].native }));
 
 function SegRow<T extends string>({
   label,
@@ -102,6 +106,8 @@ export default function SettingsButton() {
   const [linkCopied, setLinkCopied] = useState(false);
   const router = useRouter();
   const lang = useLang();
+  const switchLocale = useSwitchLocale();
+  const t = useT();
   const {
     langs,
     openLangPicker,
@@ -172,16 +178,16 @@ export default function SettingsButton() {
     langs === null
       ? "…"
       : langs.length
-        ? langs.join(", ")
-        : "All languages";
+        ? langs.map((l) => NATIVE_NAMES[l] ?? l).join(", ")
+        : t("settings.allLanguages");
 
   return (
     <>
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Settings"
-        title="Settings"
+        aria-label={t("settings.title")}
+        title={t("settings.title")}
         className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
       >
         <Icon name="settings" size={17} strokeWidth={1.7} />
@@ -193,7 +199,7 @@ export default function SettingsButton() {
           className="fixed inset-0 z-50"
           role="dialog"
           aria-modal="true"
-          aria-label="Settings"
+          aria-label={t("settings.title")}
         >
           <div
             className="fade-in absolute inset-0 bg-ink/40 backdrop-blur-[2px]"
@@ -203,11 +209,11 @@ export default function SettingsButton() {
             <div className="mx-auto w-full max-w-md px-5 pt-4">
               <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-border md:hidden" />
               <div className="flex items-center justify-between">
-                <h2 className="font-display text-xl font-semibold text-ink">Settings</h2>
+                <h2 className="font-display text-xl font-semibold text-ink">{t("settings.title")}</h2>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  aria-label="Close settings"
+                  aria-label={t("a11y.closeSettings")}
                   className="hit-expand -mr-2 flex h-8 w-8 items-center justify-center rounded-full text-muted transition hover:text-ink"
                 >
                   <Icon name="x" size={17} strokeWidth={2} />
@@ -216,20 +222,26 @@ export default function SettingsButton() {
 
               <div className="mt-5 space-y-5">
                 <SegRow
-                  label="Theme"
-                  options={THEME_OPTS}
+                  label={t("settings.appLanguage")}
+                  options={LOCALE_OPTS}
+                  value={lang}
+                  onChange={switchLocale}
+                />
+                <SegRow
+                  label={t("settings.theme")}
+                  options={THEME_OPTS.map((o) => ({ v: o.v, label: t(o.labelKey) }))}
                   value={theme}
                   onChange={setTheme}
                 />
                 <SegRow
-                  label="Text size"
-                  options={SIZE_OPTS}
+                  label={t("settings.textSize")}
+                  options={SIZE_OPTS.map((o) => ({ v: o.v, label: t(o.labelKey) }))}
                   value={textSize}
                   onChange={setTextSize}
                 />
 
                 <div>
-                  <p className="text-[13px] font-semibold text-ink">Languages</p>
+                  <p className="text-[13px] font-semibold text-ink">{t("settings.languages")}</p>
                   <button
                     type="button"
                     onClick={() => {
@@ -243,24 +255,24 @@ export default function SettingsButton() {
                         {langSummary}
                       </span>
                       <span className="mt-0.5 block text-[11px] text-muted">
-                        Languages shown first on Home and Search
+                        {t("settings.languagesHint")}
                       </span>
                     </span>
                     <span className="shrink-0 text-[13px] font-semibold text-brand-2 dark:text-accent">
-                      Change
+                      {t("action.change")}
                     </span>
                   </button>
                 </div>
 
                 <Toggle
-                  label="Data saver"
-                  hint="Ask before playing streams over 128 kbps and prefer lighter streams"
+                  label={t("settings.dataSaver")}
+                  hint={t("settings.dataSaverHint")}
                   on={dataSaver}
                   onChange={setDataSaver}
                 />
                 <Toggle
-                  label="Simple mode"
-                  hint="A giant one-tap screen for seniors — opens the simple player"
+                  label={t("settings.simpleMode")}
+                  hint={t("settings.simpleModeHint")}
                   on={simpleMode}
                   onChange={(v) => {
                     setSimpleMode(v);
@@ -278,7 +290,7 @@ export default function SettingsButton() {
                     className="flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-3 py-3 text-[13px] font-semibold text-ink transition hover:border-brand-2/40"
                   >
                     <Icon name="trash" size={15} strokeWidth={1.8} />
-                    {cleared ? "Cleared" : "Clear history"}
+                    {cleared ? t("settings.cleared") : t("settings.clearHistory")}
                   </button>
                   <button
                     type="button"
@@ -287,7 +299,7 @@ export default function SettingsButton() {
                     className="flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-3 py-3 text-[13px] font-semibold text-ink transition hover:border-brand-2/40 disabled:opacity-50"
                   >
                     <Icon name="download" size={15} strokeWidth={1.8} />
-                    Export favorites
+                    {t("settings.exportFavorites")}
                   </button>
                 </div>
 
@@ -299,8 +311,8 @@ export default function SettingsButton() {
                 >
                   <Icon name="share" size={15} strokeWidth={1.8} />
                   {linkCopied
-                    ? "Setup link copied"
-                    : "Copy a setup link for a senior's device"}
+                    ? t("settings.setupLinkCopied")
+                    : t("settings.setupLink")}
                 </button>
 
                 <ShareFavorites stations={favoriteStations} />
@@ -314,7 +326,7 @@ export default function SettingsButton() {
                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-[13px] font-semibold text-muted transition hover:border-brand-2/40 hover:text-ink"
                 >
                   <Icon name="clock" size={15} strokeWidth={1.8} />
-                  My listening stats
+                  {t("settings.myStats")}
                 </button>
 
                 <button
@@ -326,7 +338,7 @@ export default function SettingsButton() {
                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-[13px] font-semibold text-muted transition hover:border-brand-2/40 hover:text-ink"
                 >
                   <Icon name="heart" size={15} strokeWidth={1.8} />
-                  Go ad-free — support the app
+                  {t("settings.goAdFree")}
                 </button>
 
                 <button
@@ -338,11 +350,11 @@ export default function SettingsButton() {
                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-[13px] font-semibold text-muted transition hover:border-brand-2/40 hover:text-ink"
                 >
                   <Icon name="settings" size={15} strokeWidth={1.8} />
-                  Privacy choices — reconsider analytics &amp; ads consent
+                  {t("settings.privacyChoices")}
                 </button>
 
                 <p className="pb-1 text-center text-[11px] text-muted">
-                  Everything is stored only on this device.
+                  {t("settings.localOnly")}
                 </p>
               </div>
             </div>

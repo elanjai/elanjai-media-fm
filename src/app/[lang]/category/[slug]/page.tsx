@@ -12,7 +12,7 @@ import {
 } from "@/lib/data";
 import { featuredStations } from "@/lib/featured";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
-import { langAlternates } from "@/i18n";
+import { dictionaryFor, fmt, getDictionary, hasLocale, langAlternates } from "@/i18n";
 import { SITE } from "@/lib/site";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
@@ -23,11 +23,12 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
   const c = getCategory(slug);
-  if (!c) return { title: "Category not found" };
+  if (!c) return { title: dict.meta.notFound };
   const list = getStationsByCategory(slug);
-  const title = `${c.name} Radio — ${list.length} Live Stations`;
-  const description = `${c.description} Listen to ${list.length} live stations free on ${SITE.name}.`;
+  const title = fmt(dict.meta.radioTitle, { name: c.name, count: list.length });
+  const description = fmt(dict.meta.categoryDesc, { description: c.description, count: list.length, site: SITE.name });
   return {
     title,
     description,
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CategoryPage({ params }: Props) {
   const { lang, slug } = await params;
+  const dict = await getDictionary();
   const c = getCategory(slug);
   if (!c) notFound();
   const stations = getStationsByCategory(slug).map(toPublic);
@@ -66,7 +68,7 @@ export default async function CategoryPage({ params }: Props) {
       <div className="flex items-center gap-3">
         <Link
           href="/genres"
-          aria-label="Back to browse"
+          aria-label={dict.category.back}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
@@ -74,7 +76,7 @@ export default async function CategoryPage({ params }: Props) {
         <h1 className="font-display text-lg font-semibold text-ink">{c.name}</h1>
         <Link
           href="/search"
-          aria-label="Search"
+          aria-label={dict.nav.search}
           className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
         >
           <Icon name="search" size={18} />
@@ -104,7 +106,7 @@ export default async function CategoryPage({ params }: Props) {
         )}
       </div>
       <p className="mt-3 text-xs text-muted">
-        {stations.length} live stations — tap to play
+        {fmt(dict.common.liveStationsTap, { count: stations.length })}
       </p>
 
       <div className="mt-4">

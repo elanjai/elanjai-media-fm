@@ -10,7 +10,7 @@ import {
   todayCached,
 } from "@/lib/data";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
-import { langAlternates } from "@/i18n";
+import { dictionaryFor, fmt, getDictionary, hasLocale, langAlternates } from "@/i18n";
 import { SITE } from "@/lib/site";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
@@ -26,10 +26,11 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
   const c = await findCollection(slug);
-  if (!c) return { title: "Collection not found" };
+  if (!c) return { title: dict.meta.notFound };
   return {
-    title: `${c.title} — curated radio`,
+    title: fmt(dict.meta.collectionTitle, { title: c.title }),
     description: c.description,
     alternates: { canonical: `${SITE.url}/${lang}/collection/${c.slug}`, ...langAlternates(`/collection/${c.slug}`) },
   };
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CollectionPage({ params }: Props) {
   const { lang, slug } = await params;
+  const dict = await getDictionary();
   const c = await findCollection(slug);
   if (!c) notFound();
   const stations = getCollectionStations(c).map(toPublic);
@@ -58,7 +60,7 @@ export default async function CollectionPage({ params }: Props) {
       <div className="flex items-center gap-3">
         <Link
           href="/"
-          aria-label="Back home"
+          aria-label={dict.common.backHome}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
@@ -66,7 +68,7 @@ export default async function CollectionPage({ params }: Props) {
         <h1 className="font-display text-lg font-semibold text-ink">{c.title}</h1>
         <Link
           href="/search"
-          aria-label="Search"
+          aria-label={dict.nav.search}
           className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
         >
           <Icon name="search" size={18} />
@@ -74,7 +76,7 @@ export default async function CollectionPage({ params }: Props) {
       </div>
       <p className="mt-2 text-xs leading-relaxed text-muted">{c.description}</p>
       <p className="mt-3 text-xs text-muted">
-        {stations.length} stations — curated by our editors
+        {fmt(dict.collection.count, { count: stations.length })}
       </p>
 
       <div className="mt-4">

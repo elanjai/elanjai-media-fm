@@ -10,7 +10,7 @@ import {
   toPublic,
 } from "@/lib/data";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
-import { langAlternates } from "@/i18n";
+import { dictionaryFor, fmt, getDictionary, hasLocale, langAlternates } from "@/i18n";
 import { SITE } from "@/lib/site";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
@@ -21,11 +21,12 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
+  const dict = await dictionaryFor(hasLocale(lang) ? lang : "en");
   const n = getNetwork(slug);
-  if (!n) return { title: "Network not found" };
+  if (!n) return { title: dict.meta.notFound };
   const list = getStationsByNetwork(slug);
-  const title = `${n.name} — ${list.length} Live Stations`;
-  const description = `Listen to all ${list.length} ${n.name} streams live and free on ${SITE.name}.`;
+  const title = fmt(dict.meta.networkDetailTitle, { name: n.name, count: list.length });
+  const description = fmt(dict.meta.networkDetailDesc, { count: list.length, name: n.name, site: SITE.name });
   return {
     title,
     description,
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function NetworkPage({ params }: Props) {
   const { lang, slug } = await params;
+  const dict = await getDictionary();
   const n = getNetwork(slug);
   if (!n) notFound();
   const stations = getStationsByNetwork(slug).map(toPublic);
@@ -59,7 +61,7 @@ export default async function NetworkPage({ params }: Props) {
       <div className="flex items-center gap-3">
         <Link
           href="/network"
-          aria-label="Back to networks"
+          aria-label={dict.network.back}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-ink transition hover:border-brand-2/50"
         >
           <Icon name="chevL" size={16} />
@@ -67,7 +69,7 @@ export default async function NetworkPage({ params }: Props) {
         <h1 className="font-display text-lg font-semibold text-ink">{n.name}</h1>
         <Link
           href="/search"
-          aria-label="Search"
+          aria-label={dict.nav.search}
           className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-ink"
         >
           <Icon name="search" size={18} />
@@ -95,7 +97,7 @@ export default async function NetworkPage({ params }: Props) {
         )}
       </div>
       <p className="mt-3 text-xs text-muted">
-        {stations.length} live streams — tap to play
+        {fmt(dict.network.count, { count: stations.length })}
       </p>
 
       <div className="mt-4">
