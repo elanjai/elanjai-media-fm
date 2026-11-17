@@ -8011,6 +8011,18 @@
   "name": "Suryan FM",
   "streams": [
    {
+    "url": "https://radios.crabdance.com:8002/1",
+    "codec": "AAC+",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
+    "url": "https://radios.crabdance.com:8002/3",
+    "codec": "AAC+",
+    "bitrate": 128,
+    "hls": false
+   },
+   {
     "url": "https://listen.openstream.co/6714/audio",
     "codec": "MP3",
     "bitrate": 24,
