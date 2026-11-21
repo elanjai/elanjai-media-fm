@@ -29,16 +29,19 @@ export default function OrderedGenreSections({
   const { langs } = usePrefs();
   const t = useT();
   const gn = useGenreName();
-  const ordered = useMemo(
-    () =>
-      langs?.length
-        ? orderByLangs(
-            sections.map((s) => ({ slug: s.genre.slug, s })),
-            langs
-          ).map((x) => x.s)
-        : sections,
-    [sections, langs]
-  );
+  const ordered = useMemo(() => {
+    // The featured rail already shows the first-picked genre — skip it here,
+    // then lift the listener's languages into the visible 4-section window.
+    const pref = langs?.[0] ?? "tamil";
+    const rest = sections.filter((s) => s.genre.slug !== pref);
+    const sorted = langs?.length
+      ? orderByLangs(
+          rest.map((s) => ({ slug: s.genre.slug, s })),
+          langs
+        ).map((x) => x.s)
+      : rest;
+    return sorted.slice(0, 4);
+  }, [sections, langs]);
 
   return (
     <>

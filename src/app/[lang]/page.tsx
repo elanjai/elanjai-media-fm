@@ -5,10 +5,10 @@ import FavoritesRail from "@/components/FavoritesRail";
 import HeroPlay from "@/components/HeroPlay";
 import RecentsRail from "@/components/RecentsRail";
 import WeekCard from "@/components/WeekCard";
-import Icon from "@/components/Icon";
 import LanguageRail from "@/components/LanguageRail";
 import LiveBadge from "@/components/LiveBadge";
 import OrderedGenreSections from "@/components/OrderedGenreSections";
+import PreferredGenreRail from "@/components/PreferredGenreRail";
 import SponsoredStationRow from "@/components/SponsoredStationRow";
 import StationCard from "@/components/StationCard";
 import {
@@ -32,8 +32,15 @@ export default async function HomePage() {
   const featured = featuredStations({ slot: "featured-rail", today });
   const genres = getGenres();
   const total = getStations().length;
-  const tamil = getStationsByGenre("tamil").slice(0, 8).map(toPublic);
-  const tamilGenre = genres.find((g) => g.slug === "tamil");
+  // One section object per language — the featured rail picks the listener's
+  // first choice (default Tamil) and OrderedGenreSections orders the rest.
+  const allSections = genres.map((g) => ({
+    genre: g,
+    stations: getStationsByGenre(g.slug).slice(0, 8).map(toPublic),
+  }));
+  const heroFallback =
+    allSections.find((s) => s.genre.slug === "tamil")?.stations[0] ??
+    allSections.find((s) => s.stations.length)?.stations[0];
   // flagship station per language — top_rank #1 after editorial ranking
   const collections = genres.flatMap((g) => {
     const station = getStationsByGenre(g.slug)[0];
@@ -71,9 +78,9 @@ export default async function HomePage() {
         <p className="relative mt-1.5 text-xs text-brand-ink/80">
           {genres.slice(0, 3).map((g) => genreName(dict, g.slug, g.name)).join(" · ")} · {fmt(dict.hero.moreLangs, { count: Math.max(genres.length - 3, 0) })}
         </p>
-        {tamil[0] && (
+        {heroFallback && (
           <HeroPlay
-            fallback={tamil[0]}
+            fallback={heroFallback}
             flagships={collections.map((c) => ({
               slug: c.genre.slug,
               station: c.station,
@@ -209,42 +216,14 @@ export default async function HomePage() {
       {/* Favorites — user's saved stations, hidden until ≥1 exists */}
       <FavoritesRail />
 
+      {/* Preferred-language radio — card rail (first picked, default Tamil) */}
+      <PreferredGenreRail sections={allSections} />
+
       {/* Recently played — one-tap re-entry for returning listeners */}
       <RecentsRail />
 
       {/* "Your week" listening recap — only for returning listeners */}
       <WeekCard />
-
-      {/* Tamil radio — card rail */}
-      {tamilGenre && tamil.length > 0 && (
-        <section aria-labelledby="tamil-rail" className="mt-8">
-          <div className="mb-3 flex items-baseline justify-between">
-            <h2 id="tamil-rail" className="font-display text-[16.5px] font-semibold text-ink">
-              {fmt(dict.home.popularIn, { lang: genreName(dict, "tamil", tamilGenre.name) })}
-            </h2>
-            <Link
-              href="/genre/tamil"
-              className="text-xs font-semibold text-brand-2 dark:text-accent"
-            >
-              {fmt(dict.home.seeAllCount, { count: tamilGenre.count })}
-            </Link>
-          </div>
-          <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
-            {tamil.map((s) => (
-              <div key={s.id} className="w-[130px] shrink-0">
-                <StationCard station={s} queue={tamil} genreLabel={genreName(dict, "tamil", tamilGenre.name)} />
-              </div>
-            ))}
-            <Link
-              href="/genre/tamil"
-              className="flex w-[80px] shrink-0 flex-col items-center justify-center gap-2 rounded-[20px] border border-dashed border-border text-muted transition hover:border-brand-2 hover:text-brand-2"
-            >
-              <Icon name="chevR" size={20} />
-              <span className="text-[11px] font-semibold">{fmt(dict.common.allCountPlain, { count: tamilGenre.count })}</span>
-            </Link>
-          </div>
-        </section>
-      )}
 
       {/* Other languages — section per genre, rows; re-sorted by language pref.
           Ad sits after the 2nd language section (placement map §6.3). */}
@@ -252,13 +231,7 @@ export default async function HomePage() {
         insertAfter={
           <AdSlot id="home-infeed-2" className="mt-8" />
         }
-        sections={genres
-          .filter((g) => g.slug !== "tamil")
-          .slice(0, 4)
-          .map((g) => ({
-            genre: g,
-            stations: getStationsByGenre(g.slug).slice(0, 4).map(toPublic),
-          }))}
+        sections={allSections}
       />
     </div>
   );
