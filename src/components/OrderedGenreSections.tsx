@@ -63,7 +63,7 @@ export default function OrderedGenreSections({
             </div>
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
               {stations.map((s) => (
-                <StationRow key={s.id} station={s} queue={stations} />
+                <StationRow key={s.id} station={s} queue={stations} fav />
               ))}
             </div>
             </section>

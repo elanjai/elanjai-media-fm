@@ -37,7 +37,7 @@ export default function StationRowsWithAds({
       ))}
       {stations.map((s, i) => (
         <Fragment key={s.id}>
-          <StationRow station={s} queue={queue} />
+          <StationRow station={s} queue={queue} fav />
           {AD_POSITIONS.has(i) && (
             <div className="md:col-span-2">
               <AdSlot id="list-infeed" language={language} />

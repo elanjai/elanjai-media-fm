@@ -14,6 +14,7 @@ import { track } from "@/lib/analytics";
 import { reportStreamIssue, sessionId } from "@/lib/report";
 import { recordSeconds, recordSession } from "@/lib/stats";
 import type { PublicStation } from "@/lib/types";
+import FavToast from "./FavToast";
 import { usePrefs } from "./PrefsProvider";
 
 /**
@@ -84,7 +85,8 @@ type PlaybackActions = {
 type Library = {
   /** Slugs of favorited stations. */
   favorites: Set<string>;
-  toggleFavorite: (station: PublicStation) => void;
+  /** Toggle + report which surface it happened on (analytics only). */
+  toggleFavorite: (station: PublicStation, surface?: string) => void;
   /** Merge stations into favorites — never removes (setup links, /simple). */
   addFavorites: (stations: PublicStation[]) => void;
   favoriteStations: PublicStation[];
@@ -956,22 +958,41 @@ export default function AudioProvider({
     };
   }, [status, current]);
 
-  const toggleFavorite = useCallback((station: PublicStation) => {
-    const slug = station.slug;
-    setFavRefs((prev) => {
+  const toggleFavorite = useCallback(
+    (station: PublicStation, surface = "unknown") => {
+      const slug = station.slug;
+      // Storage is the source of truth — favRefs mirrors it, and reading it
+      // here keeps this callback free of state deps.
+      let prev: string[] = [];
+      try {
+        prev = JSON.parse(localStorage.getItem(FAV_KEY) ?? "[]") as string[];
+      } catch {
+        /* private mode */
+      }
       const on = !prev.includes(slug);
-      const next = on ? [slug, ...prev] : prev.filter((x) => x !== slug);
-      localStorage.setItem(FAV_KEY, JSON.stringify(next));
-      setSnaps((m) => {
-        const mm = { ...m };
-        if (on) mm[slug] = station;
-        else delete mm[slug];
-        localStorage.setItem(SNAPS_KEY, JSON.stringify(mm));
-        return mm;
+      const first = on && prev.length === 0;
+      setFavRefs((cur) => {
+        const next = on ? [slug, ...cur] : cur.filter((x) => x !== slug);
+        localStorage.setItem(FAV_KEY, JSON.stringify(next));
+        setSnaps((m) => {
+          const mm = { ...m };
+          if (on) mm[slug] = station;
+          else delete mm[slug];
+          localStorage.setItem(SNAPS_KEY, JSON.stringify(mm));
+          return mm;
+        });
+        return next;
       });
-      return next;
-    });
-  }, []);
+      track("fav", { slug, on: on ? "1" : "0", surface });
+      // FavToast listens for this and shows a confirmation pill.
+      window.dispatchEvent(
+        new CustomEvent("emfm:fav", {
+          detail: { kind: on ? (first ? "first" : "add") : "remove" },
+        })
+      );
+    },
+    []
+  );
 
   const addFavorites = useCallback((stations: PublicStation[]) => {
     if (!stations.length) return;
@@ -1203,6 +1224,7 @@ export default function AudioProvider({
           <SleepTimerCtx.Provider value={sleep}>
             <CatalogCtx.Provider value={catalogValue}>
               {children}
+              <FavToast />
             </CatalogCtx.Provider>
           </SleepTimerCtx.Provider>
         </LibraryCtx.Provider>

@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import type { Campaign } from "@/lib/ads";
 import { isBusyStatus, usePlayback, usePlaybackActions } from "./AudioProvider";
 import EqBars from "./EqBars";
+import FavToggle from "./FavToggle";
 import Icon from "./Icon";
 import NowPlayingSheet from "./NowPlayingSheet";
 import StationLogo from "./StationLogo";
@@ -133,6 +134,7 @@ export default function PlayerChrome({
             </span>
             <Icon name="chevD" size={14} className="shrink-0 -rotate-180 text-muted" />
           </button>
+          <FavToggle station={current} size={38} surface="mini" />
           <button
             type="button"
             onClick={next}
