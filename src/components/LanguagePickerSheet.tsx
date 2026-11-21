@@ -80,14 +80,35 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
       <div className="sheet-in absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-[26px] bg-bg pb-[max(1.5rem,env(safe-area-inset-bottom))] md:inset-x-1/2 md:bottom-6 md:w-[min(92vw,30rem)] md:-translate-x-1/2 md:rounded-[26px] md:border md:border-border md:shadow-2xl">
         <div className="mx-auto w-full max-w-md px-5 pt-4">
           <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-border md:hidden" />
-          <h2 className="font-display text-xl font-semibold text-ink">
+          <h2 className="font-display text-lg font-semibold text-ink">
             {t("prefs.chooseTitle")}
           </h2>
-          <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
+          <p className="mt-1 text-xs leading-relaxed text-muted">
             {t("prefs.chooseHint")}
           </p>
 
-          <div className="mt-5 flex flex-wrap gap-2.5">
+          {/* Done pinned above the chip wall — pick, tap, no scrolling. The
+              count updates live, so it doubles as the selection indicator. */}
+          <div className="mt-3 flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => finish(picked)}
+              className="flex-1 rounded-full bg-accent py-2.5 text-sm font-bold text-accent-ink shadow-md shadow-brand/20 transition hover:brightness-105 active:scale-[0.98]"
+            >
+              {picked.length
+                ? fmt(t("prefs.doneCount"), { count: picked.length })
+                : t("prefs.done")}
+            </button>
+            <button
+              type="button"
+              onClick={() => finish([])}
+              className="rounded-full border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-muted transition hover:text-ink"
+            >
+              {hasChosenLangs ? t("prefs.clear") : t("prefs.skip")}
+            </button>
+          </div>
+
+          <div className="mt-3.5 flex flex-wrap gap-2">
             {available.map((g) => {
               const on = picked.includes(g.slug);
               return (
@@ -96,7 +117,7 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
                   type="button"
                   onClick={() => toggle(g.slug)}
                   aria-pressed={on}
-                  className={`flex items-center gap-2 rounded-full border px-4 py-2.5 text-[15px] font-semibold transition active:scale-95 ${
+                  className={`hit-expand flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm font-semibold transition active:scale-95 ${
                     on
                       ? "border-brand-2 bg-brand-2 text-brand-ink dark:border-accent dark:bg-accent dark:text-accent-ink"
                       : "border-border bg-surface text-ink hover:border-brand-2/50"
@@ -106,42 +127,24 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
                   <span className={`text-[11px] font-medium ${on ? "opacity-75" : "text-muted"}`}>
                     {g.name}
                   </span>
-                  {on && <Icon name="check" size={14} strokeWidth={2.4} />}
+                  {on && <Icon name="check" size={13} strokeWidth={2.4} />}
                 </button>
               );
             })}
           </div>
 
-          <div className="mt-6 flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => finish(picked)}
-              className="flex-1 rounded-full bg-accent py-3 text-sm font-bold text-accent-ink shadow-md shadow-brand/20 transition hover:brightness-105 active:scale-[0.98]"
-            >
-              {picked.length
-                ? fmt(t("prefs.doneCount"), { count: picked.length })
-                : t("prefs.done")}
-            </button>
-            <button
-              type="button"
-              onClick={() => finish([])}
-              className="rounded-full border border-border bg-surface px-5 py-3 text-sm font-semibold text-muted transition hover:text-ink"
-            >
-              {hasChosenLangs ? t("prefs.clear") : t("prefs.skip")}
-            </button>
-          </div>
           {stations && stations.length > 0 && (
             <button
               type="button"
               onClick={playNow}
-              className="mt-3.5 flex w-full items-center justify-center gap-2 rounded-full border border-brand-2/30 bg-brand-2/5 py-2.5 text-[13px] font-semibold text-brand-2 transition hover:border-brand-2/60 dark:border-accent/30 dark:bg-accent/10 dark:text-accent"
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-brand-2/30 bg-brand-2/5 py-2.5 text-[13px] font-semibold text-brand-2 transition hover:border-brand-2/60 dark:border-accent/30 dark:bg-accent/10 dark:text-accent"
             >
               <Icon name="play" size={14} />
               {t("prefs.playNow")}
               <span className="font-normal opacity-75">· {t("prefs.playNowHint")}</span>
             </button>
           )}
-          <p className="mt-3 pb-1 text-center text-[11px] text-muted">
+          <p className="mt-2.5 pb-1 text-center text-[11px] text-muted">
             {t("prefs.privacyNote")}
           </p>
         </div>
