@@ -69,7 +69,7 @@
    "bollywood"
   ],
   "votes": 42274,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -5293,7 +5293,7 @@
   "homepage": "",
   "tags": [],
   "votes": 221,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -6258,7 +6258,7 @@
    "radio chann pardesi"
   ],
   "votes": 147,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -6532,7 +6532,7 @@
   "homepage": "",
   "tags": [],
   "votes": 114,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -8656,7 +8656,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -9785,7 +9785,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -10140,7 +10140,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -10250,7 +10250,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -10354,7 +10354,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -11497,7 +11497,7 @@
    "hit",
    "pop"
   ],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "6e70cf66",
