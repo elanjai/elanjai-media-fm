@@ -1077,10 +1077,14 @@ export default function AudioProvider({
         "button, a, input, select, textarea, [role='button'], [role='slider'], [role='switch'], [role='link'], summary"
       );
       const inPlayer = !!el.closest("[data-player-scope]");
+      // A modal owns the keyboard — don't fire letter shortcuts behind it.
+      const dialogOpen = !!document.querySelector('[role="dialog"]');
       if (e.code === "Space") {
-        if (interactive) return;
+        if (interactive || dialogOpen) return;
         e.preventDefault();
         toggle();
+      } else if (dialogOpen) {
+        return;
       } else if (e.key === "m" || e.key === "M") {
         toggleMute();
       } else if (e.key === "n" || e.key === "N") {

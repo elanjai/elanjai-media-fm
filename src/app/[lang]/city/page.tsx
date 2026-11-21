@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "@/components/LangLink";
 import Icon from "@/components/Icon";
 import { getCities } from "@/lib/data";
-import { dictionaryFor, fmt, getDictionary, hasLocale } from "@/i18n";
+import { dictionaryFor, fmt, fmtCount, getDictionary, hasLocale } from "@/i18n";
 
 type Props = { params: Promise<{ lang: string }> };
 
@@ -42,7 +42,7 @@ export default async function CitiesPage() {
           >
             <p className="font-display text-[15px] font-semibold text-ink">{c.name}</p>
             <p className="mt-1 text-xs text-muted">
-              {fmt(dict.common.stations, { count: c.count })}{c.state ? ` · ${c.state}` : ""}
+              {fmtCount(dict.common.station, dict.common.stations, c.count)}{c.state ? ` · ${c.state}` : ""}
             </p>
           </Link>
         ))}

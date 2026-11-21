@@ -130,7 +130,7 @@ export default function AdSlotClient({
           onClick={click}
           className="flex items-center gap-2.5 text-[13px] no-underline"
         >
-          <span className="shrink-0 rounded bg-muted/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">
+          <span className="shrink-0 rounded bg-muted/15 px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-muted">
             {t(LABEL_KEYS[picked.label] ?? "sponsored.sponsored")}
           </span>
           <span className="min-w-0 flex-1 truncate font-semibold text-ink">
@@ -162,7 +162,7 @@ export default function AdSlotClient({
             <p className="truncate text-[13.5px] font-bold text-ink">
               {picked.creative.headline}
             </p>
-            <span className="shrink-0 rounded bg-muted/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">
+            <span className="shrink-0 rounded bg-muted/15 px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-muted">
               {t(LABEL_KEYS[picked.label] ?? "sponsored.sponsored")}
             </span>
           </div>

@@ -28,13 +28,19 @@
     "seeAll": "See all →",
     "seeAllCount": "See all {count} →",
     "featured": "Featured stations",
-    "genreRadio": "{lang} radio"
+    "genreRadio": "{lang} radio",
+    "explore": "Explore",
+    "exploreCities": "By city",
+    "exploreNetworks": "Networks",
+    "exploreAbroad": "Listen abroad"
   },
   "common": {
+    "station": "{count} station",
     "stations": "{count} stations",
     "allCount": "All {count} →",
     "allCountPlain": "All {count}",
     "liveStationsTap": "{count} live stations — tap to play",
+    "liveStationTapOne": "{count} live station — tap to play",
     "backHome": "Back home",
     "listening": "{count} listening"
   },
@@ -69,6 +75,7 @@
     "noResultsHint": "Try a different spelling, a city, or a language.",
     "loading": "Loading stations…",
     "resultCount": "{count} stations for “{term}”",
+    "resultCountOne": "{count} station for “{term}”",
     "requestStation": "Request this station →",
     "recentSearches": "Recent searches",
     "listening": "Listening…",
@@ -86,7 +93,8 @@
     "remove": "Remove from favorites",
     "imported": "Added to your favorites",
     "open": "Open favorites →",
-    "importCta": "Add {count} stations to my favorites"
+    "importCta": "Add {count} stations to my favorites",
+    "importCtaOne": "Add {count} station to my favorites"
   },
   "recent": {
     "title": "Recently played",
@@ -95,6 +103,7 @@
     "emptyTitle": "Nothing played yet",
     "emptyHint": "Pick a station to get started.",
     "clear": "Clear history",
+    "clearConfirm": "Clear your listening history on this device?",
     "now": "now",
     "minsAgo": "{count} min",
     "hoursAgo": "{count} h",
@@ -133,7 +142,16 @@
     "cancelTimer": "Cancel timer",
     "reconnectingN": "Reconnecting… ({attempt}/{max})",
     "dataSaverHold": "Uses ≈ {rate} MB/hr — data saver is on",
-    "preroll": "Ad · station starts in a moment"
+    "preroll": "Ad · station starts in a moment",
+    "trySimilar": "Not working? Try a similar station",
+    "earlier": "Earlier · {track}",
+    "findSong": "Find this song",
+    "lblFav": "Favorite",
+    "lblSleep": "Sleep",
+    "lblAlarm": "Alarm",
+    "lblCast": "Cast",
+    "lblShare": "Share",
+    "lblMute": "Mute"
   },
   "action": {
     "play": "Play",
@@ -149,7 +167,8 @@
     "change": "Change",
     "cancel": "Cancel",
     "playStation": "Play {name}",
-    "pauseStation": "Pause {name}"
+    "pauseStation": "Pause {name}",
+    "shuffle": "Shuffle"
   },
   "settings": {
     "title": "Settings",
@@ -213,7 +232,9 @@
   },
   "offline": {
     "title": "You're offline",
-    "body": "No internet connection right now. Favorites and recent stations are saved on this device — they'll be back when you're online."
+    "body": "No internet connection right now. Favorites and recent stations are saved on this device — they'll be back when you're online.",
+    "favoritesTitle": "Your saved stations",
+    "favoritesHint": "Streaming needs a connection, but here's your dial."
   },
   "station": {
     "live": "LIVE",
@@ -259,15 +280,18 @@
     "subtitle": "{count} broadcaster networks",
     "streams": "{count} streams",
     "back": "Back to networks",
-    "count": "{count} live streams — tap to play"
+    "count": "{count} live streams — tap to play",
+    "countOne": "{count} live stream — tap to play"
   },
   "collection": {
-    "count": "{count} stations — curated by our editors"
+    "count": "{count} stations — curated by our editors",
+    "countOne": "{count} station — curated by our editors"
   },
   "listen": {
     "title": "Indian radio abroad",
     "intro": "Missing home? Every station below streams free, works on any phone or laptop, and needs no sign-up. Pick your language and where you live — the page lists only stations on air right now.",
     "genreCount": "{genre} · {count} stations",
+    "genreCountOne": "{genre} · {count} station",
     "chip": "{genre} radio in {market}",
     "liveNow": "{count} {genre} stations live now"
   },
@@ -372,13 +396,18 @@
     "sessions": "Sessions",
     "last7Days": "Last 7 days",
     "topStations": "Top stations",
-    "reset": "Reset all stats on this device"
+    "reset": "Reset all stats on this device",
+    "resetConfirm": "Reset all listening stats on this device?",
+    "weekTitle": "Your week in radio",
+    "weekLine": "{hours} h this week · mostly {name}",
+    "weekCta": "See stats →"
   },
   "share": {
     "title": "Shared favorites",
     "empty": "This link doesn't match any stations — it may be old, or those stations have left the directory.",
     "browseAll": "Browse all stations →",
     "sharedCount": "Someone shared {count} stations with you",
+    "sharedCountOne": "Someone shared {count} station with you",
     "missing": "{count} no longer in the directory",
     "listeningTo": "Listening to {name} on Elanjai FM",
     "whatsapp": "Share on WhatsApp",
@@ -414,7 +443,9 @@
     "doneCount": "Done · {count} selected",
     "clear": "Clear",
     "skip": "Skip",
-    "privacyNote": "Your pick stays on this device — no sign-up."
+    "privacyNote": "Your pick stays on this device — no sign-up.",
+    "playNow": "Play now",
+    "playNowHint": "Hear a station first — pick languages later"
   },
   "sponsored": {
     "sponsored": "Sponsored",
@@ -425,7 +456,9 @@
   "simple": {
     "title": "My Radio",
     "exit": "Exit simple mode",
-    "hint": "Tap a station to listen. Tap the big button to stop."
+    "hint": "Tap a station to listen. Tap the big button to stop.",
+    "promo": "For easier listening: giant one-tap mode",
+    "promoCta": "Open simple mode →"
   },
   "schedule": {
     "title": "Programmes today",

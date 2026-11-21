@@ -27,6 +27,17 @@ export const hasLocale = (l: string): l is Locale => l in LOCALE_META;
 export const fmt = (template: string, vars: Record<string, string | number>) =>
   template.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? `{${k}}`));
 
+/**
+ * Plural-aware fmt: uses the singular template when count is 1 (locales
+ * without a separate singular form define `one` equal to `many`).
+ */
+export const fmtCount = (
+  one: string,
+  many: string,
+  count: number,
+  vars: Record<string, string | number> = {}
+) => fmt(count === 1 ? one : many, { ...vars, count });
+
 /** Preferred locale from an Accept-Language header. */
 export function detectLocale(acceptLanguage: string | null): Locale {
   if (!acceptLanguage) return DEFAULT_LOCALE;

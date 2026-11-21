@@ -6,6 +6,7 @@ import type { Campaign } from "@/lib/ads";
 import { reportStreamIssue } from "@/lib/report";
 import type { PublicStation } from "@/lib/types";
 import { fmt } from "@/i18n/locales";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 import { isBusyStatus, useLibrary, usePlayback, usePlaybackActions, useSleepTimer } from "./AudioProvider";
 import AdSlotClient from "./AdSlotClient";
 import AlarmCircle from "./AlarmCircle";
@@ -167,6 +168,8 @@ export default function NowPlayingSheet({
   const [shared, setShared] = useState(false);
   /** Slug the user already reported — resets automatically on station change. */
   const [reportedSlug, setReportedSlug] = useState<string | null>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(sheetRef);
 
   useEffect(() => {
     let live = true;
@@ -214,7 +217,7 @@ export default function NowPlayingSheet({
   };
 
   return (
-    <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label={t("player.nowPlaying")} data-player-scope>
+    <div ref={sheetRef} className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label={t("player.nowPlaying")} data-player-scope>
       <button
         type="button"
         aria-label={t("a11y.close")}
@@ -246,7 +249,7 @@ export default function NowPlayingSheet({
               title={t("action.stop")}
               className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-muted transition hover:text-danger"
             >
-              <Icon name="x" size={15} />
+              <Icon name="stop" size={15} />
             </button>
           </div>
 
@@ -275,6 +278,16 @@ export default function NowPlayingSheet({
             bitrate={current.bitrate}
             status={status}
           />
+          {nowPlaying && (
+            <a
+              href={`https://www.youtube.com/results?search_query=${encodeURIComponent(nowPlaying)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1.5 block text-center text-[11px] font-medium text-brand-2 underline-offset-2 hover:underline dark:text-accent"
+            >
+              {t("nowPlaying.findSong")} ↗
+            </a>
+          )}
 
           <div className="mt-4 flex items-center gap-3 rounded-2xl border border-border bg-surface px-3.5 py-3">
             <Icon name="eq" size={22} className="shrink-0 text-brand-2 dark:text-accent" />
@@ -319,6 +332,33 @@ export default function NowPlayingSheet({
             </div>
             {playing && !nowPlaying && <EqBars className="ml-auto" />}
           </div>
+          {status === "error" && upNext && (
+            <button
+              type="button"
+              onClick={next}
+              className="mt-3 flex w-full items-center gap-3 rounded-2xl border border-brand-2/30 bg-brand-2/5 px-3.5 py-2.5 text-left transition hover:border-brand-2/60 dark:border-accent/30 dark:bg-accent/10"
+            >
+              <StationLogo src={upNext.favicon} fallbackSrc={upNext.faviconAlt} name={upNext.name} size={32} className="h-8 w-8 shrink-0" />
+              <span className="min-w-0 flex-1">
+                <span className="block text-[12px] font-semibold text-brand-2 dark:text-accent">
+                  {t("nowPlaying.trySimilar")}
+                </span>
+                <span className="mt-0.5 block truncate text-[11px] text-muted">
+                  {upNext.name}
+                </span>
+              </span>
+              <Icon name="chevR" size={16} className="shrink-0 text-muted" />
+            </button>
+          )}
+          {status === "error" && !upNext && (
+            <button
+              type="button"
+              onClick={next}
+              className="mt-3 w-full rounded-2xl border border-brand-2/30 bg-brand-2/5 px-3.5 py-2.5 text-center text-[12px] font-semibold text-brand-2 transition hover:border-brand-2/60 dark:border-accent/30 dark:bg-accent/10 dark:text-accent"
+            >
+              {t("nowPlaying.trySimilar")}
+            </button>
+          )}
 
           {/* Transport */}
           <div className="mt-5 flex items-center justify-center gap-9">
@@ -352,53 +392,74 @@ export default function NowPlayingSheet({
             </button>
           </div>
 
-          {/* Secondary actions */}
-          <div className="mt-6 flex items-center justify-center gap-3.5">
-            <button
-              type="button"
-              onClick={() => toggleFavorite(current)}
-              aria-pressed={isFav}
-              aria-label={isFav ? t("favorites.remove") : t("favorites.add")}
-              className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
-                isFav ? "text-rose" : "text-muted hover:text-rose"
-              }`}
-            >
-              <Icon name={isFav ? "heartF" : "heart"} size={20} strokeWidth={1.8} />
-            </button>
-            <SleepCircle />
-            <AlarmCircle slug={current.slug} />
-            <CastButton />
-            <a
-              href={wa}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={t("share.whatsapp")}
-              title={t("share.whatsapp")}
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25d366]/15 text-[#1da851] transition hover:bg-[#25d366]/25"
-            >
-              <Icon name="whatsapp" size={18} />
-            </a>
-            <button
-              type="button"
-              onClick={share}
-              aria-label={t("share.station")}
-              title={shared ? t("share.linkCopied") : t("share.station")}
-              className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
-                shared ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
-              }`}
-            >
-              <Icon name={shared ? "check" : "share"} size={18} strokeWidth={1.8} />
-            </button>
-            <button
-              type="button"
-              onClick={toggleMute}
-              aria-label={muted ? t("player.unmute") : t("player.mute")}
-              className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
-                muted ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
-              }`}
-            >
-              <Icon name={muted ? "x" : "vol"} size={18} strokeWidth={1.8} />
-            </button>
+          {/* Secondary actions — icon + visible label so nothing needs recall */}
+          <div className="mt-6 flex items-start justify-center gap-2">
+            <span className="flex w-12 flex-col items-center gap-1">
+              <button
+                type="button"
+                onClick={() => toggleFavorite(current)}
+                aria-pressed={isFav}
+                aria-label={isFav ? t("favorites.remove") : t("favorites.add")}
+                className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
+                  isFav ? "text-rose" : "text-muted hover:text-rose"
+                }`}
+              >
+                <Icon name={isFav ? "heartF" : "heart"} size={20} strokeWidth={1.8} />
+              </button>
+              <span className="text-[10px] font-medium text-muted">{t("nowPlaying.lblFav")}</span>
+            </span>
+            <span className="flex w-12 flex-col items-center gap-1">
+              <SleepCircle />
+              <span className="text-[10px] font-medium text-muted">{t("nowPlaying.lblSleep")}</span>
+            </span>
+            <span className="flex w-12 flex-col items-center gap-1">
+              <AlarmCircle slug={current.slug} />
+              <span className="text-[10px] font-medium text-muted">{t("nowPlaying.lblAlarm")}</span>
+            </span>
+            <span className="flex w-12 flex-col items-center gap-1">
+              <CastButton />
+              <span className="text-[10px] font-medium text-muted">{t("nowPlaying.lblCast")}</span>
+            </span>
+            <span className="flex w-12 flex-col items-center gap-1">
+              <a
+                href={wa}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t("share.whatsapp")}
+                title={t("share.whatsapp")}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25d366]/15 text-[#1da851] transition hover:bg-[#25d366]/25"
+              >
+                <Icon name="whatsapp" size={18} />
+              </a>
+              <span className="text-[10px] font-medium text-muted">WhatsApp</span>
+            </span>
+            <span className="flex w-12 flex-col items-center gap-1">
+              <button
+                type="button"
+                onClick={share}
+                aria-label={t("share.station")}
+                title={shared ? t("share.linkCopied") : t("share.station")}
+                className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
+                  shared ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
+                }`}
+              >
+                <Icon name={shared ? "check" : "share"} size={18} strokeWidth={1.8} />
+              </button>
+              <span className="text-[10px] font-medium text-muted">{t("nowPlaying.lblShare")}</span>
+            </span>
+            <span className="flex w-12 flex-col items-center gap-1">
+              <button
+                type="button"
+                onClick={toggleMute}
+                aria-label={muted ? t("player.unmute") : t("player.mute")}
+                className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${
+                  muted ? "text-brand-2 dark:text-accent" : "text-muted hover:text-ink"
+                }`}
+              >
+                <Icon name={muted ? "volOff" : "vol"} size={18} strokeWidth={1.8} />
+              </button>
+              <span className="text-[10px] font-medium text-muted">{t("nowPlaying.lblMute")}</span>
+            </span>
           </div>
 
           {/* Volume */}
@@ -412,6 +473,7 @@ export default function NowPlayingSheet({
               value={vol}
               onChange={(e) => setVolume(Number(e.target.value))}
               aria-label={t("player.volume")}
+              aria-valuetext={`${Math.round(vol * 100)}%`}
               className="vol w-full"
               style={{ "--fill": `${vol * 100}%` } as React.CSSProperties}
             />

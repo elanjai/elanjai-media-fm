@@ -11,7 +11,7 @@
   --surface-2: #f5f2e4;
   --border: #e9e5d3;
   --ink: #10241a;
-  --muted: #5f7268;
+  --muted: #556760;
   --brand: #0b3d2e;
   --brand-2: #0f5138;
   --brand-ink: #fdfcf6;
@@ -119,6 +119,24 @@ html[lang="hi"] body { --font-sans: var(--font-noto-dev), var(--font-inter), ui-
   scrollbar-width: none;
 }
 .rail::-webkit-scrollbar { display: none; }
+
+/* Minimum 44px touch target for chips/links that carry their own padding —
+   design rule "Tap targets ≥ 44px". */
+.hit {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Keyboard focus — a consistent ring everywhere, not browser defaults. */
+:focus-visible {
+  outline: 2px solid var(--brand-2);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--accent);
+}
 
 /* Small visual, big touch target — expands a control's hit area to 44×44
    without changing how it looks. Apply to icon-only buttons under 44px. */

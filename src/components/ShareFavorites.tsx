@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { PublicStation } from "@/lib/types";
 import Icon from "./Icon";
+import { useT } from "./LocaleProvider";
 
 /**
  * F-5.2 export side: a shareable /f?s=… link plus a QR code for
@@ -17,6 +18,7 @@ export default function ShareFavorites({
   const [open, setOpen] = useState(false);
   const [svg, setSvg] = useState("");
   const [copied, setCopied] = useState(false);
+  const t = useT();
 
   useEffect(() => {
     if (!open || !stations.length) return;
@@ -43,7 +45,7 @@ export default function ShareFavorites({
         className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-surface px-4 py-3 text-[13px] font-semibold text-muted transition hover:border-brand-2/40 hover:text-ink disabled:opacity-50"
       >
         <Icon name="share" size={15} strokeWidth={1.8} />
-        {open ? "Hide share options" : "Share favorites (link + QR)"}
+        {open ? t("share.hideOptions") : t("share.favorites")}
       </button>
 
       {open && (
@@ -52,7 +54,7 @@ export default function ShareFavorites({
             <div
               className="mx-auto w-[180px] [&>svg]:h-full [&>svg]:w-full"
               dangerouslySetInnerHTML={{ __html: svg }}
-              aria-label="QR code for the share link"
+              aria-label={t("share.qrAlt")}
             />
           ) : (
             <div className="mx-auto h-[180px] w-[180px] animate-pulse rounded-xl bg-surface-2" />
@@ -71,7 +73,7 @@ export default function ShareFavorites({
             }}
             className="mt-3 rounded-full bg-accent px-5 py-2 text-xs font-bold text-accent-ink transition hover:brightness-105"
           >
-            {copied ? "Copied" : "Copy link"}
+            {copied ? t("share.copied") : t("share.copyLink")}
           </button>
         </div>
       )}

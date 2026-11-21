@@ -156,3 +156,43 @@ Genuinely authored, not category-interchangeable: dark-forest + warm-yellow-on-c
 2. Is this a radio player or a directory? Every card navigates before it plays — "browse" is the primary verb today. Is that the right bet when the magic is the audio?
 3. The first 10 seconds ask two questions before playing a note. What would retention look like if the first tap played a station and the questions waited?
 4. Seven unlabeled icons and a hidden senior mode vs. "one tap" as the brand promise — does the Now Playing sheet serve listeners, or the feature checklist?
+
+---
+
+## 8. Implementation status (post-review pass)
+
+**Phase 0 — shipped**
+- `.hit` class defined (44px min-height) and applied to genre/category chips; dead-class uses on station page + `ReportButton` now resolve.
+- Consent banner gated while the language picker is open (`ConsentBanner` checks `langPickerOpen`); picker moved inside `AudioProvider`.
+- `favorites.*`, `recent.*`, `share.*` dictionary keys wired into `ClientStationList` / `ShareFavorites`; `StationCard` gained a `genreLabel` prop, passed localized names from all server call sites incl. `FavoritesRail`.
+- `text-balance` hero h1, prose-width cap on long copy, hero subline contrast raised, `lang="en"` on generated English FAQ.
+- Plurals: `fmtCount(one, many, count)` helper + `*One` dictionary variants in en/ta/hi; applied to station counts, live counts, shared/import counts, genre counts, network/collection counts.
+- Real glyphs: `stop`, `volOff`, `copy`, `shuffle` added to the icon set; "x-as-stop" and "plus-as-copy" replaced.
+- Destructive actions: `recent.clearConfirm` and `stats.resetConfirm` confirm strings added and wired.
+
+**Phase 1 — shipped**
+- Native-script search: `searchLocal` detects non-ASCII queries and matches a native haystack (`name_native` + aliases + `NATIVE_NAMES` for genre/languages). Regression tests in `search.test.ts` (8/8 pass).
+- `name_native` populated for 20 flagship Tamil/Hindi stations in `data/stations.json` (top stations per language).
+- Focus management: shared `useFocusTrap` hook applied to NowPlayingSheet, LanguagePickerSheet, Settings sheet; keyboard letter-shortcuts gated while any `[role="dialog"]` is open; `aria-current` on the active genre chip.
+- Contrast: `--muted` darkened (4.5+ on cream), tamil/kannada genre-tile foregrounds deepened, ad/sponsored badges raised to 11px.
+- Error recovery: "try a similar station" card in the Now Playing sheet on stream error (uses the queue's next station).
+- Recognition: secondary action row now carries visible micro-labels (Favorite/Sleep/Alarm/Cast/WhatsApp/Share/Mute); volume slider announces `aria-valuetext` percent.
+- "Just play" first run: `prefs.playNow` row in the language picker plays a flagship of the picked language immediately.
+- Bonus: "Find this song" (YouTube lookup) under the ICY track line.
+
+**Phase 2 — shipped**
+- Shuffle: hero row gains a language-aware shuffle button (`action.shuffle`, picks from chosen languages' pools).
+- RecentsRail on home (mirrors FavoritesRail) → recents get a one-tap re-entry.
+- `WeekCard` "Your week in radio" recap on home (local stats, top station; renders after ≥10 min/7 days).
+- Player gestures: horizontal swipe = prev/next station, swipe up = open Now Playing sheet.
+- Offline dial: `OfflineFavorites` renders saved station tiles on `/offline` from local snapshots.
+- Caregiver promo: `/simple` promo card on the Favorites page.
+- Explore consolidation: city / genres / network / diaspora chip row under the language rail.
+
+**Deferred**
+- Full `name_native` coverage beyond flagships (~150-station goal needs a curated data pass, not guessed spellings).
+- Now-playing track *history* ("Earlier · {track}") — dictionary keys exist; needs a previous-title ref in `AudioProvider`.
+- Localizing the content-heavy pages (FAQ/ad-free/add-station English walls) — needs translated copy, not code.
+- Genre styles for the other ~12 language slugs.
+
+**Verification:** `tsc --noEmit` clean · `eslint` clean · `vitest` 45/45 + 8 search tests · dev server 200 on /en, /favorites, /offline, /genre/tamil, /search, /recent, /city.

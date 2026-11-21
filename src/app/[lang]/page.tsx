@@ -3,6 +3,8 @@ import AdSlot from "@/components/AdSlot";
 import BrandLogo from "@/components/BrandLogo";
 import FavoritesRail from "@/components/FavoritesRail";
 import HeroPlay from "@/components/HeroPlay";
+import RecentsRail from "@/components/RecentsRail";
+import WeekCard from "@/components/WeekCard";
 import Icon from "@/components/Icon";
 import LanguageRail from "@/components/LanguageRail";
 import LiveBadge from "@/components/LiveBadge";
@@ -60,13 +62,13 @@ export default async function HomePage() {
           <BrandLogo size={84} className="shrink-0 md:hidden" />
           <BrandLogo size={104} className="hidden shrink-0 md:block" />
         </div>
-        <h1 className="relative mt-3 font-display text-[26px] font-semibold leading-[1.18] tracking-tight sm:text-[32px] lg:text-[38px]">
+        <h1 className="relative mt-3 max-w-md text-balance font-display text-[26px] font-semibold leading-[1.18] tracking-tight sm:text-[32px] lg:text-[38px]">
           {dict.hero.title}
         </h1>
         <p className="relative mt-2 text-xs text-brand-ink/75">
           {dict.hero.subtitle}
         </p>
-        <p className="relative mt-1.5 text-[11px] text-brand-ink/60">
+        <p className="relative mt-1.5 text-xs text-brand-ink/80">
           {genres.slice(0, 3).map((g) => genreName(dict, g.slug, g.name)).join(" · ")} · {fmt(dict.hero.moreLangs, { count: Math.max(genres.length - 3, 0) })}
         </p>
         {tamil[0] && (
@@ -93,6 +95,24 @@ export default async function HomePage() {
         <LanguageRail genres={genres} />
       </section>
 
+      {/* Explore — consolidated discovery: cities, near-me, networks, diaspora */}
+      <nav aria-label={dict.home.explore} className="rail -mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1">
+        {([
+          ["/city", dict.home.exploreCities],
+          ["/genres", dict.footer.allGenres],
+          ["/network", dict.home.exploreNetworks],
+          ["/listen", dict.home.exploreAbroad],
+        ] as const).map(([href, label]) => (
+          <Link
+            key={href}
+            href={href}
+            className="hit shrink-0 rounded-full border border-border bg-surface px-4 py-2 text-xs font-semibold text-ink transition hover:border-brand-2/50"
+          >
+            {label}
+          </Link>
+        ))}
+      </nav>
+
       {/* Popular now — flagship station per language */}
       {collections.length > 0 && (
         <section aria-labelledby="popular" className="mt-8">
@@ -110,6 +130,7 @@ export default async function HomePage() {
                   <StationCard
                     station={station}
                     queue={collections.map((c) => c.station)}
+                    genreLabel={genreName(dict, genre.slug, genre.name)}
                   />
                   <span
                     className="pointer-events-none absolute left-5 top-5 z-10 rounded-full px-2 py-[3px] text-[11px] font-bold uppercase tracking-wider shadow-sm"
@@ -177,7 +198,7 @@ export default async function HomePage() {
             <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
               {stations.map((s) => (
                 <div key={s.id} className="w-[130px] shrink-0">
-                  <StationCard station={s} queue={stations} />
+                  <StationCard station={s} queue={stations} genreLabel={genreName(dict, s.genre)} />
                 </div>
               ))}
             </div>
@@ -187,6 +208,12 @@ export default async function HomePage() {
 
       {/* Favorites — user's saved stations, hidden until ≥1 exists */}
       <FavoritesRail />
+
+      {/* Recently played — one-tap re-entry for returning listeners */}
+      <RecentsRail />
+
+      {/* "Your week" listening recap — only for returning listeners */}
+      <WeekCard />
 
       {/* Tamil radio — card rail */}
       {tamilGenre && tamil.length > 0 && (
@@ -205,7 +232,7 @@ export default async function HomePage() {
           <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
             {tamil.map((s) => (
               <div key={s.id} className="w-[130px] shrink-0">
-                <StationCard station={s} queue={tamil} />
+                <StationCard station={s} queue={tamil} genreLabel={genreName(dict, "tamil", tamilGenre.name)} />
               </div>
             ))}
             <Link

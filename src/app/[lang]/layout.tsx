@@ -172,8 +172,8 @@ export default async function RootLayout({
               <InstallPrompt />
               <AlarmWatcher />
               <TabBar />
+              <LanguagePickerSheet genres={genres} />
             </AudioProvider>
-            <LanguagePickerSheet genres={genres} />
             <ConsentBanner />
             <PageViewBeacon />
           </PrefsProvider>

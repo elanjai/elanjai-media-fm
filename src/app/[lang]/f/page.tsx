@@ -3,7 +3,7 @@ import Link from "@/components/LangLink";
 import ImportFavorites from "@/components/ImportFavorites";
 import { getStationBySlug, toPublic } from "@/lib/data";
 import { SITE } from "@/lib/site";
-import { dictionaryFor, fmt, getDictionary, hasLocale } from "@/i18n";
+import { dictionaryFor, fmt, fmtCount, getDictionary, hasLocale } from "@/i18n";
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -62,7 +62,7 @@ export default async function SharedFavoritesPage({
       ) : (
         <>
           <p className="mt-3 text-sm text-muted">
-            {fmt(dict.share.sharedCount, { count: found.length })}
+            {fmtCount(dict.share.sharedCountOne, dict.share.sharedCount, found.length)}
             {missing > 0 ? ` (${fmt(dict.share.missing, { count: missing })})` : ""}.
           </p>
           <ImportFavorites stations={found} />

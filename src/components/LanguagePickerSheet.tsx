@@ -1,9 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { Genre } from "@/lib/types";
 import { NATIVE_NAMES, langsFromNavigator } from "@/lib/languages";
 import { fmt } from "@/i18n/locales";
+import { useFocusTrap } from "@/lib/useFocusTrap";
+import { useCatalog, usePlaybackActions } from "./AudioProvider";
 import Icon from "./Icon";
 import { useT } from "./LocaleProvider";
 import { usePrefs } from "./PrefsProvider";
@@ -18,6 +20,10 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
   const t = useT();
   const { langs, hasChosenLangs, setLangs, langPickerOpen, closeLangPicker } =
     usePrefs();
+  const { stations } = useCatalog();
+  const { play } = usePlaybackActions();
+  const sheetRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(sheetRef, langPickerOpen);
   // Chips the user tapped this session; null = untouched, so the derived
   // pre-selection (saved choice, else browser languages) shows instead.
   const [override, setOverride] = useState<string[] | null>(null);
@@ -53,8 +59,18 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
     closeLangPicker();
   };
 
+  const playNow = () => {
+    if (!stations?.length) return;
+    const slug = picked[0];
+    const first =
+      stations.find((s) => s.languages?.includes(slug)) ?? stations[0];
+    finish(picked);
+    play(first, stations);
+  };
+
   return (
     <div
+      ref={sheetRef}
       className="fixed inset-0 z-50"
       role="dialog"
       aria-modal="true"
@@ -114,6 +130,17 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
               {hasChosenLangs ? t("prefs.clear") : t("prefs.skip")}
             </button>
           </div>
+          {stations && stations.length > 0 && (
+            <button
+              type="button"
+              onClick={playNow}
+              className="mt-3.5 flex w-full items-center justify-center gap-2 rounded-full border border-brand-2/30 bg-brand-2/5 py-2.5 text-[13px] font-semibold text-brand-2 transition hover:border-brand-2/60 dark:border-accent/30 dark:bg-accent/10 dark:text-accent"
+            >
+              <Icon name="play" size={14} />
+              {t("prefs.playNow")}
+              <span className="font-normal opacity-75">· {t("prefs.playNowHint")}</span>
+            </button>
+          )}
           <p className="mt-3 pb-1 text-center text-[11px] text-muted">
             {t("prefs.privacyNote")}
           </p>

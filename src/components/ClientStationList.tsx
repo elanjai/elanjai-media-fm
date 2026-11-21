@@ -1,24 +1,33 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { fmt } from "@/i18n/locales";
 import { useLibrary } from "./AudioProvider";
 import Icon from "./Icon";
+import { useT } from "./LocaleProvider";
 import StationRow from "./StationRow";
-
-function relTime(at?: number): string | null {
-  if (!at) return null;
-  const m = Math.floor((Date.now() - at) / 60000);
-  if (m < 1) return "now";
-  if (m < 60) return `${m} min`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `${h} h`;
-  const d = Math.floor(h / 24);
-  return d <= 1 ? "Yesterday" : `${d} d`;
-}
 
 /** Renders stations stored client-side (favorites map / recents). */
 export default function ClientStationList({ kind }: { kind: "favorites" | "recents" }) {
   const { favoriteStations, recents, clearRecents } = useLibrary();
+  const t = useT();
   const list = kind === "favorites" ? favoriteStations : recents;
+  // Relative-time base — captured once after mount, not during render.
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => {
+    queueMicrotask(() => setNow(Date.now()));
+  }, []);
+
+  const relTime = (at?: number): string | null => {
+    if (!at || !now) return null;
+    const m = Math.floor((now - at) / 60000);
+    if (m < 1) return t("recent.now");
+    if (m < 60) return fmt(t("recent.minsAgo"), { count: m });
+    const h = Math.floor(m / 60);
+    if (h < 24) return fmt(t("recent.hoursAgo"), { count: h });
+    const d = Math.floor(h / 24);
+    return d <= 1 ? t("recent.yesterday") : fmt(t("recent.daysAgo"), { count: d });
+  };
 
   if (list.length === 0) {
     return (
@@ -30,12 +39,10 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
           className="text-muted"
         />
         <p className="mt-4 font-display text-sm font-semibold text-ink">
-          {kind === "favorites" ? "No favorites yet" : "Nothing played yet"}
+          {t(kind === "favorites" ? "favorites.emptyTitle" : "recent.emptyTitle")}
         </p>
         <p className="mt-1.5 text-xs text-muted">
-          {kind === "favorites"
-            ? "Tap the heart on any station and it lands here."
-            : "Pick a station to get started."}
+          {t(kind === "favorites" ? "favorites.emptyHint" : "recent.emptyHint")}
         </p>
       </div>
     );
@@ -66,20 +73,22 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
           <Icon name="heart" size={20} className="shrink-0 text-accent-ink" />
           <div>
             <p className="text-[12px] font-medium text-accent-ink">
-              Tap ♡ on any station to keep it here.
+              {t("favorites.empty")}
             </p>
             <p className="mt-0.5 text-[11px] text-accent-ink/70">
-              Favorites never leave your device.
+              {t("favorites.deviceNote")}
             </p>
           </div>
         </div>
       ) : (
         <button
           type="button"
-          onClick={clearRecents}
+          onClick={() => {
+            if (window.confirm(t("recent.clearConfirm"))) clearRecents();
+          }}
           className="mt-4 flex w-full items-center justify-center gap-2.5 rounded-[14px] bg-surface-2 py-3 text-[13px] font-semibold text-muted transition hover:text-ink"
         >
-          <Icon name="x" size={15} /> Clear history
+          <Icon name="x" size={15} /> {t("recent.clear")}
         </button>
       )}
     </div>

@@ -10,6 +10,7 @@ import { breadcrumbJsonLd } from "@/lib/jsonld";
 import {
   dictionaryFor,
   fmt,
+  fmtCount,
   genreName,
   getDictionary,
   hasLocale,
@@ -90,7 +91,8 @@ export default async function GenrePage({ params }: Props) {
           x.slug === g.slug ? (
             <span
               key={x.slug}
-              className="shrink-0 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-accent-ink"
+              aria-current="page"
+              className="hit shrink-0 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-accent-ink"
             >
               {genreName(dict, x.slug, x.name)}
             </span>
@@ -98,7 +100,7 @@ export default async function GenrePage({ params }: Props) {
             <Link
               key={x.slug}
               href={`/genre/${x.slug}`}
-              className="shrink-0 rounded-full border border-border bg-surface-2 px-4 py-2 text-xs font-medium text-ink transition hover:border-brand-2/50"
+              className="hit shrink-0 rounded-full border border-border bg-surface-2 px-4 py-2 text-xs font-medium text-ink transition hover:border-brand-2/50"
             >
               {genreName(dict, x.slug, x.name)}
             </Link>
@@ -111,14 +113,14 @@ export default async function GenrePage({ params }: Props) {
           <Link
             key={c.slug}
             href={`/category/${c.slug}`}
-            className="shrink-0 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-medium text-muted transition hover:border-brand-2/50 hover:text-ink"
+            className="hit shrink-0 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-medium text-muted transition hover:border-brand-2/50 hover:text-ink"
           >
             {c.name}
           </Link>
         ))}
       </div>
       <p className="mt-3 text-xs text-muted">
-        {fmt(dict.common.liveStationsTap, { count: g.count })}
+        {fmtCount(dict.common.liveStationTapOne, dict.common.liveStationsTap, g.count)}
       </p>
 
       {/* Desktop right rail (§6.3) — only where it can't crowd the content */}

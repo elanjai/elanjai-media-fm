@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Icon from "@/components/Icon";
+import OfflineFavorites from "@/components/OfflineFavorites";
 import { dictionaryFor, getDictionary, hasLocale } from "@/i18n";
 
 type Props = { params: Promise<{ lang: string }> };
@@ -27,6 +28,7 @@ export default async function OfflinePage() {
       <p className="mt-2 max-w-sm text-sm text-muted">
         {dict.offline.body}
       </p>
+      <OfflineFavorites />
     </div>
   );
 }

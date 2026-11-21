@@ -7,10 +7,13 @@ import StationLogo from "./StationLogo";
 export default function StationCard({
   station,
   queue,
+  genreLabel,
 }: {
   station: PublicStation;
   /** List this card belongs to — passed to the player as the next/prev queue. */
   queue?: PublicStation[];
+  /** Localized genre name (this is a server component — callers resolve it). */
+  genreLabel?: string;
 }) {
   return (
     <div className="group relative rounded-[20px] border border-border bg-surface p-3 transition hover:-translate-y-0.5 hover:border-brand-2/50 hover:shadow-lg hover:shadow-brand/10">
@@ -33,7 +36,7 @@ export default function StationCard({
       </div>
       <p className="mt-2.5 truncate text-[13px] font-semibold text-ink">{station.name}</p>
       <p className="mt-0.5 truncate text-xs capitalize text-muted">
-        {station.genre} {station.bitrate ? `· ${station.bitrate}k` : ""}
+        {genreLabel ?? station.genre} {station.bitrate ? `· ${station.bitrate}k` : ""}
       </p>
     </div>
   );

@@ -2,12 +2,13 @@
 
 import Link from "@/components/LangLink";
 import { useLibrary } from "./AudioProvider";
-import { useT } from "./LocaleProvider";
+import { useGenreName, useT } from "./LocaleProvider";
 import StationCard from "./StationCard";
 
 /** Home-page favorites rail — renders only once the user has ≥1 saved station. */
 export default function FavoritesRail() {
   const t = useT();
+  const gn = useGenreName();
   const { favoriteStations } = useLibrary();
   if (!favoriteStations.length) return null;
 
@@ -30,7 +31,7 @@ export default function FavoritesRail() {
       <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
         {favoriteStations.map((s) => (
           <div key={s.id} className="w-[130px] shrink-0">
-            <StationCard station={s} queue={favoriteStations} />
+            <StationCard station={s} queue={favoriteStations} genreLabel={gn(s.genre)} />
           </div>
         ))}
       </div>

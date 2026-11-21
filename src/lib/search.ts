@@ -1,3 +1,4 @@
+import { NATIVE_NAMES } from "./languages";
 import type { PublicStation } from "./types";
 
 /**
@@ -49,10 +50,15 @@ function jaccard(a: Set<string>, b: Set<string>): number {
   return inter / (a.size + b.size - inter);
 }
 
+/** True when the query carries non-ASCII script (native dictation, typed names). */
+const hasNativeScript = (s: string) => /[^\x00-\x7f]/.test(s);
+
 type Entry = {
   s: PublicStation;
   name: string;
   hay: string; // name + tags + genre + language + country, normalized
+  /** Native-script haystack — name_native + aliases, lowercased but NOT Latin-normalized. */
+  hayNative: string;
   tri: Set<string>;
 };
 
@@ -65,7 +71,17 @@ function entriesOf(stations: PublicStation[]): Entry[] {
     const hay = norm(
       [s.name, s.genre, s.language, s.country, s.codec].join(" ")
     );
-    return { s, name, hay, tri: trigrams(name) };
+    const hayNative = [
+      s.nameNative ?? "",
+      ...(s.aliases ?? []),
+      // Genre + language native labels — "தமிழ்" / "हिन्दी" queries hit every
+      // station of that language even without per-station native names.
+      NATIVE_NAMES[s.genre] ?? "",
+      ...(s.languages ?? []).map((l) => NATIVE_NAMES[l] ?? ""),
+    ]
+      .join(" ")
+      .toLowerCase();
+    return { s, name, hay, hayNative, tri: trigrams(name) };
   });
   cache = { key: stations, entries };
   return entries;
@@ -87,6 +103,20 @@ export function searchLocal(
   stations: PublicStation[],
   query: string
 ): PublicStation[] {
+  const raw = query.trim();
+  const entries = entriesOf(stations);
+  // Native-script query (e.g. Tamil dictation "சூரியன்") — the Latin
+  // normalizer would reduce it to nothing, so match raw against the
+  // native haystack (name_native + aliases) before the Latin path.
+  if (hasNativeScript(raw)) {
+    const q = raw.toLowerCase();
+    const hits = entries.filter(
+      (e) =>
+        e.hayNative.includes(q) ||
+        (e.s.nameNative ?? "").toLowerCase().includes(q)
+    );
+    if (hits.length) return hits.map((h) => h.s);
+  }
   const needle = expandQuery(query);
   if (!needle) return [];
   const tokens = needle.split(" ");

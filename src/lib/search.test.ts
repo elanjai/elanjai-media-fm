@@ -58,4 +58,22 @@ describe("searchLocal", () => {
     expect(searchLocal(catalog, "   ")).toEqual([]);
     expect(searchLocal(catalog, "zzzzqqq")).toEqual([]);
   });
+
+  it("matches native-script queries against language names", () => {
+    // Tamil dictation "தமிழ்" should hit every Tamil station, not dead-end.
+    const r = searchLocal(catalog, "தமிழ்");
+    expect(r.length).toBeGreaterThan(0);
+    expect(r.every((s) => s.genre === "tamil")).toBe(true);
+    const h = searchLocal(catalog, "हिन्दी");
+    expect(h.every((s) => s.genre === "hindi")).toBe(true);
+  });
+
+  it("matches native-script queries against station native names", () => {
+    const nativeCatalog = [
+      { ...st("Suryan FM", "tamil", 900), nameNative: "சூரியன் எஃப்.எம்" },
+      st("Hello FM 106.4", "tamil", 500),
+    ];
+    const r = searchLocal(nativeCatalog, "சூரியன்");
+    expect(r[0]?.name).toBe("Suryan FM");
+  });
 });

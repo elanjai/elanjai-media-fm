@@ -2,7 +2,7 @@
 
 import { useLocalePath, useT } from "./LocaleProvider";
 import { fmt } from "@/i18n/locales";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Campaign } from "@/lib/ads";
 import { isBusyStatus, usePlayback, usePlaybackActions } from "./AudioProvider";
 import EqBars from "./EqBars";
@@ -21,9 +21,10 @@ export default function PlayerChrome({
 }) {
   const { current, status, error, nowPlaying, retryAttempt, pendingPlay, preroll } =
     usePlayback();
-  const { toggle, next, play, confirmPendingPlay, dismissPendingPlay } =
+  const { toggle, next, prev, play, confirmPendingPlay, dismissPendingPlay } =
     usePlaybackActions();
   const [open, setOpen] = useState(false);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const pathname = useLocalePath();
   const t = useT();
   // /simple has its own giant controls — the mini player would overlap them.
@@ -71,7 +72,28 @@ export default function PlayerChrome({
           </div>
         )}
         {current && (
-        <div className="mx-auto flex h-[68px] max-w-[370px] items-center gap-1 rounded-[22px] border border-border bg-surface px-2 shadow-xl shadow-brand/10">
+        <div
+          className="mx-auto flex h-[68px] max-w-[370px] items-center gap-1 rounded-[22px] border border-border bg-surface px-2 shadow-xl shadow-brand/10"
+          onTouchStart={(e) => {
+            const tp = e.touches[0];
+            touchStart.current = { x: tp.clientX, y: tp.clientY };
+          }}
+          onTouchEnd={(e) => {
+            const s = touchStart.current;
+            touchStart.current = null;
+            if (!s) return;
+            const tp = e.changedTouches[0];
+            const dx = tp.clientX - s.x;
+            const dy = tp.clientY - s.y;
+            // Swipe left/right skips the station queue; swipe up opens the sheet.
+            if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+              if (dx < 0) next();
+              else prev();
+            } else if (dy < -48 && Math.abs(dy) > Math.abs(dx) * 1.4) {
+              setOpen(true);
+            }
+          }}
+        >
           {/* Expand — single button owning logo + meta; no nested links */}
           <button
             type="button"
