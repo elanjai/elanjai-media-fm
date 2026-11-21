@@ -69,7 +69,7 @@
    "bollywood"
   ],
   "votes": 42274,
-  "is_active": false,
+  "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -785,7 +785,7 @@
    "punjabi"
   ],
   "votes": 5389,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "top_rank": 18
@@ -5028,7 +5028,7 @@
   "homepage": "",
   "tags": [],
   "votes": 237,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -5307,7 +5307,7 @@
   "homepage": "",
   "tags": [],
   "votes": 221,
-  "is_active": false,
+  "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -5589,7 +5589,7 @@
    "lofi"
   ],
   "votes": 208,
-  "is_active": false,
+  "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -6132,7 +6132,7 @@
   "homepage": "",
   "tags": [],
   "votes": 155,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
   "top_rank": 19
  },
@@ -6274,7 +6274,7 @@
    "radio chann pardesi"
   ],
   "votes": 147,
-  "is_active": false,
+  "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -6548,7 +6548,7 @@
   "homepage": "",
   "tags": [],
   "votes": 114,
-  "is_active": false,
+  "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -7171,7 +7171,7 @@
    "surrey"
   ],
   "votes": 84,
-  "is_active": false,
+  "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -7418,7 +7418,7 @@
    "urdu"
   ],
   "votes": 70,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00",
   "city": "srinagar",
   "state": "Jammu and Kashmir",
@@ -7773,7 +7773,7 @@
    "public radio"
   ],
   "votes": 9,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
   "city": "visakhapatnam",
@@ -9054,7 +9054,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -9779,7 +9779,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": false,
+  "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -10160,7 +10160,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": false,
+  "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -10542,7 +10542,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -10698,7 +10698,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": false,
+  "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -11151,7 +11151,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -11517,7 +11517,7 @@
    "hit",
    "pop"
   ],
-  "is_active": false
+  "is_active": true
  },
  {
   "id": "6e70cf66",
@@ -11698,7 +11698,7 @@
    "local news",
    "radio drama"
   ],
-  "is_active": true,
+  "is_active": false,
   "network": "air",
   "city": "kolhapur",
   "state": "Maharashtra"
@@ -12318,7 +12318,7 @@
   "country": "Nepal",
   "votes": 13,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "89c43387",
@@ -12341,7 +12341,7 @@
   "country": "Nepal",
   "votes": 12,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "846cf12b",
@@ -12387,7 +12387,7 @@
   "country": "Nepal",
   "votes": 11,
   "tags": [],
-  "is_active": true,
+  "is_active": false,
   "network": "bbc"
  },
  {
@@ -12411,7 +12411,7 @@
   "country": "Nepal",
   "votes": 11,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "168c92e3",
@@ -12434,7 +12434,7 @@
   "country": "Nepal",
   "votes": 9,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "950aead1",
@@ -12457,7 +12457,7 @@
   "country": "Nepal",
   "votes": 7,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "6fa0bc3c",
@@ -12480,7 +12480,7 @@
   "country": "Nepal",
   "votes": 7,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "4f608d1b",
@@ -12503,7 +12503,7 @@
   "country": "Nepal",
   "votes": 6,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "ea68b367",
@@ -12526,7 +12526,7 @@
   "country": "Nepal",
   "votes": 6,
   "tags": [],
-  "is_active": true,
+  "is_active": false,
   "frequency_mhz": 92.6
  },
  {
@@ -12550,7 +12550,7 @@
   "country": "Nepal",
   "votes": 6,
   "tags": [],
-  "is_active": true,
+  "is_active": false,
   "network": "redfm"
  },
  {
@@ -12574,7 +12574,7 @@
   "country": "Nepal",
   "votes": 5,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "7552b035",
@@ -12597,7 +12597,7 @@
   "country": "Nepal",
   "votes": 5,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "096a8915",
@@ -12620,7 +12620,7 @@
   "country": "Nepal",
   "votes": 5,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "95b9a506",
@@ -12643,7 +12643,7 @@
   "country": "Nepal",
   "votes": 4,
   "tags": [],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "8285475b",
@@ -12666,7 +12666,7 @@
   "country": "Nepal",
   "votes": 4,
   "tags": [],
-  "is_active": true,
+  "is_active": false,
   "network": "radiocity"
  },
  {
@@ -12692,7 +12692,7 @@
   "country": "Nepal",
   "votes": 3,
   "tags": [],
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
