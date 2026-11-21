@@ -12,8 +12,6 @@ import PreferredGenreRail from "@/components/PreferredGenreRail";
 import SponsoredStationRow from "@/components/SponsoredStationRow";
 import StationCard from "@/components/StationCard";
 import {
-  getCollectionStations,
-  getCollections,
   getGenres,
   getStations,
   getStationsByGenre,
@@ -28,12 +26,12 @@ import { fmt, genreName, getDictionary } from "@/i18n";
 export default async function HomePage() {
   const dict = await getDictionary();
   const today = await todayCached();
-  const editorial = getCollections(today);
   const featured = featuredStations({ slot: "featured-rail", today });
   const genres = getGenres();
   const total = getStations().length;
-  // One section object per language — the featured rail picks the listener's
-  // first choice (default Tamil) and OrderedGenreSections orders the rest.
+  // One section object per language — PreferredGenreRail renders one
+  // "Popular {lang}" rail per picked language and OrderedGenreSections
+  // covers the rest.
   const allSections = genres.map((g) => ({
     genre: g,
     stations: getStationsByGenre(g.slug).slice(0, 8).map(toPublic),
@@ -120,6 +118,42 @@ export default async function HomePage() {
         ))}
       </nav>
 
+      {/* Ad — first in-feed slot (placement map §6.3) */}
+      <AdSlot id="home-infeed-1" className="mt-8" />
+
+      {/* Featured stations (F-4.4) — broadcaster listings, Sponsored-labeled */}
+      {featured.length > 0 && (
+        <section aria-labelledby="featured" className="mt-8">
+          <h2
+            id="featured"
+            className="mb-3 font-display text-[16.5px] font-semibold text-ink"
+          >
+            {dict.home.featured}
+          </h2>
+          <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2">
+            {featured.map((f) => (
+              <SponsoredStationRow
+                key={f.campaign.id}
+                station={f.station}
+                campaignId={f.campaign.id}
+                slot="featured-rail"
+                queue={featured.map((x) => x.station)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Favorites — user's saved stations, hidden until ≥1 exists */}
+      <FavoritesRail />
+
+      {/* Recently played — one-tap re-entry for returning listeners;
+          renders only once ≥1 station has been played */}
+      <RecentsRail />
+
+      {/* Popular {lang} — one card rail per picked language (default Tamil) */}
+      <PreferredGenreRail sections={allSections} />
+
       {/* Popular now — flagship station per language */}
       {collections.length > 0 && (
         <section aria-labelledby="popular" className="mt-8">
@@ -151,76 +185,6 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-
-      {/* Ad — after "Popular now" (placement map §6.3) */}
-      <AdSlot id="home-infeed-1" className="mt-8" />
-
-      {/* Featured stations (F-4.4) — broadcaster listings, Sponsored-labeled */}
-      {featured.length > 0 && (
-        <section aria-labelledby="featured" className="mt-8">
-          <h2
-            id="featured"
-            className="mb-3 font-display text-[16.5px] font-semibold text-ink"
-          >
-            {dict.home.featured}
-          </h2>
-          <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2">
-            {featured.map((f) => (
-              <SponsoredStationRow
-                key={f.campaign.id}
-                station={f.station}
-                campaignId={f.campaign.id}
-                slot="featured-rail"
-                queue={featured.map((x) => x.station)}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Editorial collections — seasonal/curated rails (F-2.5) */}
-      {editorial.map((col) => {
-        const stations = getCollectionStations(col).map(toPublic);
-        if (!stations.length) return null;
-        return (
-          <section
-            key={col.slug}
-            aria-labelledby={`col-${col.slug}`}
-            className="mt-8"
-          >
-            <div className="mb-3 flex items-baseline justify-between">
-              <h2
-                id={`col-${col.slug}`}
-                className="font-display text-[16.5px] font-semibold text-ink"
-              >
-                {col.title}
-              </h2>
-              <Link
-                href={`/collection/${col.slug}`}
-                className="text-xs font-semibold text-brand-2 dark:text-accent"
-              >
-                {dict.home.seeAll}
-              </Link>
-            </div>
-            <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
-              {stations.map((s) => (
-                <div key={s.id} className="w-[130px] shrink-0">
-                  <StationCard station={s} queue={stations} genreLabel={genreName(dict, s.genre)} />
-                </div>
-              ))}
-            </div>
-          </section>
-        );
-      })}
-
-      {/* Favorites — user's saved stations, hidden until ≥1 exists */}
-      <FavoritesRail />
-
-      {/* Preferred-language radio — card rail (first picked, default Tamil) */}
-      <PreferredGenreRail sections={allSections} />
-
-      {/* Recently played — one-tap re-entry for returning listeners */}
-      <RecentsRail />
 
       {/* "Your week" listening recap — only for returning listeners */}
       <WeekCard />

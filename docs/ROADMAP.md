@@ -491,7 +491,7 @@ would cover the player. Use manually placed units only.
 
 | Surface | Slot | Format | Notes |
 |---|---|---|---|
-| Home | After "Popular now" | In-feed / responsive, fixed min-height | First ad is below the fold on mobile |
+| Home | After the Explore chip row | In-feed / responsive, fixed min-height | First ad is below the fold on mobile |
 | Home | After the 2nd language section | Responsive | — |
 | Genre / category / city page | After row 8, then every 12 rows | In-feed matching the `StationRow` style | Max 3 per page |
 | Station page | Below the Now Playing card, above related stations | Responsive rectangle | **Never** between the hero and the Play CTA |
