@@ -19,9 +19,9 @@ const THEME_OPTS: { v: ThemeChoice; labelKey: string }[] = [
 ];
 
 const SIZE_OPTS: { v: TextSize; labelKey: string }[] = [
+  { v: "small", labelKey: "settings.sizeSmall" },
   { v: "default", labelKey: "settings.sizeDefault" },
   { v: "large", labelKey: "settings.sizeLarge" },
-  { v: "xl", labelKey: "settings.sizeXl" },
 ];
 
 const LOCALE_OPTS = LOCALES.map((l) => ({ v: l, label: LOCALE_META[l].native }));

@@ -4,6 +4,7 @@ import Link from "@/components/LangLink";
 import type { PublicStation } from "@/lib/types";
 import { usePlayback } from "./AudioProvider";
 import EqBars from "./EqBars";
+import FavToggle from "./FavToggle";
 import { useGenreName, useT } from "./LocaleProvider";
 import PlayButton from "./PlayButton";
 import StationLogo from "./StationLogo";
@@ -13,11 +14,14 @@ export default function StationRow({
   station,
   queue,
   trailing,
+  fav,
 }: {
   station: PublicStation;
   /** List this row belongs to — passed to the player as the next/prev queue. */
   queue?: PublicStation[];
   trailing?: React.ReactNode;
+  /** Show a one-tap favorite toggle before the play button. */
+  fav?: boolean;
 }) {
   const { current, status } = usePlayback();
   const t = useT();
@@ -51,6 +55,7 @@ export default function StationRow({
         )}
       </div>
       {trailing}
+      {fav && <FavToggle station={station} size={32} surface="row" className="relative z-10" />}
       <PlayButton station={station} queue={queue} size={32} className="relative z-10 shrink-0" />
     </div>
   );

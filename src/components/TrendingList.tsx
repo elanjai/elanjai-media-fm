@@ -53,7 +53,7 @@ export default function TrendingList({
             {i + 1}
           </span>
           <div className="min-w-0 flex-1">
-            <StationRow station={s} queue={ordered} />
+            <StationRow station={s} queue={ordered} fav />
           </div>
         </div>
       ))}

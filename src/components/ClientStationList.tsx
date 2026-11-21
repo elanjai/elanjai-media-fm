@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { fmt } from "@/i18n/locales";
 import { useLibrary } from "./AudioProvider";
 import Icon from "./Icon";
+import LangLink from "./LangLink";
 import { useT } from "./LocaleProvider";
 import StationRow from "./StationRow";
 
@@ -44,6 +45,14 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
         <p className="mt-1.5 text-xs text-muted">
           {t(kind === "favorites" ? "favorites.emptyHint" : "recent.emptyHint")}
         </p>
+        {kind === "favorites" && (
+          <LangLink
+            href="/"
+            className="mt-4 rounded-full bg-accent px-5 py-2.5 text-xs font-bold text-accent-ink shadow-sm transition hover:brightness-105"
+          >
+            {t("favorites.browse")}
+          </LangLink>
+        )}
       </div>
     );
   }
@@ -55,14 +64,13 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
             key={s.id}
             station={s}
             queue={list}
+            fav
             trailing={
               kind === "recents" && relTime(s.playedAt) ? (
                 <span className="flex shrink-0 items-center gap-1 text-[11px] text-muted">
                   <Icon name="clock" size={13} strokeWidth={1.8} />
                   {relTime(s.playedAt)}
                 </span>
-              ) : kind === "favorites" ? (
-                <Icon name="heartF" size={18} className="shrink-0 text-rose" />
               ) : undefined
             }
           />
@@ -70,12 +78,12 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
       </div>
       {kind === "favorites" ? (
         <div className="mt-4 flex items-center gap-3 rounded-[18px] bg-accent-soft px-4 py-3.5">
-          <Icon name="heart" size={20} className="shrink-0 text-accent-ink" />
+          <Icon name="heart" size={20} className="shrink-0 text-accent-soft-ink" />
           <div>
-            <p className="text-[12px] font-medium text-accent-ink">
+            <p className="text-[12px] font-medium text-accent-soft-ink">
               {t("favorites.empty")}
             </p>
-            <p className="mt-0.5 text-[11px] text-accent-ink/70">
+            <p className="mt-0.5 text-[11px] text-accent-soft-ink/70">
               {t("favorites.deviceNote")}
             </p>
           </div>

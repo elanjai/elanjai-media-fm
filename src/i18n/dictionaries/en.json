@@ -94,7 +94,13 @@
     "imported": "Added to your favorites",
     "open": "Open favorites →",
     "importCta": "Add {count} stations to my favorites",
-    "importCtaOne": "Add {count} station to my favorites"
+    "importCtaOne": "Add {count} station to my favorites",
+    "toastAdd": "Saved to Favorites",
+    "toastRemove": "Removed from Favorites",
+    "toastFirst": "Saved! Find it anytime under Favorites",
+    "nudge": "You listen to {name} a lot — save it?",
+    "nudgeSave": "Save",
+    "browse": "Browse stations"
   },
   "recent": {
     "title": "Recently played",
@@ -181,9 +187,9 @@
     "themeSystem": "System",
     "themeLight": "Light",
     "themeDark": "Dark",
+    "sizeSmall": "Small",
     "sizeDefault": "Default",
     "sizeLarge": "Large",
-    "sizeXl": "Extra large",
     "allLanguages": "All languages",
     "languagesHint": "Languages shown first on Home and Search",
     "dataSaverHint": "Ask before playing streams over 128 kbps and prefer lighter streams",

@@ -75,25 +75,25 @@ export default async function ContactPage() {
       {/* Grievance Officer — IT (Intermediary Guidelines and Digital Media
           Ethics Code) Rules, 2021 disclosure */}
       <section className="mt-8 rounded-2xl border border-border bg-accent-soft p-5">
-        <h2 className="font-display text-base font-semibold text-accent-ink">
+        <h2 className="font-display text-base font-semibold text-accent-soft-ink">
           {dict.contact.grievanceTitle}
         </h2>
-        <p className="mt-2 text-xs leading-6 text-accent-ink/80">
+        <p className="mt-2 text-xs leading-6 text-accent-soft-ink/80">
           As required under the Information Technology (Intermediary
           Guidelines and Digital Media Ethics Code) Rules, 2021, complaints
           about content on {SITE.name} may be addressed to our Grievance
           Officer:
         </p>
-        <p className="mt-3 text-xs font-semibold text-accent-ink">
+        <p className="mt-3 text-xs font-semibold text-accent-soft-ink">
           {fmt(dict.contact.grievanceName, { site: SITE.name })}
         </p>
         <a
           href={`mailto:${SITE.email.grievance}?subject=Grievance`}
-          className="mt-1 inline-block text-xs font-semibold text-brand-2 underline-offset-2 hover:underline"
+          className="mt-1 inline-block text-xs font-semibold text-brand-2 underline-offset-2 hover:underline dark:text-accent"
         >
           {SITE.email.grievance}
         </a>
-        <p className="mt-3 text-xs leading-6 text-accent-ink/80">
+        <p className="mt-3 text-xs leading-6 text-accent-soft-ink/80">
           Complaints are acknowledged within 24 hours and resolved within 15
           days. Please include the station name or page URL your complaint is
           about.

@@ -97,7 +97,7 @@ export const viewport: Viewport = {
 
 // Set data-theme + data-textsize before first paint to avoid a flash of
 // the wrong theme or a late layout shift from the size zoom.
-const themeInit = `(function(){try{var t=localStorage.getItem("emfm:theme")||"system";var d=t==="dark"||(t==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.dataset.theme=d?"dark":"light";var s=localStorage.getItem("emfm:textsize")||"default";document.documentElement.dataset.textsize=s}catch(e){}})()`;
+const themeInit = `(function(){try{var t=localStorage.getItem("emfm:theme")||"system";var d=t==="dark"||(t==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.dataset.theme=d?"dark":"light";var s=localStorage.getItem("emfm:textsize")||"default";if(s==="xl")s="large";document.documentElement.dataset.textsize=s}catch(e){}})()`;
 
 // Copyright year — computed once at build (Cache Components forbids an
 // uncached new Date() during prerender) and refreshed on every deploy.

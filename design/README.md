@@ -80,8 +80,9 @@ Dark & States: Home dark, Now Playing dark, Player & Empty States
 | `brand` | `#0B3D2E` | — | primary fills, hero |
 | `brand-2` | `#0F5138` | — | interactive green |
 | `accent` | `#FDE047` | — | play buttons, CTAs, active tab pill |
-| `accent-soft` | `#FEF9C3` | — | highlights, hint cards |
+| `accent-soft` | `#FEF9C3` | `#3A3310` | highlights, hint cards |
 | `accent-ink` | `#2A2300` | — | text/icons on accent |
+| `accent-soft-ink` | `#2A2300` | `#FEF9C3` | text/icons on accent-soft |
 | `rose` | `#E11D48` | — | favorites heart |
 
 Genre tiles: one pastel bg + saturated fg pair per language (Tamil, Hindi,

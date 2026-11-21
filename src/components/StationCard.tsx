@@ -1,5 +1,6 @@
 import Link from "@/components/LangLink";
 import type { PublicStation } from "@/lib/types";
+import FavToggle from "./FavToggle";
 import PlayButton from "./PlayButton";
 import StationLogo from "./StationLogo";
 
@@ -30,6 +31,14 @@ export default function StationCard({
           size={200}
           className="aspect-square w-full"
         />
+        <div className="absolute -top-1.5 -right-1.5 z-10">
+          <FavToggle
+            station={station}
+            size={28}
+            surface="card"
+            className="border border-border bg-surface shadow-sm"
+          />
+        </div>
         <div className="absolute -bottom-2 -right-1.5 z-10 transition group-hover:scale-110">
           <PlayButton station={station} queue={queue} size={30} />
         </div>

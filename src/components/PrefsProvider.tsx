@@ -18,7 +18,7 @@ import {
  *  - hasChosen:  false only on a true first run — drives the auto-open picker
  */
 export type ThemeChoice = "system" | "light" | "dark";
-export type TextSize = "default" | "large" | "xl";
+export type TextSize = "small" | "default" | "large";
 
 type Prefs = {
   langs: string[] | null;
@@ -83,7 +83,9 @@ export default function PrefsProvider({
       const traw = localStorage.getItem(THEME_KEY);
       if (traw === "light" || traw === "dark" || traw === "system") t = traw;
       const tsraw = localStorage.getItem(TEXTSIZE_KEY);
-      if (tsraw === "large" || tsraw === "xl") ts = tsraw;
+      // "xl" is retired — legacy saves land on "large".
+      if (tsraw === "small" || tsraw === "large") ts = tsraw;
+      else if (tsraw === "xl") ts = "large";
       sm = localStorage.getItem(SIMPLE_KEY) === "true";
     } catch {
       /* private mode */

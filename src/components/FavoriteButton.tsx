@@ -21,7 +21,7 @@ export default function FavoriteButton({
   return (
     <button
       type="button"
-      onClick={() => toggleFavorite(station)}
+      onClick={() => toggleFavorite(station, "station")}
       aria-pressed={on}
       aria-label={on ? t("favorites.remove") : t("favorites.add")}
       title={on ? t("favorites.remove") : t("favorites.add")}

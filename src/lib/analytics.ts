@@ -13,6 +13,7 @@ export type EventName =
   | "share"
   | "install"
   | "search"
+  | "fav"
   | "ad_impression"
   | "ad_click"
   | "report";

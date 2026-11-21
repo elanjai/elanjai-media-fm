@@ -4,6 +4,7 @@ import Link from "@/components/LangLink";
 import { useEffect, useRef, useState } from "react";
 import type { Campaign } from "@/lib/ads";
 import { reportStreamIssue } from "@/lib/report";
+import { getStats } from "@/lib/stats";
 import type { PublicStation } from "@/lib/types";
 import { fmt } from "@/i18n/locales";
 import { useFocusTrap } from "@/lib/useFocusTrap";
@@ -168,8 +169,27 @@ export default function NowPlayingSheet({
   const [shared, setShared] = useState(false);
   /** Slug the user already reported — resets automatically on station change. */
   const [reportedSlug, setReportedSlug] = useState<string | null>(null);
+  /** "You listen a lot" nudge — shown once per station until saved or dismissed. */
+  const [nudge, setNudge] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
   useFocusTrap(sheetRef);
+
+  const slug = current?.slug;
+  useEffect(() => {
+    if (!slug) return;
+    // Storage read is render-unsafe; microtask keeps setState out of the effect body.
+    queueMicrotask(() => {
+      try {
+        const dismissed = new Set(
+          JSON.parse(localStorage.getItem("emfm:favnudge") ?? "[]") as string[]
+        );
+        const sec = getStats().byStation[slug]?.sec ?? 0;
+        setNudge(sec >= 900 && !dismissed.has(slug));
+      } catch {
+        setNudge(false);
+      }
+    });
+  }, [slug]);
 
   useEffect(() => {
     let live = true;
@@ -194,6 +214,19 @@ export default function NowPlayingSheet({
   const isFav = favorites.has(current.slug);
   const vol = muted ? 0 : volume;
   const reported = reportedSlug === current.slug;
+  /** Never nudge this station again — whether saved or dismissed. */
+  const dismissNudge = () => {
+    try {
+      const d = new Set(
+        JSON.parse(localStorage.getItem("emfm:favnudge") ?? "[]") as string[]
+      );
+      d.add(current.slug);
+      localStorage.setItem("emfm:favnudge", JSON.stringify([...d]));
+    } catch {
+      /* storage denied */
+    }
+    setNudge(false);
+  };
 
   const url = `${location.origin}/${lang}/station/${current.slug}`;
   const wa = `https://wa.me/?text=${encodeURIComponent(`${shareText(t("share.listeningTo"), current.name)}\n${url}`)}`;
@@ -360,6 +393,34 @@ export default function NowPlayingSheet({
             </button>
           )}
 
+          {/* "You listen a lot" — gentle save prompt, once per station */}
+          {nudge && !isFav && (
+            <div className="mt-4 flex items-center gap-3 rounded-2xl border border-rose/30 bg-rose/5 px-3.5 py-2.5">
+              <Icon name="heart" size={18} className="shrink-0 text-rose" />
+              <p className="min-w-0 flex-1 text-[12px] font-medium text-ink">
+                {fmt(t("favorites.nudge"), { name: current.name })}
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  toggleFavorite(current, "nudge");
+                  dismissNudge();
+                }}
+                className="shrink-0 rounded-full bg-rose px-3 py-1.5 text-[11px] font-bold text-white transition hover:brightness-105 active:scale-95"
+              >
+                {t("favorites.nudgeSave")}
+              </button>
+              <button
+                type="button"
+                onClick={dismissNudge}
+                aria-label={t("a11y.dismiss")}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted transition hover:text-ink"
+              >
+                <Icon name="x" size={13} />
+              </button>
+            </div>
+          )}
+
           {/* Transport */}
           <div className="mt-5 flex items-center justify-center gap-9">
             <button
@@ -397,7 +458,7 @@ export default function NowPlayingSheet({
             <span className="flex w-12 flex-col items-center gap-1">
               <button
                 type="button"
-                onClick={() => toggleFavorite(current)}
+                onClick={() => toggleFavorite(current, "sheet")}
                 aria-pressed={isFav}
                 aria-label={isFav ? t("favorites.remove") : t("favorites.add")}
                 className={`flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface transition ${

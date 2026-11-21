@@ -125,7 +125,7 @@ export default function SearchClient({
             <div className="mt-4 grid grid-cols-1 gap-2.5 md:grid-cols-2">
               {results.map((s, i) => (
                 <Fragment key={s.id}>
-                  <StationRow station={s} queue={results} />
+                  <StationRow station={s} queue={results} fav />
                   {/* Ad after result 5 (placement map §6.3) */}
                   {i === 4 && adCampaigns.length > 0 && (
                     <div className="md:col-span-2">
