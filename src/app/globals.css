@@ -18,6 +18,7 @@
   --accent: #fde047;
   --accent-soft: #fef9c3;
   --accent-ink: #2a2300;
+  --accent-soft-ink: #2a2300;
   --rose: #e11d48;
   --danger: #dc2626;
   color-scheme: light;
@@ -36,6 +37,7 @@
   --accent: #fde047;
   --accent-soft: #3a3310;
   --accent-ink: #2a2300;
+  --accent-soft-ink: #fef9c3;
   --rose: #fb7185;
   --danger: #f87171;
   color-scheme: dark;
@@ -54,6 +56,7 @@
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
   --color-accent-ink: var(--accent-ink);
+  --color-accent-soft-ink: var(--accent-soft-ink);
   --color-rose: var(--rose);
   --color-danger: var(--danger);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -70,8 +73,8 @@ body {
 
 /* Text size preference (Settings) — the design is px-based, so the honest
    way to enlarge it is a whole-UI zoom on <html>. Baseline-supported. */
+html[data-textsize="small"] { zoom: 0.89; }
 html[data-textsize="large"] { zoom: 1.125; }
-html[data-textsize="xl"] { zoom: 1.25; }
 
 /* Indic-script UI locales use their Noto face for body text (F-3.1);
    Latin content still falls through to Inter. */

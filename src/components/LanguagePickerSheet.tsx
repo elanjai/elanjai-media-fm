@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, type TouchEvent } from "react";
 import type { Genre } from "@/lib/types";
 import { NATIVE_NAMES, langsFromNavigator } from "@/lib/languages";
 import { fmt } from "@/i18n/locales";
@@ -27,6 +27,10 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
   // Chips the user tapped this session; null = untouched, so the derived
   // pre-selection (saved choice, else browser languages) shows instead.
   const [override, setOverride] = useState<string[] | null>(null);
+  // Pull-to-dismiss: translate follows the finger while dragged, releases
+  // past ~72px close the sheet. Only armed when the sheet is scrolled to top.
+  const [dragY, setDragY] = useState(0);
+  const dragStart = useRef<{ y: number; ok: boolean } | null>(null);
 
   const suggested = useMemo(
     () =>
@@ -56,7 +60,33 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
   const finish = (slugs: string[]) => {
     setLangs(slugs);
     setOverride(null);
+    setDragY(0);
     closeLangPicker();
+  };
+
+  // Backdrop tap / swipe-down / Esc — dismiss without committing pending picks.
+  const dismiss = () => {
+    setOverride(null);
+    setDragY(0);
+    closeLangPicker();
+  };
+
+  const onSheetTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    dragStart.current = {
+      y: e.touches[0].clientY,
+      ok: e.currentTarget.scrollTop <= 0,
+    };
+  };
+  const onSheetTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    if (!dragStart.current?.ok) return;
+    const dy = e.touches[0].clientY - dragStart.current.y;
+    setDragY(dy > 0 ? Math.min(dy, 160) : 0);
+  };
+  const onSheetTouchEnd = () => {
+    const ok = dragStart.current?.ok;
+    dragStart.current = null;
+    if (ok && dragY > 72) dismiss();
+    else setDragY(0);
   };
 
   const playNow = () => {
@@ -75,9 +105,25 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
       role="dialog"
       aria-modal="true"
       aria-label={t("prefs.chooseLabel")}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") dismiss();
+      }}
     >
-      <div className="fade-in absolute inset-0 bg-ink/40 backdrop-blur-[2px]" />
-      <div className="sheet-in absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-[26px] bg-bg pb-[max(1.5rem,env(safe-area-inset-bottom))] md:inset-x-1/2 md:bottom-6 md:w-[min(92vw,30rem)] md:-translate-x-1/2 md:rounded-[26px] md:border md:border-border md:shadow-2xl">
+      <div
+        aria-hidden="true"
+        onClick={dismiss}
+        className="fade-in absolute inset-0 bg-ink/40 backdrop-blur-[2px]"
+      />
+      <div
+        onTouchStart={onSheetTouchStart}
+        onTouchMove={onSheetTouchMove}
+        onTouchEnd={onSheetTouchEnd}
+        style={{
+          transform: dragY ? `translateY(${dragY}px)` : undefined,
+          transition: dragY ? undefined : "transform 0.2s ease-out",
+        }}
+        className="sheet-in absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto overscroll-contain rounded-t-[26px] bg-bg pb-[max(1.5rem,env(safe-area-inset-bottom))] md:inset-x-1/2 md:bottom-6 md:w-[min(92vw,30rem)] md:-translate-x-1/2 md:rounded-[26px] md:border md:border-border md:shadow-2xl"
+      >
         <div className="mx-auto w-full max-w-md px-5 pt-4">
           <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-border md:hidden" />
           <h2 className="font-display text-lg font-semibold text-ink">
@@ -89,11 +135,11 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
 
           {/* Done pinned above the chip wall — pick, tap, no scrolling. The
               count updates live, so it doubles as the selection indicator. */}
-          <div className="mt-3 flex items-center gap-2.5">
+          <div className="mt-2.5 flex items-center gap-2">
             <button
               type="button"
               onClick={() => finish(picked)}
-              className="flex-1 rounded-full bg-accent py-2.5 text-sm font-bold text-accent-ink shadow-md shadow-brand/20 transition hover:brightness-105 active:scale-[0.98]"
+              className="flex-1 rounded-full bg-accent py-2 text-[13px] font-bold text-accent-ink shadow-md shadow-brand/20 transition hover:brightness-105 active:scale-[0.98]"
             >
               {picked.length
                 ? fmt(t("prefs.doneCount"), { count: picked.length })
@@ -101,14 +147,16 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
             </button>
             <button
               type="button"
-              onClick={() => finish([])}
-              className="rounded-full border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-muted transition hover:text-ink"
+              onClick={() =>
+                hasChosenLangs ? setOverride([]) : finish([])
+              }
+              className="rounded-full border border-border bg-surface px-3.5 py-2 text-[13px] font-semibold text-muted transition hover:text-ink"
             >
               {hasChosenLangs ? t("prefs.clear") : t("prefs.skip")}
             </button>
           </div>
 
-          <div className="mt-3.5 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-wrap gap-2">
             {available.map((g) => {
               const on = picked.includes(g.slug);
               return (
@@ -117,17 +165,24 @@ export default function LanguagePickerSheet({ genres }: { genres: Genre[] }) {
                   type="button"
                   onClick={() => toggle(g.slug)}
                   aria-pressed={on}
-                  className={`hit-expand flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm font-semibold transition active:scale-95 ${
+                  className={`hit-expand flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-semibold transition active:scale-95 ${
                     on
                       ? "border-brand-2 bg-brand-2 text-brand-ink dark:border-accent dark:bg-accent dark:text-accent-ink"
                       : "border-border bg-surface text-ink hover:border-brand-2/50"
                   }`}
                 >
-                  <span>{NATIVE_NAMES[g.slug] ?? g.name}</span>
-                  <span className={`text-[11px] font-medium ${on ? "opacity-75" : "text-muted"}`}>
-                    {g.name}
+                  <span className="flex flex-col items-center leading-tight">
+                    <span>{NATIVE_NAMES[g.slug] ?? g.name}</span>
+                    <span
+                      className={`text-[10px] font-medium ${on ? "opacity-75" : "text-muted"}`}
+                    >
+                      {g.name}
+                    </span>
                   </span>
-                  {on && <Icon name="check" size={13} strokeWidth={2.4} />}
+                  {/* Fixed check slot — chip size never changes with selection. */}
+                  <span className="flex w-3 shrink-0 items-center">
+                    {on && <Icon name="check" size={13} strokeWidth={2.4} />}
+                  </span>
                 </button>
               );
             })}

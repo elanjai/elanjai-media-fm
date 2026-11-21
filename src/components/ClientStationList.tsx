@@ -70,12 +70,12 @@ export default function ClientStationList({ kind }: { kind: "favorites" | "recen
       </div>
       {kind === "favorites" ? (
         <div className="mt-4 flex items-center gap-3 rounded-[18px] bg-accent-soft px-4 py-3.5">
-          <Icon name="heart" size={20} className="shrink-0 text-accent-ink" />
+          <Icon name="heart" size={20} className="shrink-0 text-accent-soft-ink" />
           <div>
-            <p className="text-[12px] font-medium text-accent-ink">
+            <p className="text-[12px] font-medium text-accent-soft-ink">
               {t("favorites.empty")}
             </p>
-            <p className="mt-0.5 text-[11px] text-accent-ink/70">
+            <p className="mt-0.5 text-[11px] text-accent-soft-ink/70">
               {t("favorites.deviceNote")}
             </p>
           </div>

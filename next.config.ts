@@ -83,7 +83,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: skipChecks,
   },
   experimental: skipChecks ? { cpus: 4 } : {},
-  allowedDevOrigins: ["192.168.1.5", "192.168.1.*"],
+  allowedDevOrigins: ["127.0.0.1", "localhost", "192.168.1.5", "192.168.1.*"],
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
