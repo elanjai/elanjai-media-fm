@@ -69,7 +69,7 @@
    "bollywood"
   ],
   "votes": 42274,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -137,7 +137,8 @@
   "votes": 28663,
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
-  "top_rank": 10
+  "top_rank": 10,
+  "name_native": "रेडियो बॉलीएफ़एम"
  },
  {
   "id": "9e9f1ac8",
@@ -871,7 +872,8 @@
   "votes": 5235,
   "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00",
-  "top_rank": 5
+  "top_rank": 5,
+  "name_native": "रेडियो रेट्रो बॉलीवुड 90s"
  },
  {
   "id": "e798cad4",
@@ -1015,7 +1017,8 @@
   "votes": 3903,
   "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00",
-  "top_rank": 8
+  "top_rank": 8,
+  "name_native": "रेडियो हंगामा बॉलीवुड दिल से"
  },
  {
   "id": "cb83db4e",
@@ -1476,7 +1479,8 @@
   "votes": 2166,
   "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00",
-  "top_rank": 7
+  "top_rank": 7,
+  "name_native": "बॉलीवुड 90s रेडियो"
  },
  {
   "id": "f52a0784",
@@ -1598,7 +1602,8 @@
   "votes": 2012,
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
-  "top_rank": 6
+  "top_rank": 6,
+  "name_native": "रेडियो रेट्रो बॉलीवुड"
  },
  {
   "id": "74b822a2",
@@ -1735,7 +1740,8 @@
   "last_checked_at": "2026-11-17T03:33:35+00:00",
   "city": "mumbai",
   "state": "Maharashtra",
-  "top_rank": 2
+  "top_rank": 2,
+  "name_native": "विविध भारती मुंबई"
  },
  {
   "id": "91a12235",
@@ -1763,7 +1769,8 @@
   "network": "air",
   "city": "mumbai",
   "state": "Maharashtra",
-  "top_rank": 4
+  "top_rank": 4,
+  "name_native": "एफ़एम गोल्ड मुंबई"
  },
  {
   "id": "26a8a6e6",
@@ -2107,7 +2114,8 @@
   "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00",
   "network": "mirchi",
-  "top_rank": 1
+  "top_rank": 1,
+  "name_native": "फिल्मी मिर्ची"
  },
  {
   "id": "7435df9a",
@@ -2133,7 +2141,8 @@
   "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00",
   "frequency_mhz": 92.7,
-  "top_rank": 3
+  "top_rank": 3,
+  "name_native": "92.7 बिग एफ़एम"
  },
  {
   "id": "519ce757",
@@ -2270,7 +2279,8 @@
   "votes": 1174,
   "is_active": true,
   "last_checked_at": "2026-11-15T17:36:11+00:00",
-  "top_rank": 9
+  "top_rank": 9,
+  "name_native": "हिट्स ऑफ़ बॉलीवुड"
  },
  {
   "id": "70ef55e2",
@@ -2498,7 +2508,8 @@
   "votes": 1004,
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
-  "top_rank": 3
+  "top_rank": 3,
+  "name_native": "92.7 பிக் எஃப்.எம்"
  },
  {
   "id": "c1ad7df7",
@@ -2749,7 +2760,8 @@
   "votes": 825,
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
-  "top_rank": 8
+  "top_rank": 8,
+  "name_native": "ஒலி 96.8"
  },
  {
   "id": "a6701332",
@@ -4230,7 +4242,8 @@
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
-  "top_rank": 4
+  "top_rank": 4,
+  "name_native": "எஃப்.எம் ரெயின்போ தமிழ்"
  },
  {
   "id": "50e42636",
@@ -4740,7 +4753,8 @@
   "network": "suryan",
   "top_rank": 10,
   "city": "chennai",
-  "state": "Tamil Nadu"
+  "state": "Tamil Nadu",
+  "name_native": "சூரியன் எஃப்.எம்"
  },
  {
   "id": "1d456505",
@@ -5293,7 +5307,7 @@
   "homepage": "",
   "tags": [],
   "votes": 221,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -5494,7 +5508,8 @@
   "votes": 210,
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
-  "top_rank": 6
+  "top_rank": 6,
+  "name_native": "விவித் பாரதி"
  },
  {
   "id": "12b2fbe0",
@@ -5900,7 +5915,8 @@
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "air",
-  "top_rank": 5
+  "top_rank": 5,
+  "name_native": "எஃப்.எம் கோல்ட் தமிழ்"
  },
  {
   "id": "0f6b2528",
@@ -6258,7 +6274,7 @@
    "radio chann pardesi"
   ],
   "votes": 147,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -6532,7 +6548,7 @@
   "homepage": "",
   "tags": [],
   "votes": 114,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -8312,7 +8328,8 @@
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
   "network": "hellofm",
-  "top_rank": 2
+  "top_rank": 2,
+  "name_native": "ஹலோ எஃப்.எம்"
  },
  {
   "id": "radio-mirchi",
@@ -8381,7 +8398,8 @@
   "network": "suryan",
   "top_rank": 1,
   "city": "chennai",
-  "state": "Tamil Nadu"
+  "state": "Tamil Nadu",
+  "name_native": "சூரியன் எஃப்.எம்"
  },
  {
   "id": "radio-gilli",
@@ -8414,7 +8432,8 @@
   "votes": 0,
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
-  "top_rank": 7
+  "top_rank": 7,
+  "name_native": "ரேடியோ கில்லி"
  },
  {
   "id": "shakthi-fm",
@@ -8441,7 +8460,8 @@
   "votes": 0,
   "is_active": true,
   "last_checked_at": "2026-11-17T03:33:35+00:00",
-  "top_rank": 9
+  "top_rank": 9,
+  "name_native": "சக்தி எஃப்.எம்"
  },
  {
   "id": "east-fm",
@@ -8656,7 +8676,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -9785,7 +9805,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -10140,7 +10160,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-17T03:33:35+00:00"
  },
  {
@@ -10250,7 +10270,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -10354,7 +10374,7 @@
    "tamil"
   ],
   "votes": 0,
-  "is_active": true,
+  "is_active": false,
   "last_checked_at": "2026-11-15T17:36:11+00:00"
  },
  {
@@ -11497,7 +11517,7 @@
    "hit",
    "pop"
   ],
-  "is_active": true
+  "is_active": false
  },
  {
   "id": "6e70cf66",
@@ -11786,7 +11806,7 @@
    "bhojpuri"
   ],
   "is_active": true,
-  "frequency_mhz": 90.0
+  "frequency_mhz": 90
  },
  {
   "id": "fe0ca91d",

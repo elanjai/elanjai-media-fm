@@ -4,7 +4,6 @@ import Link from "@/components/LangLink";
 import { Fragment, useMemo } from "react";
 import { fmt } from "@/i18n/locales";
 import type { Genre, PublicStation } from "@/lib/types";
-import { orderByLangs } from "@/lib/languages";
 import { useGenreName, useT } from "./LocaleProvider";
 import { usePrefs } from "./PrefsProvider";
 import StationRow from "./StationRow";
@@ -15,8 +14,9 @@ export type GenreSection = {
 };
 
 /**
- * Home-page per-language sections — server order first, then re-sorted so
- * the listener's chosen languages surface above the rest (F-1.5).
+ * Home-page per-language sections — every language the listener did NOT
+ * pick already renders as a "Popular {lang}" rail above, so those are
+ * skipped here and the rest keep their server order (F-1.5).
  */
 export default function OrderedGenreSections({
   sections,
@@ -29,16 +29,12 @@ export default function OrderedGenreSections({
   const { langs } = usePrefs();
   const t = useT();
   const gn = useGenreName();
-  const ordered = useMemo(
-    () =>
-      langs?.length
-        ? orderByLangs(
-            sections.map((s) => ({ slug: s.genre.slug, s })),
-            langs
-          ).map((x) => x.s)
-        : sections,
-    [sections, langs]
-  );
+  const ordered = useMemo(() => {
+    // Picked languages are already covered by the "Popular {lang}" rails —
+    // skip them all so no language shows twice, then cap at 4 sections.
+    const picked = new Set(langs?.length ? langs : ["tamil"]);
+    return sections.filter((s) => !picked.has(s.genre.slug)).slice(0, 4);
+  }, [sections, langs]);
 
   return (
     <>

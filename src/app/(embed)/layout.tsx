@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE } from "@/lib/site";
 import "../globals.css";
 
 /**
@@ -5,6 +7,12 @@ import "../globals.css";
  * public iframe widget (F-3.5). No app bar, tab bar, providers or locale:
  * embeds render a single self-contained player card.
  */
+export const metadata: Metadata = {
+  // The app-root opengraph-image.png resolves against this; without it the
+  // whole (embed) tree falls back to localhost in production. String form —
+  // URL instances don't survive cacheComponents metadata serialization.
+  metadataBase: SITE.url,
+};
 export default function EmbedRootLayout({
   children,
 }: {

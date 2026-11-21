@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { useLang, useSwitchLocale, useT } from "./LocaleProvider";
 import { LOCALE_META, LOCALES } from "@/i18n/locales";
 import { NATIVE_NAMES } from "@/lib/languages";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLibrary } from "./AudioProvider";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 import Icon from "./Icon";
 import { usePrefs, type TextSize, type ThemeChoice } from "./PrefsProvider";
 import ShareFavorites from "./ShareFavorites";
@@ -121,6 +122,8 @@ export default function SettingsButton() {
     setSimpleMode,
   } = usePrefs();
   const { favoriteStations, clearRecents } = useLibrary();
+  const sheetRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(sheetRef, open);
 
   useEffect(() => {
     if (!open) return;
@@ -196,6 +199,7 @@ export default function SettingsButton() {
       {open &&
         createPortal(
         <div
+          ref={sheetRef}
           className="fixed inset-0 z-50"
           role="dialog"
           aria-modal="true"

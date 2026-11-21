@@ -29,7 +29,7 @@ export default function EmbedBlock({ embedUrl }: { embedUrl: string }) {
         }}
         className="hit absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full text-muted transition hover:text-ink"
       >
-        <Icon name={copied ? "check" : "plus"} size={15} strokeWidth={1.8} />
+        <Icon name={copied ? "check" : "copy"} size={15} strokeWidth={1.8} />
       </button>
     </div>
   );

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getConsent, setConsent } from "@/lib/consent";
 import { useT } from "./LocaleProvider";
+import { usePrefs } from "./PrefsProvider";
 import Icon from "./Icon";
 
 /**
@@ -19,10 +20,13 @@ export default function ConsentBanner() {
     queueMicrotask(() => setOpen(!getConsent()));
   }, []);
   const [detail, setDetail] = useState(false);
-  const [analytics, setAnalytics] = useState(true);
+  const [analytics, setAnalytics] = useState(false);
   const [ads, setAds] = useState(false);
+  // The first-run language picker is a bottom sheet at z-50 — showing this
+  // z-70 banner on top of it covers the picker's Done/Skip on phones.
+  const { langPickerOpen } = usePrefs();
 
-  if (!open) return null;
+  if (!open || langPickerOpen) return null;
 
   const decide = (a: boolean, d: boolean) => {
     setConsent(a, d);

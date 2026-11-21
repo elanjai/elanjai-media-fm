@@ -10,7 +10,7 @@ import {
   toPublic,
 } from "@/lib/data";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
-import { dictionaryFor, fmt, getDictionary, hasLocale, langAlternates } from "@/i18n";
+import { dictionaryFor, fmt, fmtCount, getDictionary, hasLocale, langAlternates } from "@/i18n";
 import { SITE } from "@/lib/site";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
@@ -100,7 +100,7 @@ export default async function CityPage({ params }: Props) {
         )}
       </div>
       <p className="mt-3 text-xs text-muted">
-        {fmt(dict.common.liveStationsTap, { count: stations.length })}
+        {fmtCount(dict.common.liveStationTapOne, dict.common.liveStationsTap, stations.length)}
       </p>
 
       <div className="mt-4">

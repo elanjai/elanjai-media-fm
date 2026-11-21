@@ -62,7 +62,9 @@ export async function generateMetadata({
     count: SITE.stationCount,
   });
   return {
-    metadataBase: new URL(SITE.url),
+    // String form, not new URL(): cacheComponents serializes generateMetadata
+    // output, and URL instances don't survive it.
+    metadataBase: SITE.url,
     title: {
       default: `${SITE.name} — ${title}`,
       template: `%s | ${SITE.name}`,
@@ -170,8 +172,8 @@ export default async function RootLayout({
               <InstallPrompt />
               <AlarmWatcher />
               <TabBar />
+              <LanguagePickerSheet genres={genres} />
             </AudioProvider>
-            <LanguagePickerSheet genres={genres} />
             <ConsentBanner />
             <PageViewBeacon />
           </PrefsProvider>

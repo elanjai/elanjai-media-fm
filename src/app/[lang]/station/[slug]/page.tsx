@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "@/components/LangLink";
 import { notFound } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
+import AlarmCircle from "@/components/AlarmCircle";
 import EmbedBlock from "@/components/EmbedBlock";
 import FavoriteButton from "@/components/FavoriteButton";
 import Icon from "@/components/Icon";
@@ -259,6 +260,7 @@ export default async function StationPage({ params }: Props) {
           <p className="mt-0.5 text-xs text-muted">{dict.player.freeNoSignup}</p>
         </div>
         <FavoriteButton station={pub} size={44} />
+        <AlarmCircle slug={s.slug} />
         {s.homepage && (
           <a
             href={s.homepage}
@@ -293,7 +295,7 @@ export default async function StationPage({ params }: Props) {
         <h2 id="about" className="font-display text-[16.5px] font-semibold text-ink">
           {fmt(dict.station.aboutTitle, { name: s.name })}
         </h2>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
+        <p lang="en" className="mt-2 max-w-prose text-sm leading-relaxed text-muted">
           {description}
         </p>
       </section>
@@ -338,7 +340,7 @@ export default async function StationPage({ params }: Props) {
         <h2 id="faq" className="font-display text-[16.5px] font-semibold text-ink">
           {dict.station.faqTitle}
         </h2>
-        <div className="mt-3 space-y-2">
+        <div lang="en" className="mt-3 space-y-2">
           {faqs.map((f) => (
             <details
               key={f.q}
@@ -393,7 +395,7 @@ export default async function StationPage({ params }: Props) {
                 const p = toPublic(x);
                 return (
                   <div key={x.id} className="w-[130px] shrink-0 lg:w-auto">
-                    <StationCard station={p} queue={networkStations.map(toPublic)} />
+                    <StationCard station={p} queue={networkStations.map(toPublic)} genreLabel={genreName(dict, p.genre)} />
                   </div>
                 );
               })}
@@ -417,7 +419,7 @@ export default async function StationPage({ params }: Props) {
           <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 lg:mx-0 lg:grid lg:grid-cols-6 lg:overflow-visible lg:px-0">
             {related.map((r) => (
               <div key={r.id} className="w-[130px] shrink-0 lg:w-auto">
-                <StationCard station={r} queue={related} />
+                <StationCard station={r} queue={related} genreLabel={genreName(dict, r.genre)} />
               </div>
             ))}
           </div>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "@/components/LangLink";
 import GenreTile from "@/components/GenreTile";
 import { getCategories, getGenres, getStations } from "@/lib/data";
-import { dictionaryFor, fmt, getDictionary, hasLocale } from "@/i18n";
+import { dictionaryFor, fmt, fmtCount, getDictionary, hasLocale } from "@/i18n";
 
 type Props = { params: Promise<{ lang: string }> };
 
@@ -49,7 +49,7 @@ export default async function GenresPage() {
             className="rounded-2xl border border-border bg-surface p-4 transition hover:border-brand-2/50"
           >
             <p className="font-display text-[15px] font-semibold text-ink">{c.name}</p>
-            <p className="mt-1 text-xs text-muted">{fmt(dict.common.stations, { count: c.count })}</p>
+            <p className="mt-1 text-xs text-muted">{fmtCount(dict.common.station, dict.common.stations, c.count)}</p>
           </Link>
         ))}
       </div>

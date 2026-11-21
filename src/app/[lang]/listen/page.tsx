@@ -5,6 +5,7 @@ import { getDiasporaPages, getStationsByGenre } from "@/lib/data";
 import {
   dictionaryFor,
   fmt,
+  fmtCount,
   genreName,
   getDictionary,
   hasLocale,
@@ -62,7 +63,7 @@ export default async function ListenIndexPage({ params }: Props) {
       {Array.from(byGenre.entries()).map(([genreLabel, list]) => (
         <section key={genreLabel} className="mt-7">
           <h2 className="font-display text-[15px] font-semibold text-ink">
-            {fmt(dict.listen.genreCount, { genre: genreName(dict, list[0].genre, genreLabel), count: getStationsByGenre(list[0].genre).length })}
+            {fmtCount(dict.listen.genreCountOne, dict.listen.genreCount, getStationsByGenre(list[0].genre).length, { genre: genreName(dict, list[0].genre, genreLabel) })}
           </h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {list.map((p) => (

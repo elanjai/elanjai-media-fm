@@ -3,7 +3,7 @@
 import Link from "@/components/LangLink";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import type { Genre, PublicStation } from "@/lib/types";
-import { fmt } from "@/i18n/locales";
+import { fmt, fmtCount } from "@/i18n/locales";
 import { track } from "@/lib/analytics";
 import type { Campaign } from "@/lib/ads";
 import AdSlotClient from "./AdSlotClient";
@@ -89,7 +89,7 @@ export default function SearchClient({
           <p className="text-xs text-muted" aria-live="polite">
             {stations === null
               ? t("search.loading")
-              : fmt(t("search.resultCount"), { count: results.length, term })}
+              : fmtCount(t("search.resultCountOne"), t("search.resultCount"), results.length, { term })}
           </p>
 
           {stations !== null && results.length === 0 && (

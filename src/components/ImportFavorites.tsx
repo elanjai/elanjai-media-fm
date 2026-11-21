@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "@/components/LangLink";
-import { fmt } from "@/i18n/locales";
+import { fmtCount } from "@/i18n/locales";
 import type { PublicStation } from "@/lib/types";
 import { useLibrary } from "./AudioProvider";
 import { useT } from "./LocaleProvider";
@@ -62,7 +62,7 @@ export default function ImportFavorites({
           }}
           className="mt-5 w-full rounded-full bg-accent px-6 py-3.5 text-sm font-bold text-accent-ink shadow-md shadow-brand/20 transition hover:brightness-105"
         >
-          {fmt(t("favorites.importCta"), { count: stations.length })}
+          {fmtCount(t("favorites.importCtaOne"), t("favorites.importCta"), stations.length)}
         </button>
       )}
     </>
